@@ -1,6 +1,6 @@
 <template>
   <header>
-    Hallo Mark zurück (<router-link to="/">Startseite</router-link>)
+    VideApp<sub>corr</sub> (<router-link to="/">Startseite</router-link>)
   </header>
 </template>
 
