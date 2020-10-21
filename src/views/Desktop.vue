@@ -27,6 +27,8 @@ const drawMeasure = (obj) => {
 
 // loads a IIIF image onto the viewer
 const addPage = (page) => {
+  const scaleFactor = parseInt(page.dimensions.width) / parseInt(page.pixels.width)
+
   viewer.addTiledImage({
     tileSource: {
       '@context': 'http://iiif.io/api/image/2/context.json',
@@ -40,11 +42,42 @@ const addPage = (page) => {
     y: page.position.y,
     width: page.dimensions.width
   })
-  page.zones.forEach(zone => {
-    zone.x = zone.x + page.position.x
-    zone.y = zone.y + page.position.y
+  console.log('scaleFactor: ' + scaleFactor)
+  page.measures.forEach(zone => {
+    zone.x = (parseInt(zone.x) * scaleFactor) + parseInt(page.position.x)
+    zone.y = (parseInt(zone.y) * scaleFactor) + parseInt(page.position.y)
+    zone.width = parseInt(zone.width) * scaleFactor
+    zone.height = parseInt(zone.height) * scaleFactor
     drawMeasure(zone)
   })
+}
+
+const addSource = (source, i) => {
+  const sourceBack = document.createElement('div')
+  sourceBack.classList.add('sourceBack')
+  sourceBack.id = source.id + '_back'
+  sourceBack.innerHTML = '<label>' + source.label + '</label>'
+
+  const leftPos = i * 500 + 50
+  const topPos = i * 100 + 20
+
+  viewer.addOverlay(sourceBack, new OpenSeadragon.Rect(leftPos, topPos, parseInt(source.width) + 20, parseInt(source.height) + 20))
+
+  const leftPage = source.pages[0].v
+  const rightPage = source.pages[0].r
+
+  if (leftPage !== null) {
+    const x = parseInt(leftPos) + 10 + parseInt(source.centerfold) - parseInt(leftPage.dimensions.width)
+    const y = parseInt(topPos) + 10 + (parseInt(source.height) - parseInt(leftPage.dimensions.height)) / 2
+    leftPage.position = { x, y }
+    addPage(leftPage)
+  }
+  if (rightPage !== null) {
+    const x = parseInt(leftPos) + 10 + parseInt(source.centerfold)
+    const y = parseInt(topPos) + 10 + (parseInt(source.height) - parseInt(rightPage.dimensions.height)) / 2
+    rightPage.position = { x, y }
+    addPage(rightPage)
+  }
 }
 
 export default {
@@ -125,7 +158,8 @@ export default {
       collectionMode: false
 
     })
-    // console.log(osdConfiguration)
+
+    // load desktop background
     viewer.addTiledImage({
       tileSource: {
         height: 1000,
@@ -140,10 +174,18 @@ export default {
       y: 0,
       width: 1600
     })
-    const pages = this.$store.getters.pages
-    pages.forEach(page => {
-      addPage(page)
+    const sources = this.$store.getters.sources
+    console.log(typeof addPage)
+    console.log(sources)
+    // let w = 10 // 10mm from left
+    // let h = 10 // 10mm from top
+
+    sources.forEach((source, i) => {
+      addSource(source, i)
     })
+    /* pages.forEach(page => {
+      addPage(page)
+    }) */
   },
   computed: {
     pages: function () {
