@@ -1,6 +1,20 @@
 <template>
-  <div class="hello">
+  <div class="desk">
     <div id="canvas"></div>
+    <div id="sidebar">
+      <div>
+        <div id="navigatorBox">
+          <div id="navigator"></div>
+        </div>
+        <div id="btnBox">
+          <btn-group>
+            <btn id="zoomIn" icon="plus" size="sm"></btn>
+            <btn id="zoomOut" icon="minus" size="sm"></btn>
+            <btn id="desktopOverview" icon="hResize" size="sm"></btn>
+          </btn-group>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -20,14 +34,35 @@ const drawMeasure = (obj) => {
   overlay.innerHTML = obj.label
   overlay.addEventListener('click', (e) => {
     overlay.classList.toggle('active')
-    console.log('I need to start an annotation on zone ' + obj.id)
+    console.log('I need to start an annotation on zone ' + obj.zone)
+
+    const annot = {
+      '@context': 'http://www.w3.org/ns/anno.jsonld#',
+      id: 'randomuuId',
+      type: 'Annotation',
+      body: {
+        type: 'TextualBody',
+        value: '<p>j\'adore !</p>',
+        format: 'text/html',
+        language: 'fr',
+        creator: 'http://example.net/user2',
+        created: '2014-06-02T17:00:00Z'
+      },
+      target: 'http://linkToSource#' + obj.zone
+    }
+    console.log(annot)
   })
   viewer.addOverlay(overlay, new OpenSeadragon.Rect(obj.x, obj.y, obj.width, obj.height))
 }
 
 // loads a IIIF image onto the viewer
-const addPage = (page) => {
+const addPage = (page, source) => {
   const scaleFactor = parseInt(page.dimensions.width) / parseInt(page.pixels.width)
+
+  // const placement = page.place === 'verso' ? OpenSeadragon.Placement.RIGHT : OpenSeadragon.Placement.LEFT
+
+  const x = page.place === 'verso' ? source.position.x - (source.maxDimensions.width / 4) : source.position.x + (source.maxDimensions.width / 4)
+  const y = source.position.y - (source.maxDimensions.height / 2)
 
   viewer.addTiledImage({
     tileSource: {
@@ -38,14 +73,19 @@ const addPage = (page) => {
       width: page.pixels.width,
       height: page.pixels.height
     },
-    x: page.position.x,
-    y: page.position.y,
-    width: page.dimensions.width
+    x,
+    y,
+    width: page.dimensions.width// ,
+    // fitBounds: new OpenSeadragon.Rect(source.position.x, source.position.y, page.dimensions.width, page.dimensions.height),
+    //  fitBoundsPlacement: placement,
+    // degrees: source.rotation / 5
   })
+  console.log('viewer:')
+  console.log(viewer)
   console.log('scaleFactor: ' + scaleFactor)
   page.measures.forEach(zone => {
-    zone.x = (parseInt(zone.x) * scaleFactor) + parseInt(page.position.x)
-    zone.y = (parseInt(zone.y) * scaleFactor) + parseInt(page.position.y)
+    zone.x = (parseInt(zone.x) * scaleFactor) + parseInt(x)
+    zone.y = (parseInt(zone.y) * scaleFactor) + parseInt(y)
     zone.width = parseInt(zone.width) * scaleFactor
     zone.height = parseInt(zone.height) * scaleFactor
     drawMeasure(zone)
@@ -58,25 +98,19 @@ const addSource = (source, i) => {
   sourceBack.id = source.id + '_back'
   sourceBack.innerHTML = '<label>' + source.label + '</label>'
 
-  const leftPos = i * 500 + 50
-  const topPos = i * 100 + 20
+  // const centerX = source.position.x
+  // const centerY = source.position.y
 
-  viewer.addOverlay(sourceBack, new OpenSeadragon.Rect(leftPos, topPos, parseInt(source.width) + 20, parseInt(source.height) + 20))
+  // viewer.addOverlay(sourceBack, new OpenSeadragon.Rect(leftPos, topPos, parseInt(source.width) + 20, parseInt(source.height) + 20))
 
   const leftPage = source.pages[0].v
   const rightPage = source.pages[0].r
 
   if (leftPage !== null) {
-    const x = parseInt(leftPos) + 10 + parseInt(source.centerfold) - parseInt(leftPage.dimensions.width)
-    const y = parseInt(topPos) + 10 + (parseInt(source.height) - parseInt(leftPage.dimensions.height)) / 2
-    leftPage.position = { x, y }
-    addPage(leftPage)
+    addPage(leftPage, source)
   }
   if (rightPage !== null) {
-    const x = parseInt(leftPos) + 10 + parseInt(source.centerfold)
-    const y = parseInt(topPos) + 10 + (parseInt(source.height) - parseInt(rightPage.dimensions.height)) / 2
-    rightPage.position = { x, y }
-    addPage(rightPage)
+    addPage(rightPage, source)
   }
 }
 
@@ -138,14 +172,14 @@ export default {
       showRotationControl: true,
       showNavigator: true,
       navigatorRotate: false,
-      // navigatorId: containerID + '_facsimileNavigator',
+      navigatorId: 'navigator',
       showFullPageControl: false,
-      // zoomInButton: containerID + '_zoomIn',
-      // zoomOutButton: containerID + '_zoomOut',
-      // homeButton: containerID + '_zoomHome',
+      zoomInButton: 'zoomIn',
+      zoomOutButton: 'zoomOut',
+      homeButton: 'desktopOverview',
       // rotateLeftButton: containerID + '_rotateLeft',
       // rotateRightButton: containerID + '_rotateRight',
-      // toolbar: containerID + '_menubar',
+      // toolbar: 'desktopToolbar',
       pixelsPerWheelLine: 60,
       // Enable touch rotation on tactile devices
       gestureSettingsTouch: {
@@ -199,21 +233,61 @@ export default {
 <style lang="scss">
 @import "@/scss/variables.scss";
 
-#canvas {
-  margin: 1rem 5rem;
-  height: 10rem;
-  border  : .5px solid $border-color;
-  background-color: #333333;
+.desk {
+  flex: 1 0 auto;
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: stretch;
+  position: relative;
 }
 
-.measure {
-  width: 3rem;
-  hight: 1rem;
-  border: .5px solid $border-color;
-  background-color: fuchsia;
+#canvas {
+  height: 100%;
+  width: calc(100% - 15rem);
+  flex: 1 1 auto;
 
-  &.active {
-    background-color: blue;
+  .measure {
+    width: 3rem;
+    hight: 1rem;
+    border: .5px solid $border-color;
+    box-shadow: 0 0 .5rem #00000099;
+    opacity: 0;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    &.active {
+      background-color: blue;
+    }
+  }
+
+}
+
+#sidebar {
+  height: 100%;
+  width: calc(15rem - .5px);
+  flex: 1 1 auto;
+  border-left: .5px solid $border-color;
+  background-color: #f5f5f5;
+
+  & > div {
+    width: calc(100% - 1px - .4rem);
+    margin: .2rem;
+    border: .5px solid $border-color;
+    border-radius: .3rem;
+    background-color: #ffffff;
+    box-shadow: 0 .1rem .5rem #00000033 inset;
+  }
+
+  #navigator {
+    height: 5rem;
+    width: 100%;
+  }
+
+  #btnBox > div {
+    display: inline-block;
   }
 }
 </style>

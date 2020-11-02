@@ -1,14 +1,12 @@
 <template>
-  <div>
-    <container id="app">
-      <AppHeader/>
-      <router-view/>
-    </container>
+  <container id="app">
+    <AppHeader/>
+    <router-view/>
+  </container>
     <!--<div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div>-->
-  </div>
 </template>
 
 <script>
@@ -24,6 +22,14 @@ export default {
 
 <style lang="scss">
 
+body {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -32,7 +38,11 @@ export default {
   color: #2c3e50;
   padding: 0;
   margin: 0;
-
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: stretch;
 }
 
 #nav {
