@@ -249,7 +249,7 @@ export default {
 
   .measure {
     width: 3rem;
-    hight: 1rem;
+    height: 1rem;
     border: .5px solid $border-color;
     box-shadow: 0 0 .5rem #00000099;
     opacity: 0;
