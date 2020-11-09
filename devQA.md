@@ -1,8 +1,7 @@
 # Basic Decisions
 ## jsdoc
 
-* shall the docs folder be committed or ignored? (see `.gitignore`)
-  It is accessible without `npm install`, but OTOH it will be a lot of files to carry there.
+* the /docs/ folder is created, but the contents are ignored
 * To start jsdoc there is a bash-script `./jsdoc.sh`
 
 ## lint
