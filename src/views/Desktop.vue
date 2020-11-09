@@ -114,6 +114,9 @@ const addSource = (source, i) => {
   }
 }
 
+/**
+ * @vue-computed {Array} pages
+ */
 export default {
   name: 'Desktop',
   mounted () {
