@@ -15,6 +15,9 @@
         </div>
       </div>
     </div>
+    <div id="dialog">
+      <button @click="closeDialog">Close</button>
+    </div>
   </div>
 </template>
 
@@ -34,6 +37,7 @@ const drawMeasure = (obj) => {
   overlay.innerHTML = obj.label
   overlay.addEventListener('click', (e) => {
     overlay.classList.toggle('active')
+
     console.log('I need to start an annotation on zone ' + obj.zone)
 
     const annot = {
@@ -245,6 +249,24 @@ export default {
   position: relative;
 }
 
+#dialog {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 800px;
+  height: 600px;
+  z-index: -1;
+  background-color: white;
+  border-radius: 5px;
+
+  &:hover {
+    border: 1px black solid;
+  }
+  &.active {
+    z-index: 10;
+  }
+}
+
 #canvas {
   height: 100%;
   width: calc(100% - 15rem);
@@ -254,6 +276,7 @@ export default {
     width: 3rem;
     height: 1rem;
     border: .5px solid $border-color;
+    border-radius: 5px;
     box-shadow: 0 0 .5rem #00000099;
     opacity: 0;
 
@@ -262,7 +285,7 @@ export default {
     }
 
     &.active {
-      background-color: blue;
+      background-color: rgba($color: #ffffff, $alpha: .5);
     }
   }
 
