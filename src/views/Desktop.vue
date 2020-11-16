@@ -14,9 +14,7 @@
           </btn-group>
         </div>
       </div>
-    </div>
-    <div id="dialog">
-      <button @click="closeDialog">Close</button>
+      <ZoneAnnotation />
     </div>
   </div>
 </template>
@@ -24,6 +22,7 @@
 <script>
 
 import OpenSeadragon from 'openseadragon'
+import ZoneAnnotation from '@/components/ZoneAnnotation'
 // import osdConfiguration from '@/config/osd.config.js'
 
 // will be populated when OSD is loaded
@@ -123,6 +122,9 @@ const addSource = (source, i) => {
  */
 export default {
   name: 'Desktop',
+  components: {
+    ZoneAnnotation
+  },
   mounted () {
     /* let tileSources = [{
       '@context': 'http://iiif.io/api/image/2/context.json',
