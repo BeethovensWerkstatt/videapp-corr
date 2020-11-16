@@ -16,16 +16,17 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/WorksList.vue')
+    component: () => import(/* webpackChunkName: "videapp" */ '../views/WorksList.vue')
   },
   {
     path: '/work/:id',
     name: 'Schreibtisch',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Desktop.vue')
+    component: () => import(/* webpackChunkName: "videapp" */ '../views/Desktop.vue')
   }
 ]
 
 const router = new VueRouter({
+  // mode: 'history', // nice, but needs server config
   routes
 })
 
