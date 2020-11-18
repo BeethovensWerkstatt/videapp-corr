@@ -83,9 +83,6 @@ const addPage = (page, source) => {
     //  fitBoundsPlacement: placement,
     // degrees: source.rotation / 5
   })
-  console.log('viewer:')
-  console.log(viewer)
-  console.log('scaleFactor: ' + scaleFactor)
   page.measures.forEach(zone => {
     zone.x = (parseInt(zone.x) * scaleFactor) + parseInt(x)
     zone.y = (parseInt(zone.y) * scaleFactor) + parseInt(y)
@@ -93,6 +90,10 @@ const addPage = (page, source) => {
     zone.height = parseInt(zone.height) * scaleFactor
     drawMeasure(zone)
   })
+  console.log('page: ' + page.uri + ' (' + page.pixels.width + 'x' + page.pixels.height + ')')
+  console.log('viewer:')
+  console.log(viewer)
+  console.log('scaleFactor: ' + scaleFactor)
 }
 
 const addSource = (source, i) => {
@@ -104,7 +105,10 @@ const addSource = (source, i) => {
   // const centerX = source.position.x
   // const centerY = source.position.y
 
+  // const leftPos = source.position.x
+  // const topPos = source.position.y
   // viewer.addOverlay(sourceBack, new OpenSeadragon.Rect(leftPos, topPos, parseInt(source.width) + 20, parseInt(source.height) + 20))
+  // console.log(JSON.stringify(source.pages))
 
   const leftPage = source.pages[0].v
   const rightPage = source.pages[0].r
@@ -115,6 +119,7 @@ const addSource = (source, i) => {
   if (rightPage !== null) {
     addPage(rightPage, source)
   }
+  // console.log('source width: ' + sourceBack.clientWidth)
 }
 
 /**
