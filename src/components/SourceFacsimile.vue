@@ -1,13 +1,25 @@
 <template>
-  <div/>
+  <div class="sourceBack" :id="this.divid">
+    <label>{{ this.label }}</label>
+  </div>
 </template>
 
 <script>
 export default {
   name: 'SourceFacsimile',
   props: {
-    viewer: Object,
-    source: Object
+    source: {
+      type: Object,
+      default: () => { return {} }
+    }
+  },
+  computed: {
+    divid () {
+      return this.source.id + '_back'
+    },
+    label () {
+      return this.source.label
+    }
   }
 }
 </script>
