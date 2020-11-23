@@ -1,19 +1,26 @@
 <template>
-  <div id="osd-canvas"></div>
+  <div :id="this.divid"></div>
 </template>
 
 <script>
+import Vue from 'vue'
 import OpenSeadragon from 'openseadragon'
+import SourceFacsimile from '@/components/SourceFacsimile'
 import osddef from '@/config/osd.default.js'
 
 export default {
   name: 'OpenSeadragon',
+  components: {},
   data: function () {
     return {
       viewerprops: { ...osddef, ...this.osdinit }
     }
   },
   props: {
+    divid: {
+      type: String,
+      default: 'osd-canvas'
+    },
     osdinit: {
       type: Object,
       default: () => {
@@ -45,12 +52,29 @@ export default {
   },
   methods: {
     init () {
-      const viewer = OpenSeadragon(this.viewerprops)
-
       console.log(this.viewerprops)
+      const viewer = OpenSeadragon(this.viewerprops)
+      console.log(viewer)
+
+      // load desktop background
+      viewer.addTiledImage({
+        tileSource: this.backsrc,
+        x: 0,
+        y: 0,
+        width: this.width
+      })
 
       this.$store.commit('SET_VIEWER', viewer)
       this.$store.commit('SET_OSD', this)
+
+      const SourceFacsimileVue = Vue.extend(SourceFacsimile)
+
+      const sources = this.$store.getters.sources
+      sources.forEach((source, i) => {
+        const srcfacs = new SourceFacsimileVue({ probs: { source: source } })
+        srcfacs.$mount()
+        srcfacs.addSource(source, i)
+      })
     }
   },
   mounted () {
