@@ -20,7 +20,7 @@
 </template>
 
 <script>
-
+// import OpenSeadragon from '@/components/OpenSeadragonComponent'
 import OpenSeadragon from 'openseadragon'
 import ZoneAnnotation from '@/components/ZoneAnnotation'
 // import osdConfiguration from '@/config/osd.config.js'
