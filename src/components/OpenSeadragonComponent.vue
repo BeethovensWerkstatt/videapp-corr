@@ -52,9 +52,9 @@ export default {
   },
   methods: {
     init () {
-      console.log(this.viewerprops)
+      // console.log(this.viewerprops)
       const viewer = OpenSeadragon(this.viewerprops)
-      console.log(viewer)
+      // console.log(viewer)
 
       // load desktop background
       viewer.addTiledImage({
@@ -71,9 +71,8 @@ export default {
 
       const sources = this.$store.getters.sources
       sources.forEach((source, i) => {
-        const srcfacs = new SourceFacsimileVue({ probs: { source: source } })
+        const srcfacs = new SourceFacsimileVue({ propsData: { source: source, OSD: this } })
         srcfacs.$mount()
-        srcfacs.addSource(source, i)
       })
     }
   },

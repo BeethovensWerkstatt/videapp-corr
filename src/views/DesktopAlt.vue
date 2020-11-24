@@ -123,9 +123,6 @@ const addSource = (source, i) => {
   // console.log('source width: ' + sourceBack.clientWidth)
 }
 
-/**
- * @vue-computed {Array} pages
- */
 export default {
   name: 'Desktop',
   components: {

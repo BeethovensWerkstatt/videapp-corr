@@ -14,24 +14,25 @@
           </btn-group>
         </div>
       </div>
-      <!-- <ZoneAnnotation /> -->
+      <SourceInfo />
     </div>
   </div>
 </template>
 
 <script>
 import OpenSeadragonComponent from '@/components/OpenSeadragonComponent'
+import SourceInfo from '@/components/SourceInfo'
 // import ZoneAnnotation from '@/components/ZoneAnnotation'
 // import osdConfiguration from '@/config/osd.config.js'
 
 /**
- * @vue-computed {Array} pages
+ * Desktop View
  */
 export default {
   name: 'Desktop',
   components: {
-    // ZoneAnnotation
-    OpenSeadragonComponent
+    OpenSeadragonComponent,
+    SourceInfo
   },
   mounted () {
     const sources = this.$store.getters.sources
