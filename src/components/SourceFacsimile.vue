@@ -17,6 +17,14 @@ import OpenSeadragon from 'openseadragon'
  */
 export default {
   name: 'SourceFacsimile',
+  data: function () {
+    return {
+      position: {
+        x: this.source.position.x,
+        y: this.source.position.y
+      }
+    }
+  },
   props: {
     source: {
       type: Object,
@@ -46,10 +54,10 @@ export default {
   },
   mounted () {
     const x = this.source.position.x
-    const y = this.source.position.y + (this.source.maxDimensions.height / 1.9)
+    const y = this.source.position.y + (this.source.maxDimensions.height / 2)
 
     this.openPage(0)
-    this.viewer.addOverlay(this.$el, new OpenSeadragon.Point(x, y))
+    this.viewer.addOverlay(this.$el, new OpenSeadragon.Point(x, y), OpenSeadragon.TOP_CENTER)
   },
   methods: {
     /**
@@ -86,7 +94,7 @@ export default {
         },
         x,
         y,
-        // index: page.place === 'verso' ? 0 : 1,
+        index: this.index,
         width: page.dimensions.width// ,
         // fitBounds: new OpenSeadragon.Rect(source.position.x, source.position.y, page.dimensions.width, page.dimensions.height),
         // fitBoundsPlacement: placement,
@@ -105,6 +113,9 @@ export default {
 <style scoped lang="scss">
 .sourceBack {
   background-color: rgba($color: #ffffff, $alpha: 0.5);
+  border-radius: 5px;
+  margin: 5pt;
+  padding: 3pt;
 }
 
 .sourceBack:active {
