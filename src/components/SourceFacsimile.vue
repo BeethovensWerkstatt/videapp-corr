@@ -107,8 +107,13 @@ export default {
   background-color: rgba($color: #ffffff, $alpha: 0.5);
 }
 
+.sourceBack:active {
+  border: 1px solid blue;
+  background-color: rgba($color: #ffff88, $alpha: 1.0);
+}
+
 .sourceBack:hover {
-  border: 1px solid red;
+  border: 1px solid blue;
   background-color: rgba($color: #ffffff, $alpha: 0.8);
 }
 </style>
