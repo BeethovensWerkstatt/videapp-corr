@@ -116,9 +116,21 @@ export default {
 
       if (leftPage !== null) {
         this.addPage(leftPage)
+      } else {
+        if (this.ti_verso) {
+          this.ti_verso.setOpacity(0)
+          this.ti_verso.destroy()
+          this.ti_verso = null
+        }
       }
       if (rightPage !== null) {
         this.addPage(rightPage)
+      } else {
+        if (this.ti_recto) {
+          this.ti_recto.setOpacity(0)
+          this.ti_recto.destroy()
+          this.ti_recto = null
+        }
       }
     },
     addPage (page) {
@@ -140,11 +152,13 @@ export default {
         success: (e) => {
           if (page.place === 'verso') {
             if (this.ti_verso) {
+              this.ti_verso.setOpacity(0)
               this.ti_verso.destroy()
             }
             this.ti_verso = e.item
           } else {
             if (this.ti_recto) {
+              this.ti_recto.setOpacity(0)
               this.ti_recto.destroy()
             }
             this.ti_recto = e.item
