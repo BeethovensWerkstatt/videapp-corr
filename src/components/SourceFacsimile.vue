@@ -2,7 +2,7 @@
   <div class="sourceBack" v-bind:class="{ active: isActive }" :id="this.divid">
     <btn-group>
       <btn @click="prevPage" v-if="hasPrev">◄</btn>
-      <btn @click="openSourceInfo">{{ this.label }} ({{ this.pagenr+1 }}/{{ this.source.pages.length }})</btn>
+      <btn @click="openSourceInfo" v-bind:style="this.labelStyle">{{ this.label }} ({{ this.pagenr+1 }}/{{ this.source.pages.length }})</btn>
       <btn @click="nextPage" v-if="hasNext">►</btn>
     </btn-group>
   </div>
@@ -107,6 +107,9 @@ export default {
     },
     isActive () {
       return this.OSD.$store.state.activeSourceFacs === this
+    },
+    labelStyle () {
+      return { fontSize: (100 * this.OSD.viewer.getZoom()) + '%' }
     }
   },
   methods: {
