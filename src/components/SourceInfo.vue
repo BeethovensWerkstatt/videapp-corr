@@ -5,6 +5,8 @@
     <div>
         <table>
             <tr><td>Anzahl Seiten:</td><td>{{ pagecount }}</td></tr>
+            <tr><td>Verso:</td><td>{{ verso_label }}</td></tr>
+            <tr><td>Recto:</td><td>{{ recto_label }}</td></tr>
         </table>
     </div>
   </div>
@@ -15,13 +17,16 @@ export default {
   name: 'SourceInfo',
   computed: {
     source () {
-      const current = this.$store.state.sources.find((source) => {
-        return source.id === this.$store.state.activeSourceId
-      })
-      if (current) {
-        return current
+      if (this.$store.state.activeSourceFacs) {
+        return this.$store.state.activeSourceFacs.source
       }
       return null
+    },
+    activePage () {
+      if (this.$store.state.activeSourceFacs) {
+        return this.$store.state.activeSourceFacs.pagenr
+      }
+      return 0
     },
     title () {
       if (this.source) {
@@ -31,9 +36,26 @@ export default {
     },
     pagecount () {
       if (this.source) {
-        return this.source.pages.length
+        var pc = 0
+        this.source.pages.forEach(page => {
+          if (page.v) pc++
+          if (page.r) pc++
+        })
+        return pc
       }
       return 0
+    },
+    verso_label () {
+      if (this.$store.state.activeSourceFacs) {
+        return this.$store.state.activeSourceFacs.left_label
+      }
+      return '---'
+    },
+    recto_label () {
+      if (this.$store.state.activeSourceFacs) {
+        return this.$store.state.activeSourceFacs.right_label
+      }
+      return '---'
     }
   }
 }

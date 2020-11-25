@@ -1,9 +1,9 @@
 <template>
-  <div class="sourceBack" :id="this.divid">
+  <div class="sourceBack" v-bind:class="{ active: isActive }" :id="this.divid">
     <btn-group>
-      <btn @click="prevPage">◄</btn>
-      <btn @click="openSourceInfo">{{ this.label }}</btn>
-      <btn @click="nextPage">►</btn>
+      <btn @click="prevPage" v-if="hasPrev">◄</btn>
+      <btn @click="openSourceInfo">{{ this.label }} ({{ this.pagenr+1 }}/{{ this.source.pages.length }})</btn>
+      <btn @click="nextPage" v-if="hasNext">►</btn>
     </btn-group>
   </div>
 </template>
@@ -53,27 +53,6 @@ export default {
       default: 0
     }
   },
-  computed: {
-    divid () {
-      return this.source.id + '_back'
-    },
-    label () {
-      return this.source.label
-    },
-    viewer () {
-      return this.OSD.viewer
-    },
-    ti_imgs () {
-      var ret = ''
-      if (this.ti_recto) {
-        ret = ret + this.ti_recto.getBounds()
-      }
-      if (this.ti_verso) {
-        ret += ret + this.ti_verso.getBounds()
-      }
-      return ret
-    }
-  },
   mounted () {
     const x = this.source.position.x
     const y = this.source.position.y + (this.source.maxDimensions.height / 2)
@@ -94,6 +73,42 @@ export default {
     this.openPage(this.pagenr)
     this.viewer.addOverlay(this.$el, new OpenSeadragon.Point(x, y), OpenSeadragon.TOP_CENTER)
   },
+  computed: {
+    divid () {
+      return this.source.id + '_back'
+    },
+    label () {
+      return this.source.label
+    },
+    viewer () {
+      return this.OSD.viewer
+    },
+    hasNext () {
+      return this.pagenr < this.source.pages.length - 1
+    },
+    hasPrev () {
+      return this.pagenr > 0
+    },
+    left_label () {
+      if (this.pagenr >= 0 && this.pagenr < this.source.pages.length) {
+        if (this.source.pages[this.pagenr].v) {
+          return this.source.pages[this.pagenr].v.label
+        }
+      }
+      return '---'
+    },
+    right_label () {
+      if (this.pagenr >= 0 && this.pagenr < this.source.pages.length) {
+        if (this.source.pages[this.pagenr].r) {
+          return this.source.pages[this.pagenr].r.label
+        }
+      }
+      return '---'
+    },
+    isActive () {
+      return this.OSD.$store.state.activeSourceFacs === this
+    }
+  },
   methods: {
     nextPage () {
       const p = this.pagenr + 1
@@ -110,6 +125,8 @@ export default {
       // console.log('open page ' + p)
       if (p >= this.source.pages.length) p = this.source.pages.length - 1
       if (p < 0) p = 0
+
+      this.pagenr = p
 
       const leftPage = this.source.pages[p].v
       const rightPage = this.source.pages[p].r
@@ -174,7 +191,7 @@ export default {
     },
     openSourceInfo (e) {
       e.preventDefault()
-      this.OSD.$store.commit('ACTIVATE_SOURCE', this.source)
+      this.OSD.$store.commit('ACTIVATE_SOURCE', this)
     }
   }
 }
@@ -192,5 +209,9 @@ export default {
 .btn:hover {
   border: 1px solid blue;
   background-color: rgba($color: #ffffff, $alpha: 0.8);
+}
+.active {
+  border: 1px solid green;
+  background-color: rgba($color: #ffffff, $alpha: 0.5);
 }
 </style>

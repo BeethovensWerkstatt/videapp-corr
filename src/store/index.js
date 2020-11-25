@@ -19,7 +19,7 @@ export default new Vuex.Store({
     annotations: [],
     activeAnnotationId: null,
     sources: [],
-    activeSourceId: null
+    activeSourceFacs: null
     /*
     sample source:
     {
@@ -45,8 +45,8 @@ export default new Vuex.Store({
       sources.push(source)
       state.sources = sources
     },
-    ACTIVATE_SOURCE (state, source) {
-      state.activeSourceId = source.id
+    ACTIVATE_SOURCE (state, srcfacs) {
+      state.activeSourceFacs = srcfacs
     },
     ADD_ANNOTATION (state, annotation) {
       const annots = [...state.annotations]
