@@ -104,6 +104,7 @@ export default {
   flex: 1 1 auto;
   border-left: .5px solid $border-color;
   background-color: #f5f5f5;
+  padding: 5px;
 
   & > div {
     width: calc(100% - 1px - .4rem);
@@ -112,6 +113,7 @@ export default {
     border-radius: .3rem;
     background-color: #ffffff;
     box-shadow: 0 .1rem .5rem #00000033 inset;
+    padding: 8px;
   }
 
   #navigator {
