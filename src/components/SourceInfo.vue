@@ -27,7 +27,7 @@ export default {
       if (this.source) {
         return this.source.label
       }
-      return 'N/A'
+      return '---'
     },
     pagecount () {
       if (this.source) {

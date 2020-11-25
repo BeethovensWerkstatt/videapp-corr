@@ -1,6 +1,10 @@
 <template>
-  <div class="sourceBack" :id="this.divid" @click="openSourceInfo">
-    <label>{{ this.label }}</label>
+  <div class="sourceBack" :id="this.divid">
+    <btn-group>
+      <btn @click="prevPage">◄</btn>
+      <btn @click="openSourceInfo">{{ this.label }}</btn>
+      <btn @click="nextPage">►</btn>
+    </btn-group>
   </div>
 </template>
 
@@ -22,7 +26,11 @@ export default {
       position: {
         x: this.source.position.x,
         y: this.source.position.y
-      }
+      },
+      pagenr: this.defaultPage,
+      pagetiles: [],
+      ti_recto: null,
+      ti_verso: null
     }
   },
   props: {
@@ -39,6 +47,10 @@ export default {
     },
     index: {
       type: Number
+    },
+    defaultPage: {
+      type: Number,
+      default: 0
     }
   },
   computed: {
@@ -50,21 +62,54 @@ export default {
     },
     viewer () {
       return this.OSD.viewer
+    },
+    ti_imgs () {
+      var ret = ''
+      if (this.ti_recto) {
+        ret = ret + this.ti_recto.getBounds()
+      }
+      if (this.ti_verso) {
+        ret += ret + this.ti_verso.getBounds()
+      }
+      return ret
     }
   },
   mounted () {
     const x = this.source.position.x
     const y = this.source.position.y + (this.source.maxDimensions.height / 2)
 
-    this.openPage(0)
+    /*
+    this.pagetiles = this.source.pages.map(page => {
+      return {
+        '@context': 'http://iiif.io/api/image/2/context.json',
+        '@id': page.uri,
+        profile: 'http://iiif.io/api/image/2/level2.json',
+        protocol: 'http://iiif.io/api/image',
+        width: page.pixels.width,
+        height: page.pixels.height
+      }
+    })
+    */
+
+    this.openPage(this.pagenr)
     this.viewer.addOverlay(this.$el, new OpenSeadragon.Point(x, y), OpenSeadragon.TOP_CENTER)
   },
   methods: {
+    nextPage () {
+      const p = this.pagenr + 1
+      this.openPage(p)
+    },
+    prevPage () {
+      const p = this.pagenr - 1
+      this.openPage(p)
+    },
     /**
      * @param p - open page pair <i>p</i>
      */
     openPage (p) {
       // console.log('open page ' + p)
+      if (p >= this.source.pages.length) p = this.source.pages.length - 1
+      if (p < 0) p = 0
 
       const leftPage = this.source.pages[p].v
       const rightPage = this.source.pages[p].r
@@ -92,9 +137,21 @@ export default {
           width: page.pixels.width,
           height: page.pixels.height
         },
+        success: (e) => {
+          if (page.place === 'verso') {
+            if (this.ti_verso) {
+              this.ti_verso.destroy()
+            }
+            this.ti_verso = e.item
+          } else {
+            if (this.ti_recto) {
+              this.ti_recto.destroy()
+            }
+            this.ti_recto = e.item
+          }
+        },
         x,
         y,
-        index: this.index,
         width: page.dimensions.width// ,
         // fitBounds: new OpenSeadragon.Rect(source.position.x, source.position.y, page.dimensions.width, page.dimensions.height),
         // fitBoundsPlacement: placement,
@@ -111,19 +168,14 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-.sourceBack {
+.btn {
   background-color: rgba($color: #ffffff, $alpha: 0.5);
   border-radius: 5px;
   margin: 5pt;
   padding: 3pt;
 }
 
-.sourceBack:active {
-  border: 1px solid blue;
-  background-color: rgba($color: #ffff88, $alpha: 1.0);
-}
-
-.sourceBack:hover {
+.btn:hover {
   border: 1px solid blue;
   background-color: rgba($color: #ffffff, $alpha: 0.8);
 }

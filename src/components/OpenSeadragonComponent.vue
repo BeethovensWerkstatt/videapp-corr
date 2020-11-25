@@ -71,7 +71,7 @@ export default {
 
       const sources = this.$store.getters.sources
       sources.forEach((source, i) => {
-        const srcfacs = new SourceFacsimileVue({ propsData: { source: source, OSD: this } })
+        const srcfacs = new SourceFacsimileVue({ propsData: { source: source, OSD: this, index: i } })
         srcfacs.$mount()
       })
     }
