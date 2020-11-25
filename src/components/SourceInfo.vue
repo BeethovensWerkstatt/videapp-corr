@@ -2,9 +2,10 @@
   <div class="source-info">
     <strong>Source Information</strong>
     <div>
-      <table>
-        <tr><td>Titel:</td><td style="font-size: 80%;">{{ title }}</td></tr>
-        <tr><td>Seiten:</td><td>{{ pagecount }} <span v-if="this.source"> [{{ first_label }} &ndash; {{ last_label }}]</span></td></tr>
+      <table width="100%">
+        <tr><td>Titel:</td><td class="smaller">{{ title }}</td></tr>
+        <tr><td>Seiten:</td><td>{{ pagecount }} <span v-if="this.source" class="smaller"> [{{ first_label }} &ndash; {{ last_label }}]</span></td></tr>
+        <tr><td colspan="2"><hr /></td></tr>
         <tr><td>Verso:</td><td>{{ verso_label }}</td></tr>
         <tr><td>Recto:</td><td>{{ recto_label }}</td></tr>
       </table>
@@ -95,5 +96,8 @@ export default {
 .source-info {
   padding: 8pt;
   text-align: left;
+}
+.smaller {
+  font-size: 80%;
 }
 </style>
