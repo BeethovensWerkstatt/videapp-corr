@@ -10,13 +10,13 @@
   },
   "dependencies": {
     "@vectrejs/vectre": "^1.1.0",
-    "core-js": "^3.6.5",
+    "core-js": "^3.8.0",
     "openseadragon": "^2.4.2",
     "spectre.css": "^0.5.9",
-    "verovio": "^3.0.0",
+    "verovio": "^3.0.2",
     "vue": "^2.6.11",
-    "vue-router": "^3.2.0",
-    "vuex": "^3.4.0"
+    "vue-router": "^3.4.9",
+    "vuex": "^3.6.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
@@ -26,7 +26,7 @@
     "@vue/cli-plugin-vuex": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "@vue/eslint-config-standard": "^5.1.2",
-    "@vue/test-utils": "^1.0.3",
+    "@vue/test-utils": "^1.1.1",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-import": "^2.20.2",

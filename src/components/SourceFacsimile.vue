@@ -109,7 +109,7 @@ export default {
       return this.OSD.$store.state.activeSourceFacs === this
     },
     labelStyle () {
-      return { fontSize: (100 * this.OSD.viewer.getZoom()) + '%' }
+      return { fontSize: (100000 * this.OSD.viewer.viewport.getZoom()) + '%' }
     }
   },
   methods: {
