@@ -13,6 +13,7 @@ import OpenSeadragon from 'openseadragon'
 
 /**
  * Source components are created dynamically. See {@tutorial vue-components-programmatically}.
+ * If a source is selected it may be accessed globally. See {@link module:SourceInfo}.
  *
  * @vue-data {Object} position - position of source on desktop (x,y)
  * @vue-data {Number} pagenr - index of displayed page-pair
@@ -23,6 +24,11 @@ import OpenSeadragon from 'openseadragon'
  * @vue-computed {String} divid - id of the div for the source label
  * @vue-computed {String} label - label of this source
  * @vue-computed {OpenSeadragon} viewer - OpenSeadragon Viewer
+ * @vue-computed {Boolean} hasNext - next page pair available
+ * @vue-computed {Boolean} hasPrev - previous page pair available
+ * @vue-computed {String} left_label - label of left (verso) page
+ * @vue-computed {String} right_label - label of right (recto) page
+ * @vue-computed {Boolean} isActive - true if this is the selected source
  */
 export default {
   name: 'SourceFacsimile',
