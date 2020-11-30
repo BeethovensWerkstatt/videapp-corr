@@ -7,6 +7,20 @@ import { uuidv4 } from '@/toolbox'
 
 Vue.use(Vuex)
 
+/**
+ * @namespace store
+ */
+
+/**
+ * @typedef {object} store.state
+ * @memberof store
+ * @property {object} viewer - OpenSeadragon Viewer object
+ * @property {object} osd_component - OpenSeadragon Vue component
+ * @property {object[]} annotations - list of annotations
+ * @property {string} activeAnnotationId - ID of selected annotation
+ * @property {object[]} sources - list of source objects
+ * @property {module:SourceFacsimile} activeSourceFacs - selected source component
+ */
 export default new Vuex.Store({
   state: {
     viewer: null,
@@ -28,15 +42,25 @@ export default new Vuex.Store({
     }
     */
   },
+  /**
+   * @namespace store.mutations
+   */
   mutations: {
     /**
      * set OpenSeadragon Viewer
-     * @param {Object} state
-     * @param {Viewer} viewer
+     * @memberof store.mutations
+     * @param {object} state
+     * @param {object} viewer
      */
     SET_VIEWER (state, viewer) {
       state.viewer = viewer
     },
+    /**
+     * set OpenSeadragon component
+     * @memberof store.mutations
+     * @param {object} state
+     * @param {module:OpenSeadragonComponent} OSDComponent
+     */
     SET_OSD (state, OSDComponent) {
       state.OSDComponent = OSDComponent
     },
@@ -75,7 +99,16 @@ export default new Vuex.Store({
       }
     }
   },
+  /**
+   * @namespace store.actions
+   * @memberof store
+   */
   actions: {
+    /**
+     * load sources
+     * @memberof store.actions
+     * @param {*} param0
+     */
     loadSources ({ commit, state }) {
       // this needs to be replaced with dynamic content
       const json = pageSetup
@@ -174,6 +207,10 @@ export default new Vuex.Store({
       commit('MODIFY_ANNOTATION', body)
     }
   },
+  /**
+   * @namespace store.getters
+   * @property {object} viewer - OpenSeadragon Viewer object
+   */
   getters: {
     viewer: (state) => {
       return state.viewer

@@ -14,6 +14,10 @@
 
 <script>
 // @ is an alias to /src
+
+/**
+ * Home component
+ */
 export default {
   name: 'Home'
 }
