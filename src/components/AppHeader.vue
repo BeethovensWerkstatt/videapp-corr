@@ -5,6 +5,9 @@
 </template>
 
 <script>
+/**
+ * Application header component
+ */
 export default {
   name: 'AppHeader'
 }
