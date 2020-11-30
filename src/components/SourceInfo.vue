@@ -20,6 +20,19 @@
 </template>
 
 <script>
+/**
+ * Display information about current selected/activated source and
+ * its display state (displayed page).
+ *
+ * @vue-computed source {Object} - selected source object
+ * @vue-computed activePage {Number} - index of the displayed verso-recto page pair.
+ * @vue-computed title {String} - title of the source
+ * @vue-computed pagecount {Number} - number of pages available for this source
+ * @vue-computed verso_label {String} - label of left/verso page
+ * @vue-computed recto_label {String} - label of right/recto page
+ * @vue-computed first_label {String} - label of first available page
+ * @vue-computed last_label {String} - label of last available page
+ */
 export default {
   name: 'SourceInfo',
   computed: {
@@ -85,6 +98,9 @@ export default {
     }
   },
   methods: {
+    /**
+     * unselect source / reset component
+     */
     clearInfo () {
       this.$store.commit('ACTIVATE_SOURCE', null)
     }

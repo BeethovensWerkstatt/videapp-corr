@@ -6,6 +6,11 @@
 </template>
 
 <script>
+/**
+ * This component will serve measure annotations. (to be developed)
+ *
+ * @vue-computed {String} title
+ */
 export default {
   computed: {
     title () {

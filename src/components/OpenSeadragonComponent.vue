@@ -8,6 +8,17 @@ import OpenSeadragon from 'openseadragon'
 import SourceFacsimile from '@/components/SourceFacsimile'
 import osddef from '@/config/osd.default.js'
 
+/**
+ * OpenSeadragon component
+ *
+ * @vue-data {Object} viewerprops - configuration of OpenSeaDragon Viewer (<code>config/osd.default.js</code>)
+ * @vue-prop {String} [divid='osd-init'] - ID of container div
+ * @vue-prop {Object} [osdinit={}] - configuration of OSD Viewer &ndash; overrides default config
+ * @vue-prop {Number} [width=1600] - desktop width
+ * @vue-prop {Number} [height=1000] - desktop height
+ * @vue-prop {URL} [backsrc=data] - source of tiled background image (default is beige rectangle)
+ * @vue-computed {Viewer} viewer - OpenSeaDragon Viewer object (placed in vuex store)
+ */
 export default {
   name: 'OpenSeadragon',
   components: {},
@@ -51,6 +62,9 @@ export default {
     }
   },
   methods: {
+    /**
+     * init OSD Viewer with properties, add tiled background image and add selected sources.
+     */
     init () {
       // console.log(this.viewerprops)
       const viewer = OpenSeadragon(this.viewerprops)

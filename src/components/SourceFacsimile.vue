@@ -12,9 +12,14 @@
 import OpenSeadragon from 'openseadragon'
 
 /**
+ * Source components are created dynamically. See {@tutorial vue-components-programmatically}.
+ *
+ * @vue-data {Object} position - position of source on desktop (x,y)
+ * @vue-data {Number} pagenr - index of displayed page-pair
  * @vue-prop {Object} source - source object
  * @vue-prop {OpenSeadragonComponent} OSD - OpenSeaDragon component
  * @vue-prop {Number} index - index of this source
+ * @vue-prop {Number} [defaultPage=0] - default page pair
  * @vue-computed {String} divid - id of the div for the source label
  * @vue-computed {String} label - label of this source
  * @vue-computed {OpenSeadragon} viewer - OpenSeadragon Viewer
@@ -113,16 +118,22 @@ export default {
     }
   },
   methods: {
+    /**
+     * open previous page pair
+     */
     nextPage () {
       const p = this.pagenr + 1
       this.openPage(p)
     },
+    /**
+     * open next page pair
+     */
     prevPage () {
       const p = this.pagenr - 1
       this.openPage(p)
     },
     /**
-     * @param p - open page pair <i>p</i>
+     * @param p - open page pair of index <i>p</i>
      */
     openPage (p) {
       // console.log('open page ' + p)
