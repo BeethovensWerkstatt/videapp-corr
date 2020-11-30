@@ -29,6 +29,7 @@ import OpenSeadragon from 'openseadragon'
  * @vue-computed {String} left_label - label of left (verso) page
  * @vue-computed {String} right_label - label of right (recto) page
  * @vue-computed {Boolean} isActive - true if this is the selected source
+ * @vue-computed {Object} labelStyle - adjusted font-size by zoom-factor
  */
 export default {
   name: 'SourceFacsimile',
@@ -139,7 +140,9 @@ export default {
       this.openPage(p)
     },
     /**
-     * @param p - open page pair of index <i>p</i>
+     * open page pair of index <i>p</i>
+     *
+     * @param p - index of page pair
      */
     openPage (p) {
       // console.log('open page ' + p)
@@ -170,6 +173,11 @@ export default {
         }
       }
     },
+    /**
+     * create TiledImage for verso and rector page.
+     *
+     * @param {Object} page - parameters of page: width, height, uri
+     */
     addPage (page) {
       // const scaleFactor = parseInt(page.dimensions.width) / parseInt(page.pixels.width)
       // console.log(scaleFactor)
@@ -209,6 +217,11 @@ export default {
         // degrees: source.rotation / 5
       })
     },
+    /**
+     * set this source selected
+     *
+     * @param {Object} e - event object
+     */
     openSourceInfo (e) {
       e.preventDefault()
       this.OSD.$store.commit('ACTIVATE_SOURCE', this)
