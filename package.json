@@ -29,6 +29,7 @@
     "@vue/eslint-config-standard": "^5.1.2",
     "@vue/test-utils": "^1.1.1",
     "babel-eslint": "^10.1.0",
+    "docdash": "^1.2.0",
     "eslint": "^6.7.2",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-node": "^11.1.0",
@@ -36,6 +37,7 @@
     "eslint-plugin-standard": "^4.0.0",
     "eslint-plugin-vue": "^6.2.2",
     "jsdoc": "^3.6.6",
+    "jsdoc-to-markdown": "^6.0.1",
     "jsdoc-vuejs": "^3.0.9",
     "lint-staged": "^9.5.0",
     "node-sass": "^4.12.0",
@@ -43,7 +45,9 @@
     "vue-template-compiler": "^2.6.11"
   },
   "gitHooks": {
-    "pre-commit": ["lint-staged"]
+    "pre-commit": [
+      "lint-staged"
+    ]
   },
   "lint-staged": {
     "*.{js,jsx,vue}": [
