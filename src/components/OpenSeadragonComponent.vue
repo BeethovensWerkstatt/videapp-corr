@@ -8,6 +8,10 @@ import OpenSeadragon from 'openseadragon'
 import SourceFacsimile from '@/components/SourceFacsimile'
 import osddef from '@/config/osd.default.js'
 
+import fabricosd from '@/openseadragon/openseadragon-fabricjs-overlay'
+
+fabricosd(OpenSeadragon)
+
 /**
  * OpenSeadragon component
  *
@@ -69,6 +73,7 @@ export default {
       // console.log(this.viewerprops)
       const viewer = OpenSeadragon(this.viewerprops)
       // console.log(viewer)
+      console.log(viewer.fabricCanvas)
 
       // load desktop background
       viewer.addTiledImage({
