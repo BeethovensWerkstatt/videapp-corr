@@ -7,6 +7,7 @@
       ◄
       </btn>
       <btn
+        id="draghandle"
         @mouseenter="startMove"
         @mouseout="finishMove"
         @mousedown="beginMove"
@@ -105,6 +106,16 @@ export default {
 
     this.openPage(this.pagenr)
     this.viewer.addOverlay(this.$el, new OpenSeadragon.Point(x, y), OpenSeadragon.TOP_CENTER)
+
+    const dh = this.$el.querySelector('#draghandle')
+    console.log(this.$el)
+    const mt = new OpenSeadragon.MouseTracker({
+      element: dh,
+      dragHandler (e) {
+        console.log(e)
+      }
+    })
+    console.log(mt)
   },
   computed: {
     divid () {
