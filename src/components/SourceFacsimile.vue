@@ -1,8 +1,8 @@
 <template>
-  <div class="sourceBack" v-bind:class="{ active: isActive }" :id="this.divid">
+  <div class="sourceBack" v-bind:class="{ active: isActive }" :id="this.divid" :title="label">
     <btn-group>
       <btn @click="prevPage" :disabled="!hasPrev">◄</btn>
-      <btn @click="openSourceInfo" v-bind:style="this.labelStyle">{{ this.label }} ({{ this.pagenr+1 }}/{{ this.source.pages.length }})</btn>
+      <btn @click="openSourceInfo">({{ this.pagenr+1 }}/{{ this.source.pages.length }})</btn>
       <btn @click="nextPage" :disabled="!hasNext">►</btn>
     </btn-group>
   </div>
