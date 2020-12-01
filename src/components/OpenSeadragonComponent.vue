@@ -73,7 +73,7 @@ export default {
       // console.log(this.viewerprops)
       const viewer = OpenSeadragon(this.viewerprops)
       // console.log(viewer)
-      console.log(viewer.fabricCanvas)
+      // console.log(viewer.fabricCanvas)
 
       // load desktop background
       viewer.addTiledImage({

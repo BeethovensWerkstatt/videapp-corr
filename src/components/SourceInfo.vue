@@ -8,6 +8,7 @@
         <tr><td colspan="2"><hr /></td></tr>
         <tr><td>Verso:</td><td>{{ verso_label }}</td></tr>
         <tr><td>Recto:</td><td>{{ recto_label }}</td></tr>
+        <tr><td>Position:</td><td>{{ position }}</td></tr>
       </table>
     </div>
     <hr />
@@ -116,6 +117,13 @@ export default {
     hasNext () {
       const sf = this.$store.state.activeSourceFacs
       return sf && sf.hasNext
+    },
+    position () {
+      const sf = this.$store.state.activeSourceFacs
+      if (sf) {
+        return sf.position.x.toFixed(2) + ' / ' + sf.position.y.toFixed(2)
+      }
+      return '---'
     }
   },
   methods: {

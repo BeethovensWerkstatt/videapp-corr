@@ -1,23 +1,21 @@
 <template>
-  <div class="sourceBack" v-bind:class="{ active: isActive }" :id="this.divid" :title="label">
+  <div
+    class="sourceBack"
+    v-bind:class="{ active: isActive }"
+    :id="this.divid"
+    :title="label"
+  >
     <btn-group>
       <btn
         @click="prevPage"
         :disabled="!hasPrev">
       ◄
       </btn>
-      <btn
-        id="draghandle"
-        @mouseenter="startMove"
-        @mouseout="finishMove"
-        @mousedown="beginMove"
-        @mouseup="stopMove"
-        @mousemove="doMove"
-      >
+      <btn id="draghandle">
         ❂
       </btn>
       <btn @click="openSourceInfo">
-        ℹ {{ this.moving }}
+        ℹ
       </btn>
       <btn
         @click="nextPage"
@@ -64,7 +62,8 @@ export default {
       pagetiles: [],
       ti_recto: null,
       ti_verso: null,
-      moving: null
+      moving: null,
+      tracker: null
     }
   },
   props: {
@@ -105,16 +104,16 @@ export default {
     */
 
     this.openPage(this.pagenr)
-    this.viewer.addOverlay(this.$el, new OpenSeadragon.Point(x, y), OpenSeadragon.TOP_CENTER)
+    this.viewer.addOverlay(this.$el,
+      new OpenSeadragon.Point(x, y),
+      OpenSeadragon.TOP_CENTER)
 
     const dh = this.$el.querySelector('#draghandle')
-    const mt = new OpenSeadragon.MouseTracker({
+    this.tracker = new OpenSeadragon.MouseTracker({
       element: dh,
-      dragHandler (e) {
-        console.log(e)
-      }
+      dragHandler: this.dragHandler,
+      dragEndHandler: this.dragEndHandler
     })
-    console.log(mt)
   },
   computed: {
     divid () {
@@ -186,7 +185,7 @@ export default {
       const rightPage = this.source.pages[p].r
 
       if (leftPage !== null) {
-        this.addPage(leftPage)
+        this.addPage(leftPage, rightPage === null)
       } else {
         if (this.ti_verso) {
           this.ti_verso.setOpacity(0)
@@ -195,7 +194,7 @@ export default {
         }
       }
       if (rightPage !== null) {
-        this.addPage(rightPage)
+        this.addPage(rightPage, leftPage === null)
       } else {
         if (this.ti_recto) {
           this.ti_recto.setOpacity(0)
@@ -204,17 +203,28 @@ export default {
         }
       }
     },
+    getPageX (page, single = false) {
+      if (single) {
+        return this.source.position.x
+      }
+      return page.place === 'verso'
+        ? this.source.position.x - (this.source.maxDimensions.width / 4)
+        : this.source.position.x + (this.source.maxDimensions.width / 4)
+    },
+    getPageY (page, single = false) {
+      return this.source.position.y - (this.source.maxDimensions.height / 2)
+    },
     /**
      * create TiledImage for verso and rector page.
      *
      * @param {Object} page - parameters of page: width, height, uri
      */
-    addPage (page) {
+    addPage (page, single = false) {
       // const scaleFactor = parseInt(page.dimensions.width) / parseInt(page.pixels.width)
       // console.log(scaleFactor)
 
-      const x = page.place === 'verso' ? this.source.position.x - (this.source.maxDimensions.width / 4) : this.source.position.x + (this.source.maxDimensions.width / 4)
-      const y = this.source.position.y - (this.source.maxDimensions.height / 2)
+      const x = this.getPageX(page, single)
+      const y = this.getPageY(page, single)
 
       this.viewer.addTiledImage({
         tileSource: {
@@ -247,6 +257,12 @@ export default {
         // fitBoundsPlacement: placement,
         // degrees: source.rotation / 5
       })
+      const mark = document.createElement('div')
+      mark.setAttribute('style', 'font-weight: bold; color: red;')
+      mark.innerHTML = 'X'
+      this.viewer.addOverlay(mark,
+        new OpenSeadragon.Point(x, y),
+        OpenSeadragon.TOP_CENTER)
     },
     /**
      * set this source selected
@@ -257,24 +273,17 @@ export default {
       e.preventDefault()
       this.OSD.$store.commit('ACTIVATE_SOURCE', this)
     },
-    startMove (e) {
-      this.viewer.setMouseNavEnabled(false)
-    },
-    beginMove (e) {
-      console.log(e)
-      this.moving = { x: e.clientX - this.position.x, y: e.clientY - this.position.y }
-    },
-    doMove (e) {
-      if (this.moving) {
-        console.log({ x: e.clientX - this.moving.x, y: this.moving.y - e.clientY })
+    dragHandler (e) {
+      if (!this.moving) {
+        this.moving = { ...this.position }
       }
+      this.moving.x += e.delta.x
+      this.moving.y += e.delta.y
     },
-    stopMove (e) {
-      console.log(e)
+    dragEndHandler (e) {
       this.moving = null
-    },
-    finishMove (e) {
-      this.viewer.setMouseNavEnabled(true)
+      this.position.x += e.position.x
+      this.position.y += e.position.y
     }
   }
 }
