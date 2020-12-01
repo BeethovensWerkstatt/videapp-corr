@@ -13,6 +13,19 @@
     <hr />
     <div>
       <btn-group>
+        <btn
+          @click="prevPage"
+          :disabled="!hasPrev"
+        >
+          ◄
+        </btn>
+        <btn
+          @click="nextPage"
+          :disabled="!hasNext"
+        >
+          ►
+        </btn>
+        <btn disabled="true">&nbsp;</btn>
         <btn @click.prevent="clearInfo">clear</btn>
       </btn-group>
     </div>
@@ -95,9 +108,25 @@ export default {
         return this.source.pages[lp].v.label
       }
       return ''
+    },
+    hasPrev () {
+      const sf = this.$store.state.activeSourceFacs
+      return sf && sf.hasPrev
+    },
+    hasNext () {
+      const sf = this.$store.state.activeSourceFacs
+      return sf && sf.hasNext
     }
   },
   methods: {
+    prevPage () {
+      const sf = this.$store.state.activeSourceFacs
+      return sf && sf.prevPage()
+    },
+    nextPage () {
+      const sf = this.$store.state.activeSourceFacs
+      return sf && sf.nextPage()
+    },
     /**
      * unselect source / reset component
      */

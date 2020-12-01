@@ -1,9 +1,29 @@
 <template>
   <div class="sourceBack" v-bind:class="{ active: isActive }" :id="this.divid" :title="label">
     <btn-group>
-      <btn @click="prevPage" :disabled="!hasPrev">◄</btn>
-      <btn @click="openSourceInfo">({{ this.pagenr+1 }}/{{ this.source.pages.length }})</btn>
-      <btn @click="nextPage" :disabled="!hasNext">►</btn>
+      <btn
+        @click="prevPage"
+        :disabled="!hasPrev">
+      ◄
+      </btn>
+      <btn
+        @mouseenter="startMove"
+        @mouseout="finishMove"
+        @mousedown="beginMove"
+        @mouseup="stopMove"
+        @mousemove="doMove"
+      >
+        ❂
+      </btn>
+      <btn @click="openSourceInfo">
+        ℹ {{ this.moving }}
+      </btn>
+      <btn
+        @click="nextPage"
+        :disabled="!hasNext"
+      >
+      ►
+      </btn>
     </btn-group>
   </div>
 </template>
@@ -42,7 +62,8 @@ export default {
       pagenr: this.defaultPage,
       pagetiles: [],
       ti_recto: null,
-      ti_verso: null
+      ti_verso: null,
+      moving: null
     }
   },
   props: {
@@ -225,6 +246,25 @@ export default {
     openSourceInfo (e) {
       e.preventDefault()
       this.OSD.$store.commit('ACTIVATE_SOURCE', this)
+    },
+    startMove (e) {
+      this.viewer.setMouseNavEnabled(false)
+    },
+    beginMove (e) {
+      console.log(e)
+      this.moving = { x: e.clientX - this.position.x, y: e.clientY - this.position.y }
+    },
+    doMove (e) {
+      if (this.moving) {
+        console.log({ x: e.clientX - this.moving.x, y: this.moving.y - e.clientY })
+      }
+    },
+    stopMove (e) {
+      console.log(e)
+      this.moving = null
+    },
+    finishMove (e) {
+      this.viewer.setMouseNavEnabled(true)
     }
   }
 }
