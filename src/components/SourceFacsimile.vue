@@ -108,7 +108,6 @@ export default {
     this.viewer.addOverlay(this.$el, new OpenSeadragon.Point(x, y), OpenSeadragon.TOP_CENTER)
 
     const dh = this.$el.querySelector('#draghandle')
-    console.log(this.$el)
     const mt = new OpenSeadragon.MouseTracker({
       element: dh,
       dragHandler (e) {
