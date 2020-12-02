@@ -59,7 +59,7 @@ export default {
         y: this.source.position.y
       },
       pagenr: this.defaultPage,
-      pagetiles: [],
+      // pagetiles: [],
       ti_recto: null,
       ti_verso: null,
       moving: null,
@@ -90,6 +90,7 @@ export default {
     const x = this.source.position.x
     const y = this.source.position.y + (this.source.maxDimensions.height / 2)
 
+    this.addMark(this.source.position.x, this.source.position.y)
     /*
     this.pagetiles = this.source.pages.map(page => {
       return {
@@ -108,7 +109,10 @@ export default {
       new OpenSeadragon.Point(x, y),
       OpenSeadragon.TOP_CENTER)
 
+    this.addMark(x, y)
+
     const dh = this.$el.querySelector('#draghandle')
+    // console.log(this.width + ' x ' + this.height)
     this.tracker = new OpenSeadragon.MouseTracker({
       element: dh,
       dragHandler: this.dragHandler,
@@ -118,6 +122,12 @@ export default {
   computed: {
     divid () {
       return this.source.id + '_back'
+    },
+    width () {
+      return this.$el.clientWidth
+    },
+    height () {
+      return this.$el.clientHeight
     },
     label () {
       return this.source.label
@@ -146,6 +156,9 @@ export default {
         }
       }
       return '---'
+    },
+    overlay () {
+      return this.viewer.getOverlayById(this.divid)
     },
     isActive () {
       return this.OSD.$store.state.activeSourceFacs === this
@@ -203,16 +216,31 @@ export default {
         }
       }
     },
+    /**
+     * calculate X for page
+     *
+     * @param {object} page - page object
+     * @param {boolean} single - is single page
+     */
     getPageX (page, single = false) {
       if (single) {
-        return this.source.position.x
+        return this.position.x
       }
       return page.place === 'verso'
-        ? this.source.position.x - (this.source.maxDimensions.width / 4)
-        : this.source.position.x + (this.source.maxDimensions.width / 4)
+        ? this.position.x - (this.source.maxDimensions.width / 4)
+        : this.position.x + (this.source.maxDimensions.width / 4)
     },
-    getPageY (page, single = false) {
-      return this.source.position.y - (this.source.maxDimensions.height / 2)
+    /**
+     * calculate Y for page
+     *
+     * @param {object} page - page object
+     * @param {boolean} single - is single page
+     */
+    getPageY (page) {
+      return this.position.y - (this.source.maxDimensions.height / 2)
+    },
+    moveTo (tox, toy) {
+      console.log(tox + ' - ' + toy)
     },
     /**
      * create TiledImage for verso and rector page.
@@ -224,7 +252,7 @@ export default {
       // console.log(scaleFactor)
 
       const x = this.getPageX(page, single)
-      const y = this.getPageY(page, single)
+      const y = this.getPageY(page)
 
       this.viewer.addTiledImage({
         tileSource: {
@@ -257,12 +285,7 @@ export default {
         // fitBoundsPlacement: placement,
         // degrees: source.rotation / 5
       })
-      const mark = document.createElement('div')
-      mark.setAttribute('style', 'font-weight: bold; color: red;')
-      mark.innerHTML = 'X'
-      this.viewer.addOverlay(mark,
-        new OpenSeadragon.Point(x, y),
-        OpenSeadragon.TOP_CENTER)
+      this.addMark(x, y)
     },
     /**
      * set this source selected
@@ -279,11 +302,21 @@ export default {
       }
       this.moving.x += e.delta.x
       this.moving.y += e.delta.y
+      this.moveTo(this.moving.x, this.moving.y)
     },
     dragEndHandler (e) {
       this.moving = null
-      this.position.x += e.position.x
-      this.position.y += e.position.y
+      this.moveTo(
+        this.position.x + e.position.x,
+        this.position.y + e.position.y)
+    },
+    addMark (x, y) {
+      const mark = document.createElement('div')
+      mark.setAttribute('style', 'font-weight: bold; color: red;')
+      mark.innerHTML = 'X'
+      this.viewer.addOverlay(mark,
+        new OpenSeadragon.Point(x, y),
+        { placement: OpenSeadragon.Placement.TOP_CENTER })
     }
   }
 }
@@ -291,6 +324,13 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+.sourceBack {
+  display: none;
+}
+.sourceBack:hover {
+  display: absolute;
+}
+
 .btn {
   background-color: rgba($color: #ffffff, $alpha: 0.5);
   border-radius: 5px;

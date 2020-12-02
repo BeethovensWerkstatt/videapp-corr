@@ -35,10 +35,13 @@ export default {
     SourceInfo
   },
   mounted () {
-    const sources = this.$store.getters.sources
-    console.log(sources)
+    // console.log(this.sources)
   },
   computed: {
+    sources () {
+      // TODO query
+      return this.$store.getters.sources
+    }
   }
 }
 </script>
