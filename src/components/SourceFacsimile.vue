@@ -41,6 +41,8 @@ import OpenSeadragon from 'openseadragon'
  * @vue-prop {Number} index - index of this source
  * @vue-prop {Number} [defaultPage=0] - default page pair
  * @vue-computed {String} divid - id of the div for the source label
+ * @vue-computed {Number} width - width of control div
+ * @vue-computed {Number} height - height of control div
  * @vue-computed {String} label - label of this source
  * @vue-computed {OpenSeadragon} viewer - OpenSeadragon Viewer
  * @vue-computed {Boolean} hasNext - next page pair available
@@ -87,9 +89,6 @@ export default {
     }
   },
   mounted () {
-    const x = this.source.position.x
-    const y = this.source.position.y + (this.source.maxDimensions.height / 2)
-
     this.addMark(this.source.position.x, this.source.position.y)
     /*
     this.pagetiles = this.source.pages.map(page => {
@@ -104,20 +103,15 @@ export default {
     })
     */
 
-    this.openPage(this.pagenr)
-    this.viewer.addOverlay(this.$el,
-      new OpenSeadragon.Point(x, y),
-      OpenSeadragon.TOP_CENTER)
-
-    this.addMark(x, y)
-
     const dh = this.$el.querySelector('#draghandle')
-    // console.log(this.width + ' x ' + this.height)
+    console.log(this.width + ' x ' + this.height)
     this.tracker = new OpenSeadragon.MouseTracker({
       element: dh,
       dragHandler: this.dragHandler,
       dragEndHandler: this.dragEndHandler
     })
+
+    this.openPage(this.pagenr)
   },
   computed: {
     divid () {
@@ -215,6 +209,17 @@ export default {
           this.ti_recto = null
         }
       }
+      const ovl = this.overlay
+      if (ovl) {
+        console.log(ovl)
+        ovl.destroy()
+      }
+      console.log(this.width)
+      const x = this.position.x - (this.width / 2)
+      const y = this.position.y + (this.source.maxDimensions.height / 2)
+      this.viewer.addOverlay(this.$el,
+        new OpenSeadragon.Point(x, y),
+        OpenSeadragon.TOP_CENTER)
     },
     /**
      * calculate X for page
@@ -224,11 +229,11 @@ export default {
      */
     getPageX (page, single = false) {
       if (single) {
-        return this.position.x
+        return this.position.x - (this.source.maxDimensions.width / 2)
       }
       return page.place === 'verso'
-        ? this.position.x - (this.source.maxDimensions.width / 4)
-        : this.position.x + (this.source.maxDimensions.width / 4)
+        ? this.position.x - (this.source.maxDimensions.width / 2)
+        : this.position.x // + (this.source.maxDimensions.width / 4)
     },
     /**
      * calculate Y for page
@@ -239,8 +244,32 @@ export default {
     getPageY (page) {
       return this.position.y - (this.source.maxDimensions.height / 2)
     },
+    /**
+     * [WIP] *doesn't work right now*
+     * Move this SourceFacsimile to a new position
+     */
     moveTo (tox, toy) {
       console.log(tox + ' - ' + toy)
+      console.log(this.ti_recto)
+      console.log(this.ti_verso)
+
+      this.position.x = tox
+      this.position.y = toy
+      this.openPage(this.pagenr)
+      /*
+      if (this.ti_verso) {
+        const x = tox - (this.source.maxDimensions.width / 4)
+        const y = toy - (this.source.maxDimensions.height / 2)
+        this.ti_verso.setPosition(x, y)
+      }
+      if (this.ti_recto) {
+        const x = tox + (this.source.maxDimensions.width / 4)
+        const y = toy - (this.source.maxDimensions.height / 2)
+        this.position.x = x
+        this.position.y = y
+        this.ti_recto.setPosition(x, y)
+      }
+      */
     },
     /**
      * create TiledImage for verso and rector page.
@@ -269,6 +298,7 @@ export default {
               this.ti_verso.setOpacity(0)
               this.ti_verso.destroy()
             }
+            console.log(e.item)
             this.ti_verso = e.item
           } else {
             if (this.ti_recto) {
@@ -296,20 +326,31 @@ export default {
       e.preventDefault()
       this.OSD.$store.commit('ACTIVATE_SOURCE', this)
     },
+    /**
+     * handle drag and drop with the drag handler
+     */
     dragHandler (e) {
       if (!this.moving) {
         this.moving = { ...this.position }
       }
       this.moving.x += e.delta.x
       this.moving.y += e.delta.y
-      this.moveTo(this.moving.x, this.moving.y)
+      // this.moveTo(this.moving.x, this.moving.y)
     },
+    /**
+     * handle drag and drop with the drag handler
+     */
     dragEndHandler (e) {
-      this.moving = null
       this.moveTo(
         this.position.x + e.position.x,
         this.position.y + e.position.y)
+      this.moving = null
+      this.openPage(this.pagenr)
     },
+    /**
+     * **for debugging**
+     * add red 'X' at position (x, y)
+     */
     addMark (x, y) {
       const mark = document.createElement('div')
       mark.setAttribute('style', 'font-weight: bold; color: red;')
