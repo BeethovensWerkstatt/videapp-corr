@@ -1,6 +1,8 @@
 
 /**
  * OpenSeadragon canvas Overlay plugin based on svg overlay plugin and fabric.js
+ * 
+ * [jpv] export function with OpenSeadragon parameter - 'import' instead of 'require'
  * @version 0.0.2
  */
 export default function (OpenSeadragon) {

@@ -1,18 +1,10 @@
 // OpenSeadragon HTML Overlay plugin 0.0.1
+// [jpv] export function with OpenSeadragon parameter - 'import' instead of 'require'
 
-(function() {
-
-    var $ = window.OpenSeadragon;
-
-    if (!$) {
-        $ = require('openseadragon');
-        if (!$) {
-            throw new Error('OpenSeadragon is missing.');
-        }
-    }
+export default function(OpenSeadragon) {
 
     // ----------
-    $.Viewer.prototype.htmlOverlay = function() {
+    OpenSeadragon.Viewer.prototype.htmlOverlay = function() {
         if (this._htmlOverlayInfo) {
             return this._htmlOverlayInfo;
         }
@@ -79,7 +71,7 @@
 
         // ----------
         resize: function() {
-            var p = this._viewer.viewport.pixelFromPoint(new $.Point(0, 0), true);
+            var p = this._viewer.viewport.pixelFromPoint(new OpenSeadragon.Point(0, 0), true);
             var zoom = this._viewer.viewport.getZoom(true);
             var rotation = this._viewer.viewport.getRotation();
 
@@ -94,11 +86,11 @@
         onClick: function(element, handler) {
             // TODO: Fast click for mobile browsers
 
-            new $.MouseTracker({
+            new OpenSeadragon.MouseTracker({
                 element: element,
                 clickHandler: handler
             }).setTracking(true);
         }
     };
 
-})();
+}
