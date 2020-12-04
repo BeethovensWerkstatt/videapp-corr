@@ -2,6 +2,16 @@
   <div class="source-info">
     <strong>Source Information</strong>
     <div>
+      <select @change="changeSource" :value="$store.state.activeSourceFacs ? $store.state.activeSourceFacs.source.id : ''">
+        <option key="---none---" value="">--- select source ---</option>
+        <option
+          v-for="src in $store.state.sources"
+          :key="src.id"
+          :value="src.id"
+        >
+          {{ src.label }}
+        </option>
+      </select>
       <table width="100%">
         <tr><td>Titel:</td><td class="smaller">{{ title }}</td></tr>
         <tr><td>Seiten:</td><td>{{ pagecount }} <span v-if="this.source" class="smaller"> [{{ first_label }} &ndash; {{ last_label }}]</span></td></tr>
@@ -140,6 +150,18 @@ export default {
      */
     clearInfo () {
       this.$store.commit('ACTIVATE_SOURCE', null)
+    },
+    changeSource (e) {
+      if (e.target.value === '') {
+        this.clearInfo()
+      } else {
+        for (var i in this.$store.state.sources) {
+          const src = this.$store.state.sources[i]
+          if (src.id === e.target.value) {
+            this.$store.commit('ACTIVATE_SOURCE', src.component)
+          }
+        }
+      }
     }
   }
 }

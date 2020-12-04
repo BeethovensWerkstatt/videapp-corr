@@ -88,6 +88,8 @@ export default {
     }
   },
   mounted () {
+    this.source.component = this
+
     this.addMark(this.source.position.x, this.source.position.y)
     /*
     this.pagetiles = this.source.pages.map(page => {
