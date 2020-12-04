@@ -306,13 +306,13 @@ export default {
         this.ti_verso.setPosition(
           new OpenSeadragon.Point(
             this.getPageX({ place: 'verso' }, this.ti_recto === null),
-            this.getPageY({ place: 'verso' })))
+            this.getPageY({ place: 'verso' })), true)
       }
       if (this.ti_recto) {
         this.ti_recto.setPosition(
           new OpenSeadragon.Point(
             this.getPageX({ place: 'recto' }, this.ti_verso === null),
-            this.getPageY({ place: 'recto' })))
+            this.getPageY({ place: 'recto' })), true)
       }
     },
     /**
