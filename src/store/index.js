@@ -44,6 +44,7 @@ export default new Vuex.Store({
   },
   /**
    * @namespace store.mutations
+   * @memberof store
    */
   mutations: {
     /**
@@ -64,11 +65,21 @@ export default new Vuex.Store({
     SET_OSD (state, OSDComponent) {
       state.OSDComponent = OSDComponent
     },
+    /**
+     * set load source
+     * @param {object} state
+     * @param {object} source - (*TBD typedef source object*)
+     */
     LOAD_SOURCE (state, source) {
       const sources = [...state.sources]
       sources.push(source)
       state.sources = sources
     },
+    /**
+     * set active source component
+     * @param {object} state
+     * @param {module:SourceFacsimile} srcfacs source component
+     */
     ACTIVATE_SOURCE (state, srcfacs) {
       state.activeSourceFacs = srcfacs
     },
@@ -107,7 +118,8 @@ export default new Vuex.Store({
     /**
      * load sources
      * @memberof store.actions
-     * @param {*} param0
+     * @param {*} commit
+     * @param {*} state
      */
     loadSources ({ commit, state }) {
       // this needs to be replaced with dynamic content
@@ -209,6 +221,7 @@ export default new Vuex.Store({
   },
   /**
    * @namespace store.getters
+   * @memberof store
    * @property {object} viewer - OpenSeadragon Viewer object
    */
   getters: {

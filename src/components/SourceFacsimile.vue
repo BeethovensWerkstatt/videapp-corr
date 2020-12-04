@@ -50,7 +50,6 @@ import OpenSeadragon from 'openseadragon'
  * @vue-computed {String} left_label - label of left (verso) page
  * @vue-computed {String} right_label - label of right (recto) page
  * @vue-computed {Boolean} isActive - true if this is the selected source
- * @vue-computed {Object} labelStyle - adjusted font-size by zoom-factor
  */
 export default {
   name: 'SourceFacsimile',
@@ -156,21 +155,18 @@ export default {
     },
     isActive () {
       return this.OSD.$store.state.activeSourceFacs === this
-    },
-    labelStyle () {
-      return { fontSize: (100000 * this.OSD.viewer.viewport.getZoom()) + '%' }
     }
   },
   methods: {
     /**
-     * open previous page pair
+     * open next page pair
      */
     nextPage () {
       const p = this.pagenr + 1
       this.openPage(p)
     },
     /**
-     * open next page pair
+     * open previous page pair
      */
     prevPage () {
       const p = this.pagenr - 1
@@ -247,6 +243,8 @@ export default {
     /**
      * [WIP] *doesn't work right now*
      * Move this SourceFacsimile to a new position
+     * @param {number} tox - X coordinate
+     * @param {number} toy - Y coordinate
      */
     moveTo (tox, toy) {
       console.log(tox + ' - ' + toy)
