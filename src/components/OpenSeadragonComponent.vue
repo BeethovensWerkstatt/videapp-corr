@@ -69,6 +69,8 @@ export default {
       // console.log(this.viewerprops)
       const viewer = OpenSeadragon(this.viewerprops)
       // console.log(viewer)
+      console.log(viewer.fabricjsOverlay)
+      console.log(viewer.htmlOverlay)
 
       // load desktop background
       viewer.addTiledImage({
@@ -78,11 +80,14 @@ export default {
         width: this.width
       })
 
+      // make OpenSeadragon Viewer and component avilable through the store
       this.$store.commit('SET_VIEWER', viewer)
       this.$store.commit('SET_OSD', this)
 
+      // create SourceFacsimile component-constructor
       const SourceFacsimileVue = Vue.extend(SourceFacsimile)
 
+      // for every node in the store create and init (empty mount) SourceFacsimile vue component
       const sources = this.$store.getters.sources
       sources.forEach((source, i) => {
         const srcfacs = new SourceFacsimileVue({ propsData: { source: source, OSD: this, index: i } })

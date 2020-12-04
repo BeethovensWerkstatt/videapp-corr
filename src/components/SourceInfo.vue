@@ -2,17 +2,41 @@
   <div class="source-info">
     <strong>Source Information</strong>
     <div>
+      <select @change="changeSource" :value="$store.state.activeSourceFacs ? $store.state.activeSourceFacs.source.id : ''">
+        <option key="---none---" value="">--- select source ---</option>
+        <option
+          v-for="src in $store.state.sources"
+          :key="src.id"
+          :value="src.id"
+        >
+          {{ src.label }}
+        </option>
+      </select>
       <table width="100%">
         <tr><td>Titel:</td><td class="smaller">{{ title }}</td></tr>
         <tr><td>Seiten:</td><td>{{ pagecount }} <span v-if="this.source" class="smaller"> [{{ first_label }} &ndash; {{ last_label }}]</span></td></tr>
         <tr><td colspan="2"><hr /></td></tr>
         <tr><td>Verso:</td><td>{{ verso_label }}</td></tr>
         <tr><td>Recto:</td><td>{{ recto_label }}</td></tr>
+        <tr><td>Position:</td><td>{{ position }}</td></tr>
       </table>
     </div>
     <hr />
     <div>
       <btn-group>
+        <btn
+          @click="prevPage"
+          :disabled="!hasPrev"
+        >
+          ◄
+        </btn>
+        <btn
+          @click="nextPage"
+          :disabled="!hasNext"
+        >
+          ►
+        </btn>
+        <btn disabled="true">&nbsp;</btn>
         <btn @click.prevent="clearInfo">clear</btn>
       </btn-group>
     </div>
@@ -95,14 +119,49 @@ export default {
         return this.source.pages[lp].v.label
       }
       return ''
+    },
+    hasPrev () {
+      const sf = this.$store.state.activeSourceFacs
+      return sf && sf.hasPrev
+    },
+    hasNext () {
+      const sf = this.$store.state.activeSourceFacs
+      return sf && sf.hasNext
+    },
+    position () {
+      const sf = this.$store.state.activeSourceFacs
+      if (sf) {
+        return sf.position.x.toFixed(2) + ' / ' + sf.position.y.toFixed(2)
+      }
+      return '---'
     }
   },
   methods: {
+    prevPage () {
+      const sf = this.$store.state.activeSourceFacs
+      return sf && sf.prevPage()
+    },
+    nextPage () {
+      const sf = this.$store.state.activeSourceFacs
+      return sf && sf.nextPage()
+    },
     /**
      * unselect source / reset component
      */
     clearInfo () {
       this.$store.commit('ACTIVATE_SOURCE', null)
+    },
+    changeSource (e) {
+      if (e.target.value === '') {
+        this.clearInfo()
+      } else {
+        for (var i in this.$store.state.sources) {
+          const src = this.$store.state.sources[i]
+          if (src.id === e.target.value) {
+            this.$store.commit('ACTIVATE_SOURCE', src.component)
+          }
+        }
+      }
     }
   }
 }

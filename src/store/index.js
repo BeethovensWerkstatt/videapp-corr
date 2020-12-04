@@ -7,6 +7,20 @@ import { uuidv4 } from '@/toolbox'
 
 Vue.use(Vuex)
 
+/**
+ * @namespace store
+ */
+
+/**
+ * @typedef {object} store.state
+ * @memberof store
+ * @property {object} viewer - OpenSeadragon Viewer object
+ * @property {object} osd_component - OpenSeadragon Vue component
+ * @property {object[]} annotations - list of annotations
+ * @property {string} activeAnnotationId - ID of selected annotation
+ * @property {object[]} sources - list of source objects
+ * @property {module:SourceFacsimile} activeSourceFacs - selected source component
+ */
 export default new Vuex.Store({
   state: {
     viewer: null,
@@ -28,23 +42,44 @@ export default new Vuex.Store({
     }
     */
   },
+  /**
+   * @namespace store.mutations
+   * @memberof store
+   */
   mutations: {
     /**
      * set OpenSeadragon Viewer
-     * @param {Object} state
-     * @param {Viewer} viewer
+     * @memberof store.mutations
+     * @param {object} state
+     * @param {object} viewer
      */
     SET_VIEWER (state, viewer) {
       state.viewer = viewer
     },
+    /**
+     * set OpenSeadragon component
+     * @memberof store.mutations
+     * @param {object} state
+     * @param {module:OpenSeadragonComponent} OSDComponent
+     */
     SET_OSD (state, OSDComponent) {
       state.OSDComponent = OSDComponent
     },
+    /**
+     * set load source
+     * @param {object} state
+     * @param {object} source - (*TBD typedef source object*)
+     */
     LOAD_SOURCE (state, source) {
       const sources = [...state.sources]
       sources.push(source)
       state.sources = sources
     },
+    /**
+     * set active source component
+     * @param {object} state
+     * @param {module:SourceFacsimile} srcfacs source component
+     */
     ACTIVATE_SOURCE (state, srcfacs) {
       state.activeSourceFacs = srcfacs
     },
@@ -75,7 +110,17 @@ export default new Vuex.Store({
       }
     }
   },
+  /**
+   * @namespace store.actions
+   * @memberof store
+   */
   actions: {
+    /**
+     * load sources
+     * @memberof store.actions
+     * @param {*} commit
+     * @param {*} state
+     */
     loadSources ({ commit, state }) {
       // this needs to be replaced with dynamic content
       const json = pageSetup
@@ -174,6 +219,11 @@ export default new Vuex.Store({
       commit('MODIFY_ANNOTATION', body)
     }
   },
+  /**
+   * @namespace store.getters
+   * @memberof store
+   * @property {object} viewer - OpenSeadragon Viewer object
+   */
   getters: {
     viewer: (state) => {
       return state.viewer

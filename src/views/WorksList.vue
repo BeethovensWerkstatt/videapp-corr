@@ -28,6 +28,9 @@
 </template>
 
 <script>
+/**
+ * list of works component
+ */
 export default {
   name: 'WorksList'
 }

@@ -6,13 +6,15 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "jsdoc": "jsdoc -a all -c jsdoc.json"
   },
   "dependencies": {
     "@vectrejs/vectre": "^1.1.0",
     "core-js": "^3.8.0",
     "openseadragon": "^2.4.2",
     "spectre.css": "^0.5.9",
+    "typescript": "^4.1.2",
     "verovio": "^3.0.2",
     "vue": "^2.6.11",
     "vue-router": "^3.4.9",
@@ -28,6 +30,7 @@
     "@vue/eslint-config-standard": "^5.1.2",
     "@vue/test-utils": "^1.1.1",
     "babel-eslint": "^10.1.0",
+    "docdash": "^1.2.0",
     "eslint": "^6.7.2",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-node": "^11.1.0",
@@ -35,14 +38,18 @@
     "eslint-plugin-standard": "^4.0.0",
     "eslint-plugin-vue": "^6.2.2",
     "jsdoc": "^3.6.6",
+    "jsdoc-to-markdown": "^6.0.1",
     "jsdoc-vuejs": "^3.0.9",
     "lint-staged": "^9.5.0",
+    "markdown-pdf": "^10.0.0",
     "node-sass": "^4.12.0",
     "sass-loader": "^8.0.2",
     "vue-template-compiler": "^2.6.11"
   },
   "gitHooks": {
-    "pre-commit": "lint-staged"
+    "pre-commit": [
+      "lint-staged"
+    ]
   },
   "lint-staged": {
     "*.{js,jsx,vue}": [

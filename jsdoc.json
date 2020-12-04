@@ -1,16 +1,44 @@
 {
-  "plugins": ["plugins/markdown", "node_modules/jsdoc-vuejs", "jsdoc/undocumented", "jsdoc/staticFiles"],
+  "plugins": [
+    "plugins/markdown",
+    "node_modules/jsdoc-vuejs",
+    "jsdoc/undocumented",
+    "jsdoc/staticFiles"
+  ],
   "source": {
     "include": ["./src_docs/README.md", "./src/"],
     "includePattern": "\\.(vue|js)$",
     "excludePattern": "(^|\\/|\\\\)__tests__"
   },
   "opts": {
+    "template": "node_modules/docdash",
     "destination": "./docs/",
     "recurse": true,
     "tutorials": "./tutorials/"
   },
   "staticFiles": {
-    "include": ["img:src_docs_img","img:tutorials/img"]
+    "include": ["img:src_docs_img", "img:tutorials/img"]
+  },
+  "docdash": {
+    "static": true,
+    "sort": true,
+    "search": true,
+    "collapse": true,
+    "typedefs": true,
+    "removeQuotes": "none",
+    "scripts": [],
+    "menu": {
+      "Github repo": {
+        "href": "https://github.com/BeethovensWerkstatt/videapp-corr",
+        "target": "_blank",
+        "class": "menu-item",
+        "id": "repository"
+      }
+    }
+  },
+  "templates": {
+    "default": {
+      "useLongnameInNav": true
+    }
   }
 }
