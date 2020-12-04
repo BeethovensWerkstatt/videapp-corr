@@ -41,8 +41,6 @@ import OpenSeadragon from 'openseadragon'
  * @vue-prop {Number} index - index of this source
  * @vue-prop {Number} [defaultPage=0] - default page pair
  * @vue-computed {String} divid - id of the div for the source label
- * @vue-computed {Number} width - width of control div
- * @vue-computed {Number} height - height of control div
  * @vue-computed {String} label - label of this source
  * @vue-computed {OpenSeadragon} viewer - OpenSeadragon Viewer
  * @vue-computed {Boolean} hasNext - next page pair available
@@ -90,7 +88,7 @@ export default {
   mounted () {
     this.source.component = this
 
-    this.addMark(this.source.position.x, this.source.position.y)
+    this.addMark(this.source.position.x, this.source.position.y, '')
     /*
     this.pagetiles = this.source.pages.map(page => {
       return {
@@ -105,7 +103,6 @@ export default {
     */
 
     const dh = this.$el.querySelector('#draghandle')
-    console.log(this.width + ' x ' + this.height)
     this.tracker = new OpenSeadragon.MouseTracker({
       element: dh,
       dragHandler: this.dragHandler,
@@ -113,16 +110,18 @@ export default {
     })
 
     this.openPage(this.pagenr)
+
+    this.viewer.addOverlay(this.$el, this.getDashPos(), OpenSeadragon.TOP_CENTER)
+    var ovl = this.viewer.getOverlayById(this.divid)
+    // console.log(ovl)
+    if (ovl) {
+      // console.log(this.getWidth())
+      ovl.update(this.getDashPos(), OpenSeadragon.TOP_CENTER)
+    }
   },
   computed: {
     divid () {
       return this.source.id + '_back'
-    },
-    width () {
-      return this.$el.clientWidth
-    },
-    height () {
-      return this.$el.clientHeight
     },
     label () {
       return this.source.label
@@ -160,6 +159,22 @@ export default {
     }
   },
   methods: {
+    getSize () {
+      var size = new OpenSeadragon.Point(this.$el.clientWidth, this.$el.clientHeight)
+      return this.viewer.viewport.deltaPointsFromPixels(size)
+    },
+    /**
+     * get width of control
+     */
+    getWidth () {
+      return this.getSize().x
+    },
+    /**
+     * get width of control
+     */
+    getHeight () {
+      return this.getSize().y
+    },
     /**
      * open next page pair
      */
@@ -207,17 +222,16 @@ export default {
           this.ti_recto = null
         }
       }
-      const ovl = this.overlay
-      if (ovl) {
-        console.log(ovl)
-        ovl.destroy()
-      }
-      console.log(this.width)
-      const x = this.position.x - (this.width / 2)
-      const y = this.position.y + (this.source.maxDimensions.height / 2)
-      this.viewer.addOverlay(this.$el,
-        new OpenSeadragon.Point(x, y),
-        OpenSeadragon.TOP_CENTER)
+    },
+    getDashX () {
+      return this.position.x - (this.getWidth() / 2)
+    },
+    getDashY () {
+      return this.position.y + (this.source.maxDimensions.height / 2)
+    },
+    getDashPos () {
+      // console.log(this.getWidth())
+      return new OpenSeadragon.Point(this.getDashX(), this.getDashY())
     },
     /**
      * calculate X for page
@@ -248,28 +262,58 @@ export default {
      * @param {number} tox - X coordinate
      * @param {number} toy - Y coordinate
      */
-    moveTo (tox, toy) {
-      console.log(tox + ' - ' + toy)
-      console.log(this.ti_recto)
-      console.log(this.ti_verso)
+    moveTo (tox, toy, end = false) {
+      // console.log(tox + ' - ' + toy)
+      // console.log(this.ti_recto)
+      // console.log(this.ti_verso)
 
       this.position.x = tox
       this.position.y = toy
-      this.openPage(this.pagenr)
-      /*
+
+      var ovl = this.viewer.getOverlayById(this.divid)
+      // console.log(ovl)
+      if (ovl) {
+        // console.log(this.getWidth())
+        ovl.update(this.getDashPos(), OpenSeadragon.TOP_CENTER)
+      }
+
+      // move debug markers ...
+      ovl = this.viewer.getOverlayById('mark_' + this.divid + '_')
+      if (ovl) {
+        ovl.update(
+          new OpenSeadragon.Point(this.position.x, this.position.y),
+          OpenSeadragon.TOP_CENTER)
+      }
+      ovl = this.viewer.getOverlayById('mark_' + this.divid + '_verso')
+      if (ovl) {
+        ovl.update(
+          new OpenSeadragon.Point(
+            this.getPageX({ place: 'verso' }, this.ti_recto === null),
+            this.getPageY({ place: 'verso' })),
+          OpenSeadragon.TOP_CENTER)
+      }
+      ovl = this.viewer.getOverlayById('mark_' + this.divid + '_recto')
+      if (ovl) {
+        ovl.update(
+          new OpenSeadragon.Point(
+            this.getPageX({ place: 'recto' }, this.ti_verso === null),
+            this.getPageY({ place: 'recto' })),
+          OpenSeadragon.TOP_CENTER)
+      }
+      // ... move debug markers end
+
       if (this.ti_verso) {
-        const x = tox - (this.source.maxDimensions.width / 4)
-        const y = toy - (this.source.maxDimensions.height / 2)
-        this.ti_verso.setPosition(x, y)
+        this.ti_verso.setPosition(
+          new OpenSeadragon.Point(
+            this.getPageX({ place: 'verso' }, this.ti_recto === null),
+            this.getPageY({ place: 'verso' })))
       }
       if (this.ti_recto) {
-        const x = tox + (this.source.maxDimensions.width / 4)
-        const y = toy - (this.source.maxDimensions.height / 2)
-        this.position.x = x
-        this.position.y = y
-        this.ti_recto.setPosition(x, y)
+        this.ti_recto.setPosition(
+          new OpenSeadragon.Point(
+            this.getPageX({ place: 'recto' }, this.ti_verso === null),
+            this.getPageY({ place: 'recto' })))
       }
-      */
     },
     /**
      * create TiledImage for verso and rector page.
@@ -298,7 +342,6 @@ export default {
               this.ti_verso.setOpacity(0)
               this.ti_verso.destroy()
             }
-            console.log(e.item)
             this.ti_verso = e.item
           } else {
             if (this.ti_recto) {
@@ -315,7 +358,7 @@ export default {
         // fitBoundsPlacement: placement,
         // degrees: source.rotation / 5
       })
-      this.addMark(x, y)
+      this.addMark(x, y, page.place)
     },
     /**
      * set this source selected
@@ -333,9 +376,7 @@ export default {
       if (!this.moving) {
         this.moving = { ...this.position }
       }
-      this.moving.x += e.delta.x
-      this.moving.y += e.delta.y
-      // this.moveTo(this.moving.x, this.moving.y)
+      this.moveTo(this.position.x + e.delta.x, this.position.y + e.delta.y)
     },
     /**
      * handle drag and drop with the drag handler
@@ -345,19 +386,25 @@ export default {
         this.position.x + e.position.x,
         this.position.y + e.position.y)
       this.moving = null
-      this.openPage(this.pagenr)
     },
     /**
      * **for debugging**
      * add red 'X' at position (x, y)
      */
-    addMark (x, y) {
+    addMark (x, y, tag) {
+      const id = 'mark_' + this.divid + '_' + tag
       const mark = document.createElement('div')
+      mark.setAttribute('id', id)
       mark.setAttribute('style', 'font-weight: bold; color: red;')
       mark.innerHTML = 'X'
-      this.viewer.addOverlay(mark,
-        new OpenSeadragon.Point(x, y),
-        { placement: OpenSeadragon.Placement.TOP_CENTER })
+      const ovl = this.viewer.getOverlayById(id)
+      if (ovl) {
+        ovl.update(new OpenSeadragon.Point(x, y), OpenSeadragon.Placement.TOP_CENTER)
+      } else {
+        this.viewer.addOverlay(mark,
+          new OpenSeadragon.Point(x, y),
+          { placement: OpenSeadragon.Placement.TOP_CENTER })
+      }
     }
   }
 }
