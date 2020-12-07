@@ -69,8 +69,8 @@ export default {
       // console.log(this.viewerprops)
       const viewer = OpenSeadragon(this.viewerprops)
       // console.log(viewer)
-      console.log(viewer.fabricjsOverlay)
-      console.log(viewer.htmlOverlay)
+      // console.log(viewer.fabricjsOverlay)
+      // console.log(viewer.htmlOverlay)
 
       // load desktop background
       viewer.addTiledImage({
@@ -79,6 +79,10 @@ export default {
         y: 0,
         width: this.width
       })
+      const htmlovl = viewer.htmlOverlay()
+      const desk = document.createElement('div')
+      desk.setAttribute('style', 'width: ' + this.width + 'px; height: ' + this.height + 'px;')
+      htmlovl.element().appendChild(desk)
 
       // make OpenSeadragon Viewer and component avilable through the store
       this.$store.commit('SET_VIEWER', viewer)
