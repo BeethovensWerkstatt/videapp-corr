@@ -4,7 +4,8 @@
     v-bind:class="{ active: isActive }"
     :id="this.divid"
     :title="label"
-    @resize="updateDashPos"
+    @resize="resize"
+    :style="styles()"
   >
     <btn-group>
       <btn
@@ -14,9 +15,6 @@
       </btn>
       <btn id="draghandle">
         ❂
-      </btn>
-      <btn @click="openSourceInfo">
-        ℹ
       </btn>
       <btn
         @click="nextPage"
@@ -29,9 +27,9 @@
 </template>
 
 <script>
-import Vue from 'vue'
+// import Vue from 'vue'
 import OpenSeadragon from 'openseadragon'
-import SourceOverlay from '@/components/SourceOverlay'
+// import SourceOverlay from '@/components/SourceOverlay'
 
 /**
  * Source components are created dynamically. See {@tutorial vue-components-programmatically}.
@@ -108,6 +106,9 @@ export default {
     const dh = this.$el.querySelector('#draghandle')
     this.tracker = new OpenSeadragon.MouseTracker({
       element: dh,
+      clickHandler: () => {
+        this.openSourceInfo()
+      },
       dragHandler: this.dragHandler,
       dragEndHandler: this.dragEndHandler
     })
@@ -157,7 +158,9 @@ export default {
   },
   methods: {
     getSize () {
-      var size = new OpenSeadragon.Point(this.$el.clientWidth, this.$el.clientHeight)
+      const w = this.$el ? this.$el.clientWidth : 200
+      const h = this.$el ? this.$el.clientHeight : 10
+      const size = new OpenSeadragon.Point(w, h)
       return this.viewer.viewport.deltaPointsFromPixels(size)
     },
     /**
@@ -231,8 +234,9 @@ export default {
       return new OpenSeadragon.Point(this.getDashX(), this.getDashY())
     },
     updateDashPos () {
+      const p = this.getDashPos()
       if (this.overlay) {
-        this.overlay.update(this.getDashPos(), OpenSeadragon.TOP_CENTER)
+        this.overlay.update(p, OpenSeadragon.TOP_CENTER)
       }
     },
     /**
@@ -359,6 +363,7 @@ export default {
       this.addMark(x, y, page.place)
       this.updateDashPos()
 
+      /*
       const SourceOverlayVue = Vue.extend(SourceOverlay)
       const srcovl = new SourceOverlayVue({
         propsData: {
@@ -368,11 +373,24 @@ export default {
         }
       })
       srcovl.$mount()
-      const htmlovl = this.viewer.htmlOverlay()
-      htmlovl.element().appendChild(srcovl.$el)
+      */
+      // const htmlovl = this.viewer.htmlOverlay()
+      // htmlovl.element().appendChild(srcovl.$el)
     },
     /**
-     * set this source selected
+     * place source on top of the stack
+     */
+    placeOnTop () {
+      const ci = this.viewer.world.getItemCount()
+      if (this.ti_verso) {
+        this.viewer.world.setItemIndex(this.ti_verso, ci - 1)
+      }
+      if (this.ti_recto) {
+        this.viewer.world.setItemIndex(this.ti_recto, ci - 1)
+      }
+    },
+    /**
+     * select this source
      *
      * @param {Object} e - event object
      */
@@ -381,6 +399,7 @@ export default {
         e.preventDefault()
       }
       this.OSD.$store.commit('ACTIVATE_SOURCE', this)
+      this.placeOnTop()
     },
     /**
      * handle drag and drop with the drag handler
@@ -402,6 +421,27 @@ export default {
       //  this.position.x + delta.x,
       //  this.position.y + delta.y)
       this.moving = null
+    },
+    getScale () {
+      var zoom = this.viewer.viewport.getZoom(true)
+      return this.viewer.viewport._containerInnerSize.x * zoom
+    },
+    getTransform () {
+      var rotation = this.viewer.viewport.getRotation()
+      return 'scale(' + this.getScale() + ') rotate(' + rotation + ')'
+    },
+    styles () {
+      var p = this.viewer.viewport.pixelFromPoint(this.getDashPos(), true)
+
+      return {
+        left: p.x + 'px',
+        top: p.y + 'px',
+        transform: this.getTransform()
+      }
+    },
+    resize (e) {
+      console.log(e)
+      this.updateDashPos()
     },
     /**
      * **for debugging**
@@ -428,7 +468,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .sourceBack {
-  display: none;
+  background-color: rgba($color: #ffffff, $alpha: 0.5);
 }
 
 .btn {
@@ -444,7 +484,6 @@ export default {
 }
 .active {
   border: 1px solid green;
-  background-color: rgba($color: #ffffff, $alpha: 0.5);
-  display: absolute;
+  background-color: rgba($color: #ffffff, $alpha: 0.8);
 }
 </style>

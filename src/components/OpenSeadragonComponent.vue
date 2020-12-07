@@ -79,10 +79,15 @@ export default {
         y: 0,
         width: this.width
       })
+      /*
       const htmlovl = viewer.htmlOverlay()
       const desk = document.createElement('div')
       desk.setAttribute('style', 'width: ' + this.width + 'px; height: ' + this.height + 'px;')
       htmlovl.element().appendChild(desk)
+      htmlovl.onClick(desk, (e) => {
+        console.log(e)
+      })
+      */
 
       // make OpenSeadragon Viewer and component avilable through the store
       this.$store.commit('SET_VIEWER', viewer)

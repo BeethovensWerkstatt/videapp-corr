@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     styles () {
-      console.log(this.SF.getPageX(this.page))
+      // console.log(this.SF.getPageX(this.page))
       return {
         position: 'absolute',
         left: this.SF.getPageX(this.page) + 'px',
