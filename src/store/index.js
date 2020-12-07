@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import pageSetup from '@/temp/pageSetup.json'
-
 import { uuidv4 } from '@/toolbox'
+
+import pageSetup from '@/temp/pageSetup.json'
 
 Vue.use(Vuex)
 

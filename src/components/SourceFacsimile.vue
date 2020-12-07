@@ -4,6 +4,7 @@
     v-bind:class="{ active: isActive }"
     :id="this.divid"
     :title="label"
+    @resize="updateDashPos"
   >
     <btn-group>
       <btn
@@ -112,12 +113,6 @@ export default {
     this.openPage(this.pagenr)
 
     this.viewer.addOverlay(this.$el, this.getDashPos(), OpenSeadragon.TOP_CENTER)
-    var ovl = this.viewer.getOverlayById(this.divid)
-    // console.log(ovl)
-    if (ovl) {
-      // console.log(this.getWidth())
-      ovl.update(this.getDashPos(), OpenSeadragon.TOP_CENTER)
-    }
   },
   computed: {
     divid () {
@@ -233,6 +228,14 @@ export default {
       // console.log(this.getWidth())
       return new OpenSeadragon.Point(this.getDashX(), this.getDashY())
     },
+    updateDashPos () {
+      var ovl = this.viewer.getOverlayById(this.divid)
+      // console.log(ovl)
+      if (ovl) {
+        // console.log(this.getWidth())
+        ovl.update(this.getDashPos(), OpenSeadragon.TOP_CENTER)
+      }
+    },
     /**
      * calculate X for page
      *
@@ -270,13 +273,9 @@ export default {
       this.position.x = tox
       this.position.y = toy
 
-      var ovl = this.viewer.getOverlayById(this.divid)
-      // console.log(ovl)
-      if (ovl) {
-        // console.log(this.getWidth())
-        ovl.update(this.getDashPos(), OpenSeadragon.TOP_CENTER)
-      }
+      this.updateDashPos()
 
+      var ovl
       // move debug markers ...
       ovl = this.viewer.getOverlayById('mark_' + this.divid + '_')
       if (ovl) {
@@ -316,7 +315,7 @@ export default {
       }
     },
     /**
-     * create TiledImage for verso and rector page.
+     * create TiledImage for verso and recto page.
      *
      * @param {Object} page - parameters of page: width, height, uri
      */
@@ -359,6 +358,7 @@ export default {
         // degrees: source.rotation / 5
       })
       this.addMark(x, y, page.place)
+      this.updateDashPos()
     },
     /**
      * set this source selected
@@ -366,7 +366,9 @@ export default {
      * @param {Object} e - event object
      */
     openSourceInfo (e) {
-      e.preventDefault()
+      if (e) {
+        e.preventDefault()
+      }
       this.OSD.$store.commit('ACTIVATE_SOURCE', this)
     },
     /**
@@ -375,16 +377,19 @@ export default {
     dragHandler (e) {
       if (!this.moving) {
         this.moving = { ...this.position }
+        this.openSourceInfo()
       }
-      this.moveTo(this.position.x + e.delta.x, this.position.y + e.delta.y)
+      const delta = this.viewer.viewport.deltaPointsFromPixels(e.delta)
+      this.moveTo(this.position.x + delta.x, this.position.y + delta.y)
     },
     /**
      * handle drag and drop with the drag handler
      */
     dragEndHandler (e) {
-      this.moveTo(
-        this.position.x + e.position.x,
-        this.position.y + e.position.y)
+      // const delta = this.viewer.viewport.deltaPointsFromPixels(e.position)
+      // this.moveTo(
+      //  this.position.x + delta.x,
+      //  this.position.y + delta.y)
       this.moving = null
     },
     /**
@@ -415,9 +420,6 @@ export default {
 .sourceBack {
   display: none;
 }
-.sourceBack:hover {
-  display: absolute;
-}
 
 .btn {
   background-color: rgba($color: #ffffff, $alpha: 0.5);
@@ -433,5 +435,6 @@ export default {
 .active {
   border: 1px solid green;
   background-color: rgba($color: #ffffff, $alpha: 0.5);
+  display: absolute;
 }
 </style>
