@@ -7,6 +7,7 @@
   ],
   "source": {
     "include": ["./src_docs/README.md", "./src/"],
+    "exclude": ["./src/openseadragon/"],
     "includePattern": "\\.(vue|js)$",
     "excludePattern": "(^|\\/|\\\\)__tests__"
   },

@@ -90,8 +90,25 @@ export default {
       // for every node in the store create and init (empty mount) SourceFacsimile vue component
       const sources = this.$store.getters.sources
       sources.forEach((source, i) => {
-        const srcfacs = new SourceFacsimileVue({ propsData: { source: source, OSD: this, index: i } })
+        const srcfacs = new SourceFacsimileVue({
+          propsData: {
+            source: source,
+            OSD: this,
+            index: i
+          }
+        })
         srcfacs.$mount()
+      })
+      viewer.addHandler('resize', this.updateView)
+      viewer.addHandler('zoom', this.updateView)
+      viewer.addHandler('open', this.updateView)
+    },
+    updateView (e) {
+      const sources = this.$store.getters.sources
+      sources.forEach((source, i) => {
+        if (source.component) {
+          source.component.updateDashPos()
+        }
       })
     }
   },
