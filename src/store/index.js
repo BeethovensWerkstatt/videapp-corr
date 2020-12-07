@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import { uuidv4 } from '@/toolbox'
-
 import pageSetup from '@/temp/pageSetup.json'
+
+import { uuidv4 } from '@/toolbox'
 
 Vue.use(Vuex)
 
@@ -82,6 +82,9 @@ export default new Vuex.Store({
      */
     ACTIVATE_SOURCE (state, srcfacs) {
       state.activeSourceFacs = srcfacs
+      if (state.activeSourceFacs) {
+        state.activeSourceFacs.placeOnTop()
+      }
     },
     ADD_ANNOTATION (state, annotation) {
       const annots = [...state.annotations]

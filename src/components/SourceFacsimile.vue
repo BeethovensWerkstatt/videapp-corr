@@ -361,6 +361,18 @@ export default {
       this.updateDashPos()
     },
     /**
+     * place source on top of the stack
+     */
+    placeOnTop () {
+      const ci = this.viewer.world.getItemCount()
+      if (this.ti_verso) {
+        this.viewer.world.setItemIndex(this.ti_verso, ci - 1)
+      }
+      if (this.ti_recto) {
+        this.viewer.world.setItemIndex(this.ti_recto, ci - 1)
+      }
+    },
+    /**
      * set this source selected
      *
      * @param {Object} e - event object
