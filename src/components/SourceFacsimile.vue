@@ -29,7 +29,9 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import OpenSeadragon from 'openseadragon'
+import SourceOverlay from '@/components/SourceOverlay'
 
 /**
  * Source components are created dynamically. See {@tutorial vue-components-programmatically}.
@@ -229,11 +231,8 @@ export default {
       return new OpenSeadragon.Point(this.getDashX(), this.getDashY())
     },
     updateDashPos () {
-      var ovl = this.viewer.getOverlayById(this.divid)
-      // console.log(ovl)
-      if (ovl) {
-        // console.log(this.getWidth())
-        ovl.update(this.getDashPos(), OpenSeadragon.TOP_CENTER)
+      if (this.overlay) {
+        this.overlay.update(this.getDashPos(), OpenSeadragon.TOP_CENTER)
       }
     },
     /**
@@ -359,6 +358,18 @@ export default {
       })
       this.addMark(x, y, page.place)
       this.updateDashPos()
+
+      const SourceOverlayVue = Vue.extend(SourceOverlay)
+      const srcovl = new SourceOverlayVue({
+        propsData: {
+          SF: this,
+          source: this.source,
+          page: page
+        }
+      })
+      srcovl.$mount()
+      const htmlovl = this.viewer.htmlOverlay()
+      htmlovl.element().appendChild(srcovl.$el)
     },
     /**
      * set this source selected
@@ -402,9 +413,8 @@ export default {
       mark.setAttribute('id', id)
       mark.setAttribute('style', 'font-weight: bold; color: red;')
       mark.innerHTML = 'X'
-      const ovl = this.viewer.getOverlayById(id)
-      if (ovl) {
-        ovl.update(new OpenSeadragon.Point(x, y), OpenSeadragon.Placement.TOP_CENTER)
+      if (this.overlay) {
+        this.overlay.update(new OpenSeadragon.Point(x, y), OpenSeadragon.Placement.TOP_CENTER)
       } else {
         this.viewer.addOverlay(mark,
           new OpenSeadragon.Point(x, y),
