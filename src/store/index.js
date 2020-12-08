@@ -28,7 +28,8 @@ export default new Vuex.Store({
     annotations: [],
     activeAnnotationId: null,
     sources: [],
-    activeSourceFacs: null
+    activeSourceFacs: null,
+    activeZone: null
     /*
     sample source:
     {
@@ -82,6 +83,9 @@ export default new Vuex.Store({
      */
     ACTIVATE_SOURCE (state, srcfacs) {
       state.activeSourceFacs = srcfacs
+    },
+    ACTIVATE_ZONE (state, zone) {
+      state.activeZone = zone
     },
     ADD_ANNOTATION (state, annotation) {
       const annots = [...state.annotations]

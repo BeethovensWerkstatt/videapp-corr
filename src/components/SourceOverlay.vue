@@ -3,21 +3,31 @@
       :id="divid"
       :style="styles()"
     >
-      <div
-        v-for="(item, zone) in page.measures"
+      <zone-overlay
+        v-for="(zone) in page.measures"
         :key="zone.zone"
+        :source="source"
+        :SF="SF"
+        :page="page"
+        :zone="zone"
         :style="styleForZone(zone)"
       />
     </div>
 </template>
 
 <script>
+import ZoneOverlay from '@/components/ZoneOverlay'
+
 /**
  * @vue-prop {object} source - source object
  * @vue-prop {SourceFacsimile} SF - SourceFacsimile component
+ * @vue-prop {object} page - page object
  */
 export default {
   name: 'SourceOverlay',
+  components: {
+    ZoneOverlay
+  },
   data: function () {
     return {}
   },
@@ -46,7 +56,6 @@ export default {
     styles () {
       // console.log(this.SF.getPageX(this.page))
       return {
-        border: '1px solid red'
       }
     },
     styleForZone (zone) {

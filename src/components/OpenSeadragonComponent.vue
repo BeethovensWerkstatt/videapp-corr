@@ -98,12 +98,11 @@ export default {
 
       // for every node in the store create and init (empty mount) SourceFacsimile vue component
       const sources = this.$store.getters.sources
-      sources.forEach((source, i) => {
+      sources.forEach(source => {
         const srcfacs = new SourceFacsimileVue({
           propsData: {
             source: source,
-            OSD: this,
-            index: i
+            OSD: this
           }
         })
         srcfacs.$mount()

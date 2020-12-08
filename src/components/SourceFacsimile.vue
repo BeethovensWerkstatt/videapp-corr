@@ -62,7 +62,8 @@ export default {
       ti_recto: null,
       ti_verso: null,
       moving: null,
-      tracker: null
+      tracker: null,
+      overlays: []
     }
   },
   props: {
@@ -76,9 +77,6 @@ export default {
     },
     OSD: {
       required: true
-    },
-    index: {
-      type: Number
     },
     defaultPage: {
       type: Number,
@@ -117,14 +115,14 @@ export default {
     this.viewer.addOverlay(this.$el, this.getDashPos(), OpenSeadragon.TOP_CENTER)
   },
   computed: {
+    viewer () {
+      return this.OSD.viewer
+    },
     divid () {
       return this.source.id + '_back'
     },
     label () {
       return this.source.label
-    },
-    viewer () {
-      return this.OSD.viewer
     },
     hasNext () {
       return this.pagenr < this.source.pages.length - 1
@@ -302,6 +300,11 @@ export default {
 
       this.updateDashPos()
 
+      const pageXr = this.getPageX({ place: 'recto' }, this.ti_verso === null)
+      const pageYr = this.getPageY({ place: 'recto' })
+      const pageXv = this.getPageX({ place: 'verso' }, this.ti_recto === null)
+      const pageYv = this.getPageY({ place: 'verso' })
+
       var ovl
       // move debug markers ...
       const tenp = this.viewer.viewport.deltaPointsFromPixels(new OpenSeadragon.Point(10, 10)).x
@@ -314,24 +317,21 @@ export default {
       ovl = this.viewer.getOverlayById('mark_' + this.divid + '_verso')
       if (ovl) {
         const pos = new OpenSeadragon.Point(
-          this.getPageX({ place: 'verso' }, this.ti_recto === null) - tenp,
-          this.getPageY({ place: 'verso' }) - tenp)
+          pageXv - tenp,
+          pageYv - tenp)
         ovl.update(pos, OpenSeadragon.TOP_CENTER)
       }
       ovl = this.viewer.getOverlayById('mark_' + this.divid + '_recto')
       if (ovl) {
         const pos = new OpenSeadragon.Point(
-          this.getPageX({ place: 'recto' }, this.ti_verso === null) - tenp,
-          this.getPageY({ place: 'recto' }) - tenp)
+          pageXr - tenp,
+          pageYr - tenp)
         ovl.update(pos, OpenSeadragon.TOP_CENTER)
       }
       // ... move debug markers end
 
       if (this.ti_verso) {
-        this.ti_verso.setPosition(
-          new OpenSeadragon.Point(
-            this.getPageX({ place: 'verso' }, this.ti_recto === null),
-            this.getPageY({ place: 'verso' })), true)
+        this.ti_verso.setPosition(new OpenSeadragon.Point(pageXv, pageYv), true)
       }
       if (this.ti_recto) {
         this.ti_recto.setPosition(
