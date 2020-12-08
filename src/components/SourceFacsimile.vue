@@ -26,9 +26,9 @@
 </template>
 
 <script>
-// import Vue from 'vue'
+import Vue from 'vue'
 import OpenSeadragon from 'openseadragon'
-// import SourceOverlay from '@/components/SourceOverlay'
+import SourceOverlay from '@/components/SourceOverlay'
 
 /**
  * Source components are created dynamically. See {@tutorial vue-components-programmatically}.
@@ -164,12 +164,16 @@ export default {
     },
     /**
      * get width of control
+     *
+     * @returns {number} width of control panel
      */
     getWidth () {
       return this.getSize().x
     },
     /**
-     * get width of control
+     * get height of control in OpenSeadragon coordinates
+     *
+     * @returns {number} height of control panel
      */
     getHeight () {
       return this.getSize().y
@@ -222,16 +226,34 @@ export default {
         }
       }
     },
+    /**
+     * get X coordinate of control panel
+     *
+     * @returns {number} X coordinate
+     */
     getDashX () {
       return this.position.x - (this.getWidth() / 2)
     },
+    /**
+     * get Y coordinate of control panel
+     *
+     * @returns {number} Y coordinate
+     */
     getDashY () {
       return this.position.y + (this.source.maxDimensions.height / 2)
     },
+    /**
+     * get coordinate point of control panel
+     *
+     * @returns {OpenSeadragon.Point} coordinate of left upper corner
+     */
     getDashPos () {
       // console.log(this.getWidth())
       return new OpenSeadragon.Point(this.getDashX(), this.getDashY())
     },
+    /**
+     * update dash coordinates to current scale
+     */
     updateDashPos () {
       const p = this.getDashPos()
       if (this.overlay) {
@@ -243,8 +265,10 @@ export default {
      *
      * @param {object} page - page object
      * @param {boolean} single - is single page
+     * @returns {number} X coordinate of tiled source images
      */
     getPageX (page, single = false) {
+      // console.log(page.place + ' ' + (page.place === 'verso') + ' ' + single)
       if (single) {
         return this.position.x - (this.source.maxDimensions.width / 2)
       }
@@ -257,13 +281,14 @@ export default {
      *
      * @param {object} page - page object
      * @param {boolean} single - is single page
+     * @returns {number} Y coordinate of tiled source images
      */
     getPageY (page) {
       return this.position.y - (this.source.maxDimensions.height / 2)
     },
     /**
-     * [WIP] *doesn't work right now*
      * Move this SourceFacsimile to a new position
+     *
      * @param {number} tox - X coordinate
      * @param {number} toy - Y coordinate
      */
@@ -279,28 +304,26 @@ export default {
 
       var ovl
       // move debug markers ...
-      // const tenp =
+      const tenp = this.viewer.viewport.deltaPointsFromPixels(new OpenSeadragon.Point(10, 10)).x
       ovl = this.viewer.getOverlayById('mark_' + this.divid + '_')
       if (ovl) {
         ovl.update(
-          new OpenSeadragon.Point(this.position.x, this.position.y),
+          new OpenSeadragon.Point(this.position.x - tenp, this.position.y - tenp),
           OpenSeadragon.TOP_CENTER)
       }
       ovl = this.viewer.getOverlayById('mark_' + this.divid + '_verso')
       if (ovl) {
-        ovl.update(
-          new OpenSeadragon.Point(
-            this.getPageX({ place: 'verso' }, this.ti_recto === null),
-            this.getPageY({ place: 'verso' })),
-          OpenSeadragon.TOP_CENTER)
+        const pos = new OpenSeadragon.Point(
+          this.getPageX({ place: 'verso' }, this.ti_recto === null) - tenp,
+          this.getPageY({ place: 'verso' }) - tenp)
+        ovl.update(pos, OpenSeadragon.TOP_CENTER)
       }
       ovl = this.viewer.getOverlayById('mark_' + this.divid + '_recto')
       if (ovl) {
-        ovl.update(
-          new OpenSeadragon.Point(
-            this.getPageX({ place: 'recto' }, this.ti_verso === null),
-            this.getPageY({ place: 'recto' })),
-          OpenSeadragon.TOP_CENTER)
+        const pos = new OpenSeadragon.Point(
+          this.getPageX({ place: 'recto' }, this.ti_verso === null) - tenp,
+          this.getPageY({ place: 'recto' }) - tenp)
+        ovl.update(pos, OpenSeadragon.TOP_CENTER)
       }
       // ... move debug markers end
 
@@ -360,10 +383,10 @@ export default {
         // fitBoundsPlacement: placement,
         // degrees: source.rotation / 5
       })
-      this.addMark(x, y, page.place)
+      const tenp = this.viewer.viewport.deltaPointsFromPixels(new OpenSeadragon.Point(10, 10)).x
+      this.addMark(x - tenp, y - tenp, page.place)
       this.updateDashPos()
 
-      /*
       const SourceOverlayVue = Vue.extend(SourceOverlay)
       const srcovl = new SourceOverlayVue({
         propsData: {
@@ -373,9 +396,10 @@ export default {
         }
       })
       srcovl.$mount()
-      */
       // const htmlovl = this.viewer.htmlOverlay()
       // htmlovl.element().appendChild(srcovl.$el)
+      const scaleFactor = parseInt(page.dimensions.width) / parseInt(page.pixels.width)
+      this.viewer.addOverlay(srcovl.$el, new OpenSeadragon.Rect(x, y, page.pixels.width * scaleFactor, page.pixels.height * scaleFactor))
     },
     /**
      * place source on top of the stack
@@ -403,6 +427,8 @@ export default {
     },
     /**
      * handle drag and drop with the drag handler
+     *
+     * @param {Object} e - event object
      */
     dragHandler (e) {
       if (!this.moving) {
@@ -414,6 +440,8 @@ export default {
     },
     /**
      * handle drag and drop with the drag handler
+     *
+     * @param {Object} e - event object
      */
     dragEndHandler (e) {
       // const delta = this.viewer.viewport.deltaPointsFromPixels(e.position)
@@ -422,14 +450,30 @@ export default {
       //  this.position.y + delta.y)
       this.moving = null
     },
+    /**
+     * get current zoom scale
+     *
+     * @returns {number} zoom factor
+     */
     getScale () {
       var zoom = this.viewer.viewport.getZoom(true)
       return this.viewer.viewport._containerInnerSize.x * zoom
     },
+    /**
+     * get CSS transformation string
+     *
+     * @returns {string} 'scale(*scale*) rotate(*rotation*)'
+     */
     getTransform () {
       var rotation = this.viewer.viewport.getRotation()
       return 'scale(' + this.getScale() + ') rotate(' + rotation + ')'
     },
+    /**
+     * *not used*
+     * calculate styles for control panel
+     *
+     * @returns {object} position and scale
+     */
     styles () {
       var p = this.viewer.viewport.pixelFromPoint(this.getDashPos(), true)
 
@@ -439,6 +483,10 @@ export default {
         transform: this.getTransform()
       }
     },
+    /**
+     * *not used*
+     * process resize events
+     */
     resize (e) {
       console.log(e)
       this.updateDashPos()

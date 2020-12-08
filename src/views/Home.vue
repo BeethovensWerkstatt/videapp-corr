@@ -16,9 +16,22 @@
 // @ is an alias to /src
 
 /**
- * Home component
+ * Home view
+ *
+ * @vue-computed {object[]} sources - list of available sources
  */
 export default {
-  name: 'Home'
+  name: 'Home',
+  components: {
+  },
+  mounted () {
+    // console.log(this.sources)
+  },
+  computed: {
+    sources () {
+      // TODO query
+      return this.$store.getters.sources
+    }
+  }
 }
 </script>

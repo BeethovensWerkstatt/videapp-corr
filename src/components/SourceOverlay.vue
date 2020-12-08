@@ -1,8 +1,13 @@
 <template>
     <div
+      :id="divid"
       :style="styles()"
     >
-      Hallo
+      <div
+        v-for="(item, zone) in page.measures"
+        :key="zone.zone"
+        :style="styleForZone(zone)"
+      />
     </div>
 </template>
 
@@ -30,17 +35,28 @@ export default {
     }
   },
   computed: {
+    divid () {
+      return 'ovl_' + this.source.id
+    },
+    scaleFactor () {
+      return parseInt(this.page.dimensions.width) / parseInt(this.page.pixels.width)
+    }
   },
   methods: {
     styles () {
       // console.log(this.SF.getPageX(this.page))
       return {
-        position: 'absolute',
-        left: this.SF.getPageX(this.page) + 'px',
-        top: this.SF.getPageY(this.page) + 'px',
-        width: 50 + 'px',
-        height: 50 + 'px',
         border: '1px solid red'
+      }
+    },
+    styleForZone (zone) {
+      return {
+        position: 'absolute',
+        left: (zone.x * this.scaleFactor) + 'px',
+        right: (zone.y * this.scaleFactor) + 'px',
+        width: zone.width + 'px',
+        height: zone.height + 'px',
+        border: '1px solid green'
       }
     }
   }

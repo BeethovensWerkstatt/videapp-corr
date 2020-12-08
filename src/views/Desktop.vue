@@ -27,6 +27,8 @@ import SourceInfo from '@/components/SourceInfo'
 
 /**
  * Desktop View
+ *
+ * @vue-computed {object[]} sources - list of available sources
  */
 export default {
   name: 'Desktop',
