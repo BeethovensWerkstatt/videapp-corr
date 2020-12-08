@@ -1,11 +1,10 @@
 <template>
   <div
     class="sourceBack"
-    v-bind:class="{ active: isActive }"
+    :class="{ active: isActive }"
     :id="this.divid"
     :title="label"
     @resize="resize"
-    :style="styles()"
   >
     <btn-group>
       <btn
@@ -280,6 +279,7 @@ export default {
 
       var ovl
       // move debug markers ...
+      // const tenp =
       ovl = this.viewer.getOverlayById('mark_' + this.divid + '_')
       if (ovl) {
         ovl.update(
@@ -451,13 +451,13 @@ export default {
       const id = 'mark_' + this.divid + '_' + tag
       const mark = document.createElement('div')
       mark.setAttribute('id', id)
-      mark.setAttribute('style', 'font-weight: bold; color: red;')
+      mark.setAttribute('style', 'font-weight: bold; color: red; width: 20px; text-align: center;')
       mark.innerHTML = 'X'
       if (this.overlay) {
-        this.overlay.update(new OpenSeadragon.Point(x, y), OpenSeadragon.Placement.TOP_CENTER)
+        this.overlay.update(new OpenSeadragon.Point(x - 10, y), OpenSeadragon.Placement.TOP_CENTER)
       } else {
         this.viewer.addOverlay(mark,
-          new OpenSeadragon.Point(x, y),
+          new OpenSeadragon.Point(x - 10, y),
           { placement: OpenSeadragon.Placement.TOP_CENTER })
       }
     }
@@ -469,6 +469,8 @@ export default {
 <style scoped lang="scss">
 .sourceBack {
   background-color: rgba($color: #ffffff, $alpha: 0.5);
+  width: 110px;
+  text-align: center;
 }
 
 .btn {

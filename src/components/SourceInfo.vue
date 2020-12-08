@@ -151,6 +151,9 @@ export default {
     clearInfo () {
       this.$store.commit('ACTIVATE_SOURCE', null)
     },
+    /**
+     * change selected source
+     */
     changeSource (e) {
       if (e.target.value === '') {
         this.clearInfo()
