@@ -17,6 +17,7 @@ export default {
     return {}
   },
   mounted () {
+    // this.getZonePos()
     const pos = new OpenSeadragon.Rect(this.zone.x, this.zone.y, 10, 10)
     this.viewer.addOverlay(this.$el, pos)
   },
@@ -50,9 +51,12 @@ export default {
   },
   methods: {
     getZonePos () {
-      const px = this.SF.getPageX(this.page)
-      const py = this.SF.getPageY(this.page)
-      return new OpenSeadragon.Rect(px, py, 10, 10)
+      const zonepos = new OpenSeadragon.Rect(10, 10, 10, 10)
+      zonepos.x = (parseInt(this.zone.x) * this.scaleFactor) + parseInt(this.SF.getPageX(this.page))
+      zonepos.y = (parseInt(this.zone.y) * this.scaleFactor) + parseInt(this.SF.getPageY(this.page))
+      zonepos.width = parseInt(this.zone.width) * this.scaleFactor
+      zonepos.height = parseInt(this.zone.height) * this.scaleFactor
+      return zonepos
     },
     activateZone () {
       this.SF.openSourceInfo()
