@@ -26,6 +26,11 @@ export default {
   methods: {
     clearInfo () {
       this.$store.commit('ACTIVATE_ZONE', null)
+    },
+    destroyZone () {
+      if (this.ovl_zone) {
+        this.ovl_zone.destroyZone()
+      }
     }
   }
 }

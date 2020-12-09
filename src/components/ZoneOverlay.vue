@@ -1,5 +1,5 @@
 <template>
-    <div class="measure" :title="zone.zone" @click="activateZone" />
+    <div class="measure-ovl" :title="zone.zone" @click.prevent="activateZone" />
 </template>
 
 <script>
@@ -17,8 +17,9 @@ export default {
     return {}
   },
   mounted () {
-    // this.getZonePos()
-    const pos = new OpenSeadragon.Rect(this.zone.x, this.zone.y, 10, 10)
+    // console.log(this.SF.getPageX(this.page) + ', ' + this.SF.getPageY(this.page))
+    // console.log(this.getZonePos())
+    const pos = this.getZonePos()
     this.viewer.addOverlay(this.$el, pos)
   },
   props: {
@@ -45,11 +46,20 @@ export default {
     divid () {
       return 'ovl_' + this.zone.zone
     },
+    overlay () {
+      return this.viewer.getOverlayById(this.divid)
+    },
     scaleFactor () {
       return parseInt(this.page.dimensions.width) / parseInt(this.page.pixels.width)
     }
   },
   methods: {
+    updatePos () {
+      const ovl = this.overlay
+      if (ovl) {
+        ovl.update(this.getZonePos(), OpenSeadragon.TOP_LEFT)
+      }
+    },
     getZonePos () {
       const zonepos = new OpenSeadragon.Rect(10, 10, 10, 10)
       zonepos.x = (parseInt(this.zone.x) * this.scaleFactor) + parseInt(this.SF.getPageX(this.page))
@@ -59,7 +69,7 @@ export default {
       return zonepos
     },
     activateZone () {
-      this.SF.openSourceInfo()
+      this.SF.selectSource()
       this.SF.$store.commit('ACTIVATE_ZONE', this)
     }
   }
@@ -69,13 +79,13 @@ export default {
 <style scoped lang="scss">
 @import "@/scss/variables.scss";
 
-.measure {
+.measure-ovl {
   width: 3rem;
   height: 1rem;
   border: .5px solid $border-color;
-  border-radius: 5px;
-  box-shadow: 0 0 .5rem #00000099;
-  opacity: 0;
+  // border-radius: 5px;
+  // box-shadow: 0 0 .5rem #00000099;
+  opacity: 0.2;
 
   &:hover {
     opacity: 1;
@@ -85,5 +95,4 @@ export default {
     background-color: rgba($color: #ffffff, $alpha: .5);
   }
 }
-
 </style>

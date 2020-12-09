@@ -106,7 +106,7 @@ export default {
     this.tracker = new OpenSeadragon.MouseTracker({
       element: dh,
       clickHandler: () => {
-        this.openSourceInfo()
+        this.selectSource()
       },
       dragHandler: this.dragHandler,
       dragEndHandler: this.dragEndHandler
@@ -156,6 +156,9 @@ export default {
     },
     isActive () {
       return this.OSD.$store.state.activeSourceFacs === this
+    },
+    isSinglePage () {
+      return this.ti_verso ? !this.ti_recto : this.ti_recto
     }
   },
   methods: {
@@ -270,16 +273,9 @@ export default {
      * @param {boolean} single - is single page
      * @returns {number} X coordinate of tiled source images
      */
-    getPageX (page, single = false) {
+    getPageX (page) {
       // console.log(page.place + ' ' + (page.place === 'verso') + ' ' + single)
-      if ((page.place === 'verso' && !this.ti_recto) ||
-          (page.place === 'rector' && !this.ti_verso)) {
-        if (!single) {
-          console.log('single page!')
-        }
-        return this.position.x - (this.source.maxDimensions.width / 2)
-      }
-      if (single) {
+      if (this.isSinglePage) {
         return this.position.x - (this.source.maxDimensions.width / 2)
       }
       return page.place === 'verso'
@@ -312,9 +308,9 @@ export default {
 
       this.updateDashPos()
 
-      const pageXr = this.getPageX({ place: 'recto' }, this.ti_verso === null)
+      const pageXr = this.getPageX({ place: 'recto' })
       const pageYr = this.getPageY({ place: 'recto' })
-      const pageXv = this.getPageX({ place: 'verso' }, this.ti_recto === null)
+      const pageXv = this.getPageX({ place: 'verso' })
       const pageYv = this.getPageY({ place: 'verso' })
 
       var ovl
@@ -346,10 +342,7 @@ export default {
         this.ti_verso.setPosition(new OpenSeadragon.Point(pageXv, pageYv), true)
       }
       if (this.ti_recto) {
-        this.ti_recto.setPosition(
-          new OpenSeadragon.Point(
-            this.getPageX({ place: 'recto' }, this.ti_verso === null),
-            this.getPageY({ place: 'recto' })), true)
+        this.ti_recto.setPosition(new OpenSeadragon.Point(pageXr, pageYr), true)
       }
     },
     /**
@@ -409,8 +402,8 @@ export default {
       srcovl.$mount()
       // const htmlovl = this.viewer.htmlOverlay()
       // htmlovl.element().appendChild(srcovl.$el)
-      const scaleFactor = parseInt(page.dimensions.width) / parseInt(page.pixels.width)
-      this.viewer.addOverlay(srcovl.$el, new OpenSeadragon.Rect(x, y, page.pixels.width * scaleFactor, page.pixels.height * scaleFactor))
+      // const scaleFactor = parseInt(page.dimensions.width) / parseInt(page.pixels.width)
+      // this.viewer.addOverlay(srcovl.$el, new OpenSeadragon.Rect(x, y, page.pixels.width * scaleFactor, page.pixels.height * scaleFactor))
     },
     /**
      * place source on top of the stack
@@ -429,7 +422,7 @@ export default {
      *
      * @param {Object} e - event object
      */
-    openSourceInfo (e) {
+    selectSource (e) {
       if (e) {
         e.preventDefault()
       }
@@ -444,7 +437,7 @@ export default {
     dragHandler (e) {
       if (!this.moving) {
         this.moving = { ...this.position }
-        this.openSourceInfo()
+        this.selectSource()
       }
       const delta = this.viewer.viewport.deltaPointsFromPixels(e.delta)
       this.moveTo(this.position.x + delta.x, this.position.y + delta.y)
