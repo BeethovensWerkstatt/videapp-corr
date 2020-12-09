@@ -38,7 +38,7 @@
           ►
         </btn>
         <btn disabled="true">&nbsp;</btn>
-        <btn @click.prevent="clearInfo">clear</btn>
+        <btn @click.prevent="clearInfo">close</btn>
       </btn-group>
     </div>
   </div>
