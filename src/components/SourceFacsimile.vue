@@ -158,7 +158,7 @@ export default {
       return this.OSD.$store.state.activeSourceFacs === this
     },
     isSinglePage () {
-      return this.ti_verso ? !this.ti_recto : this.ti_recto
+      return (this.ti_verso === null && this.ti_recto !== null) || (this.ti_verso !== null && this.ti_recto === null)
     }
   },
   methods: {
@@ -275,6 +275,7 @@ export default {
      */
     getPageX (page) {
       // console.log(page.place + ' ' + (page.place === 'verso') + ' ' + single)
+      console.log(page.place + ' ' + this.isSinglePage)
       if (this.isSinglePage) {
         return this.position.x - (this.source.maxDimensions.width / 2)
       }

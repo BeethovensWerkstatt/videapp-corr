@@ -232,7 +232,7 @@ export default new Vuex.Store({
     viewer: (state) => {
       return state.viewer
     },
-    osd_componen: (state) => {
+    osd_component: (state) => {
       return state.osd_component
     },
     sources: (state) => {
