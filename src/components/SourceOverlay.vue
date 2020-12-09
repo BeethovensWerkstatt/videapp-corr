@@ -31,6 +31,8 @@ export default {
   data: function () {
     return {}
   },
+  mounted () {
+  },
   props: {
     source: {
       type: Object,
@@ -45,6 +47,9 @@ export default {
     }
   },
   computed: {
+    viewer () {
+      return this.SF.viewer
+    },
     divid () {
       return 'ovl_' + this.source.id
     },
@@ -60,11 +65,6 @@ export default {
     },
     styleForZone (zone) {
       return {
-        position: 'absolute',
-        left: (zone.x * this.scaleFactor) + 'px',
-        right: (zone.y * this.scaleFactor) + 'px',
-        width: zone.width + 'px',
-        height: zone.height + 'px',
         border: '1px solid green'
       }
     }

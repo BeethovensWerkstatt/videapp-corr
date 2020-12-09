@@ -8,6 +8,9 @@ import OpenSeadragon from 'openseadragon'
 import SourceFacsimile from '@/components/SourceFacsimile'
 import osddef from '@/config/osd.default.js'
 
+// create SourceFacsimile component-constructor
+const SourceFacsimileVue = Vue.extend(SourceFacsimile)
+
 /**
  * OpenSeadragon component
  *
@@ -92,9 +95,6 @@ export default {
       // make OpenSeadragon Viewer and component avilable through the store
       this.$store.commit('SET_VIEWER', viewer)
       this.$store.commit('SET_OSD', this)
-
-      // create SourceFacsimile component-constructor
-      const SourceFacsimileVue = Vue.extend(SourceFacsimile)
 
       // for every node in the store create and init (empty mount) SourceFacsimile vue component
       const sources = this.$store.getters.sources

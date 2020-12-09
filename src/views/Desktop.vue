@@ -14,7 +14,8 @@
           </btn-group>
         </div>
       </div>
-      <SourceInfo />
+      <zone-info />
+      <source-info />
     </div>
   </div>
 </template>
@@ -22,6 +23,7 @@
 <script>
 import OpenSeadragonComponent from '@/components/OpenSeadragonComponent'
 import SourceInfo from '@/components/SourceInfo'
+import ZoneInfo from '@/components/ZoneInfo.vue'
 // import ZoneAnnotation from '@/components/ZoneAnnotation'
 // import osdConfiguration from '@/config/osd.config.js'
 
@@ -34,7 +36,8 @@ export default {
   name: 'Desktop',
   components: {
     OpenSeadragonComponent,
-    SourceInfo
+    SourceInfo,
+    ZoneInfo
   },
   mounted () {
     // console.log(this.sources)

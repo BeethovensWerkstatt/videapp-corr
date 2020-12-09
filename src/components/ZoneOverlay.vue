@@ -1,8 +1,10 @@
 <template>
-    <div class="measure" />
+    <div class="measure" :title="zone.zone" @click="activateZone" />
 </template>
 
 <script>
+import OpenSeadragon from 'openseadragon'
+
 /**
  * @vue-prop {object} source - source object
  * @vue-prop {SourceFacsimile} SF - SourceFacsimile component
@@ -15,6 +17,8 @@ export default {
     return {}
   },
   mounted () {
+    const pos = new OpenSeadragon.Rect(this.zone.x, this.zone.y, 10, 10)
+    this.viewer.addOverlay(this.$el, pos)
   },
   props: {
     source: {
@@ -34,11 +38,25 @@ export default {
     }
   },
   computed: {
+    viewer () {
+      return this.SF.viewer
+    },
     divid () {
       return 'ovl_' + this.zone.zone
     },
     scaleFactor () {
       return parseInt(this.page.dimensions.width) / parseInt(this.page.pixels.width)
+    }
+  },
+  methods: {
+    getZonePos () {
+      const px = this.SF.getPageX(this.page)
+      const py = this.SF.getPageY(this.page)
+      return new OpenSeadragon.Rect(px, py, 10, 10)
+    },
+    activateZone () {
+      this.SF.openSourceInfo()
+      this.SF.$store.commit('ACTIVATE_ZONE', this)
     }
   }
 }

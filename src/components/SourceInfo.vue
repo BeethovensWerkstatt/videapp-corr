@@ -12,7 +12,8 @@
           {{ src.label }}
         </option>
       </select>
-      <table width="100%">
+      <table width="100%" v-if="this.$store.state.activeSourceFacs">
+        <tr><td colspan="2"><hr /></td></tr>
         <tr><td>Titel:</td><td class="smaller">{{ title }}</td></tr>
         <tr><td>Seiten:</td><td>{{ pagecount }} <span v-if="this.source" class="smaller"> [{{ first_label }} &ndash; {{ last_label }}]</span></td></tr>
         <tr><td colspan="2"><hr /></td></tr>
@@ -21,8 +22,8 @@
         <tr><td>Position:</td><td>{{ position }}</td></tr>
       </table>
     </div>
-    <hr />
-    <div>
+    <div v-if="this.$store.state.activeSourceFacs">
+      <hr />
       <btn-group>
         <btn
           @click="prevPage"

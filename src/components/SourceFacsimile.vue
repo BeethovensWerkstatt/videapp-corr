@@ -30,6 +30,8 @@ import Vue from 'vue'
 import OpenSeadragon from 'openseadragon'
 import SourceOverlay from '@/components/SourceOverlay'
 
+const SourceOverlayVue = Vue.extend(SourceOverlay)
+
 /**
  * Source components are created dynamically. See {@tutorial vue-components-programmatically}.
  * If a source is selected it may be accessed globally. See {@link module:SourceInfo}.
@@ -115,6 +117,9 @@ export default {
     this.viewer.addOverlay(this.$el, this.getDashPos(), OpenSeadragon.TOP_CENTER)
   },
   computed: {
+    '$store' () {
+      return this.OSD.$store
+    },
     viewer () {
       return this.OSD.viewer
     },
@@ -267,6 +272,13 @@ export default {
      */
     getPageX (page, single = false) {
       // console.log(page.place + ' ' + (page.place === 'verso') + ' ' + single)
+      if ((page.place === 'verso' && !this.ti_recto) ||
+          (page.place === 'rector' && !this.ti_verso)) {
+        if (!single) {
+          console.log('single page!')
+        }
+        return this.position.x - (this.source.maxDimensions.width / 2)
+      }
       if (single) {
         return this.position.x - (this.source.maxDimensions.width / 2)
       }
@@ -387,7 +399,6 @@ export default {
       this.addMark(x - tenp, y - tenp, page.place)
       this.updateDashPos()
 
-      const SourceOverlayVue = Vue.extend(SourceOverlay)
       const srcovl = new SourceOverlayVue({
         propsData: {
           SF: this,
