@@ -57,8 +57,8 @@ export default {
   name: 'SourceComponent',
   mixins: [OverlayContainer],
   data: function () {
-    const source = this.desktop.$store.getters.getSourceById(this.sourceID)
-    console.log(source)
+    // console.log('source-component: ' + this.sourceId)
+    const source = this.desktop.$store.getters.getSourceById(this.sourceId)
     return {
       position: {
         x: source.position.x,
@@ -110,13 +110,13 @@ export default {
       return this.desktop.$store
     },
     viewer () {
-      return this.desktop.viewer
+      return this.$store.getters.viewer
     },
     divid () {
       return this.source.id + '_back'
     },
     source () {
-      const source = this.$store.getters.getSourceById(this.sourceID)
+      const source = this.$store.getters.getSourceById(this.sourceId)
       if (source) {
         return source
       }
@@ -154,10 +154,7 @@ export default {
       return this.viewer.getOverlayById(this.divid)
     },
     isActive () {
-      return this.desktop.$store.getters.activeSourceID === this.sourceID
-    },
-    isSinglePage () {
-      return (this.ti_verso === null && this.ti_recto !== null) || (this.ti_verso !== null && this.ti_recto === null)
+      return this.desktop.$store.getters.activeSourceID === this.sourceId
     },
     pagetiles () {
       return this.source.pages.map(page => {
@@ -209,6 +206,18 @@ export default {
     prevPage () {
       const p = this.pagenr - 1
       this.openPage(p)
+    },
+    /**
+     * is current page single?
+     */
+    isSinglePage () {
+      if (!this.source.pages[this.pagenr].v && !this.source.pages[this.pagenr].r) {
+        console.log('no displayed page???')
+      }
+      return (this.source.pages[this.pagenr].v === null &&
+              this.source.pages[this.pagenr].r !== null) ||
+             (this.source.pages[this.pagenr].v !== null &&
+              this.source.pages[this.pagenr].r === null)
     },
     /**
      * open page pair of index <i>p</i>
@@ -286,9 +295,8 @@ export default {
      * @returns {number} X coordinate of tiled source images
      */
     getPageX (page) {
-      // console.log(page.place + ' ' + (page.place === 'verso') + ' ' + single)
-      console.log(page.place + ' ' + this.isSinglePage)
-      if (this.isSinglePage) {
+      // console.log(this.sourceId + ': ' + page.place + ' single: ' + this.isSinglePage())
+      if (this.isSinglePage()) {
         return this.position.x - (this.source.maxDimensions.width / 2)
       }
       return page.place === 'verso'

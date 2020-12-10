@@ -6,8 +6,9 @@
 import Vue from 'vue'
 import OpenSeadragon from 'openseadragon'
 import SourceComponentFactory from '@/components/SourceComponent'
+import DesktopAccess from '@/mixins'
 import osddef from '@/config/osd.default.js'
-import desktopTile from '@/toolbox'
+import { desktopTile } from '@/toolbox'
 
 // create SourceComponent component-constructor
 const SourceComponent = Vue.extend(SourceComponentFactory)
@@ -25,6 +26,7 @@ const SourceComponent = Vue.extend(SourceComponentFactory)
  */
 export default {
   name: 'DesktopComponent',
+  mixins: [DesktopAccess],
   components: {},
   data: function () {
     return {
@@ -59,6 +61,7 @@ export default {
           tileSize: 256,
           minLevel: 8,
           getTileUrl: function (level, x, y) {
+            // console.log(desktopTile)
             return desktopTile
           }
         }
@@ -84,15 +87,6 @@ export default {
         y: 0,
         width: this.width
       })
-      /*
-      const htmlovl = viewer.htmlOverlay()
-      const desk = document.createElement('div')
-      desk.setAttribute('style', 'width: ' + this.width + 'px; height: ' + this.height + 'px;')
-      htmlovl.element().appendChild(desk)
-      htmlovl.onClick(desk, (e) => {
-        console.log(e)
-      })
-      */
 
       // make OpenSeadragon Viewer and component avilable through the store
       this.$store.commit('SET_VIEWER', viewer)
@@ -101,7 +95,7 @@ export default {
       // for every node in the store create and init (empty mount) SourceComponent
       const sources = this.$store.getters.sources
       sources.forEach(source => {
-        console.log(source.id)
+        // console.log(source.id)
         const srcfacs = new SourceComponent({
           propsData: {
             sourceId: source.id,
@@ -127,9 +121,6 @@ export default {
     this.init()
   },
   computed: {
-    viewer () {
-      return this.$store.getters.viewer
-    }
   }
 }
 </script>

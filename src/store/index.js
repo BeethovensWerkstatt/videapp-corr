@@ -242,8 +242,14 @@ export default new Vuex.Store({
       return state.sources.find(source => source.id === state.activeSourceID)
     },
     getSourceById: (state) => (id) => {
-      console.log(id)
-      return state.sources.find(source => { console.log(source.id); return source.id === id })
+      // console.log('get source: ' + id)
+      if (!id) {
+        throw new Error('source id undefined!')
+      }
+      return state.sources.find(source => {
+        // console.log(source.id)
+        return source.id === id
+      })
     },
     activeZoneID: (state) => {
       return state.activeZoneID
