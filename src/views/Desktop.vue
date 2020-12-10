@@ -1,6 +1,6 @@
 <template>
   <div class="desk">
-    <open-seadragon-component divid="canvas"></open-seadragon-component>
+    <desktop-component divid="canvas"></desktop-component>
     <div id="sidebar">
       <div>
         <div id="navigatorBox">
@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import OpenSeadragonComponent from '@/components/OpenSeadragonComponent'
+import DesktopComponent from '@/components/DesktopComponent'
 import SourceInfo from '@/components/SourceInfo'
 import ZoneInfo from '@/components/ZoneInfo.vue'
 // import ZoneAnnotation from '@/components/ZoneAnnotation'
@@ -35,7 +35,7 @@ import ZoneInfo from '@/components/ZoneInfo.vue'
 export default {
   name: 'Desktop',
   components: {
-    OpenSeadragonComponent,
+    DesktopComponent,
     SourceInfo,
     ZoneInfo
   },

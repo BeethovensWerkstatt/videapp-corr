@@ -4,12 +4,14 @@
 
 <script>
 import OpenSeadragon from 'openseadragon'
+import AssociatedOverlay from '@/mixins'
 
 /**
  * Simple Overlay component
  */
 export default {
   name: 'SimpleOverlay',
+  mixins: [AssociatedOverlay],
   data () {
     return {
       position: new OpenSeadragon.Point(this.x, this.y)

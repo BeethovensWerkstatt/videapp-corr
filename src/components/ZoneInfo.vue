@@ -16,11 +16,7 @@ export default {
   name: 'ZoneInfo',
   computed: {
     ovl_zone () {
-      if (this.$store.state.activeZone &&
-          this.$store.state.activeZone.SF === this.$store.state.activeSourceFacs) {
-        return this.$store.state.activeZone
-      }
-      return null
+      return this.$store.getters.activeZone
     }
   },
   methods: {

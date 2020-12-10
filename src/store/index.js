@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import { uuidv4 } from '@/toolbox'
+import uuidv4 from '@/toolbox'
 
 import pageSetup from '@/temp/pageSetup.json'
 
@@ -24,24 +24,12 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     viewer: null,
-    osd_component: null,
+    desktop: null,
     annotations: [],
     activeAnnotationId: null,
     sources: [],
-    activeSourceFacs: null,
-    activeZone: null
-    /*
-    sample source:
-    {
-      id: String,
-      label: String,
-      maxDimensions: {height: 200, width: 600},
-      position: {x: 100, y: 200},
-      rotation: 0,
-      singleLeaf: false,
-      pages: []
-    }
-    */
+    activeSourceID: null,
+    activeZoneID: null
   },
   /**
    * @namespace store.mutations
@@ -63,7 +51,7 @@ export default new Vuex.Store({
      * @param {object} state
      * @param {module:OpenSeadragonComponent} OSDComponent
      */
-    SET_OSD (state, OSDComponent) {
+    SET_DESKTOP (state, OSDComponent) {
       state.OSDComponent = OSDComponent
     },
     /**
@@ -84,8 +72,13 @@ export default new Vuex.Store({
     ACTIVATE_SOURCE (state, srcfacs) {
       state.activeSourceFacs = srcfacs
     },
+    /**
+     * set active zone ID
+     * @param {Object} state
+     * @param {String} zone - ID of selected zone
+     */
     ACTIVATE_ZONE (state, zone) {
-      state.activeZone = zone
+      state.activeZoneID = zone
     },
     ADD_ANNOTATION (state, annotation) {
       const annots = [...state.annotations]
@@ -229,34 +222,38 @@ export default new Vuex.Store({
    * @property {object} viewer - OpenSeadragon Viewer object
    */
   getters: {
+    /**
+     * @param {Object} state
+     * @returns current viewer
+     */
     viewer: (state) => {
       return state.viewer
     },
-    osd_component: (state) => {
-      return state.osd_component
+    desktop: (state) => {
+      return state.desktop
     },
     sources: (state) => {
       return state.sources
     },
-    annotations: (state) => {
-      return state.annotations
+    activeSourceID: (state) => {
+      return state.activeSourceID
     },
-    activeAnnotation: (state) => {
-      if (state.activeAnnotationId !== null) {
-        const annot = state.annotations.find(annot => annot.id === state.activeAnnotationId)
-        if (annot === undefined) {
-          return null
-        } else {
-          return annot
-        }
-      } else {
-        return null
+    activeSource: (state) => {
+      return state.sources.find(source => source.id === state.activeSourceID)
+    },
+    getSourceById: (state) => (id) => {
+      console.log(id)
+      return state.sources.find(source => { console.log(source.id); return source.id === id })
+    },
+    activeZoneID: (state) => {
+      return state.activeZoneID
+    },
+    activeZone: (state) => {
+      const source = state.activeSource
+      if (source) {
+        return source.measures.find(zone => zone.id === state.activeZoneID)
       }
-    },
-    annotationByZoneId: (state) => (id) => {
-      return state.annotations.filter(annot => {
-        return annot.target === id
-      })
+      return null
     }
   }
 })

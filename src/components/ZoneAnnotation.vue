@@ -14,7 +14,7 @@
 export default {
   computed: {
     title () {
-      const current = this.$store.state.sources.find((source) => { return source.id === this.$store.state.activeSourceId })
+      const current = this.$store.getters.getSelectedSource()
       if (current) {
         return current.label
       }

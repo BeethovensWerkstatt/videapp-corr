@@ -1,6 +1,6 @@
 <template>
   <div class="desk">
-    <open-seadragon-component></open-seadragon-component>
+    <desktop-component></desktop-component>
     <div id="canvas"></div>
     <div id="sidebar">
       <div>
@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import OpenSeadragonComponent from '@/components/OpenSeadragonComponent'
+import DesktopComponent from '@/components/DesktopComponent'
 import OpenSeadragon from 'openseadragon'
 // import ZoneAnnotation from '@/components/ZoneAnnotation'
 // import osdConfiguration from '@/config/osd.config.js'
@@ -127,7 +127,7 @@ export default {
   name: 'Desktop',
   components: {
     // ZoneAnnotation
-    OpenSeadragonComponent
+    DesktopComponent
   },
   mounted () {
     /* let tileSources = [{

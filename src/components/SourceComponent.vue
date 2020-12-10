@@ -29,6 +29,7 @@
 import Vue from 'vue'
 import OpenSeadragon from 'openseadragon'
 import SourceOverlay from '@/components/SourceOverlay'
+import OverlayContainer from '@/mixins'
 
 const SourceOverlayVue = Vue.extend(SourceOverlay)
 
@@ -36,10 +37,11 @@ const SourceOverlayVue = Vue.extend(SourceOverlay)
  * Source components are created dynamically. See {@tutorial vue-components-programmatically}.
  * If a source is selected it may be accessed globally. See {@link module:SourceInfo}.
  *
+ * @vue-mixin {mixin.OverlayContainer}
  * @vue-data {Object} position - position of source on desktop (x,y)
  * @vue-data {Number} pagenr - index of displayed page-pair
  * @vue-prop {Object} source - source object
- * @vue-prop {OpenSeadragonComponent} OSD - OpenSeaDragon component
+ * @vue-prop {DesktopComponent} desktop - desktop component
  * @vue-prop {Number} index - index of this source
  * @vue-prop {Number} [defaultPage=0] - default page pair
  * @vue-computed {String} divid - id of the div for the source label
@@ -52,15 +54,17 @@ const SourceOverlayVue = Vue.extend(SourceOverlay)
  * @vue-computed {Boolean} isActive - true if this is the selected source
  */
 export default {
-  name: 'SourceFacsimile',
+  name: 'SourceComponent',
+  mixins: [OverlayContainer],
   data: function () {
+    const source = this.desktop.$store.getters.getSourceById(this.sourceID)
+    console.log(source)
     return {
       position: {
-        x: this.source.position.x,
-        y: this.source.position.y
+        x: source.position.x,
+        y: source.position.y
       },
       pagenr: this.defaultPage,
-      // pagetiles: [],
       ti_recto: null,
       ti_verso: null,
       moving: null,
@@ -69,15 +73,11 @@ export default {
     }
   },
   props: {
-    source: {
-      type: Object,
-      default: () => {
-        return {
-          pages: [{ v: null, r: null }]
-        }
-      }
+    sourceId: {
+      type: String,
+      required: true
     },
-    OSD: {
+    desktop: {
       required: true
     },
     defaultPage: {
@@ -86,21 +86,10 @@ export default {
     }
   },
   mounted () {
+    // link this source component with th source object
     this.source.component = this
 
     this.addMark(this.source.position.x, this.source.position.y, '')
-    /*
-    this.pagetiles = this.source.pages.map(page => {
-      return {
-        '@context': 'http://iiif.io/api/image/2/context.json',
-        '@id': page.uri,
-        profile: 'http://iiif.io/api/image/2/level2.json',
-        protocol: 'http://iiif.io/api/image',
-        width: page.pixels.width,
-        height: page.pixels.height
-      }
-    })
-    */
 
     const dh = this.$el.querySelector('#draghandle')
     this.tracker = new OpenSeadragon.MouseTracker({
@@ -118,13 +107,23 @@ export default {
   },
   computed: {
     '$store' () {
-      return this.OSD.$store
+      return this.desktop.$store
     },
     viewer () {
-      return this.OSD.viewer
+      return this.desktop.viewer
     },
     divid () {
       return this.source.id + '_back'
+    },
+    source () {
+      const source = this.$store.getters.getSourceById(this.sourceID)
+      if (source) {
+        return source
+      }
+      // return fake source object
+      return {
+        pages: [{ v: null, r: null }]
+      }
     },
     label () {
       return this.source.label
@@ -155,10 +154,23 @@ export default {
       return this.viewer.getOverlayById(this.divid)
     },
     isActive () {
-      return this.OSD.$store.state.activeSourceFacs === this
+      return this.desktop.$store.getters.activeSourceID === this.sourceID
     },
     isSinglePage () {
       return (this.ti_verso === null && this.ti_recto !== null) || (this.ti_verso !== null && this.ti_recto === null)
+    },
+    pagetiles () {
+      return this.source.pages.map(page => {
+        // verso / recto ??
+        return {
+          '@context': 'http://iiif.io/api/image/2/context.json',
+          '@id': page.uri,
+          profile: 'http://iiif.io/api/image/2/level2.json',
+          protocol: 'http://iiif.io/api/image',
+          width: page.pixels.width,
+          height: page.pixels.height
+        }
+      })
     }
   },
   methods: {
@@ -294,7 +306,7 @@ export default {
       return this.position.y - (this.source.maxDimensions.height / 2)
     },
     /**
-     * Move this SourceFacsimile to a new position
+     * Move this SourceComponent to a new position
      *
      * @param {number} tox - X coordinate
      * @param {number} toy - Y coordinate
@@ -427,7 +439,7 @@ export default {
       if (e) {
         e.preventDefault()
       }
-      this.OSD.$store.commit('ACTIVATE_SOURCE', this)
+      this.desktop.$store.commit('ACTIVATE_SOURCE', this)
       this.placeOnTop()
     },
     /**
