@@ -28,8 +28,8 @@ export default new Vuex.Store({
     annotations: [],
     activeAnnotationId: null,
     sources: [],
-    activeSourceID: null,
-    activeZoneID: null
+    activeSourceId: null,
+    activeZoneId: null
   },
   /**
    * @namespace store.mutations
@@ -67,10 +67,10 @@ export default new Vuex.Store({
     /**
      * set active source component
      * @param {object} state
-     * @param {module:SourceFacsimile} srcfacs source component
+     * @param {String} src source id
      */
-    ACTIVATE_SOURCE (state, srcfacs) {
-      state.activeSourceFacs = srcfacs
+    ACTIVATE_SOURCE (state, src) {
+      state.activeSourceId = src
     },
     /**
      * set active zone ID
@@ -78,7 +78,7 @@ export default new Vuex.Store({
      * @param {String} zone - ID of selected zone
      */
     ACTIVATE_ZONE (state, zone) {
-      state.activeZoneID = zone
+      state.activeZoneId = zone
     },
     ADD_ANNOTATION (state, annotation) {
       const annots = [...state.annotations]
@@ -220,12 +220,9 @@ export default new Vuex.Store({
    * @namespace store.getters
    * @memberof store
    * @property {object} viewer - OpenSeadragon Viewer object
+   * @method {object} getSourceById
    */
   getters: {
-    /**
-     * @param {Object} state
-     * @returns current viewer
-     */
     viewer: (state) => {
       return state.viewer
     },
@@ -235,11 +232,11 @@ export default new Vuex.Store({
     sources: (state) => {
       return state.sources
     },
-    activeSourceID: (state) => {
-      return state.activeSourceID
+    activeSourceId: (state) => {
+      return state.activeSourceId
     },
     activeSource: (state) => {
-      return state.sources.find(source => source.id === state.activeSourceID)
+      return state.sources.find(source => source.id === state.activeSourceId)
     },
     getSourceById: (state) => (id) => {
       // console.log('get source: ' + id)
@@ -251,14 +248,20 @@ export default new Vuex.Store({
         return source.id === id
       })
     },
-    activeZoneID: (state) => {
-      return state.activeZoneID
+    activeZoneId: (state) => {
+      return state.activeZoneId
     },
     activeZone: (state) => {
       const source = state.activeSource
       if (source) {
-        return source.measures.find(zone => zone.id === state.activeZoneID)
+        return source.measures.find(zone => zone.id === state.activeZoneId)
       }
+      return null
+    },
+    getZoneById: (state) => (id) => {
+      state.sources.forEach((source) => {
+        console.log(source)
+      })
       return null
     }
   }

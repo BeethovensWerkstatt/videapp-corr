@@ -70,7 +70,7 @@ export default {
     },
     activateZone () {
       this.SF.selectSource()
-      this.SF.$store.commit('ACTIVATE_ZONE', this)
+      this.SF.$store.commit('ACTIVATE_ZONE', this.zone.id)
     }
   }
 }

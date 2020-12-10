@@ -154,7 +154,7 @@ export default {
       return this.viewer.getOverlayById(this.divid)
     },
     isActive () {
-      return this.desktop.$store.getters.activeSourceID === this.sourceId
+      return this.desktop.$store.getters.activeSourceId === this.sourceId
     },
     pagetiles () {
       return this.source.pages.map(page => {
@@ -447,7 +447,7 @@ export default {
       if (e) {
         e.preventDefault()
       }
-      this.desktop.$store.commit('ACTIVATE_SOURCE', this)
+      this.desktop.$store.commit('ACTIVATE_SOURCE', this.sourceId)
       this.placeOnTop()
     },
     /**
