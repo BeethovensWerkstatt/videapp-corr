@@ -4,7 +4,7 @@
       class="measure-ovl"
       :title="divtitle"
       @click.prevent="activateZone"
-      :class="{ active: this.isActive, anno: hasLabel }"
+      :class="{ active: this.isActive, anno: hasLabel, hide: updating }"
     >
     {{ (this.zone.label.length > 0) ? '&bullet;' : '' }}
     </div>
@@ -24,7 +24,9 @@ export default {
   name: 'ZoneOverlay',
   mixins: [AssociatedOverlay],
   data: function () {
-    return {}
+    return {
+      updating: false
+    }
   },
   mounted () {
     // console.log(this.SF.getPageX(this.page) + ', ' + this.SF.getPageY(this.page))
@@ -34,6 +36,7 @@ export default {
     this.zone.component = this
     this.zone.overlay = this.viewer.getOverlayById(this.divid)
     // console.log(this.container)
+    this.container.addOverlay(this)
   },
   props: {
     source: {
@@ -82,11 +85,17 @@ export default {
     }
   },
   methods: {
-    updateView () {
-      const ovl = this.overlay
-      if (ovl) {
-        ovl.update(this.getZonePos(), OpenSeadragon.TOP_LEFT)
+    updateView (force = false) {
+      if ((force || !this.updating) && this.overlay) {
+        this.overlay.update(this.getZonePos(), OpenSeadragon.TOP_LEFT)
       }
+    },
+    startUpdate () {
+      this.updating = true
+    },
+    finishUpdate () {
+      this.updateView(true)
+      this.updating = false
     },
     getZonePos () {
       const zonepos = new OpenSeadragon.Rect(10, 10, 10, 10)
@@ -132,6 +141,10 @@ export default {
   &:hover {
     opacity: 1;
     box-shadow: 0 0 .5rem #00000099;
+  }
+
+  &.hide {
+    display: none
   }
 }
 </style>

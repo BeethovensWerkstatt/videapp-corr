@@ -456,6 +456,7 @@ export default {
      * @param {Object} e - event object
      */
     dragHandler (e) {
+      this.startUpdateOverlays()
       if (!this.moving) {
         this.moving = { ...this.position }
         this.selectSource()
@@ -473,6 +474,7 @@ export default {
       // this.moveTo(
       //  this.position.x + delta.x,
       //  this.position.y + delta.y)
+      this.finishUpdateOverlays()
       this.moving = null
     },
     /**

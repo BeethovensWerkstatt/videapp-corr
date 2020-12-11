@@ -23,6 +23,21 @@ export const OverlayContainer = {
      */
     remOverlay (overlay) {
       this.overlays = [...this.overlays.filter(ovl => ovl !== overlay)]
+    },
+    updateOverlays () {
+      this.overlays.forEach(ovl => {
+        ovl.updateView()
+      })
+    },
+    startUpdateOverlays () {
+      this.overlays.forEach(ovl => {
+        ovl.startUpdate()
+      })
+    },
+    finishUpdateOverlays () {
+      this.overlays.forEach(ovl => {
+        ovl.finishUpdate()
+      })
     }
   }
 }

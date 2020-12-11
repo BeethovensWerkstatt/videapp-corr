@@ -1,3 +1,5 @@
+const required = ['updateView', 'startUpdate', 'finishUpdate']
+
 /**
  * Mixin for OpenSeadragon Overlay Components
  * @memberof mixins
@@ -11,6 +13,10 @@ export const AssociatedOverlay = {
     }
   },
   mounted () {
-    // console.log(this.updateView)
+    required.forEach(func => {
+      if (typeof this[func] !== 'function') {
+        console.error('"' + func + '" (' + (typeof this[func]) + ')')
+      }
+    })
   }
 }
