@@ -29,7 +29,7 @@
 import Vue from 'vue'
 import OpenSeadragon from 'openseadragon'
 import SourceOverlay from '@/components/SourceOverlay'
-import OverlayContainer from '@/mixins'
+import { OverlayContainer } from '@/mixins/OverlayContainer'
 
 const SourceOverlayVue = Vue.extend(SourceOverlay)
 

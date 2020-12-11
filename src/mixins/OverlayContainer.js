@@ -1,12 +1,9 @@
-import DesktopAccess from '.'
-
 /**
  * Container for AssociatedOverlay objects
  * @memberof mixins
  * @vue-data {Object[]} overlays - list of overlay objects
  */
 export const OverlayContainer = {
-  mixins: [DesktopAccess],
   data () {
     return {
       overlays: []

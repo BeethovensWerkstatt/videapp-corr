@@ -12,7 +12,7 @@
 
 <script>
 import OpenSeadragon from 'openseadragon'
-import AssociatedOverlay from '@/mixins'
+import { AssociatedOverlay } from '@/mixins/AssociatedOverlay'
 
 /**
  * @vue-prop {object} source - source object
@@ -33,6 +33,7 @@ export default {
     this.viewer.addOverlay(this.$el, pos)
     this.zone.component = this
     this.zone.overlay = this.viewer.getOverlayById(this.divid)
+    // console.log(this.container)
   },
   props: {
     source: {
@@ -81,7 +82,7 @@ export default {
     }
   },
   methods: {
-    updatePos () {
+    updateView () {
       const ovl = this.overlay
       if (ovl) {
         ovl.update(this.getZonePos(), OpenSeadragon.TOP_LEFT)
@@ -95,7 +96,10 @@ export default {
       zonepos.height = parseInt(this.zone.height) * this.scaleFactor
       return zonepos
     },
-    activateZone () {
+    activateZone (e) {
+      if (e) {
+        e.preventDefault()
+      }
       this.SF.selectSource()
       this.SF.$store.commit('ACTIVATE_ZONE', this.zone.zone)
     }

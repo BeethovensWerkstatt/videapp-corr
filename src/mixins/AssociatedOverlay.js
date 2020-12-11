@@ -11,8 +11,6 @@ export const AssociatedOverlay = {
     }
   },
   mounted () {
-    if (!this.update) {
-      throw new Error('"update" not implemented')
-    }
+    // console.log(this.updateView)
   }
 }

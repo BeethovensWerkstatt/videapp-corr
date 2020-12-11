@@ -8,6 +8,7 @@
         :key="zone.zone"
         :source="source"
         :SF="SF"
+        :container="SF"
         :page="page"
         :zone="zone"
         :style="styleForZone(zone)"
