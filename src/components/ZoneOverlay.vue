@@ -2,11 +2,11 @@
     <div
       :id="divid"
       class="measure-ovl"
-      :title="zone.zone"
+      :title="divtitle"
       @click.prevent="activateZone"
       :class="{ active: this.isActive, anno: hasLabel }"
     >
-    {{ this.zone.label }}
+    {{ (this.zone.label.length > 0) ? '&bullet;' : '' }}
     </div>
 </template>
 
@@ -60,6 +60,12 @@ export default {
     },
     divid () {
       return 'ovl_' + this.zone.zone
+    },
+    divtitle () {
+      if (this.zone.label) {
+        return this.zone.label
+      }
+      return this.zone.zone
     },
     overlay () {
       return this.viewer.getOverlayById(this.divid)
