@@ -18,6 +18,7 @@
 /**
  * Home view
  *
+ * @module views.Home
  * @vue-computed {object[]} sources - list of available sources
  */
 export default {

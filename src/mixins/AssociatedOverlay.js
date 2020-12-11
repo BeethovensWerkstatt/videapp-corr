@@ -1,7 +1,8 @@
 const required = ['updateView', 'startUpdate', 'finishUpdate']
 
 /**
- * Mixin for OpenSeadragon Overlay Components
+ * Mixin for OpenSeadragon Overlay Components.<br>
+ * Needs functions `updateView`, `startUpdate`, `finishUpdate` in the Vue component
  * @memberof mixins
  * @vue-prop {Object} container - associated element for this Overlay
  */

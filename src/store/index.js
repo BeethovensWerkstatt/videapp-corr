@@ -19,7 +19,8 @@ Vue.use(Vuex)
  * @property {object[]} annotations - list of annotations
  * @property {string} activeAnnotationId - ID of selected annotation
  * @property {object[]} sources - list of source objects
- * @property {module:SourceFacsimile} activeSourceFacs - selected source component
+ * @property {string} activeSourceId - ID of selected source
+ * @property {string} activeZoneId - ID of selected zone
  */
 export default new Vuex.Store({
   state: {
@@ -113,6 +114,7 @@ export default new Vuex.Store({
    */
   actions: {
     /**
+     * **TODO: load from REST API**
      * load sources
      * @memberof store.actions
      * @param {*} commit
@@ -220,7 +222,10 @@ export default new Vuex.Store({
    * @namespace store.getters
    * @memberof store
    * @property {object} viewer - OpenSeadragon Viewer object
-   * @method {object} getSourceById
+   * @property {object} desktop - Desktop Component
+   * @property {object[]} sources - list of source objects loaded
+   * @property {string} activeSourceId - ID of selected source object
+   * @property {string} activeZoneId - ID of selected source object
    */
   getters: {
     viewer: (state) => {
@@ -235,11 +240,20 @@ export default new Vuex.Store({
     activeSourceId: (state) => {
       return state.activeSourceId
     },
+    /**
+     * @memberof store.getters
+     * @returns {object} selected source object or null
+     */
     activeSource: (state) => () => {
       const source = state.sources.find(source => { return source.id === state.activeSourceId })
       // console.log('active source: ' + source)
       return source
     },
+    /**
+     * @memberof store.getters
+     * @param {string} id
+     * @returns {object} source object of id or null
+     */
     getSourceById: (state) => (id) => {
       // console.log('get source: ' + id)
       if (!id) {
@@ -254,6 +268,10 @@ export default new Vuex.Store({
       // console.log('active zone id: ' + state.activeZoneId)
       return state.activeZoneId
     },
+    /**
+     * @memberof store.getters
+     * @returns {object} selected zone object or null
+     */
     activeZone: (state) => () => {
       const source = state.sources.find(source => {
         return source.id === state.activeSourceId
@@ -271,6 +289,12 @@ export default new Vuex.Store({
       }
       return null
     },
+    /**
+     * **not implemented yet!**
+     * @memberof store.getters
+     * @param {string} id
+     * @returns {object} source zone of id or null
+     */
     getZoneById: (state) => (id) => {
       state.sources.forEach((source) => {
         console.log(source)

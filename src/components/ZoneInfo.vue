@@ -12,17 +12,29 @@
 </template>
 
 <script>
+/**
+ * Zone information widget
+ *
+ * @module components.ZoneInfo
+ */
 export default {
   name: 'ZoneInfo',
   computed: {
   },
   methods: {
+    /**
+     * @returns {object} selected zone
+     */
     activeZone () {
       return this.$store.getters.activeZone()
     },
+    /**
+     * clears information widget
+     */
     clearInfo () {
       this.$store.commit('ACTIVATE_ZONE', null)
     },
+    // TODO test
     destroyZone () {
       if (this.ovl_zone) {
         this.ovl_zone.destroyZone()

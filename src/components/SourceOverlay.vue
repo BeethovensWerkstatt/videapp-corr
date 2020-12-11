@@ -20,6 +20,7 @@
 import ZoneOverlay from '@/components/ZoneOverlay'
 
 /**
+ * @module components.SourceOverlay
  * @vue-prop {object} source - source object
  * @vue-prop {SourceFacsimile} SF - SourceFacsimile component
  * @vue-prop {object} page - page object

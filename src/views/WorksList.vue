@@ -30,6 +30,8 @@
 <script>
 /**
  * list of works component
+ *
+ * @module views.WorksList
  */
 export default {
   name: 'WorksList'

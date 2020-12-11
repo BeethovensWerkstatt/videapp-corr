@@ -49,6 +49,7 @@
  * Display information about current selected/activated source and
  * its display state (displayed page).
  *
+ * @module components.SourceInfo
  * @vue-computed source {Object} - selected source object
  * @vue-computed activePage {Number} - index of the displayed verso-recto page pair.
  * @vue-computed title {String} - title of the source
