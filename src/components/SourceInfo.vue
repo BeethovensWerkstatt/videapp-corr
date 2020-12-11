@@ -2,7 +2,7 @@
   <div class="source-info">
     <strong>Source Information</strong>
     <div>
-      <select @change="changeSource" :value="$store.getters.activeSource ? $store.getters.activeSource.id : ''">
+      <select @change="changeSource" :value="source ? source.id : ''">
         <option key="---none---" value="">--- select source ---</option>
         <option
           v-for="src in $store.getters.sources"
@@ -12,7 +12,7 @@
           {{ src.label }}
         </option>
       </select>
-      <table width="100%" v-if="this.$store.getters.activeSource">
+      <table width="100%" v-if="this.source">
         <tr><td colspan="2"><hr /></td></tr>
         <tr><td>Titel:</td><td class="smaller">{{ title }}</td></tr>
         <tr><td>Seiten:</td><td>{{ pagecount }} <span v-if="this.source" class="smaller"> [{{ first_label }} &ndash; {{ last_label }}]</span></td></tr>
@@ -22,7 +22,7 @@
         <tr><td>Position:</td><td>{{ position }}</td></tr>
       </table>
     </div>
-    <div v-if="this.$store.getters.activeSource">
+    <div v-if="this.source">
       <hr />
       <btn-group>
         <btn
@@ -62,11 +62,11 @@ export default {
   name: 'SourceInfo',
   computed: {
     source () {
-      return this.$store.getters.activeSource
+      return this.$store.getters.activeSource()
     },
     activePage () {
-      if (this.$store.getters.activeSource) {
-        return this.$store.getters.activeSource.component.pagenr
+      if (this.source) {
+        return this.source.component.pagenr
       }
       return 0
     },
@@ -88,14 +88,14 @@ export default {
       return '---'
     },
     verso_label () {
-      if (this.$store.getters.activeSource) {
-        return this.$store.getters.activeSource.component.left_label
+      if (this.source) {
+        return this.source.component.left_label
       }
       return '---'
     },
     recto_label () {
-      if (this.$store.getters.activeSourceFacs) {
-        return this.$store.getters.activeSourceFacs.right_label
+      if (this.source) {
+        return this.source.component.right_label
       }
       return '---'
     },
@@ -119,29 +119,25 @@ export default {
       return ''
     },
     hasPrev () {
-      const sf = this.$store.getters.activeSource.component
-      return sf && sf.hasPrev
+      return this.source && this.source.component.hasPrev
     },
     hasNext () {
-      const sf = this.$store.getters.activeSource.component
-      return sf && sf.hasNext
+      return this.source && this.source.component.hasNext
     },
     position () {
-      const sf = this.$store.getters.activeSource.component
-      if (sf) {
-        return sf.position.x.toFixed(2) + ' / ' + sf.position.y.toFixed(2)
+      if (this.source) {
+        return this.source.component.position.x.toFixed(2) + ' / ' +
+               this.source.component.position.y.toFixed(2)
       }
       return '---'
     }
   },
   methods: {
     prevPage () {
-      const sf = this.$store.getters.activeSource.component
-      return sf && sf.prevPage()
+      return this.source && this.source.component.prevPage()
     },
     nextPage () {
-      const sf = this.$store.getters.activeSource.component
-      return sf && sf.nextPage()
+      return this.source && this.source.component.nextPage()
     },
     /**
      * unselect source / reset component

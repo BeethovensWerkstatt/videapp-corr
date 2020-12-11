@@ -1,9 +1,9 @@
 <template>
   <div class="zone-info">
     <strong>Measure Information</strong>
-    <div v-if="ovl_zone">
-      <div class="smaller">{{ ovl_zone.zone }}</div>
-      <input v-model="ovl_zone.zone.label" />
+    <div v-if="activeZone()">
+      <div class="smaller">{{ activeZone().zone }}</div>
+      <input v-model="activeZone().label" />
       <btn-group>
         <btn @click.prevent="clearInfo">close</btn>
       </btn-group>
@@ -15,11 +15,11 @@
 export default {
   name: 'ZoneInfo',
   computed: {
-    ovl_zone () {
-      return this.$store.getters.activeZone
-    }
   },
   methods: {
+    activeZone () {
+      return this.$store.getters.activeZone()
+    },
     clearInfo () {
       this.$store.commit('ACTIVATE_ZONE', null)
     },
@@ -34,7 +34,7 @@ export default {
 
 <style scoped>
 .zone-info {
-  padding: 8pt;
+  padding: 0p;
   text-align: left;
 }
 .smaller {

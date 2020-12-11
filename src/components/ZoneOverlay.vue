@@ -1,9 +1,18 @@
 <template>
-    <div class="measure-ovl" :title="zone.zone" @click.prevent="activateZone" />
+    <div
+      :id="divid"
+      class="measure-ovl"
+      :title="zone.zone"
+      @click.prevent="activateZone"
+      :class="{ active: this.isActive, anno: hasLabel }"
+    >
+    {{ this.zone.label }}
+    </div>
 </template>
 
 <script>
 import OpenSeadragon from 'openseadragon'
+import AssociatedOverlay from '@/mixins'
 
 /**
  * @vue-prop {object} source - source object
@@ -13,6 +22,7 @@ import OpenSeadragon from 'openseadragon'
  */
 export default {
   name: 'ZoneOverlay',
+  mixins: [AssociatedOverlay],
   data: function () {
     return {}
   },
@@ -21,6 +31,8 @@ export default {
     // console.log(this.getZonePos())
     const pos = this.getZonePos()
     this.viewer.addOverlay(this.$el, pos)
+    this.zone.component = this
+    this.zone.overlay = this.viewer.getOverlayById(this.divid)
   },
   props: {
     source: {
@@ -40,6 +52,9 @@ export default {
     }
   },
   computed: {
+    '$store' () {
+      return this.SF.$store
+    },
     viewer () {
       return this.SF.viewer
     },
@@ -51,6 +66,12 @@ export default {
     },
     scaleFactor () {
       return parseInt(this.page.dimensions.width) / parseInt(this.page.pixels.width)
+    },
+    isActive () {
+      return this.SF.$store.getters.activeZone() && this.SF.$store.getters.activeZone().component === this
+    },
+    hasLabel () {
+      return this.zone.label && this.zone.label.length > 0
     }
   },
   methods: {
@@ -85,14 +106,22 @@ export default {
   border: .5px solid $border-color;
   // border-radius: 5px;
   // box-shadow: 0 0 .5rem #00000099;
-  opacity: 0.2;
+  opacity: 0;
+
+  &.active {
+    opacity: .5;
+    background-color: rgba($color: #ffffff, $alpha: .5);
+  }
+
+  &.anno {
+    opacity: .5;
+    border: .5px solid blue !important;
+    border-radius: 3px;
+  }
 
   &:hover {
     opacity: 1;
-  }
-
-  &.active {
-    background-color: rgba($color: #ffffff, $alpha: .5);
+    box-shadow: 0 0 .5rem #00000099;
   }
 }
 </style>
