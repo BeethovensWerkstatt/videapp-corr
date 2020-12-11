@@ -237,7 +237,7 @@ export default new Vuex.Store({
     },
     activeSource: (state) => {
       const source = state.sources.find(source => { return source.id === state.activeSourceId })
-      console.log('active source: ' + source)
+      // console.log('active source: ' + source)
       return source
     },
     getSourceById: (state) => (id) => {
@@ -251,16 +251,20 @@ export default new Vuex.Store({
       })
     },
     activeZoneId: (state) => {
-      console.log('active zone id: ' + state.activeZoneId)
+      // console.log('active zone id: ' + state.activeZoneId)
       return state.activeZoneId
     },
     activeZone: (state) => {
       // const source = state.activeSource
       const source = state.sources.find(source => { return source.id === state.activeSourceId })
-      console.log('active source: ' + state.activeSource)
+      console.log('active source: ')
+      console.log(source)
       console.log('active zone: ' + state.activeZoneId)
       if (source) {
-        const zone = source.measures.find(zone => { return zone.zone === state.activeZoneId })
+        const vpage = source.pages[source.component.pagenr].v
+        const rpage = source.pages[source.component.pagenr].r
+        const measures = [...(vpage ? vpage.measures : []), ...(rpage ? rpage.measures : [])]
+        const zone = measures.find(zone => { return zone.zone === state.activeZoneId })
         console.log(zone)
         return zone
       }
