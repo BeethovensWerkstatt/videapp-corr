@@ -1,5 +1,5 @@
 const required = {
-  function: ['updateView', 'startUpdate', 'finishUpdate'],
+  function: ['updateView', 'startUpdate', 'finishUpdate', 'destroy'],
   string: ['overlayType'],
   object: ['$store']
 }
@@ -7,7 +7,7 @@ const required = {
 /**
  * Mixin for OpenSeadragon Overlay Components.<br>
  * Needs functions `updateView`, `startUpdate`, `finishUpdate` and
- * `$store` property in the Vue component. This component is likely
+ * `$store`,`overlayType` properties in the Vue component. This component is likely
  * created dynamically. In that case you have to provide a computed
  * property of that name:
  * @example <caption>define `$store` for dynamic vue component</caption>

@@ -35,7 +35,7 @@ const SourceOverlayVue = Vue.extend(SourceOverlay)
 
 /**
  * Source components are created dynamically. See {@tutorial vue-components-programmatically}.
- * If a source is selected it may be accessed globally. See {@link module:SourceInfo}.
+ * If a source is selected it may be accessed globally. See {@link module:components.SourceInfo}.
  *
  * @module components.SourceComponent
  * @vue-mixin {mixin.OverlayContainer}
@@ -405,6 +405,13 @@ export default {
       const x = this.getPageX(page, single)
       const y = this.getPageY(page)
 
+      // remove all zone overlays of the previous page
+      this.overlays.forEach(ovl => {
+        if (ovl.overlayType === 'zone' && ovl.page.place === page.place) {
+          ovl.destroy()
+        }
+      })
+
       this.viewer.addTiledImage({
         tileSource: {
           '@context': 'http://iiif.io/api/image/2/context.json',
@@ -415,14 +422,17 @@ export default {
           height: page.pixels.height
         },
         success: (e) => {
+          // when the tiled image is loaded (on success), a previous image is removed
           if (page.place === 'verso') {
             if (this.ti_verso) {
+              // clear canvas before removing the ti
               this.ti_verso.setOpacity(0)
               this.ti_verso.destroy()
             }
             this.ti_verso = e.item
           } else {
             if (this.ti_recto) {
+              // clear canvas before removing the ti
               this.ti_recto.setOpacity(0)
               this.ti_recto.destroy()
             }
@@ -440,6 +450,7 @@ export default {
       this.addMark(x - tenp, y - tenp, page.place)
       this.updateDashPos()
 
+      // TODO srcovl lives only for this moment. This should be cleaned up!
       const srcovl = new SourceOverlayVue({
         propsData: {
           SrcCmp: this,
@@ -448,10 +459,6 @@ export default {
         }
       })
       srcovl.$mount()
-      // const htmlovl = this.viewer.htmlOverlay()
-      // htmlovl.element().appendChild(srcovl.$el)
-      // const scaleFactor = parseInt(page.dimensions.width) / parseInt(page.pixels.width)
-      // this.viewer.addOverlay(srcovl.$el, new OpenSeadragon.Rect(x, y, page.pixels.width * scaleFactor, page.pixels.height * scaleFactor))
     },
     /**
      * place source on top of the stack

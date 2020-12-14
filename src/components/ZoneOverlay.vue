@@ -144,6 +144,13 @@ export default {
       }
       this.container.activeZoneId = this.zone.zone
       this.container.selectSource()
+    },
+    /**
+     * destroy overlay
+     */
+    destroy () {
+      this.container.remOverlay()
+      this.overlay.destroy()
     }
   }
 }
