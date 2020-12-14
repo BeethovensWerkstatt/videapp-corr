@@ -1,6 +1,7 @@
 const required = {
   function: ['updateView', 'startUpdate', 'finishUpdate'],
-  string: ['overlayType']
+  string: ['overlayType'],
+  object: ['$store']
 }
 
 /**
@@ -9,13 +10,15 @@ const required = {
  * `$store` property in the Vue component. This component is likely
  * created dynamically. In that case you have to provide a computed
  * property of that name:
- * @example
+ * @example <caption>define `$store` for dynamic vue component</caption>
  * '$store' () {
  *   return this.container.$store
  * }
  *
  * @memberof mixins
  * @vue-prop {Object} container - associated element for this Overlay
+ * @vue-computed {Viewer} viewer - OpenSeadragon Viewer
+ * @vue-computed {DesktopComponent} desktop - Desktop Component
  */
 export const AssociatedOverlay = {
   props: {
@@ -35,6 +38,12 @@ export const AssociatedOverlay = {
     }
   },
   computed: {
+    viewer () {
+      return this.$store.getters.viewer
+    },
+    desktop () {
+      return this.$store.getters.desktop
+    }
 
   }
 }

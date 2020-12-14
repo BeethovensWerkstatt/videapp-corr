@@ -268,24 +268,14 @@ export default new Vuex.Store({
      * @returns {object} selected zone object or null
      */
     activeZone: (state) => () => {
-      const source = state.sources.find(source => {
-        return source.id === state.activeSourceId
-      })
-      if (source) {
-        return source.component.activeZone
-      }
-      /*
-        const vpage = source.pages[source.component.pagenr].v
-        const rpage = source.pages[source.component.pagenr].r
-        const measures = [
-          ...(vpage ? vpage.measures : []),
-          ...(rpage ? rpage.measures : [])]
-        const zone = measures.find(zone => {
-          return zone.zone === state.activeZoneId
+      if (state.activeSourceId) {
+        const source = state.sources.find(source => {
+          return source.id === state.activeSourceId
         })
-        return zone
+        if (source) {
+          return source.component.activeZone
+        }
       }
-      */
       return null
     },
     /**

@@ -4,7 +4,7 @@
       class="measure-ovl"
       :title="divtitle"
       @click.prevent="activateZone"
-      :class="{ active: this.isActive, anno: hasLabel, hide: updating }"
+      :class="{ active: this.isActive, anno: this.hasLabel, hide: this.updating }"
     >
     {{ (this.zone.label.length > 0) ? '&bullet;' : '' }}
     </div>
@@ -67,9 +67,6 @@ export default {
     '$store' () {
       return this.container.$store
     },
-    viewer () {
-      return this.container.viewer
-    },
     divid () {
       return 'ovl_' + this.zone.zone
     },
@@ -124,7 +121,7 @@ export default {
       this.updateView()
     },
     /**
-     * get current position of overlay
+     * get current position of overlay as OpenSeadragon coordinates
      *
      * @returns {OpenSeadragon.Rect} position and size of overlay
      */
