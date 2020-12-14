@@ -16,7 +16,7 @@ const SourceComponent = Vue.extend(SourceComponentFactory)
 /**
  * OpenSeadragon component
  *
- * @module components.DesktopComponent
+ * @module components/DesktopComponent
  * @vue-data {Object} viewerprops - configuration of OpenSeaDragon Viewer (<code>config/osd.default.js</code>)
  * @vue-prop {String} [divid='desktop-init'] - ID of container div
  * @vue-prop {Object} [osdinit={}] - configuration of OSD Viewer &ndash; overrides default config

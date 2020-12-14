@@ -15,7 +15,7 @@
 /**
  * Zone information widget
  *
- * @module components.ZoneInfo
+ * @module components/ZoneInfo
  */
 export default {
   name: 'ZoneInfo',

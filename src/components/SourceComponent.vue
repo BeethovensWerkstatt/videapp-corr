@@ -35,9 +35,9 @@ const SourceOverlayVue = Vue.extend(SourceOverlay)
 
 /**
  * Source components are created dynamically. See {@tutorial vue-components-programmatically}.
- * If a source is selected it may be accessed globally. See {@link module:components.SourceInfo}.
+ * If a source is selected it may be accessed globally. See {@link module:components/SourceInfo}.
  *
- * @module components.SourceComponent
+ * @module components/SourceComponent
  * @vue-mixin {mixin.OverlayContainer}
  * @vue-data {Object} position - position of source on desktop (x,y)
  * @vue-data {Number} pagenr - index of displayed page-pair

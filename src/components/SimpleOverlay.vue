@@ -9,7 +9,7 @@ import AssociatedOverlay from '@/mixins'
 /**
  * Simple Overlay component
  *
- * @module components.SimpleOverlay
+ * @module components/SimpleOverlay
  */
 export default {
   name: 'SimpleOverlay',

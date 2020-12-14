@@ -15,7 +15,7 @@ import OpenSeadragon from 'openseadragon'
 import { AssociatedOverlay } from '@/mixins/AssociatedOverlay'
 
 /**
- * @module components.ZoneOverlay
+ * @module components/ZoneOverlay
  * @vue-prop {Object} source - source object
  * @vue-prop {SourceComponent} container - SourceComponent component
  * @vue-prop {Object} page - page object

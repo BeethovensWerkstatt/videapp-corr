@@ -30,7 +30,7 @@ import ZoneInfo from '@/components/ZoneInfo.vue'
 /**
  * Desktop View
  *
- * @module views.Desktop
+ * @module views/Desktop
  * @vue-computed {object[]} sources - list of available sources
  */
 export default {

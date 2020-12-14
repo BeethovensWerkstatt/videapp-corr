@@ -8,7 +8,7 @@
 /**
  * Application header component
  *
- * @module components.AppHeader
+ * @module components/AppHeader
  */
 export default {
   name: 'AppHeader'

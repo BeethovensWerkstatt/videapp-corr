@@ -31,7 +31,7 @@
 /**
  * list of works component
  *
- * @module views.WorksList
+ * @module views/WorksList
  */
 export default {
   name: 'WorksList'
