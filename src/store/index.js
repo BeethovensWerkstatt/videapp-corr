@@ -20,7 +20,6 @@ Vue.use(Vuex)
  * @property {string} activeAnnotationId - ID of selected annotation
  * @property {object[]} sources - list of source objects
  * @property {string} activeSourceId - ID of selected source
- * @property {string} activeZoneId - ID of selected zone
  */
 export default new Vuex.Store({
   state: {
@@ -29,8 +28,7 @@ export default new Vuex.Store({
     annotations: [],
     activeAnnotationId: null,
     sources: [],
-    activeSourceId: null,
-    activeZoneId: null
+    activeSourceId: null
   },
   /**
    * @namespace store.mutations
@@ -72,14 +70,6 @@ export default new Vuex.Store({
      */
     ACTIVATE_SOURCE (state, src) {
       state.activeSourceId = src
-    },
-    /**
-     * set active zone ID
-     * @param {Object} state
-     * @param {String} zone - ID of selected zone
-     */
-    ACTIVATE_ZONE (state, zone) {
-      state.activeZoneId = zone
     },
     ADD_ANNOTATION (state, annotation) {
       const annots = [...state.annotations]
@@ -265,8 +255,13 @@ export default new Vuex.Store({
       })
     },
     activeZoneId: (state) => {
-      // console.log('active zone id: ' + state.activeZoneId)
-      return state.activeZoneId
+      const source = state.sources.find(source => {
+        return source.id === state.activeSourceId
+      })
+      if (source) {
+        return source.component.activeZoneId
+      }
+      return null
     },
     /**
      * @memberof store.getters
@@ -277,6 +272,9 @@ export default new Vuex.Store({
         return source.id === state.activeSourceId
       })
       if (source) {
+        return source.component.activeZone
+      }
+      /*
         const vpage = source.pages[source.component.pagenr].v
         const rpage = source.pages[source.component.pagenr].r
         const measures = [
@@ -287,6 +285,7 @@ export default new Vuex.Store({
         })
         return zone
       }
+      */
       return null
     },
     /**

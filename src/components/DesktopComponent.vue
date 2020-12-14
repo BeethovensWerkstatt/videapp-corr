@@ -114,6 +114,7 @@ export default {
       sources.forEach((source, i) => {
         if (source.component) {
           source.component.updateDashPos()
+          source.component.updateOverlays()
         }
       })
     }

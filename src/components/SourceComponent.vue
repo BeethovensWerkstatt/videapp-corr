@@ -70,7 +70,8 @@ export default {
       ti_verso: null,
       moving: null,
       tracker: null,
-      overlays: []
+      overlays: [],
+      activeZoneId: null
     }
   },
   props: {
@@ -99,7 +100,8 @@ export default {
         this.selectSource()
       },
       dragHandler: this.dragHandler,
-      dragEndHandler: this.dragEndHandler
+      dragEndHandler: this.dragEndHandler,
+      releaseHandler: this.dragEndHandler
     })
 
     this.openPage(this.pagenr)
@@ -157,6 +159,27 @@ export default {
     isActive () {
       return this.desktop.$store.getters.activeSourceId === this.sourceId
     },
+    activePage () {
+      // TODO check pagenr
+      return this.source.pages[this.pagenr]
+    },
+    activeZone () {
+      var zone = null
+      if (this.activeZoneId) {
+        if (this.activePage.r) {
+          zone = this.activePage.r.measures.find(zone => {
+            return zone.zone === this.activeZoneId
+          })
+        }
+        if (!zone && this.activePage.v) {
+          zone = this.activePage.v.measures.find(zone => {
+            return zone.zone === this.activeZoneId
+          })
+        }
+        return zone
+      }
+      return zone
+    },
     pagetiles () {
       return this.source.pages.map(page => {
         // verso / recto ??
@@ -172,6 +195,11 @@ export default {
     }
   },
   methods: {
+    /**
+     * get size of control widget
+     *
+     * @returns {OpenSeadragon.Point}
+     */
     getSize () {
       const w = this.$el ? this.$el.clientWidth : 200
       const h = this.$el ? this.$el.clientHeight : 10
@@ -179,7 +207,7 @@ export default {
       return this.viewer.viewport.deltaPointsFromPixels(size)
     },
     /**
-     * get width of control
+     * get width of control in OpenSeadragon coordinates
      *
      * @returns {number} width of control panel
      */
@@ -296,7 +324,6 @@ export default {
      * @returns {number} X coordinate of tiled source images
      */
     getPageX (page) {
-      // console.log(this.sourceId + ': ' + page.place + ' single: ' + this.isSinglePage())
       if (this.isSinglePage()) {
         return this.position.x - (this.source.maxDimensions.width / 2)
       }
@@ -325,8 +352,7 @@ export default {
       // console.log(this.ti_recto)
       // console.log(this.ti_verso)
 
-      this.position.x = tox
-      this.position.y = toy
+      this.position = { x: tox, y: toy }
 
       this.updateDashPos()
 
@@ -416,7 +442,7 @@ export default {
 
       const srcovl = new SourceOverlayVue({
         propsData: {
-          SF: this,
+          SrcCmp: this,
           source: this.source,
           page: page
         }
@@ -457,10 +483,10 @@ export default {
      * @param {Object} e - event object
      */
     dragHandler (e) {
-      this.startUpdateOverlays()
       if (!this.moving) {
         this.moving = { ...this.position }
         this.selectSource()
+        this.startUpdateOverlays()
       }
       const delta = this.viewer.viewport.deltaPointsFromPixels(e.delta)
       this.moveTo(this.position.x + delta.x, this.position.y + delta.y)

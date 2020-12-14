@@ -16,11 +16,20 @@ import { AssociatedOverlay } from '@/mixins/AssociatedOverlay'
 
 /**
  * @module components.ZoneOverlay
- * @vue-prop {object} source - source object
- * @vue-prop {SourceComponent} SF - SourceComponent component
+ * @vue-prop {Object} source - source object
  * @vue-prop {SourceComponent} container - SourceComponent component
- * @vue-prop {object} page - page object
- * @vue-prop {object} zone - measure zone
+ * @vue-prop {Object} page - page object
+ * @vue-prop {Object} zone - measure zone
+ * @vue-computed {Object} $store - this component is created dynamically, so $store has to be retrieved from container
+ * @vue-computed {Object} viewer - OpenSeadragon viewer
+ * @vue-computed {String} divid - ID of div overlay tag
+ * @vue-computed {String} divtitle - title attribute of div overlay tag
+ * @vue-computed {Object} overlay - OpenSeadragon overlay object
+ * @vue-computed {Number} scaleFactor - ratio of dimension and pixel width
+ * @vue-computed {Boolean} isActive - `true` if zone is selected
+ * @vue-computed {Boolean} hasLabel - `true` if `label` property is not empty
+ * @vue-computed {Number} zoneposX - X coordinate of overlay on desktop
+ * @vue-computed {Number} zoneposY - Y coordinate of overlay on desktop
  */
 export default {
   name: 'ZoneOverlay',
@@ -31,7 +40,7 @@ export default {
     }
   },
   mounted () {
-    // console.log(this.SF.getPageX(this.page) + ', ' + this.SF.getPageY(this.page))
+    // console.log(this.container.getPageX(this.page) + ', ' + this.container.getPageY(this.page))
     // console.log(this.getZonePos())
     const pos = this.getZonePos()
     this.viewer.addOverlay(this.$el, pos)
@@ -45,9 +54,6 @@ export default {
       type: Object,
       required: true
     },
-    SF: {
-      required: true
-    },
     page: {
       type: Object,
       required: true
@@ -59,10 +65,10 @@ export default {
   },
   computed: {
     '$store' () {
-      return this.SF.$store
+      return this.container.$store
     },
     viewer () {
-      return this.SF.viewer
+      return this.container.viewer
     },
     divid () {
       return 'ovl_' + this.zone.zone
@@ -76,43 +82,71 @@ export default {
     overlay () {
       return this.viewer.getOverlayById(this.divid)
     },
+    overlayType () {
+      return 'zone'
+    },
     scaleFactor () {
       return parseInt(this.page.dimensions.width) / parseInt(this.page.pixels.width)
     },
     isActive () {
-      return this.SF.$store.getters.activeZone() && this.SF.$store.getters.activeZone().component === this
+      return this.container.activeZone && this.container.activeZoneId === this.zone.zone
     },
     hasLabel () {
       return this.zone.label && this.zone.label.length > 0
+    },
+    zoneposX () {
+      return (parseInt(this.zone.x) * this.scaleFactor)
+    },
+    zoneposY () {
+      return (parseInt(this.zone.y) * this.scaleFactor)
     }
   },
   methods: {
-    updateView (force = false) {
-      if ((force || !this.updating) && this.overlay) {
+    /**
+     * update position of overlay if not updating (drag and drop)
+     */
+    updateView () {
+      if (!this.updating && this.overlay) {
         this.overlay.update(this.getZonePos(), OpenSeadragon.TOP_LEFT)
       }
     },
+    /**
+     * start updating (drag and drop)
+     */
     startUpdate () {
       this.updating = true
     },
+    /**
+     * finish updating (drag and drop)
+     */
     finishUpdate () {
-      this.updateView(true)
       this.updating = false
+      this.updateView()
     },
+    /**
+     * get current position of overlay
+     *
+     * @returns {OpenSeadragon.Rect} position and size of overlay
+     */
     getZonePos () {
       const zonepos = new OpenSeadragon.Rect(10, 10, 10, 10)
-      zonepos.x = (parseInt(this.zone.x) * this.scaleFactor) + parseInt(this.SF.getPageX(this.page))
-      zonepos.y = (parseInt(this.zone.y) * this.scaleFactor) + parseInt(this.SF.getPageY(this.page))
+      zonepos.x = this.zoneposX + this.container.getPageX(this.page)
+      zonepos.y = this.zoneposY + this.container.getPageY(this.page)
       zonepos.width = parseInt(this.zone.width) * this.scaleFactor
       zonepos.height = parseInt(this.zone.height) * this.scaleFactor
+      // console.log(this.page.place)
+      // console.log(zonepos)
       return zonepos
     },
+    /**
+     * select this zone
+     */
     activateZone (e) {
       if (e) {
         e.preventDefault()
       }
-      this.SF.selectSource()
-      this.SF.$store.commit('ACTIVATE_ZONE', this.zone.zone)
+      this.container.activeZoneId = this.zone.zone
+      this.container.selectSource()
     }
   }
 }

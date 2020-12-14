@@ -7,8 +7,7 @@
         v-for="(zone) in page.measures"
         :key="zone.zone"
         :source="source"
-        :SF="SF"
-        :container="SF"
+        :container="SrcCmp"
         :page="page"
         :zone="zone"
         :style="styleForZone(zone)"
@@ -22,7 +21,7 @@ import ZoneOverlay from '@/components/ZoneOverlay'
 /**
  * @module components.SourceOverlay
  * @vue-prop {object} source - source object
- * @vue-prop {SourceFacsimile} SF - SourceFacsimile component
+ * @vue-prop {SourceFacsimile} SrcCmp - SourceFacsimile component
  * @vue-prop {object} page - page object
  */
 export default {
@@ -40,7 +39,7 @@ export default {
       type: Object,
       required: true
     },
-    SF: {
+    SrcCmp: {
       required: true
     },
     page: {
@@ -50,7 +49,7 @@ export default {
   },
   computed: {
     viewer () {
-      return this.SF.viewer
+      return this.SrcCmp.viewer
     },
     divid () {
       return 'ovl_' + this.source.id
@@ -61,7 +60,7 @@ export default {
   },
   methods: {
     styles () {
-      // console.log(this.SF.getPageX(this.page))
+      // console.log(this.SrcCmp.getPageX(this.page))
       return {
       }
     },
