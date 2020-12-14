@@ -7,6 +7,8 @@
 <script>
 /**
  * Application header component
+ *
+ * @module components.AppHeader
  */
 export default {
   name: 'AppHeader'

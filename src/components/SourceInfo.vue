@@ -2,17 +2,18 @@
   <div class="source-info">
     <strong>Source Information</strong>
     <div>
-      <select @change="changeSource" :value="$store.state.activeSourceFacs ? $store.state.activeSourceFacs.source.id : ''">
+      <select @change="changeSource" :value="source ? source.id : ''">
         <option key="---none---" value="">--- select source ---</option>
         <option
-          v-for="src in $store.state.sources"
+          v-for="src in $store.getters.sources"
           :key="src.id"
           :value="src.id"
         >
           {{ src.label }}
         </option>
       </select>
-      <table width="100%">
+      <table width="100%" v-if="this.source">
+        <tr><td colspan="2"><hr /></td></tr>
         <tr><td>Titel:</td><td class="smaller">{{ title }}</td></tr>
         <tr><td>Seiten:</td><td>{{ pagecount }} <span v-if="this.source" class="smaller"> [{{ first_label }} &ndash; {{ last_label }}]</span></td></tr>
         <tr><td colspan="2"><hr /></td></tr>
@@ -21,8 +22,8 @@
         <tr><td>Position:</td><td>{{ position }}</td></tr>
       </table>
     </div>
-    <hr />
-    <div>
+    <div v-if="this.source">
+      <hr />
       <btn-group>
         <btn
           @click="prevPage"
@@ -37,7 +38,7 @@
           ►
         </btn>
         <btn disabled="true">&nbsp;</btn>
-        <btn @click.prevent="clearInfo">clear</btn>
+        <btn @click.prevent="clearInfo">close</btn>
       </btn-group>
     </div>
   </div>
@@ -48,6 +49,7 @@
  * Display information about current selected/activated source and
  * its display state (displayed page).
  *
+ * @module components.SourceInfo
  * @vue-computed source {Object} - selected source object
  * @vue-computed activePage {Number} - index of the displayed verso-recto page pair.
  * @vue-computed title {String} - title of the source
@@ -61,14 +63,11 @@ export default {
   name: 'SourceInfo',
   computed: {
     source () {
-      if (this.$store.state.activeSourceFacs) {
-        return this.$store.state.activeSourceFacs.source
-      }
-      return null
+      return this.$store.getters.activeSource()
     },
     activePage () {
-      if (this.$store.state.activeSourceFacs) {
-        return this.$store.state.activeSourceFacs.pagenr
+      if (this.source) {
+        return this.source.component.pagenr
       }
       return 0
     },
@@ -90,14 +89,14 @@ export default {
       return '---'
     },
     verso_label () {
-      if (this.$store.state.activeSourceFacs) {
-        return this.$store.state.activeSourceFacs.left_label
+      if (this.source) {
+        return this.source.component.left_label
       }
       return '---'
     },
     recto_label () {
-      if (this.$store.state.activeSourceFacs) {
-        return this.$store.state.activeSourceFacs.right_label
+      if (this.source) {
+        return this.source.component.right_label
       }
       return '---'
     },
@@ -121,29 +120,25 @@ export default {
       return ''
     },
     hasPrev () {
-      const sf = this.$store.state.activeSourceFacs
-      return sf && sf.hasPrev
+      return this.source && this.source.component.hasPrev
     },
     hasNext () {
-      const sf = this.$store.state.activeSourceFacs
-      return sf && sf.hasNext
+      return this.source && this.source.component.hasNext
     },
     position () {
-      const sf = this.$store.state.activeSourceFacs
-      if (sf) {
-        return sf.position.x.toFixed(2) + ' / ' + sf.position.y.toFixed(2)
+      if (this.source) {
+        return this.source.component.position.x.toFixed(2) + ' / ' +
+               this.source.component.position.y.toFixed(2)
       }
       return '---'
     }
   },
   methods: {
     prevPage () {
-      const sf = this.$store.state.activeSourceFacs
-      return sf && sf.prevPage()
+      return this.source && this.source.component.prevPage()
     },
     nextPage () {
-      const sf = this.$store.state.activeSourceFacs
-      return sf && sf.nextPage()
+      return this.source && this.source.component.nextPage()
     },
     /**
      * unselect source / reset component
@@ -151,16 +146,18 @@ export default {
     clearInfo () {
       this.$store.commit('ACTIVATE_SOURCE', null)
     },
+    /**
+     * change selected source
+     */
     changeSource (e) {
       if (e.target.value === '') {
         this.clearInfo()
       } else {
-        for (var i in this.$store.state.sources) {
-          const src = this.$store.state.sources[i]
-          if (src.id === e.target.value) {
-            this.$store.commit('ACTIVATE_SOURCE', src.component)
+        this.$store.getters.sources.forEach(source => {
+          if (source.id === e.target.value) {
+            this.$store.commit('ACTIVATE_SOURCE', source.id)
           }
-        }
+        })
       }
     }
   }

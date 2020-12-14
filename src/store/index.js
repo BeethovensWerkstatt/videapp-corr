@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import pageSetup from '@/temp/pageSetup.json'
+import uuidv4 from '@/toolbox'
 
-import { uuidv4 } from '@/toolbox'
+import pageSetup from '@/temp/pageSetup.json'
 
 Vue.use(Vuex)
 
@@ -19,28 +19,16 @@ Vue.use(Vuex)
  * @property {object[]} annotations - list of annotations
  * @property {string} activeAnnotationId - ID of selected annotation
  * @property {object[]} sources - list of source objects
- * @property {module:SourceFacsimile} activeSourceFacs - selected source component
+ * @property {string} activeSourceId - ID of selected source
  */
 export default new Vuex.Store({
   state: {
     viewer: null,
-    osd_component: null,
+    desktop: null,
     annotations: [],
     activeAnnotationId: null,
     sources: [],
-    activeSourceFacs: null
-    /*
-    sample source:
-    {
-      id: String,
-      label: String,
-      maxDimensions: {height: 200, width: 600},
-      position: {x: 100, y: 200},
-      rotation: 0,
-      singleLeaf: false,
-      pages: []
-    }
-    */
+    activeSourceId: null
   },
   /**
    * @namespace store.mutations
@@ -62,7 +50,7 @@ export default new Vuex.Store({
      * @param {object} state
      * @param {module:OpenSeadragonComponent} OSDComponent
      */
-    SET_OSD (state, OSDComponent) {
+    SET_DESKTOP (state, OSDComponent) {
       state.OSDComponent = OSDComponent
     },
     /**
@@ -78,13 +66,10 @@ export default new Vuex.Store({
     /**
      * set active source component
      * @param {object} state
-     * @param {module:SourceFacsimile} srcfacs source component
+     * @param {String} src source id
      */
-    ACTIVATE_SOURCE (state, srcfacs) {
-      state.activeSourceFacs = srcfacs
-      if (state.activeSourceFacs) {
-        state.activeSourceFacs.placeOnTop()
-      }
+    ACTIVATE_SOURCE (state, src) {
+      state.activeSourceId = src
     },
     ADD_ANNOTATION (state, annotation) {
       const annots = [...state.annotations]
@@ -119,6 +104,7 @@ export default new Vuex.Store({
    */
   actions: {
     /**
+     * **TODO: load from REST API**
      * load sources
      * @memberof store.actions
      * @param {*} commit
@@ -226,36 +212,83 @@ export default new Vuex.Store({
    * @namespace store.getters
    * @memberof store
    * @property {object} viewer - OpenSeadragon Viewer object
+   * @property {object} desktop - Desktop Component
+   * @property {object[]} sources - list of source objects loaded
+   * @property {string} activeSourceId - ID of selected source object
+   * @property {string} activeZoneId - ID of selected source object
    */
   getters: {
     viewer: (state) => {
       return state.viewer
     },
-    osd_componen: (state) => {
-      return state.osd_component
+    desktop: (state) => {
+      return state.desktop
     },
     sources: (state) => {
       return state.sources
     },
-    annotations: (state) => {
-      return state.annotations
+    activeSourceId: (state) => {
+      return state.activeSourceId
     },
-    activeAnnotation: (state) => {
-      if (state.activeAnnotationId !== null) {
-        const annot = state.annotations.find(annot => annot.id === state.activeAnnotationId)
-        if (annot === undefined) {
-          return null
-        } else {
-          return annot
-        }
-      } else {
-        return null
+    /**
+     * @memberof store.getters
+     * @returns {object} selected source object or null
+     */
+    activeSource: (state) => () => {
+      const source = state.sources.find(source => { return source.id === state.activeSourceId })
+      // console.log('active source: ' + source)
+      return source
+    },
+    /**
+     * @memberof store.getters
+     * @param {string} id
+     * @returns {object} source object of id or null
+     */
+    getSourceById: (state) => (id) => {
+      // console.log('get source: ' + id)
+      if (!id) {
+        throw new Error('source id undefined!')
       }
-    },
-    annotationByZoneId: (state) => (id) => {
-      return state.annotations.filter(annot => {
-        return annot.target === id
+      return state.sources.find(source => {
+        // console.log(source.id)
+        return source.id === id
       })
+    },
+    activeZoneId: (state) => {
+      const source = state.sources.find(source => {
+        return source.id === state.activeSourceId
+      })
+      if (source) {
+        return source.component.activeZoneId
+      }
+      return null
+    },
+    /**
+     * @memberof store.getters
+     * @returns {object} selected zone object or null
+     */
+    activeZone: (state) => () => {
+      if (state.activeSourceId) {
+        const source = state.sources.find(source => {
+          return source.id === state.activeSourceId
+        })
+        if (source) {
+          return source.component.activeZone
+        }
+      }
+      return null
+    },
+    /**
+     * **not implemented yet!**
+     * @memberof store.getters
+     * @param {string} id
+     * @returns {object} source zone of id or null
+     */
+    getZoneById: (state) => (id) => {
+      state.sources.forEach((source) => {
+        console.log(source)
+      })
+      return null
     }
   }
 })

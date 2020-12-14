@@ -1,10 +1,10 @@
 <template>
   <div
     class="sourceBack"
-    v-bind:class="{ active: isActive }"
+    :class="{ active: isActive }"
     :id="this.divid"
     :title="label"
-    @resize="updateDashPos"
+    @resize="resize"
   >
     <btn-group>
       <btn
@@ -14,9 +14,6 @@
       </btn>
       <btn id="draghandle">
         ❂
-      </btn>
-      <btn @click="openSourceInfo">
-        ℹ
       </btn>
       <btn
         @click="nextPage"
@@ -29,16 +26,23 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import OpenSeadragon from 'openseadragon'
+import SourceOverlay from '@/components/SourceOverlay'
+import { OverlayContainer } from '@/mixins/OverlayContainer'
+
+const SourceOverlayVue = Vue.extend(SourceOverlay)
 
 /**
  * Source components are created dynamically. See {@tutorial vue-components-programmatically}.
- * If a source is selected it may be accessed globally. See {@link module:SourceInfo}.
+ * If a source is selected it may be accessed globally. See {@link module:components.SourceInfo}.
  *
+ * @module components.SourceComponent
+ * @vue-mixin {mixin.OverlayContainer}
  * @vue-data {Object} position - position of source on desktop (x,y)
  * @vue-data {Number} pagenr - index of displayed page-pair
  * @vue-prop {Object} source - source object
- * @vue-prop {OpenSeadragonComponent} OSD - OpenSeaDragon component
+ * @vue-prop {DesktopComponent} desktop - desktop component
  * @vue-prop {Number} index - index of this source
  * @vue-prop {Number} [defaultPage=0] - default page pair
  * @vue-computed {String} divid - id of the div for the source label
@@ -51,35 +55,32 @@ import OpenSeadragon from 'openseadragon'
  * @vue-computed {Boolean} isActive - true if this is the selected source
  */
 export default {
-  name: 'SourceFacsimile',
+  name: 'SourceComponent',
+  mixins: [OverlayContainer],
   data: function () {
+    // console.log('source-component: ' + this.sourceId)
+    const source = this.desktop.$store.getters.getSourceById(this.sourceId)
     return {
       position: {
-        x: this.source.position.x,
-        y: this.source.position.y
+        x: source.position.x,
+        y: source.position.y
       },
       pagenr: this.defaultPage,
-      // pagetiles: [],
       ti_recto: null,
       ti_verso: null,
       moving: null,
-      tracker: null
+      tracker: null,
+      overlays: [],
+      activeZoneId: null
     }
   },
   props: {
-    source: {
-      type: Object,
-      default: () => {
-        return {
-          pages: [{ v: null, r: null }]
-        }
-      }
-    },
-    OSD: {
+    sourceId: {
+      type: String,
       required: true
     },
-    index: {
-      type: Number
+    desktop: {
+      required: true
     },
     defaultPage: {
       type: Number,
@@ -87,27 +88,20 @@ export default {
     }
   },
   mounted () {
+    // link this source component with th source object
     this.source.component = this
 
     this.addMark(this.source.position.x, this.source.position.y, '')
-    /*
-    this.pagetiles = this.source.pages.map(page => {
-      return {
-        '@context': 'http://iiif.io/api/image/2/context.json',
-        '@id': page.uri,
-        profile: 'http://iiif.io/api/image/2/level2.json',
-        protocol: 'http://iiif.io/api/image',
-        width: page.pixels.width,
-        height: page.pixels.height
-      }
-    })
-    */
 
     const dh = this.$el.querySelector('#draghandle')
     this.tracker = new OpenSeadragon.MouseTracker({
       element: dh,
+      clickHandler: () => {
+        this.selectSource()
+      },
       dragHandler: this.dragHandler,
-      dragEndHandler: this.dragEndHandler
+      dragEndHandler: this.dragEndHandler,
+      releaseHandler: this.dragEndHandler
     })
 
     this.openPage(this.pagenr)
@@ -115,14 +109,27 @@ export default {
     this.viewer.addOverlay(this.$el, this.getDashPos(), OpenSeadragon.TOP_CENTER)
   },
   computed: {
+    '$store' () {
+      return this.desktop.$store
+    },
+    viewer () {
+      return this.$store.getters.viewer
+    },
     divid () {
       return this.source.id + '_back'
     },
+    source () {
+      const source = this.$store.getters.getSourceById(this.sourceId)
+      if (source) {
+        return source
+      }
+      // return fake source object
+      return {
+        pages: [{ v: null, r: null }]
+      }
+    },
     label () {
       return this.source.label
-    },
-    viewer () {
-      return this.OSD.viewer
     },
     hasNext () {
       return this.pagenr < this.source.pages.length - 1
@@ -150,22 +157,67 @@ export default {
       return this.viewer.getOverlayById(this.divid)
     },
     isActive () {
-      return this.OSD.$store.state.activeSourceFacs === this
+      return this.desktop.$store.getters.activeSourceId === this.sourceId
+    },
+    activePage () {
+      // TODO check pagenr
+      return this.source.pages[this.pagenr]
+    },
+    activeZone () {
+      var zone = null
+      if (this.activeZoneId) {
+        if (this.activePage.r) {
+          zone = this.activePage.r.measures.find(zone => {
+            return zone.zone === this.activeZoneId
+          })
+        }
+        if (!zone && this.activePage.v) {
+          zone = this.activePage.v.measures.find(zone => {
+            return zone.zone === this.activeZoneId
+          })
+        }
+        return zone
+      }
+      return zone
+    },
+    pagetiles () {
+      return this.source.pages.map(page => {
+        // verso / recto ??
+        return {
+          '@context': 'http://iiif.io/api/image/2/context.json',
+          '@id': page.uri,
+          profile: 'http://iiif.io/api/image/2/level2.json',
+          protocol: 'http://iiif.io/api/image',
+          width: page.pixels.width,
+          height: page.pixels.height
+        }
+      })
     }
   },
   methods: {
+    /**
+     * get size of control widget
+     *
+     * @returns {OpenSeadragon.Point}
+     */
     getSize () {
-      var size = new OpenSeadragon.Point(this.$el.clientWidth, this.$el.clientHeight)
+      const w = this.$el ? this.$el.clientWidth : 200
+      const h = this.$el ? this.$el.clientHeight : 10
+      const size = new OpenSeadragon.Point(w, h)
       return this.viewer.viewport.deltaPointsFromPixels(size)
     },
     /**
-     * get width of control
+     * get width of control in OpenSeadragon coordinates
+     *
+     * @returns {number} width of control panel
      */
     getWidth () {
       return this.getSize().x
     },
     /**
-     * get width of control
+     * get height of control in OpenSeadragon coordinates
+     *
+     * @returns {number} height of control panel
      */
     getHeight () {
       return this.getSize().y
@@ -183,6 +235,18 @@ export default {
     prevPage () {
       const p = this.pagenr - 1
       this.openPage(p)
+    },
+    /**
+     * is current page single?
+     */
+    isSinglePage () {
+      if (!this.source.pages[this.pagenr].v && !this.source.pages[this.pagenr].r) {
+        console.log('no displayed page???')
+      }
+      return (this.source.pages[this.pagenr].v === null &&
+              this.source.pages[this.pagenr].r !== null) ||
+             (this.source.pages[this.pagenr].v !== null &&
+              this.source.pages[this.pagenr].r === null)
     },
     /**
      * open page pair of index <i>p</i>
@@ -218,22 +282,38 @@ export default {
         }
       }
     },
+    /**
+     * get X coordinate of control panel
+     *
+     * @returns {number} X coordinate
+     */
     getDashX () {
       return this.position.x - (this.getWidth() / 2)
     },
+    /**
+     * get Y coordinate of control panel
+     *
+     * @returns {number} Y coordinate
+     */
     getDashY () {
       return this.position.y + (this.source.maxDimensions.height / 2)
     },
+    /**
+     * get coordinate point of control panel
+     *
+     * @returns {OpenSeadragon.Point} coordinate of left upper corner
+     */
     getDashPos () {
       // console.log(this.getWidth())
       return new OpenSeadragon.Point(this.getDashX(), this.getDashY())
     },
+    /**
+     * update dash coordinates to current scale
+     */
     updateDashPos () {
-      var ovl = this.viewer.getOverlayById(this.divid)
-      // console.log(ovl)
-      if (ovl) {
-        // console.log(this.getWidth())
-        ovl.update(this.getDashPos(), OpenSeadragon.TOP_CENTER)
+      const p = this.getDashPos()
+      if (this.overlay) {
+        this.overlay.update(p, OpenSeadragon.TOP_CENTER)
       }
     },
     /**
@@ -241,9 +321,10 @@ export default {
      *
      * @param {object} page - page object
      * @param {boolean} single - is single page
+     * @returns {number} X coordinate of tiled source images
      */
-    getPageX (page, single = false) {
-      if (single) {
+    getPageX (page) {
+      if (this.isSinglePage()) {
         return this.position.x - (this.source.maxDimensions.width / 2)
       }
       return page.place === 'verso'
@@ -255,13 +336,14 @@ export default {
      *
      * @param {object} page - page object
      * @param {boolean} single - is single page
+     * @returns {number} Y coordinate of tiled source images
      */
     getPageY (page) {
       return this.position.y - (this.source.maxDimensions.height / 2)
     },
     /**
-     * [WIP] *doesn't work right now*
-     * Move this SourceFacsimile to a new position
+     * Move this SourceComponent to a new position
+     *
      * @param {number} tox - X coordinate
      * @param {number} toy - Y coordinate
      */
@@ -270,48 +352,45 @@ export default {
       // console.log(this.ti_recto)
       // console.log(this.ti_verso)
 
-      this.position.x = tox
-      this.position.y = toy
+      this.position = { x: tox, y: toy }
 
       this.updateDashPos()
 
+      const pageXr = this.getPageX({ place: 'recto' })
+      const pageYr = this.getPageY({ place: 'recto' })
+      const pageXv = this.getPageX({ place: 'verso' })
+      const pageYv = this.getPageY({ place: 'verso' })
+
       var ovl
       // move debug markers ...
+      const tenp = this.viewer.viewport.deltaPointsFromPixels(new OpenSeadragon.Point(10, 10)).x
       ovl = this.viewer.getOverlayById('mark_' + this.divid + '_')
       if (ovl) {
         ovl.update(
-          new OpenSeadragon.Point(this.position.x, this.position.y),
+          new OpenSeadragon.Point(this.position.x - tenp, this.position.y - tenp),
           OpenSeadragon.TOP_CENTER)
       }
       ovl = this.viewer.getOverlayById('mark_' + this.divid + '_verso')
       if (ovl) {
-        ovl.update(
-          new OpenSeadragon.Point(
-            this.getPageX({ place: 'verso' }, this.ti_recto === null),
-            this.getPageY({ place: 'verso' })),
-          OpenSeadragon.TOP_CENTER)
+        const pos = new OpenSeadragon.Point(
+          pageXv - tenp,
+          pageYv - tenp)
+        ovl.update(pos, OpenSeadragon.TOP_CENTER)
       }
       ovl = this.viewer.getOverlayById('mark_' + this.divid + '_recto')
       if (ovl) {
-        ovl.update(
-          new OpenSeadragon.Point(
-            this.getPageX({ place: 'recto' }, this.ti_verso === null),
-            this.getPageY({ place: 'recto' })),
-          OpenSeadragon.TOP_CENTER)
+        const pos = new OpenSeadragon.Point(
+          pageXr - tenp,
+          pageYr - tenp)
+        ovl.update(pos, OpenSeadragon.TOP_CENTER)
       }
       // ... move debug markers end
 
       if (this.ti_verso) {
-        this.ti_verso.setPosition(
-          new OpenSeadragon.Point(
-            this.getPageX({ place: 'verso' }, this.ti_recto === null),
-            this.getPageY({ place: 'verso' })), true)
+        this.ti_verso.setPosition(new OpenSeadragon.Point(pageXv, pageYv), true)
       }
       if (this.ti_recto) {
-        this.ti_recto.setPosition(
-          new OpenSeadragon.Point(
-            this.getPageX({ place: 'recto' }, this.ti_verso === null),
-            this.getPageY({ place: 'recto' })), true)
+        this.ti_recto.setPosition(new OpenSeadragon.Point(pageXr, pageYr), true)
       }
     },
     /**
@@ -326,6 +405,13 @@ export default {
       const x = this.getPageX(page, single)
       const y = this.getPageY(page)
 
+      // remove all zone overlays of the previous page
+      this.overlays.forEach(ovl => {
+        if (ovl.overlayType === 'zone' && ovl.page.place === page.place) {
+          ovl.destroy()
+        }
+      })
+
       this.viewer.addTiledImage({
         tileSource: {
           '@context': 'http://iiif.io/api/image/2/context.json',
@@ -336,14 +422,17 @@ export default {
           height: page.pixels.height
         },
         success: (e) => {
+          // when the tiled image is loaded (on success), a previous image is removed
           if (page.place === 'verso') {
             if (this.ti_verso) {
+              // clear canvas before removing the ti
               this.ti_verso.setOpacity(0)
               this.ti_verso.destroy()
             }
             this.ti_verso = e.item
           } else {
             if (this.ti_recto) {
+              // clear canvas before removing the ti
               this.ti_recto.setOpacity(0)
               this.ti_recto.destroy()
             }
@@ -357,8 +446,19 @@ export default {
         // fitBoundsPlacement: placement,
         // degrees: source.rotation / 5
       })
-      this.addMark(x, y, page.place)
+      const tenp = this.viewer.viewport.deltaPointsFromPixels(new OpenSeadragon.Point(10, 10)).x
+      this.addMark(x - tenp, y - tenp, page.place)
       this.updateDashPos()
+
+      // TODO srcovl lives only for this moment. This should be cleaned up!
+      const srcovl = new SourceOverlayVue({
+        propsData: {
+          SrcCmp: this,
+          source: this.source,
+          page: page
+        }
+      })
+      srcovl.$mount()
     },
     /**
      * place source on top of the stack
@@ -373,36 +473,88 @@ export default {
       }
     },
     /**
+<<<<<<< HEAD:src/components/SourceFacsimile.vue
      * set this source selected
+=======
+     * select this source
+>>>>>>> jpv/dev:src/components/SourceComponent.vue
      *
      * @param {Object} e - event object
      */
-    openSourceInfo (e) {
+    selectSource (e) {
       if (e) {
         e.preventDefault()
       }
-      this.OSD.$store.commit('ACTIVATE_SOURCE', this)
+      this.desktop.$store.commit('ACTIVATE_SOURCE', this.sourceId)
+      this.placeOnTop()
     },
     /**
      * handle drag and drop with the drag handler
+     *
+     * @param {Object} e - event object
      */
     dragHandler (e) {
       if (!this.moving) {
         this.moving = { ...this.position }
-        this.openSourceInfo()
+        this.selectSource()
+        this.startUpdateOverlays()
       }
       const delta = this.viewer.viewport.deltaPointsFromPixels(e.delta)
       this.moveTo(this.position.x + delta.x, this.position.y + delta.y)
     },
     /**
      * handle drag and drop with the drag handler
+     *
+     * @param {Object} e - event object
      */
     dragEndHandler (e) {
       // const delta = this.viewer.viewport.deltaPointsFromPixels(e.position)
       // this.moveTo(
       //  this.position.x + delta.x,
       //  this.position.y + delta.y)
+      this.finishUpdateOverlays()
       this.moving = null
+    },
+    /**
+     * get current zoom scale
+     *
+     * @returns {number} zoom factor
+     */
+    getScale () {
+      var zoom = this.viewer.viewport.getZoom(true)
+      return this.viewer.viewport._containerInnerSize.x * zoom
+    },
+    /**
+     * get CSS transformation string
+     *
+     * @returns {string} 'scale(*scale*) rotate(*rotation*)'
+     */
+    getTransform () {
+      var rotation = this.viewer.viewport.getRotation()
+      return 'scale(' + this.getScale() + ') rotate(' + rotation + ')'
+    },
+    /**
+     * *not used*
+     * calculate styles for control panel
+     *
+     * @returns {object} position and scale
+     */
+    styles () {
+      var p = this.viewer.viewport.pixelFromPoint(this.getDashPos(), true)
+
+      return {
+        left: p.x + 'px',
+        top: p.y + 'px',
+        transform: this.getTransform()
+      }
+    },
+    /**
+     * *not used*
+     * process resize events
+     */
+    resize (e) {
+      console.log(e)
+      this.updateDashPos()
     },
     /**
      * **for debugging**
@@ -412,14 +564,13 @@ export default {
       const id = 'mark_' + this.divid + '_' + tag
       const mark = document.createElement('div')
       mark.setAttribute('id', id)
-      mark.setAttribute('style', 'font-weight: bold; color: red;')
+      mark.setAttribute('style', 'font-weight: bold; color: red; width: 20px; text-align: center;')
       mark.innerHTML = 'X'
-      const ovl = this.viewer.getOverlayById(id)
-      if (ovl) {
-        ovl.update(new OpenSeadragon.Point(x, y), OpenSeadragon.Placement.TOP_CENTER)
+      if (this.overlay) {
+        this.overlay.update(new OpenSeadragon.Point(x - 10, y), OpenSeadragon.Placement.TOP_CENTER)
       } else {
         this.viewer.addOverlay(mark,
-          new OpenSeadragon.Point(x, y),
+          new OpenSeadragon.Point(x - 10, y),
           { placement: OpenSeadragon.Placement.TOP_CENTER })
       }
     }
@@ -430,7 +581,9 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .sourceBack {
-  display: none;
+  background-color: rgba($color: #ffffff, $alpha: 0.5);
+  width: 110px;
+  text-align: center;
 }
 
 .btn {
@@ -446,7 +599,6 @@ export default {
 }
 .active {
   border: 1px solid green;
-  background-color: rgba($color: #ffffff, $alpha: 0.5);
-  display: absolute;
+  background-color: rgba($color: #ffffff, $alpha: 0.8);
 }
 </style>
