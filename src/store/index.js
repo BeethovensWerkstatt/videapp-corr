@@ -55,6 +55,7 @@ export default new Vuex.Store({
     },
     /**
      * set load source
+     * @memberof store.mutations
      * @param {object} state
      * @param {object} source - (*TBD typedef source object*)
      */
@@ -65,6 +66,7 @@ export default new Vuex.Store({
     },
     /**
      * set active source component
+     * @memberof store.mutations
      * @param {object} state
      * @param {String} src source id
      */
