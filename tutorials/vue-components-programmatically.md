@@ -19,8 +19,8 @@ OpenSeaDragon.
 5. render html: `theComponentInstance.$mount()`
 6. add overlay: `viewer.addOverlay(theComponentInstance.$el, ...)`
 
-**TBD**
+**To test**
 
-* Management of images and overlays int the store
+* Management of images and overlays in the store
 * synchronisation of image and related overlays
 
