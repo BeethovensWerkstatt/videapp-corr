@@ -355,6 +355,7 @@ export default {
       this.position = { x: tox, y: toy }
 
       this.updateDashPos()
+      this.updateOverlays(this.position)
 
       const pageXr = this.getPageX({ place: 'recto' })
       const pageYr = this.getPageY({ place: 'recto' })
@@ -362,7 +363,7 @@ export default {
       const pageYv = this.getPageY({ place: 'verso' })
 
       var ovl
-      // move debug markers ...
+      // move debug markers ... TODO SimpleOverlay!
       const tenp = this.viewer.viewport.deltaPointsFromPixels(new OpenSeadragon.Point(10, 10)).x
       ovl = this.viewer.getOverlayById('mark_' + this.divid + '_')
       if (ovl) {
@@ -473,11 +474,7 @@ export default {
       }
     },
     /**
-<<<<<<< HEAD:src/components/SourceFacsimile.vue
-     * set this source selected
-=======
      * select this source
->>>>>>> jpv/dev:src/components/SourceComponent.vue
      *
      * @param {Object} e - event object
      */
@@ -512,7 +509,7 @@ export default {
       // this.moveTo(
       //  this.position.x + delta.x,
       //  this.position.y + delta.y)
-      this.finishUpdateOverlays()
+      this.finishUpdateOverlays(this.position)
       this.moving = null
     },
     /**

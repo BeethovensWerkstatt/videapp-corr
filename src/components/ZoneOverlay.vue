@@ -28,21 +28,23 @@ import { AssociatedOverlay } from '@/mixins/AssociatedOverlay'
  * @vue-computed {Number} scaleFactor - ratio of dimension and pixel width
  * @vue-computed {Boolean} isActive - `true` if zone is selected
  * @vue-computed {Boolean} hasLabel - `true` if `label` property is not empty
- * @vue-computed {Number} zoneposX - X coordinate of overlay on desktop
- * @vue-computed {Number} zoneposY - Y coordinate of overlay on desktop
+ * @vue-computed {Number} zoneposX - X coordinate of overlay on facsimile
+ * @vue-computed {Number} zoneposY - Y coordinate of overlay on facsimile
+ * @vue-computed {OpenSeadragon.Rect} zonePos - position of overlay
  */
 export default {
   name: 'ZoneOverlay',
   mixins: [AssociatedOverlay],
   data: function () {
     return {
-      updating: false
+      updating: false,
+      position: { x: 0, y: 0 }
     }
   },
   mounted () {
     // console.log(this.container.getPageX(this.page) + ', ' + this.container.getPageY(this.page))
-    // console.log(this.getZonePos())
-    const pos = this.getZonePos()
+    // console.log(this.zone)
+    const pos = this.zonePos
     this.viewer.addOverlay(this.$el, pos)
     this.zone.component = this
     this.zone.overlay = this.viewer.getOverlayById(this.divid)
@@ -86,6 +88,7 @@ export default {
       return parseInt(this.page.dimensions.width) / parseInt(this.page.pixels.width)
     },
     isActive () {
+      // container is SourceComponent!
       return this.container.activeZone && this.container.activeZoneId === this.zone.zone
     },
     hasLabel () {
@@ -96,15 +99,26 @@ export default {
     },
     zoneposY () {
       return (parseInt(this.zone.y) * this.scaleFactor)
+    },
+    zonePos () {
+      const zonepos = new OpenSeadragon.Rect(10, 10, 10, 10)
+      zonepos.x = this.zoneposX + this.position.x
+      zonepos.y = this.zoneposY + this.position.y
+      zonepos.width = parseInt(this.zone.width) * this.scaleFactor
+      zonepos.height = parseInt(this.zone.height) * this.scaleFactor
+      // console.log(this.page.place)
+      // console.log(zonepos)
+      return zonepos
     }
   },
   methods: {
     /**
      * update position of overlay if not updating (drag and drop)
      */
-    updateView () {
+    updateView (position) {
       if (!this.updating && this.overlay) {
-        this.overlay.update(this.getZonePos(), OpenSeadragon.TOP_LEFT)
+        this.position = { x: position.x, y: position.y }
+        this.overlay.update(this.zonePos, OpenSeadragon.TOP_LEFT)
       }
     },
     /**
@@ -116,24 +130,9 @@ export default {
     /**
      * finish updating (drag and drop)
      */
-    finishUpdate () {
+    finishUpdate (position) {
       this.updating = false
-      this.updateView()
-    },
-    /**
-     * get current position of overlay as OpenSeadragon coordinates
-     *
-     * @returns {OpenSeadragon.Rect} position and size of overlay
-     */
-    getZonePos () {
-      const zonepos = new OpenSeadragon.Rect(10, 10, 10, 10)
-      zonepos.x = this.zoneposX + this.container.getPageX(this.page)
-      zonepos.y = this.zoneposY + this.container.getPageY(this.page)
-      zonepos.width = parseInt(this.zone.width) * this.scaleFactor
-      zonepos.height = parseInt(this.zone.height) * this.scaleFactor
-      // console.log(this.page.place)
-      // console.log(zonepos)
-      return zonepos
+      this.updateView(position)
     },
     /**
      * select this zone

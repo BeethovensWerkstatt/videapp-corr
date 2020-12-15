@@ -26,26 +26,30 @@ export const OverlayContainer = {
     },
     /**
      * update all registered overlays
+     *
+     * @param {object} position - new position of container
      */
-    updateOverlays () {
-      this.overlays.forEach(ovl => {
-        ovl.updateView()
+    updateOverlays (position) {
+      this.overlays.forEach(function (ovl) {
+        ovl.updateView(position)
       })
     },
     /**
      * start updating all overlays (for drag and drop)
      */
     startUpdateOverlays () {
-      this.overlays.forEach(ovl => {
+      this.overlays.forEach(function (ovl) {
         ovl.startUpdate()
       })
     },
     /**
      * finish updating all overlays (for drag and drop)
+     *
+     * @param {object} position - new position of container
      */
-    finishUpdateOverlays () {
-      this.overlays.forEach(ovl => {
-        ovl.finishUpdate()
+    finishUpdateOverlays (position) {
+      this.overlays.forEach(function (ovl) {
+        ovl.finishUpdate(position)
       })
     }
   }
