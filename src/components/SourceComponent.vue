@@ -355,12 +355,17 @@ export default {
       this.position = { x: tox, y: toy }
 
       this.updateDashPos()
-      this.updateOverlays(this.position)
 
       const pageXr = this.getPageX({ place: 'recto' })
       const pageYr = this.getPageY({ place: 'recto' })
       const pageXv = this.getPageX({ place: 'verso' })
       const pageYv = this.getPageY({ place: 'verso' })
+
+      this.updateOverlays((ovl) => {
+        return (ovl.page.place === 'verso')
+          ? { pageXv, pageYv }
+          : { pageXr, pageYr }
+      })
 
       var ovl
       // move debug markers ... TODO SimpleOverlay!
