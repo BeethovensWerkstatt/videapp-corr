@@ -116,10 +116,10 @@ export default {
      * update position of overlay if not updating (drag and drop)
      */
     updateView (position) {
-      if (this.overlay) { // !this.updating &&
-        this.position = { x: position.x, y: position.y }
-        this.overlay.update(this.zonePos, OpenSeadragon.TOP_LEFT)
-      }
+      this.position = { x: position.x, y: position.y }
+      // if (this.isActive || !this.updating) {
+      this.overlay.update(this.zonePos, OpenSeadragon.TOP_LEFT)
+      // }
     },
     /**
      * start updating (drag and drop)
@@ -130,9 +130,9 @@ export default {
     /**
      * finish updating (drag and drop)
      */
-    finishUpdate (position) {
+    finishUpdate () {
       this.updating = false
-      this.updateView(position)
+      this.overlay.update(this.zonePos, OpenSeadragon.TOP_LEFT)
     },
     /**
      * select this zone
