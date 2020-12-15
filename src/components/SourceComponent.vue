@@ -360,12 +360,13 @@ export default {
       const pageYr = this.getPageY({ place: 'recto' })
       const pageXv = this.getPageX({ place: 'verso' })
       const pageYv = this.getPageY({ place: 'verso' })
-
-      this.updateOverlays((ovl) => {
+      const pageP = function (ovl) {
         return (ovl.page.place === 'verso')
-          ? { pageXv, pageYv }
-          : { pageXr, pageYr }
-      })
+          ? { x: ovl.container.getPageX({ place: 'verso' }), y: ovl.container.getPageY({ place: 'verso' }) }
+          : { x: ovl.container.getPageX({ place: 'recto' }), y: ovl.container.getPageY({ place: 'recto' }) }
+      }
+
+      this.updateOverlays(pageP)
 
       var ovl
       // move debug markers ... TODO SimpleOverlay!

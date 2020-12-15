@@ -31,7 +31,7 @@ export const OverlayContainer = {
      */
     updateOverlays (position) {
       this.overlays.forEach(function (ovl) {
-        ovl.updateView((typeof position === 'function') ? position(ovl) : position)
+        ovl.updateView(position)
       })
     },
     /**

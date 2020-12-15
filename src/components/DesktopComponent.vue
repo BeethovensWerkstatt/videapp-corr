@@ -113,8 +113,17 @@ export default {
       const sources = this.$store.getters.sources
       sources.forEach((source, i) => {
         if (source.component) {
+          const pageXr = source.component.getPageX({ place: 'recto' })
+          const pageYr = source.component.getPageY({ place: 'recto' })
+          const pageXv = source.component.getPageX({ place: 'verso' })
+          const pageYv = source.component.getPageY({ place: 'verso' })
+          const pagePr = { x: pageXr, y: pageYr }
+          const pagePv = { x: pageXv, y: pageYv }
+
           source.component.updateDashPos()
-          source.component.updateOverlays()
+          source.component.updateOverlays((ovl) => {
+            return (ovl.page.place === 'verso') ? pagePv : pagePr
+          })
         }
       })
     }

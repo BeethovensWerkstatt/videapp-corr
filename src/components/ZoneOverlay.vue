@@ -116,7 +116,7 @@ export default {
      * update position of overlay if not updating (drag and drop)
      */
     updateView (position) {
-      if (!this.updating && this.overlay) {
+      if (this.overlay) { // !this.updating &&
         this.position = { x: position.x, y: position.y }
         this.overlay.update(this.zonePos, OpenSeadragon.TOP_LEFT)
       }
