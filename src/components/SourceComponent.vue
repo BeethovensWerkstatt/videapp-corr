@@ -361,7 +361,7 @@ export default {
       const pageXv = this.getPageX({ place: 'verso' })
       const pageYv = this.getPageY({ place: 'verso' })
       const pageP = function (ovl) {
-        return (ovl.page.place === 'verso')
+        return (ovl.overlayType === 'zone' && ovl.page.place === 'verso')
           ? { x: ovl.container.getPageX({ place: 'verso' }), y: ovl.container.getPageY({ place: 'verso' }) }
           : { x: ovl.container.getPageX({ place: 'recto' }), y: ovl.container.getPageY({ place: 'recto' }) }
       }
