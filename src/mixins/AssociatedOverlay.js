@@ -1,3 +1,4 @@
+// required elements for components using AssociatedOverlay mixin
 const required = {
   function: ['updateView', 'startUpdate', 'finishUpdate', 'destroy'],
   string: ['overlayType'],

@@ -88,7 +88,7 @@ export default {
     }
   },
   mounted () {
-    // link this source component with th source object
+    // link this source component with source object
     this.source.component = this
 
     this.addMark(this.source.position.x, this.source.position.y, '')
@@ -419,14 +419,23 @@ export default {
         }
       })
 
-      this.viewer.addTiledImage({
+      const elt = document.createElement('div')
+      elt.id = this.divid + '_' + page.place
+      elt.className = 'hilite'
+      const tisrc = {
         tileSource: {
           '@context': 'http://iiif.io/api/image/2/context.json',
           '@id': page.uri,
           profile: 'http://iiif.io/api/image/2/level2.json',
           protocol: 'http://iiif.io/api/image',
           width: page.pixels.width,
-          height: page.pixels.height
+          height: page.pixels.height,
+          overlays: [
+            {
+              element: elt,
+              location: new OpenSeadragon.Rect(3, 3, 5, 5)
+            }
+          ]
         },
         success: (e) => {
           // when the tiled image is loaded (on success), a previous image is removed
@@ -452,8 +461,12 @@ export default {
         // fitBounds: new OpenSeadragon.Rect(source.position.x, source.position.y, page.dimensions.width, page.dimensions.height),
         // fitBoundsPlacement: placement,
         // degrees: source.rotation / 5
-      })
+      }
+      console.log(tisrc.tileSource.overlays)
+      this.viewer.addTiledImage(tisrc)
+      // 10px in OSD scale
       const tenp = this.viewer.viewport.deltaPointsFromPixels(new OpenSeadragon.Point(10, 10)).x
+      // mark is of height and width 20px - align it centered
       this.addMark(x - tenp, y - tenp, page.place)
       this.updateDashPos()
 
@@ -597,11 +610,14 @@ export default {
 }
 
 .btn:hover {
-  border: 1px solid blue;
+  outline: 1px solid blue;
   background-color: rgba($color: #ffffff, $alpha: 0.8);
 }
 .active {
-  border: 1px solid green;
+  outline: 1px solid green;
   background-color: rgba($color: #ffffff, $alpha: 0.8);
+}
+.hilite {
+  outline: 1px solid green;
 }
 </style>
