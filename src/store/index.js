@@ -237,7 +237,7 @@ export default new Vuex.Store({
      * @returns {object} selected source object or null
      */
     activeSource: (state) => () => {
-      const source = state.sources.find(source => { return source.id === state.activeSourceId })
+      const source = state.sources.find(source => source.id === state.activeSourceId)
       // console.log('active source: ' + source)
       return source
     },
@@ -251,15 +251,10 @@ export default new Vuex.Store({
       if (!id) {
         throw new Error('source id undefined!')
       }
-      return state.sources.find(source => {
-        // console.log(source.id)
-        return source.id === id
-      })
+      return state.sources.find(source => source.id === id)
     },
     activeZoneId: (state) => {
-      const source = state.sources.find(source => {
-        return source.id === state.activeSourceId
-      })
+      const source = state.sources.find(source => source.id === state.activeSourceId)
       if (source) {
         return source.component.activeZoneId
       }
@@ -271,9 +266,7 @@ export default new Vuex.Store({
      */
     activeZone: (state) => () => {
       if (state.activeSourceId) {
-        const source = state.sources.find(source => {
-          return source.id === state.activeSourceId
-        })
+        const source = state.sources.find(source => source.id === state.activeSourceId)
         if (source) {
           return source.component.activeZone
         }

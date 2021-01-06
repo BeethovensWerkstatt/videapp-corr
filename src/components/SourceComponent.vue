@@ -59,12 +59,7 @@ export default {
   mixins: [OverlayContainer],
   data: function () {
     // console.log('source-component: ' + this.sourceId)
-    const source = this.desktop.$store.getters.getSourceById(this.sourceId)
     return {
-      position: {
-        x: source.position.x,
-        y: source.position.y
-      },
       pagenr: this.defaultPage,
       ti_recto: null,
       ti_verso: null,
@@ -124,8 +119,26 @@ export default {
         return source
       }
       // return fake source object
+      console.warn('fake source!')
       return {
-        pages: [{ v: null, r: null }]
+        pages: [{ v: null, r: null }],
+        position: { x: 0, y: 0 }
+      }
+    },
+    position: {
+      get () {
+        return {
+          x: this.source.position.x,
+          y: this.source.position.y
+        }
+      },
+      set (pos) {
+        if (pos && typeof pos.x === 'number' && typeof pos.y === 'number') {
+          this.source.position = {
+            x: pos.x,
+            y: pos.y
+          }
+        }
       }
     },
     label () {
