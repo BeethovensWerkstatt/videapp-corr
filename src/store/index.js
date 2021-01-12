@@ -65,6 +65,22 @@ export default new Vuex.Store({
       state.sources = sources
     },
     /**
+     * replace source
+     * @param {object} state
+     * @param {object} source
+     */
+    MODIFY_SOURCE (state, source) {
+      state.sources = state.sources.map(src => src.id === source.id ? source : src)
+    },
+    /**
+     *
+     * @param {object} state
+     * @param {object} src
+     */
+    MOVE_SOURCE (state, { id, x, y }) {
+
+    },
+    /**
      * set active source component
      * @memberof store.mutations
      * @param {object} state
