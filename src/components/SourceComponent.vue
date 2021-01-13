@@ -134,10 +134,7 @@ export default {
       },
       set (pos) {
         if (pos && typeof pos.x === 'number' && typeof pos.y === 'number') {
-          this.source.position = {
-            x: pos.x,
-            y: pos.y
-          }
+          this.$store.commit('MOVE_SOURCE', { id: this.sourceId, x: pos.x, y: pos.y })
         }
       }
     },
@@ -475,7 +472,7 @@ export default {
         // fitBoundsPlacement: placement,
         // degrees: source.rotation / 5
       }
-      console.log(tisrc.tileSource.overlays)
+      // console.log(tisrc.tileSource.overlays)
       this.viewer.addTiledImage(tisrc)
       // 10px in OSD scale
       const tenp = this.viewer.viewport.deltaPointsFromPixels(new OpenSeadragon.Point(10, 10)).x

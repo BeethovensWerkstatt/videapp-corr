@@ -73,12 +73,15 @@ export default new Vuex.Store({
       state.sources = state.sources.map(src => src.id === source.id ? source : src)
     },
     /**
-     *
+     * move source on the OSD space
      * @param {object} state
      * @param {object} src
      */
     MOVE_SOURCE (state, { id, x, y }) {
-
+      const msrc = { ...state.sources.find(src => src.id === id), position: { x: x, y: y } }
+      if (msrc.id) {
+        state.sources = state.sources.map(src => src.id === msrc.id ? msrc : src)
+      }
     },
     /**
      * set active source component
