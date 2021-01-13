@@ -134,7 +134,9 @@ export default {
       },
       set (pos) {
         if (pos && typeof pos.x === 'number' && typeof pos.y === 'number') {
-          this.$store.commit('MOVE_SOURCE', { id: this.sourceId, x: pos.x, y: pos.y })
+          Vue.set(this.source.position, 'x', pos.x)
+          Vue.set(this.source.position, 'y', pos.y)
+          // this.$store.commit('MOVE_SOURCE', { id: this.sourceId, x: pos.x, y: pos.y })
         }
       }
     },
