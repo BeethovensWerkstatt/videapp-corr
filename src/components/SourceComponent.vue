@@ -275,6 +275,13 @@ export default {
       const leftPage = this.source.pages[p].v
       const rightPage = this.source.pages[p].r
 
+      // remove all zone overlays
+      this.overlays.forEach(ovl => {
+        if (ovl.overlayType === 'zone') {
+          ovl.destroy()
+        }
+      })
+
       if (leftPage !== null) {
         this.addPage(leftPage, rightPage === null)
       } else {
@@ -336,12 +343,13 @@ export default {
      * @returns {number} X coordinate of tiled source images
      */
     getPageX (page) {
+      const x = this.position.x
       if (this.isSinglePage()) {
-        return this.position.x - (this.source.maxDimensions.width / 2)
+        return x - (this.source.maxDimensions.width / 2)
       }
       return page.place === 'verso'
-        ? this.position.x - (this.source.maxDimensions.width / 2)
-        : this.position.x // + (this.source.maxDimensions.width / 4)
+        ? x - (this.source.maxDimensions.width / 2)
+        : x // + (this.source.maxDimensions.width / 4)
     },
     /**
      * calculate Y for page
@@ -351,7 +359,8 @@ export default {
      * @returns {number} Y coordinate of tiled source images
      */
     getPageY (page) {
-      return this.position.y - (this.source.maxDimensions.height / 2)
+      const y = this.position.y
+      return y - (this.source.maxDimensions.height / 2)
     },
     /**
      * Move this SourceComponent to a new position
@@ -423,13 +432,6 @@ export default {
 
       const x = this.getPageX(page, single)
       const y = this.getPageY(page)
-
-      // remove all zone overlays of the previous page
-      this.overlays.forEach(ovl => {
-        if (ovl.overlayType === 'zone' && ovl.page.place === page.place) {
-          ovl.destroy()
-        }
-      })
 
       const elt = document.createElement('div')
       elt.id = this.divid + '_' + page.place

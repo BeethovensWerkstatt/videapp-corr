@@ -49,7 +49,7 @@ export default {
   },
   computed: {
     viewer () {
-      return this.SrcCmp.viewer
+      return this.$store.getters.viewer
     },
     divid () {
       return 'ovl_' + this.source.id
