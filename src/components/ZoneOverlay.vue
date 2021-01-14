@@ -4,6 +4,7 @@
       class="measure-ovl"
       :title="divtitle"
       @click.prevent="activateZone"
+      :style="{ position: 'absolute', top: this.zoneposY, left: this.zoneposX }"
       :class="{ active: this.isActive, anno: this.hasLabel, hide: this.updating }"
     >
     {{ (this.zone.label.length > 0) ? '&bullet;' : '' }}

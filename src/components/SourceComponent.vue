@@ -57,18 +57,6 @@ const SourceOverlayVue = Vue.extend(SourceOverlay)
 export default {
   name: 'SourceComponent',
   mixins: [OverlayContainer],
-  data: function () {
-    // console.log('source-component: ' + this.sourceId)
-    return {
-      pagenr: this.defaultPage,
-      ti_recto: null,
-      ti_verso: null,
-      moving: null,
-      tracker: null,
-      overlays: [],
-      activeZoneId: null
-    }
-  },
   props: {
     sourceId: {
       type: String,
@@ -82,6 +70,18 @@ export default {
       default: 0
     }
   },
+  data: function () {
+    // console.log('source-component: ' + this.sourceId)
+    return {
+      pagenr: this.defaultPage,
+      ti_recto: null,
+      ti_verso: null,
+      moving: null,
+      tracker: null,
+      overlays: [],
+      activeZoneId: null
+    }
+  },
   mounted () {
     // link this source component with source object
     this.source.component = this
@@ -91,9 +91,7 @@ export default {
     const dh = this.$el.querySelector('#draghandle')
     this.tracker = new OpenSeadragon.MouseTracker({
       element: dh,
-      clickHandler: () => {
-        this.selectSource()
-      },
+      clickHandler: () => { this.selectSource() },
       dragHandler: this.dragHandler,
       dragEndHandler: this.dragEndHandler,
       releaseHandler: this.dragEndHandler

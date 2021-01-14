@@ -62,6 +62,7 @@ export default {
     styles () {
       // console.log(this.SrcCmp.getPageX(this.page))
       return {
+        position: 'absolute'
       }
     },
     styleForZone (zone) {

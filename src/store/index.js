@@ -15,7 +15,7 @@ Vue.use(Vuex)
  * @typedef {object} store.state
  * @memberof store
  * @property {object} viewer - OpenSeadragon Viewer object
- * @property {object} osd_component - OpenSeadragon Vue component
+ * @property {object} desktop - OpenSeadragon Vue component
  * @property {object[]} annotations - list of annotations
  * @property {string} activeAnnotationId - ID of selected annotation
  * @property {object[]} sources - list of source objects
@@ -128,8 +128,8 @@ export default new Vuex.Store({
      * **TODO: load from REST API**
      * load sources
      * @memberof store.actions
-     * @param {*} commit
-     * @param {*} state
+     * @param {function} commit
+     * @param {object} state
      */
     loadSources ({ commit, state }) {
       // this needs to be replaced with dynamic content
