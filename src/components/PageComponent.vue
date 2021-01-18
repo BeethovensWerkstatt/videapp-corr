@@ -8,10 +8,19 @@
       width: width,
       height: height
     }">
+    <zone-component
+      v-for="zone in page.measures"
+      :key="zone.zone"
+      :x="scaleFactor * zone.x"
+      :y="scaleFactor * zone.y"
+      :width="scaleFactor * zone.width"
+      :height="scaleFactor * zone.height"
+    />
   </div>
 </template>
 
 <script>
+import ZoneComponent from './ZoneComponent.vue'
 /**
  * Component for one page. Collect all measure-zones
  *
@@ -28,6 +37,7 @@
  * @vue-computed {number} height - scaled height for OpenSeadragon
  */
 export default {
+  components: { ZoneComponent },
   name: 'PageComponent',
   props: {
     x: {
