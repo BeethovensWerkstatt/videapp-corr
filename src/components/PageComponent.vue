@@ -6,7 +6,8 @@
       left: x,
       top: y,
       width: width,
-      height: height
+      height: height,
+      transform: transform
     }">
     <zone-component
       v-for="zone in page.measures"
@@ -20,6 +21,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vue'
+import OpenSeadragon from 'openseadragon'
 import ZoneComponent from './ZoneComponent.vue'
 /**
  * Component for one page. Collect all measure-zones
@@ -57,19 +60,25 @@ export default {
     return {
       data: {
         pagadata: null,
-        tidata: null
+        tidata: null,
+        transform: ''
       }
     }
   },
   computed: {
+    ...mapGetters([
+      'viewer',
+      'desktop'
+    ]),
     page: {
       get () {
         return this.pagedata
       },
       set (newpage) {
         this.pagedata = newpage
-        // refresh tiled image
+
         if (this.isActive) {
+          // refresh tiled image
           const page = this.page
           const x = this.x
           const y = this.y
@@ -93,11 +102,11 @@ export default {
             // fitBoundsPlacement: placement,
             // degrees: source.rotation / 5
           }
-          // console.log(tisrc.tileSource.overlays)
           this.viewer.addTiledImage(tisrc)
         } else {
           this.tiledimage = null
         }
+        // refresh overlay?
       }
     },
     tiledimage: {
@@ -111,7 +120,21 @@ export default {
           this.tidata.destroy()
         }
         this.tidata = ti
+        if (this.tidata) {
+          if (this.overlay) {
+            this.overlay.update(this.pos, OpenSeadragon.TOP_LEFT)
+          } else {
+            this.viewer.addOverlay(this.$el, this.pos, OpenSeadragon.TOP_LEFT)
+          }
+        } else {
+          if (this.overlay) {
+            this.overlay.destroy()
+          }
+        }
       }
+    },
+    overlay () {
+      return this.viewer.getOverlayById(this.divid)
     },
     isActive () {
       return this.pagedata !== null
@@ -126,6 +149,28 @@ export default {
     },
     height () {
       return this.isActive ? this.scaleFactor * this.pagedata.pixels.height : 0
+    },
+    pos () {
+      return new OpenSeadragon.Rect(this.x, this.y, this.width, this.height)
+    }
+  },
+  methods: {
+    /**
+     * resize handler for OpenSeadragon
+     */
+    resize () {
+      var p = this.viewer.viewport.pixelFromPoint(new OpenSeadragon.Point(0, 0), true)
+      var zoom = this.viewer.viewport.getZoom(true)
+      // source rotation
+      var rotation = this.viewer.viewport.getRotation()
+
+      // TODO: Expose an accessor for _containerInnerSize in the OSD API so we don't have to use the private variable.
+      // ??? do we need width of page?
+      var scale = this.viewer.viewport._containerInnerSize.x * zoom
+
+      this.transform =
+        'translate(' + p.x + 'px,' + p.y + 'px) ' +
+        'scale(' + scale + ') rotate(' + rotation + ')'
     }
   }
 }
