@@ -4,9 +4,9 @@
 
 <script>
 import Vue from 'vue'
+import { mapGetters } from 'vuex'
 import OpenSeadragon from 'openseadragon'
 import SourceComponentFactory from '@/components/SourceComponent'
-import DesktopAccess from '@/mixins'
 import osddef from '@/config/osd.default.js'
 import { desktopTile } from '@/toolbox'
 
@@ -27,7 +27,6 @@ const SourceComponent = Vue.extend(SourceComponentFactory)
  */
 export default {
   name: 'DesktopComponent',
-  mixins: [DesktopAccess],
   components: {},
   data: function () {
     return {
@@ -70,6 +69,10 @@ export default {
     }
   },
   methods: {
+    ...mapGetters([
+      'viewer',
+      'desktop'
+    ]),
     /**
      * init Desktop Viewer with properties,
      * add tiled background image and add selected sources.
