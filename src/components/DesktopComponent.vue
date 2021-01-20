@@ -82,36 +82,6 @@ export default {
      * add tiled background image and add selected sources.
      */
     init () {
-      // console.log(this.viewerprops)
-      // const viewer = OpenSeadragon(this.viewerprops)
-      // console.log(viewer)
-      // console.log(viewer.fabricjsOverlay)
-      // console.log(viewer.htmlOverlay)
-
-      // make OpenSeadragon Viewer and component avilable through the store
-      // this.$store.commit('SET_VIEWER', viewer)
-      // this.$store.commit('SET_DESKTOP', this)
-
-      // load desktop background
-      this.viewer.addTiledImage({
-        tileSource: this.backsrc,
-        x: 0,
-        y: 0,
-        width: this.width
-      })
-
-      // for every node in the store create and init (empty mount) SourceComponent
-      // const sources = this.$store.getters.sources
-      // sources.forEach(source => {
-      // console.log(source.id)
-      // const srcfacs = new SourceComponent({
-      // propsData: {
-      // sourceId: source.id,
-      // desktop: this
-      // }
-      // })
-      // srcfacs.$mount()
-      // })
       this.viewer.addHandler('resize', this.updateView)
       this.viewer.addHandler('zoom', this.updateView)
       this.viewer.addHandler('open', this.updateView)

@@ -242,9 +242,15 @@ export default new Vuex.Store({
    * @property {string} activeZoneId - ID of selected source object
    */
   getters: {
-    viewer: (state) => {
+    viewer: (state, getters) => {
       if (!state.viewer) {
-        Vue.set(state, 'viewer', OpenSeadragon(osddef))
+        state.viewer = OpenSeadragon(osddef)
+        state.viewer.addTiledImage({
+          tileSource: getters.backsrc,
+          x: 0,
+          y: 0,
+          width: getters.width
+        })
       }
       return state.viewer
     },
