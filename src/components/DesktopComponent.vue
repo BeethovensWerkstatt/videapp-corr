@@ -1,17 +1,19 @@
 <template>
-  <div :id="this.divid"></div>
+  <div :id="this.divid">
+    <source-component v-for="source in sources" :key="source.id" :sourceId="source.id" />
+  </div>
 </template>
 
 <script>
-import Vue from 'vue'
+// import Vue from 'vue'
 import { mapGetters } from 'vuex'
-import OpenSeadragon from 'openseadragon'
-import SourceComponentFactory from '@/components/SourceComponent'
+// import OpenSeadragon from 'openseadragon'
+import SourceComponent from '@/components/SourceComponent'
 import osddef from '@/config/osd.default.js'
 import { desktopTile } from '@/toolbox'
 
 // create SourceComponent component-constructor
-const SourceComponent = Vue.extend(SourceComponentFactory)
+// const SourceComponent = Vue.extend(SourceComponentFactory)
 
 /**
  * OpenSeadragon component
@@ -27,7 +29,9 @@ const SourceComponent = Vue.extend(SourceComponentFactory)
  */
 export default {
   name: 'DesktopComponent',
-  components: {},
+  components: {
+    SourceComponent
+  },
   data: function () {
     return {
       viewerprops: { ...osddef, ...this.osdinit }
@@ -79,38 +83,38 @@ export default {
      */
     init () {
       // console.log(this.viewerprops)
-      const viewer = OpenSeadragon(this.viewerprops)
+      // const viewer = OpenSeadragon(this.viewerprops)
       // console.log(viewer)
       // console.log(viewer.fabricjsOverlay)
       // console.log(viewer.htmlOverlay)
 
+      // make OpenSeadragon Viewer and component avilable through the store
+      // this.$store.commit('SET_VIEWER', viewer)
+      // this.$store.commit('SET_DESKTOP', this)
+
       // load desktop background
-      viewer.addTiledImage({
+      this.viewer.addTiledImage({
         tileSource: this.backsrc,
         x: 0,
         y: 0,
         width: this.width
       })
 
-      // make OpenSeadragon Viewer and component avilable through the store
-      this.$store.commit('SET_VIEWER', viewer)
-      this.$store.commit('SET_DESKTOP', this)
-
       // for every node in the store create and init (empty mount) SourceComponent
-      const sources = this.$store.getters.sources
-      sources.forEach(source => {
-        // console.log(source.id)
-        const srcfacs = new SourceComponent({
-          propsData: {
-            sourceId: source.id,
-            desktop: this
-          }
-        })
-        srcfacs.$mount()
-      })
-      viewer.addHandler('resize', this.updateView)
-      viewer.addHandler('zoom', this.updateView)
-      viewer.addHandler('open', this.updateView)
+      // const sources = this.$store.getters.sources
+      // sources.forEach(source => {
+      // console.log(source.id)
+      // const srcfacs = new SourceComponent({
+      // propsData: {
+      // sourceId: source.id,
+      // desktop: this
+      // }
+      // })
+      // srcfacs.$mount()
+      // })
+      this.viewer.addHandler('resize', this.updateView)
+      this.viewer.addHandler('zoom', this.updateView)
+      this.viewer.addHandler('open', this.updateView)
     },
     updateView (e) {
       const sources = this.$store.getters.sources
@@ -135,6 +139,7 @@ export default {
     this.init()
   },
   computed: {
+    ...mapGetters(['sources', 'viewer'])
   }
 }
 </script>

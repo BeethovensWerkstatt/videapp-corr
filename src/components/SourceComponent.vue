@@ -27,6 +27,7 @@
 
 <script>
 import Vue from 'vue'
+import { mapGetters } from 'vuex'
 import OpenSeadragon from 'openseadragon'
 import SourceOverlay from '@/components/SourceOverlay'
 import { OverlayContainer } from '@/mixins/OverlayContainer'
@@ -42,7 +43,6 @@ const SourceOverlayVue = Vue.extend(SourceOverlay)
  * @vue-data {Object} position - position of source on desktop (x,y)
  * @vue-data {Number} pagenr - index of displayed page-pair
  * @vue-prop {Object} source - source object
- * @vue-prop {DesktopComponent} desktop - desktop component
  * @vue-prop {Number} index - index of this source
  * @vue-prop {Number} [defaultPage=0] - default page pair
  * @vue-computed {String} divid - id of the div for the source label
@@ -60,9 +60,6 @@ export default {
   props: {
     sourceId: {
       type: String,
-      required: true
-    },
-    desktop: {
       required: true
     },
     defaultPage: {
@@ -102,12 +99,7 @@ export default {
     this.viewer.addOverlay(this.$el, this.getDashPos(), OpenSeadragon.TOP_CENTER)
   },
   computed: {
-    '$store' () {
-      return this.desktop.$store
-    },
-    viewer () {
-      return this.$store.getters.viewer
-    },
+    ...mapGetters(['viewer']),
     divid () {
       return this.source.id + '_back'
     },
@@ -167,7 +159,7 @@ export default {
       return this.viewer.getOverlayById(this.divid)
     },
     isActive () {
-      return this.desktop.$store.getters.activeSourceId === this.sourceId
+      return this.$store.getters.activeSourceId === this.sourceId
     },
     activePage () {
       // TODO check pagenr
@@ -513,7 +505,7 @@ export default {
       if (e) {
         e.preventDefault()
       }
-      this.desktop.$store.commit('ACTIVATE_SOURCE', this.sourceId)
+      this.$store.commit('ACTIVATE_SOURCE', this.sourceId)
       this.placeOnTop()
     },
     /**

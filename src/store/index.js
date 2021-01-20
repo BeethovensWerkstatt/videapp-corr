@@ -3,6 +3,9 @@ import Vuex from 'vuex'
 
 import uuidv4 from '@/toolbox'
 
+import OpenSeadragon from 'openseadragon'
+
+import osddef from '@/config/osd.default.js'
 import pageSetup from '@/temp/pageSetup.json'
 
 Vue.use(Vuex)
@@ -240,6 +243,9 @@ export default new Vuex.Store({
    */
   getters: {
     viewer: (state) => {
+      if (!state.viewer) {
+        Vue.set(state, 'viewer', OpenSeadragon(osddef))
+      }
       return state.viewer
     },
     desktop: (state) => {
