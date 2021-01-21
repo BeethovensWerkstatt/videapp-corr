@@ -75,9 +75,6 @@ export default {
     }
   },
   methods: {
-    ...mapGetters([
-      'viewer'
-    ]),
     updateView (e) {
       const sources = this.$store.getters.sources
       sources.forEach((source, i) => {
