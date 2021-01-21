@@ -129,7 +129,7 @@ export default new Vuex.Store({
     /**
      * create OpenSeadragon canvas
      */
-    createOpenSeaDragon ({ commit, state }, { config, TIback }) {
+    createOpenSeaDragon ({ commit, state }, { config, TIback, handler }) {
       // console.log(payload)
       // console.log(state)
 
@@ -138,6 +138,10 @@ export default new Vuex.Store({
       viewer.addTiledImage(TIback)
 
       commit('SET_VIEWER', viewer)
+
+      for (const k in handler) {
+        viewer.addHandler(k, handler[k])
+      }
     },
     /**
      * **TODO: load from REST API**
