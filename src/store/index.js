@@ -26,7 +26,6 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     viewer: null,
-    desktop: null,
     annotations: [],
     activeAnnotationId: null,
     sources: [],
@@ -45,15 +44,6 @@ export default new Vuex.Store({
      */
     SET_VIEWER (state, viewer) {
       state.viewer = viewer
-    },
-    /**
-     * set OpenSeadragon component
-     * @memberof store.mutations
-     * @param {object} state
-     * @param {module:OpenSeadragonComponent} OSDComponent
-     */
-    SET_DESKTOP (state, OSDComponent) {
-      state.OSDComponent = OSDComponent
     },
     /**
      * set load source
@@ -260,9 +250,6 @@ export default new Vuex.Store({
   getters: {
     viewer: (state) => {
       return state.viewer
-    },
-    desktop: (state) => {
-      return state.desktop
     },
     sources: (state) => {
       return state.sources

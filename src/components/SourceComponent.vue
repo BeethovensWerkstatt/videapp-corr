@@ -124,9 +124,7 @@ export default {
       },
       set (pos) {
         if (pos && typeof pos.x === 'number' && typeof pos.y === 'number') {
-          Vue.set(this.source.position, 'x', pos.x)
-          Vue.set(this.source.position, 'y', pos.y)
-          // this.$store.commit('MOVE_SOURCE', { id: this.sourceId, x: pos.x, y: pos.y })
+          this.$store.commit('MOVE_SOURCE', { id: this.sourceId, x: pos.x, y: pos.y })
         }
       }
     },
@@ -181,19 +179,6 @@ export default {
         return zone
       }
       return zone
-    },
-    pagetiles () {
-      return this.source.pages.map(page => {
-        // verso / recto ??
-        return {
-          '@context': 'http://iiif.io/api/image/2/context.json',
-          '@id': page.uri,
-          profile: 'http://iiif.io/api/image/2/level2.json',
-          protocol: 'http://iiif.io/api/image',
-          width: page.pixels.width,
-          height: page.pixels.height
-        }
-      })
     }
   },
   methods: {

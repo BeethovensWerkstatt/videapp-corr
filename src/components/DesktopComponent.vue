@@ -1,7 +1,11 @@
 <template>
   <div :id="this.divid">
     <div v-if="viewer">
-      <source-component v-for="source in sources" :key="source.id" :sourceId="source.id" />
+      <source-component
+        v-for="source in sources"
+        :key="source.id"
+        :sourceId="source.id"
+      />
     </div>
   </div>
 </template>
@@ -22,7 +26,7 @@ import { desktopTile } from '@/toolbox'
  *
  * @module components/DesktopComponent
  * @vue-data {Object} viewerprops - configuration of OpenSeaDragon Viewer (<code>config/osd.default.js</code>)
- * @vue-prop {String} [divid='desktop-init'] - ID of container div
+ * @vue-prop {String} [divid='desktop-canvas'] - ID of container div
  * @vue-prop {Object} [osdinit={}] - configuration of OSD Viewer &ndash; overrides default config
  * @vue-prop {Number} [width=1600] - desktop width
  * @vue-prop {Number} [height=1000] - desktop height
@@ -95,7 +99,6 @@ export default {
     }
   },
   created () {
-    console.log('Hallo ' + this.divid)
   },
   mounted () {
     this.$store.dispatch('createOpenSeaDragon', {
