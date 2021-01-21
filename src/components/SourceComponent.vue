@@ -228,7 +228,7 @@ export default {
      */
     isSinglePage () {
       if (!this.source.pages[this.pagenr].v && !this.source.pages[this.pagenr].r) {
-        console.log('no displayed page???')
+        console.warn('no displayed page???')
       }
       return (this.source.pages[this.pagenr].v === null &&
               this.source.pages[this.pagenr].r !== null) ||
