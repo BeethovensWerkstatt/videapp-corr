@@ -1,6 +1,8 @@
 <template>
   <div :id="this.divid">
-    <source-component v-for="source in sources" :key="source.id" :sourceId="source.id" />
+    <div v-if="viewer">
+      <source-component v-for="source in sources" :key="source.id" :sourceId="source.id" />
+    </div>
   </div>
 </template>
 
@@ -74,18 +76,8 @@ export default {
   },
   methods: {
     ...mapGetters([
-      'viewer',
-      'desktop'
+      'viewer'
     ]),
-    /**
-     * init Desktop Viewer with properties,
-     * add tiled background image and add selected sources.
-     */
-    init () {
-      this.viewer.addHandler('resize', this.updateView)
-      this.viewer.addHandler('zoom', this.updateView)
-      this.viewer.addHandler('open', this.updateView)
-    },
     updateView (e) {
       const sources = this.$store.getters.sources
       sources.forEach((source, i) => {
@@ -105,8 +97,28 @@ export default {
       })
     }
   },
+  created () {
+    console.log('Hallo ' + this.divid)
+  },
   mounted () {
-    this.init()
+    this.$store.dispatch('createOpenSeaDragon', {
+      divid: this.divid,
+      handlers: {
+        resize: this.updateView,
+        zoom: this.updateView,
+        open: this.updateView
+      },
+      config: this.viewerprops,
+      TIback: {
+        tileSource: this.backsrc,
+        x: 0,
+        y: 0,
+        width: this.width
+      }
+    })
+  },
+  updated () {
+    console.log('updated ' + (this.viewer ? 'ja' : 'nein'))
   },
   computed: {
     ...mapGetters(['sources', 'viewer'])

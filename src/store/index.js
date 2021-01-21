@@ -5,7 +5,6 @@ import uuidv4 from '@/toolbox'
 
 import OpenSeadragon from 'openseadragon'
 
-import osddef from '@/config/osd.default.js'
 import pageSetup from '@/temp/pageSetup.json'
 
 Vue.use(Vuex)
@@ -128,6 +127,19 @@ export default new Vuex.Store({
    */
   actions: {
     /**
+     * create OpenSeadragon canvas
+     */
+    createOpenSeaDragon ({ commit, state }, { config, TIback }) {
+      // console.log(payload)
+      // console.log(state)
+
+      const viewer = OpenSeadragon(config)
+
+      viewer.addTiledImage(TIback)
+
+      commit('SET_VIEWER', viewer)
+    },
+    /**
      * **TODO: load from REST API**
      * load sources
      * @memberof store.actions
@@ -242,16 +254,7 @@ export default new Vuex.Store({
    * @property {string} activeZoneId - ID of selected source object
    */
   getters: {
-    viewer: (state, getters) => {
-      if (!state.viewer) {
-        state.viewer = OpenSeadragon(osddef)
-        state.viewer.addTiledImage({
-          tileSource: getters.backsrc,
-          x: 0,
-          y: 0,
-          width: getters.width
-        })
-      }
+    viewer: (state) => {
       return state.viewer
     },
     desktop: (state) => {
