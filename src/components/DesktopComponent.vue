@@ -39,7 +39,8 @@ export default {
   },
   data: function () {
     return {
-      viewerprops: { ...osddef, ...this.osdinit }
+      viewerprops: { ...osddef, ...this.osdinit },
+      scaleCache: 0
     }
   },
   props: {
@@ -79,6 +80,10 @@ export default {
   },
   methods: {
     updateView (e) {
+      if (this.scale !== this.scaleCache) {
+        console.log(this.scale)
+        this.scaleCache = this.scale
+      }
       /*
       this.sources.forEach((source, i) => {
         if (source.component) {
@@ -103,7 +108,7 @@ export default {
   mounted () {
     this.$store.dispatch('createOpenSeaDragon', {
       divid: this.divid,
-      handlers: {
+      handler: {
         resize: this.updateView,
         zoom: this.updateView,
         open: this.updateView
@@ -118,7 +123,10 @@ export default {
     })
   },
   updated () {
-    console.log(this.scale)
+    if (this.scale !== this.scaleCache) {
+      console.log(this.scale)
+      this.scaleCache = this.scale
+    }
   },
   beforeDestroy () {
     this.$store.dispatch('destroyOpenSeaDragon')
