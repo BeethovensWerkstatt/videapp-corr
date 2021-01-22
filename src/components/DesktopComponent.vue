@@ -13,7 +13,6 @@
 <script>
 // import Vue from 'vue'
 import { mapGetters } from 'vuex'
-// import OpenSeadragon from 'openseadragon'
 import SourceComponent from '@/components/SourceComponent'
 import osddef from '@/config/osd.default.js'
 import { desktopTile } from '@/toolbox'
@@ -80,8 +79,8 @@ export default {
   },
   methods: {
     updateView (e) {
-      const sources = this.$store.getters.sources
-      sources.forEach((source, i) => {
+      /*
+      this.sources.forEach((source, i) => {
         if (source.component) {
           const pageXr = source.component.getPageX({ place: 'recto' })
           const pageYr = source.component.getPageY({ place: 'recto' })
@@ -96,6 +95,7 @@ export default {
           })
         }
       })
+      */
     }
   },
   created () {
@@ -118,10 +118,13 @@ export default {
     })
   },
   updated () {
-    console.log('updated ' + (this.viewer ? 'ja' : 'nein'))
+    console.log(this.scale)
+  },
+  beforeDestroy () {
+    this.$store.dispatch('destroyOpenSeaDragon')
   },
   computed: {
-    ...mapGetters(['sources', 'viewer'])
+    ...mapGetters(['sources', 'viewer', 'scale'])
   }
 }
 </script>

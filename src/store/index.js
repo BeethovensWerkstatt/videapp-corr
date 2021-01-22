@@ -134,6 +134,15 @@ export default new Vuex.Store({
       }
     },
     /**
+     * destroy OpenSeadragon canvas
+     */
+    destroyOpenSeaDragon ({ commit, state }) {
+      if (state.viewer) {
+        state.viewer.destroy()
+        commit('SET_VIEWER', null)
+      }
+    },
+    /**
      * **TODO: load from REST API**
      * load sources
      * @memberof store.actions
@@ -253,6 +262,15 @@ export default new Vuex.Store({
     },
     sources: (state) => {
       return state.sources
+    },
+    scale: (state) => {
+      var p0 = new OpenSeadragon.Point(0, 0)
+      var p1 = new OpenSeadragon.Point(1, 1)
+      p0 = state.viewer.viewport.viewerElementToViewportCoordinates(p0)
+      p1 = state.viewer.viewport.viewerElementToViewportCoordinates(p1)
+      // console.log(1 / (p1.x - p0.x))
+      // console.log(1 / (p1.y - p0.y))
+      return (1 / (p1.x - p0.x))
     },
     activeSourceId: (state) => {
       return state.activeSourceId
