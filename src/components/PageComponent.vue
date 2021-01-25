@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vue'
+import { mapGetters } from 'vuex'
 import OpenSeadragon from 'openseadragon'
 // import ZoneComponent from '@/components/ZoneComponent.vue'
 /**
