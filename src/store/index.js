@@ -26,10 +26,12 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     viewer: null,
+    scale: 1,
     annotations: [],
     activeAnnotationId: null,
     sources: [],
-    activeSourceId: null
+    activeSourceId: null,
+    initOverlays: []
   },
   /**
    * @namespace store.mutations
@@ -44,6 +46,17 @@ export default new Vuex.Store({
      */
     SET_VIEWER (state, viewer) {
       state.viewer = viewer
+    },
+    UPDATE_SCALE (state) {
+      var p0 = new OpenSeadragon.Point(0, 0)
+      var p1 = new OpenSeadragon.Point(1, 1)
+      p0 = state.viewer.viewport.viewerElementToViewportCoordinates(p0)
+      p1 = state.viewer.viewport.viewerElementToViewportCoordinates(p1)
+      // avoid large scale value for p0 and p1 approx 0
+      state.scale = 1 / Math.max(p1.x - p0.x, 0.05)
+    },
+    ADD_OVERLAY (state, args) {
+      state.initOverlays.push(args)
     },
     /**
      * set load source
@@ -265,13 +278,7 @@ export default new Vuex.Store({
       return state.sources
     },
     scale: (state) => {
-      var p0 = new OpenSeadragon.Point(0, 0)
-      var p1 = new OpenSeadragon.Point(1, 1)
-      p0 = state.viewer.viewport.viewerElementToViewportCoordinates(p0)
-      p1 = state.viewer.viewport.viewerElementToViewportCoordinates(p1)
-      // console.log(1 / (p1.x - p0.x))
-      // console.log(1 / (p1.y - p0.y))
-      return 1 / Math.max(p1.x - p0.x, 0.05)
+      return state.scale
     },
     activeSourceId: (state) => {
       return state.activeSourceId
@@ -300,7 +307,7 @@ export default new Vuex.Store({
     activeZoneId: (state) => {
       const source = state.sources.find(source => source.id === state.activeSourceId)
       if (source) {
-        return source.component.activeZoneId
+        return source.activeZoneId
       }
       return null
     },
@@ -308,12 +315,9 @@ export default new Vuex.Store({
      * @memberof store.getters
      * @returns {object} selected zone object or null
      */
-    activeZone: (state) => () => {
-      if (state.activeSourceId) {
-        const source = state.sources.find(source => source.id === state.activeSourceId)
-        if (source) {
-          return source.component.activeZone
-        }
+    activeZone: (state, getters) => () => {
+      if (getters.activeSource) {
+        return getters.activeSource.activeZone
       }
       return null
     },

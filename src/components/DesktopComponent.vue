@@ -81,7 +81,7 @@ export default {
   methods: {
     updateView (e) {
       if (this.scale !== this.scaleCache) {
-        console.log(this.scale)
+        // console.log(this.scale)
         this.scaleCache = this.scale
       }
       /*
@@ -123,8 +123,9 @@ export default {
     })
   },
   updated () {
+    this.$store.commit('UPDATE_SCALE')
     if (this.scale !== this.scaleCache) {
-      console.log(this.scale)
+      // console.log(this.scale)
       this.scaleCache = this.scale
     }
   },

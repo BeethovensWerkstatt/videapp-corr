@@ -26,7 +26,7 @@
 
 <script>
 // import Vue from 'vue'
-// import { mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 import OpenSeadragon from 'openseadragon'
 // import PageComponent from '@/components/PageComponent.vue'
 
@@ -60,8 +60,16 @@ export default {
       dragEndHandler: this.dragEndHandler,
       releaseHandler: this.dragEndHandler
     })
+    this.viewer.addOverlay(
+      this.$el,
+      new OpenSeadragon.Point(this.dashX, this.dashY),
+      OpenSeadragon.TOP_CENTER)
+  },
+  updated () {
+    console.log('dashX: ' + this.dashX)
   },
   computed: {
+    ...mapGetters(['viewer', 'scale']),
     source () {
       const source = this.$store.getters.getSourceById(this.sourceId)
       if (source) {
@@ -96,14 +104,19 @@ export default {
     isActive () {
       return this.sourceId === this.$store.getters.activeSourceId
     },
+    overlay () {
+      return this.viewer.getOverlayById(this.divid)
+    },
     dragHandle () {
       return this.$el.querySelector('#draghandle')
     },
     dashX () {
-      return 0
+      console.log(this.$el.clientWidth + ' * ' + this.scale)
+      const ow = this.$el.clientWidth * this.scale
+      return this.source.position.x - (ow / 2)
     },
     dashY () {
-      return 0
+      return this.source.position.y + (this.source.maxDimensions.height / 2)
     },
     versoX () {
       return 0
