@@ -80,27 +80,15 @@ export default {
   },
   methods: {
     updateView (e) {
+      // console.log(e)
+      if (e.zoom) {
+        // console.log('zoom: ' + this.viewer.viewport.viewportToImageZoom(e.zoom))
+      }
       if (this.scale !== this.scaleCache) {
         // console.log(this.scale)
         this.scaleCache = this.scale
+        this.$store.commit('UPDATE_SCALE')
       }
-      /*
-      this.sources.forEach((source, i) => {
-        if (source.component) {
-          const pageXr = source.component.getPageX({ place: 'recto' })
-          const pageYr = source.component.getPageY({ place: 'recto' })
-          const pageXv = source.component.getPageX({ place: 'verso' })
-          const pageYv = source.component.getPageY({ place: 'verso' })
-          const pagePr = { x: pageXr, y: pageYr }
-          const pagePv = { x: pageXv, y: pageYv }
-
-          source.component.updateDashPos()
-          source.component.updateOverlays((ovl) => {
-            return (ovl.page.place === 'verso') ? pagePv : pagePr
-          })
-        }
-      })
-      */
     }
   },
   created () {

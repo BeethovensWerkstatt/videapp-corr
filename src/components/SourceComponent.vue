@@ -1,26 +1,40 @@
 <template>
-  <div
-    class="sourceBack"
-    :class="{ active: isActive }"
-    :id="this.divid"
-    :title="label"
-  >
-    <btn-group>
-      <btn
-        @click="prevPage"
-        :disabled="!hasPrev">
-      ◄
-      </btn>
-      <btn id="draghandle">
-        ❂
-      </btn>
-      <btn
-        @click="nextPage"
-        :disabled="!hasNext"
-      >
-      ►
-      </btn>
-    </btn-group>
+  <div>
+    <page-component
+      :divid="divid + '_recto'"
+      :page="source.pages[pagenr].r"
+      :x="rectoX"
+      :y="rectoY"
+    />
+    <page-component
+      :divid="divid + '_verso'"
+      :page="source.pages[pagenr].v"
+      :x="versoX"
+      :y="versoY"
+    />
+    <div
+      class="sourceBack"
+      :class="{ active: isActive }"
+      :id="this.divid"
+      :title="label"
+    >
+      <btn-group>
+        <btn
+          @click="prevPage"
+          :disabled="!hasPrev">
+        ◄
+        </btn>
+        <btn id="draghandle">
+          ❂
+        </btn>
+        <btn
+          @click="nextPage"
+          :disabled="!hasNext"
+        >
+        ►
+        </btn>
+      </btn-group>
+    </div>
   </div>
 </template>
 
@@ -28,13 +42,13 @@
 // import Vue from 'vue'
 import { mapGetters } from 'vuex'
 import OpenSeadragon from 'openseadragon'
-// import PageComponent from '@/components/PageComponent.vue'
+import PageComponent from '@/components/PageComponent.vue'
 
 /**
  * @module components/SourceComponent
  */
 export default {
-  // components: { PageComponent },
+  components: { PageComponent },
   name: 'SourceComponent',
   props: {
     sourceId: {
@@ -49,6 +63,7 @@ export default {
   data: function () {
     return {
       divid: this.sourceId + '_dash',
+      position_: { ...this.$store.getters.getSourceById(this.sourceId).position },
       tracker: null
     }
   },
@@ -61,12 +76,15 @@ export default {
       releaseHandler: this.dragEndHandler
     })
     this.viewer.addOverlay(
-      this.$el,
+      this.dashboard,
       new OpenSeadragon.Point(this.dashX, this.dashY),
-      OpenSeadragon.TOP_CENTER)
+      OpenSeadragon.TOP_LEFT)
   },
   updated () {
-    console.log('dashX: ' + this.dashX)
+    // console.log('dashX: ' + this.dashX)
+    if (this.overlay) {
+      this.overlay.update(new OpenSeadragon.Point(this.dashX, this.dashY), OpenSeadragon.TOP_LEFT)
+    }
   },
   computed: {
     ...mapGetters(['viewer', 'scale']),
@@ -95,6 +113,19 @@ export default {
       }
       return 0
     },
+    position: {
+      get () {
+        return this.position_
+      },
+      set (pos) {
+        this.position_ = pos
+        if (this.overlay) {
+          // console.log('move source ' + this.sourceId + ': ' + JSON.stringify(pos))
+          this.overlay.update(new OpenSeadragon.Point(this.dashX, this.dashY), OpenSeadragon.TOP_CENTER)
+          this.$forceUpdate()
+        }
+      }
+    },
     hasPrev () {
       return this.checkPageNr(this.pagenr - 1)
     },
@@ -107,16 +138,19 @@ export default {
     overlay () {
       return this.viewer.getOverlayById(this.divid)
     },
+    dashboard () {
+      return this.$el.querySelector('#' + this.divid)
+    },
     dragHandle () {
       return this.$el.querySelector('#draghandle')
     },
     dashX () {
-      console.log(this.$el.clientWidth + ' * ' + this.scale)
+      // console.log(this.$el.clientWidth + ' * ' + this.scale)
       const ow = this.$el.clientWidth * this.scale
-      return this.source.position.x - (ow / 2)
+      return this.position.x - (ow / 2)
     },
     dashY () {
-      return this.source.position.y + (this.source.maxDimensions.height / 2)
+      return this.position.y + (this.source.maxDimensions.height / 2)
     },
     versoX () {
       return 0
@@ -136,10 +170,14 @@ export default {
       return (pnr >= 0 && pnr < this.source.pages.length)
     },
     prevPage (e) {
-
+      if (this.hasPrev) {
+        this.$store.commit('SET_PAGE', { id: this.sourceId, page: this.pagenr - 1 })
+      }
     },
     nextPage (e) {
-
+      if (this.hasNext) {
+        this.$store.commit('SET_PAGE', { id: this.sourceId, page: this.pagenr + 1 })
+      }
     },
     /**
      * place source on top of the stack
@@ -159,6 +197,16 @@ export default {
       }
       this.$store.commit('ACTIVATE_SOURCE', this.sourceId)
       // this.placeOnTop()
+    },
+    dragHandler (e) {
+      const delta = this.viewer.viewport.deltaPointsFromPixels(e.delta)
+      this.moveTo(this.position.x + delta.x, this.position.y + delta.y)
+    },
+    dragEndHandler (e) {
+    },
+    moveTo (x, y) {
+      this.position = { x: x, y: y }
+      this.$store.commit('MOVE_SOURCE', { id: this.sourceId, ...this.position })
     }
   }
 }

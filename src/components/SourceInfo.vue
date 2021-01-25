@@ -63,7 +63,7 @@ export default {
   name: 'SourceInfo',
   computed: {
     source () {
-      return this.$store.getters.activeSource()
+      return this.$store.getters.activeSource
     },
     activePage () {
       if (this.source) {

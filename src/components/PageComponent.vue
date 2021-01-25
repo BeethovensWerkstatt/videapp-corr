@@ -2,28 +2,14 @@
   <div
     class="page-component"
     :id="divid"
-    :style="{
-      left: x,
-      top: y,
-      width: width,
-      height: height,
-      transform: transform
-    }">
-    <zone-component
-      v-for="zone in page.measures"
-      :key="zone.zone"
-      :x="scaleFactor * zone.x"
-      :y="scaleFactor * zone.y"
-      :width="scaleFactor * zone.width"
-      :height="scaleFactor * zone.height"
-    />
+  >
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vue'
 import OpenSeadragon from 'openseadragon'
-import ZoneComponent from './ZoneComponent.vue'
+// import ZoneComponent from '@/components/ZoneComponent.vue'
 /**
  * Component for one page. Collect all measure-zones
  *
@@ -40,12 +26,12 @@ import ZoneComponent from './ZoneComponent.vue'
  * @vue-computed {number} height - scaled height for OpenSeadragon
  */
 export default {
-  components: { ZoneComponent },
+  // components: { ZoneComponent },
   name: 'PageComponent',
   props: {
-    pagedata: {
+    page: {
       type: Object,
-      required: true
+      required: false
     },
     x: {
       type: Number,
@@ -62,18 +48,75 @@ export default {
   },
   data () {
     return {
+      pgdata: this.page ? this.page.id : null,
       tidata: null
     }
   },
+  mounted () {
+    this.updateTI()
+  },
+  updated () {
+    this.updateTI()
+  },
   computed: {
-    ...mapGetters(['viewer', 'scale']),
-    page: {
+    ...mapGetters(['viewer']),
+    tiledimage: {
       get () {
-        return this.pagedata
+        return this.tidata
       },
-      set (newpage) {
-        this.pagedata = newpage
-
+      set (ti) {
+        if (this.tidata) {
+          // remove previous image
+          this.tidata.setOpacity(0)
+          this.tidata.destroy()
+        }
+        this.tidata = ti
+        if (this.tidata) {
+          if (this.overlay) {
+            this.overlay.update(this.pos, OpenSeadragon.TOP_LEFT)
+          } else {
+            this.viewer.addOverlay(this.$el, this.pos, OpenSeadragon.TOP_LEFT)
+          }
+        } else {
+          if (this.overlay) {
+            this.overlay.destroy()
+          }
+        }
+      }
+    },
+    overlay () {
+      return this.viewer.getOverlayById(this.divid)
+    },
+    pageID () {
+      return (this.page ? this.page.id : null)
+    },
+    isActive () {
+      // make it a boolean
+      if (this.page) {
+        return true
+      }
+      return false
+    },
+    scaleFactor () {
+      return (this.isActive)
+        ? parseInt(this.page.dimensions.width) / parseInt(this.page.pixels.width)
+        : 0
+    },
+    width () {
+      return this.isActive ? this.scaleFactor * this.page.pixels.width : 0
+    },
+    height () {
+      return this.isActive ? this.scaleFactor * this.page.pixels.height : 0
+    },
+    pos () {
+      return new OpenSeadragon.Rect(this.x, this.y, this.width, this.height)
+    }
+  },
+  methods: {
+    updateTI () {
+      console.log('update TI ' + this.isActive)
+      if (this.pgdata !== this.pageID) {
+        // new page
         if (this.isActive) {
           // refresh tiled image
           const page = this.page
@@ -103,71 +146,7 @@ export default {
         } else {
           this.tiledimage = null
         }
-        // refresh overlay?
       }
-    },
-    tiledimage: {
-      get () {
-        return this.tidata
-      },
-      set (ti) {
-        if (this.tidata) {
-          // remove previous image
-          this.tidata.setOpacity(0)
-          this.tidata.destroy()
-        }
-        this.tidata = ti
-        if (this.tidata) {
-          if (this.overlay) {
-            this.overlay.update(this.pos, OpenSeadragon.TOP_LEFT)
-          } else {
-            this.viewer.addOverlay(this.$el, this.pos, OpenSeadragon.TOP_LEFT)
-          }
-        } else {
-          if (this.overlay) {
-            this.overlay.destroy()
-          }
-        }
-      }
-    },
-    overlay () {
-      return this.viewer.getOverlayById(this.divid)
-    },
-    isActive () {
-      return this.pagedata !== null
-    },
-    scaleFactor () {
-      return (this.isActive)
-        ? parseInt(this.pagedata.dimensions.width) / parseInt(this.pagedata.pixels.width)
-        : 0
-    },
-    width () {
-      return this.isActive ? this.scaleFactor * this.pagedata.pixels.width : 0
-    },
-    height () {
-      return this.isActive ? this.scaleFactor * this.pagedata.pixels.height : 0
-    },
-    pos () {
-      return new OpenSeadragon.Rect(this.x, this.y, this.width, this.height)
-    }
-  },
-  methods: {
-    /**
-     * resize handler for OpenSeadragon
-     */
-    resize () {
-      var p = this.viewer.viewport.pixelFromPoint(new OpenSeadragon.Point(0, 0), true)
-      var zoom = this.viewer.viewport.getZoom(true)
-      // source rotation
-      var rotation = this.viewer.viewport.getRotation()
-
-      // TODO: Expose an accessor for _containerInnerSize in the OSD API so we don't have to use the private variable.
-      // ??? do we need width of page?
-      var scale = this.viewer.viewport._containerInnerSize.x * zoom
-
-      this.transform =
-        'translate(' + p.x + 'px,' + p.y + 'px) ' +
-        'scale(' + scale + ') rotate(' + rotation + ')'
     }
   }
 }

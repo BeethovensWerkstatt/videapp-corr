@@ -31,6 +31,7 @@ export default new Vuex.Store({
     activeAnnotationId: null,
     sources: [],
     activeSourceId: null,
+    initImages: [],
     initOverlays: []
   },
   /**
@@ -45,18 +46,30 @@ export default new Vuex.Store({
      * @param {object} viewer
      */
     SET_VIEWER (state, viewer) {
+      if (state.viewer) {
+        console.warn('viewer set twice!')
+      }
       state.viewer = viewer
+      while (state.initOverlays.length > 0) {
+        console.log('init overlay')
+        const args = state.initOverlays.shift()
+        state.viewer.addOverlay(...args)
+      }
     },
     UPDATE_SCALE (state) {
+      /*
       var p0 = new OpenSeadragon.Point(0, 0)
       var p1 = new OpenSeadragon.Point(1, 1)
       p0 = state.viewer.viewport.viewerElementToViewportCoordinates(p0)
       p1 = state.viewer.viewport.viewerElementToViewportCoordinates(p1)
       // avoid large scale value for p0 and p1 approx 0
       state.scale = 1 / Math.max(p1.x - p0.x, 0.05)
-    },
-    ADD_OVERLAY (state, args) {
-      state.initOverlays.push(args)
+      console.log('update scale: ' + state.scale)
+      */
+      if (state.viewer) {
+        state.scale = state.viewer.viewport.viewportToImageZoom(state.viewer.viewport.getZoom(true))
+      }
+      state.scale = 1
     },
     /**
      * set load source
@@ -83,7 +96,14 @@ export default new Vuex.Store({
      * @param {object} src
      */
     MOVE_SOURCE (state, { id, x, y }) {
+      // console.log('move source ' + id + ': ' + x + ',' + y)
       const msrc = { ...state.sources.find(src => src.id === id), position: { x: x, y: y } }
+      if (msrc.id) {
+        state.sources = state.sources.map(src => src.id === msrc.id ? msrc : src)
+      }
+    },
+    SET_PAGE (state, { id, page }) {
+      const msrc = { ...state.sources.find(src => src.id === id), pagenr: page }
       if (msrc.id) {
         state.sources = state.sources.map(src => src.id === msrc.id ? msrc : src)
       }
@@ -143,7 +163,7 @@ export default new Vuex.Store({
       commit('SET_VIEWER', viewer)
 
       for (const k in handler) {
-        console.log('handler :' + k)
+        // console.log('handler :' + k)
         viewer.addHandler(k, handler[k])
       }
     },
@@ -287,10 +307,13 @@ export default new Vuex.Store({
      * @memberof store.getters
      * @returns {object} selected source object or null
      */
-    activeSource: (state) => () => {
-      const source = state.sources.find(source => source.id === state.activeSourceId)
-      // console.log('active source: ' + source)
-      return source
+    activeSource: (state, getters) => {
+      if (state.activeSourceId) {
+        const source = getters.getSourceById(state.activeSourceId)
+        // console.log('active source: ' + source)
+        return source
+      }
+      return null
     },
     /**
      * @memberof store.getters
@@ -304,8 +327,8 @@ export default new Vuex.Store({
       }
       return state.sources.find(source => source.id === id)
     },
-    activeZoneId: (state) => {
-      const source = state.sources.find(source => source.id === state.activeSourceId)
+    activeZoneId: (state, getters) => {
+      const source = getters.activeSource
       if (source) {
         return source.activeZoneId
       }
