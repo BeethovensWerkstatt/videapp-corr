@@ -271,7 +271,7 @@ export default new Vuex.Store({
       p1 = state.viewer.viewport.viewerElementToViewportCoordinates(p1)
       // console.log(1 / (p1.x - p0.x))
       // console.log(1 / (p1.y - p0.y))
-      return (p1.x - p0.x)
+      return 1 / Math.max(p1.x - p0.x, 0.05)
     },
     activeSourceId: (state) => {
       return state.activeSourceId

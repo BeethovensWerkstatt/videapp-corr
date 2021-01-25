@@ -43,6 +43,10 @@ export default {
   components: { ZoneComponent },
   name: 'PageComponent',
   props: {
+    pagedata: {
+      type: Object,
+      required: true
+    },
     x: {
       type: Number,
       required: true
@@ -58,18 +62,11 @@ export default {
   },
   data () {
     return {
-      data: {
-        pagadata: null,
-        tidata: null,
-        transform: ''
-      }
+      tidata: null
     }
   },
   computed: {
-    ...mapGetters([
-      'viewer',
-      'desktop'
-    ]),
+    ...mapGetters(['viewer', 'scale']),
     page: {
       get () {
         return this.pagedata
