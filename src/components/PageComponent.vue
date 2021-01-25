@@ -59,7 +59,7 @@ export default {
     this.updateTI()
   },
   computed: {
-    ...mapGetters(['viewer']),
+    ...mapGetters(['viewer', 'scale']),
     tiledimage: {
       get () {
         return this.tidata
@@ -114,8 +114,8 @@ export default {
   },
   methods: {
     updateTI () {
-      console.log('update TI ' + this.isActive)
-      if (this.pgdata !== this.pageID) {
+      console.log('update TI ' + (this.pgdata !== this.pageID))
+      if (!this.tiledimage || this.pgdata !== this.pageID) {
         // new page
         if (this.isActive) {
           // refresh tiled image
