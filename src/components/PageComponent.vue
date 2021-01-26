@@ -37,6 +37,10 @@ export default {
       type: Object,
       required: true
     },
+    level: { // TODO push up -> watch!
+      type: Number,
+      default: 1
+    },
     divid: {
       type: String,
       required: true
