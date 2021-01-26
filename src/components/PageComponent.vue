@@ -33,12 +33,8 @@ export default {
       type: Object,
       required: false
     },
-    x: {
-      type: Number,
-      required: true
-    },
-    y: {
-      type: Number,
+    pos: {
+      type: Object,
       required: true
     },
     divid: {
@@ -60,6 +56,16 @@ export default {
     console.log('updated ' + this.page.id)
     this.updateTI()
   },
+  watch: {
+    page () {
+      console.log('change page')
+      this.updateTI()
+    },
+    pos () {
+      // console.log(this.divid + ' ' + this.x + ', ' + this.y)
+      this.updatePosition()
+    }
+  },
   computed: {
     ...mapGetters(['viewer', 'scale']),
     tiledimage: {
@@ -77,7 +83,10 @@ export default {
           if (this.overlay) {
             this.overlay.update(this.pos, OpenSeadragon.TOP_LEFT)
           } else {
-            this.viewer.addOverlay(this.$el, this.pos, OpenSeadragon.TOP_LEFT)
+            this.viewer.addOverlay({
+              element: this.$el,
+              location: this.pos
+            }, this.pos, OpenSeadragon.TOP_LEFT)
           }
         } else {
           if (this.overlay) {
@@ -105,16 +114,21 @@ export default {
         : 0
     },
     width () {
-      return this.isActive ? this.scaleFactor * this.page.pixels.width : 0
+      return this.isActive ? this.page.dimensions.width : 0
     },
     height () {
-      return this.isActive ? this.scaleFactor * this.page.pixels.height : 0
-    },
-    pos () {
-      return new OpenSeadragon.Rect(this.x, this.y, this.width, this.height)
+      return this.isActive ? this.page.dimensions.height : 0
     }
   },
   methods: {
+    updatePosition () {
+      if (this.overlay) {
+        this.overlay.update(this.pos)
+      }
+      if (this.tiledimage) {
+        this.tiledimage.setPosition(this.pos, true)
+      }
+    },
     updateTI () {
       console.log('update TI ' + (this.pgdata !== this.pageID))
       if (!this.tiledimage || this.pgdata !== this.pageID) {
@@ -122,8 +136,8 @@ export default {
         if (this.isActive) {
           // refresh tiled image
           const page = this.page
-          const x = this.x
-          const y = this.y
+          const x = this.pos.x
+          const y = this.pos.y
           const tisrc = {
             tileSource: {
               '@context': 'http://iiif.io/api/image/2/context.json',
@@ -149,6 +163,7 @@ export default {
           this.tiledimage = null
         }
       }
+      this.pgdata = this.page ? this.page.id : null
     }
   }
 }
@@ -157,5 +172,6 @@ export default {
 <style scoped>
 .page-component {
   position: absolute;
+  border: 1px solid green;
 }
 </style>

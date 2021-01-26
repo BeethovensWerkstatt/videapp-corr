@@ -3,14 +3,12 @@
     <page-component
       :divid="divid + '_recto'"
       :page="source.pages[pagenr].r"
-      :x="rectoX"
-      :y="rectoY"
+      :pos="rectoPos"
     />
     <page-component
       :divid="divid + '_verso'"
       :page="source.pages[pagenr].v"
-      :x="versoX"
-      :y="versoY"
+      :pos="versoPos"
     />
     <div
       class="sourceBack"
@@ -152,35 +150,25 @@ export default {
     dashY () {
       return this.position.y + (this.source.maxDimensions.height / 2)
     },
-    versoX () {
+    rectoPos () {
+      const pp = this.source.pages[this.pagenr]
+      if (pp.r) {
+        // center page, if no recto page
+        const x = this.position.x - (pp.v ? pp.v.dimensions.width : (pp.r.dimensions.width / 2))
+        const y = this.position.y - (pp.r.dimensions.height / 2)
+        return new OpenSeadragon.Point(x, y)
+      }
+      return new OpenSeadragon.Point(0, 0)
+    },
+    versoPos () {
       const pp = this.source.pages[this.pagenr]
       if (pp.v) {
         // center page, if no recto page
-        return this.position.x - (pp.r ? 0 : (pp.v.dimensions.width / 2))
+        const x = this.position.x - (pp.r ? 0 : (pp.v.dimensions.width / 2))
+        const y = this.position.y - (pp.v.dimensions.height / 2)
+        return new OpenSeadragon.Point(x, y)
       }
-      return 0
-    },
-    versoY () {
-      const pp = this.source.pages[this.pagenr]
-      if (pp.v) {
-        return this.position.y - (pp.v.dimensions.height / 2)
-      }
-      return 0
-    },
-    rectoX () {
-      const pp = this.source.pages[this.pagenr]
-      if (pp.r) {
-        // center page, if no verso page
-        return this.position.x - (pp.r.dimensions.width / (pp.r ? 1 : 2))
-      }
-      return 0
-    },
-    rectoY () {
-      const pp = this.source.pages[this.pagenr]
-      if (pp.r) {
-        return this.position.y - (pp.r.dimensions.height / 2)
-      }
-      return 0
+      return new OpenSeadragon.Point(0, 0)
     }
   },
   methods: {
