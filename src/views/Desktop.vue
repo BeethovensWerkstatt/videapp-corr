@@ -14,17 +14,16 @@
           </btn-group>
         </div>
       </div>
+      <zone-info />
+      <source-info />
     </div>
   </div>
 </template>
 
 <script>
-//      <zone-info />
-//      <source-info />
-
 import DesktopComponent from '@/components/DesktopComponent'
-// import SourceInfo from '@/components/SourceInfo'
-// import ZoneInfo from '@/components/ZoneInfo.vue'
+import SourceInfo from '@/components/SourceInfo'
+import ZoneInfo from '@/components/ZoneInfo.vue'
 // import ZoneAnnotation from '@/components/ZoneAnnotation'
 // import osdConfiguration from '@/config/osd.config.js'
 
@@ -37,9 +36,9 @@ import DesktopComponent from '@/components/DesktopComponent'
 export default {
   name: 'Desktop',
   components: {
-    DesktopComponent
-    // SourceInfo,
-    // ZoneInfo
+    DesktopComponent,
+    SourceInfo,
+    ZoneInfo
   },
   mounted () {
     // console.log(this.sources)

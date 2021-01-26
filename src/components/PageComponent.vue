@@ -81,12 +81,12 @@ export default {
         this.tidata = ti
         if (this.tidata) {
           if (this.overlay) {
-            this.overlay.update(this.pos, OpenSeadragon.TOP_LEFT)
+            this.overlay.update(this.pos, OpenSeadragon.TOP_CENTER)
           } else {
             this.viewer.addOverlay({
               element: this.$el,
               location: this.pos
-            }, this.pos, OpenSeadragon.TOP_LEFT)
+            }, this.pos, OpenSeadragon.TOP_CENTER)
           }
         } else {
           if (this.overlay) {

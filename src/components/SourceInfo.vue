@@ -67,7 +67,7 @@ export default {
     },
     activePage () {
       if (this.source) {
-        return this.source.component.pagenr
+        return this.source.pagenr
       }
       return 0
     },
@@ -90,13 +90,13 @@ export default {
     },
     verso_label () {
       if (this.source) {
-        return this.source.component.left_label
+        return this.source.left_label
       }
       return '---'
     },
     recto_label () {
       if (this.source) {
-        return this.source.component.right_label
+        return this.source.right_label
       }
       return '---'
     },
@@ -127,8 +127,8 @@ export default {
     },
     position () {
       if (this.source) {
-        return this.source.component.position.x.toFixed(2) + ' / ' +
-               this.source.component.position.y.toFixed(2)
+        return this.source.position.x.toFixed(2) + ' / ' +
+               this.source.position.y.toFixed(2)
       }
       return '---'
     }

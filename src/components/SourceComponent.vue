@@ -76,12 +76,12 @@ export default {
     this.viewer.addOverlay(
       this.dashboard,
       new OpenSeadragon.Point(this.dashX, this.dashY),
-      OpenSeadragon.TOP_LEFT)
+      OpenSeadragon.TOP_CENTER)
   },
   updated () {
     // console.log('dashX: ' + this.dashX)
     if (this.overlay) {
-      this.overlay.update(new OpenSeadragon.Point(this.dashX, this.dashY), OpenSeadragon.TOP_LEFT)
+      this.overlay.update(new OpenSeadragon.Point(this.dashX, this.dashY), OpenSeadragon.TOP_CENTER)
     }
   },
   computed: {
@@ -143,9 +143,9 @@ export default {
       return this.$el.querySelector('#draghandle')
     },
     dashX () {
-      // console.log(this.$el.clientWidth + ' * ' + this.scale)
-      const ow = this.$el.clientWidth * this.scale
-      return this.position.x - (ow / 2)
+      // const dim = new OpenSeadragon.Point(this.$el.clientWidth, this.$el.clientHeight)
+      // const ow = this.viewer.viewport.viewerElementToViewportCoordinates(dim).x
+      return this.position.x // - (ow / 2)
     },
     dashY () {
       return this.position.y + (this.source.maxDimensions.height / 2)
