@@ -57,19 +57,17 @@ export default new Vuex.Store({
       }
     },
     UPDATE_SCALE (state) {
-      /*
-      var p0 = new OpenSeadragon.Point(0, 0)
-      var p1 = new OpenSeadragon.Point(1, 1)
-      p0 = state.viewer.viewport.viewerElementToViewportCoordinates(p0)
-      p1 = state.viewer.viewport.viewerElementToViewportCoordinates(p1)
-      // avoid large scale value for p0 and p1 approx 0
-      state.scale = 1 / Math.max(p1.x - p0.x, 0.05)
-      console.log('update scale: ' + state.scale)
-      */
       if (state.viewer) {
-        state.scale = state.viewer.viewport.viewportToImageZoom(state.viewer.viewport.getZoom(true))
+        // state.scale = state.viewer.viewport.viewportToImageZoom(state.viewer.viewport.getZoom(true))
+        var p0 = new OpenSeadragon.Point(0, 0)
+        var p1 = new OpenSeadragon.Point(1, 1)
+        p0 = state.viewer.viewport.viewerElementToViewportCoordinates(p0)
+        p1 = state.viewer.viewport.viewerElementToViewportCoordinates(p1)
+        // avoid large scale value for p0 and p1 approx 0
+        state.scale = 1 / Math.max(p1.x - p0.x, 0.05)
+      } else {
+        state.scale = 1
       }
-      state.scale = 1
     },
     /**
      * set load source
@@ -285,7 +283,6 @@ export default new Vuex.Store({
    * @namespace store.getters
    * @memberof store
    * @property {object} viewer - OpenSeadragon Viewer object
-   * @property {object} desktop - Desktop Component
    * @property {object[]} sources - list of source objects loaded
    * @property {string} activeSourceId - ID of selected source object
    * @property {string} activeZoneId - ID of selected source object

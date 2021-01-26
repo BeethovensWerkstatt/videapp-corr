@@ -49,6 +49,7 @@ export default {
   data () {
     return {
       pgdata: this.page ? this.page.id : null,
+      tiurl: null,
       tidata: null
     }
   },
@@ -56,6 +57,7 @@ export default {
     this.updateTI()
   },
   updated () {
+    console.log('updated ' + this.page.id)
     this.updateTI()
   },
   computed: {

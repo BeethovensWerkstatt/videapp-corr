@@ -153,15 +153,33 @@ export default {
       return this.position.y + (this.source.maxDimensions.height / 2)
     },
     versoX () {
+      const pp = this.source.pages[this.pagenr]
+      if (pp.v) {
+        // center page, if no recto page
+        return this.position.x - (pp.r ? 0 : (pp.v.dimensions.width / 2))
+      }
       return 0
     },
     versoY () {
+      const pp = this.source.pages[this.pagenr]
+      if (pp.v) {
+        return this.position.y - (pp.v.dimensions.height / 2)
+      }
       return 0
     },
     rectoX () {
+      const pp = this.source.pages[this.pagenr]
+      if (pp.r) {
+        // center page, if no verso page
+        return this.position.x - (pp.r.dimensions.width / (pp.r ? 1 : 2))
+      }
       return 0
     },
     rectoY () {
+      const pp = this.source.pages[this.pagenr]
+      if (pp.r) {
+        return this.position.y - (pp.r.dimensions.height / 2)
+      }
       return 0
     }
   },
