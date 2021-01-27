@@ -4,11 +4,13 @@
       :divid="divid + '_recto'"
       :page="source.pages[pagenr].r"
       :pos="rectoPos"
+      :active="isActive"
     />
     <page-component
       :divid="divid + '_verso'"
       :page="source.pages[pagenr].v"
       :pos="versoPos"
+      :active="isActive"
     />
     <div
       class="sourceBack"
@@ -19,7 +21,8 @@
       <btn-group>
         <btn
           @click="prevPage"
-          :disabled="!hasPrev">
+          :disabled="!hasPrev"
+        >
         ◄
         </btn>
         <btn id="draghandle">
@@ -85,7 +88,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['viewer', 'scale']),
+    ...mapGetters(['viewer']),
     source () {
       const source = this.$store.getters.getSourceById(this.sourceId)
       if (source) {

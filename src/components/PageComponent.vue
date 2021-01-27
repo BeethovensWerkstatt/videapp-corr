@@ -3,12 +3,21 @@
     class="page-component"
     :id="divid"
   >
+    <zone-component
+      v-for="zone in zones"
+      :key="zone.zone"
+      :x="(width > 0) ? (zone.x / width) : 0"
+      :y="(height > 0) ? (zone.x / height) : 0"
+      :width="(width > 0) ? (zone.width / width) : 0"
+      :height="(height > 0) ? (zone.height / height) : 0"
+    />
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 import OpenSeadragon from 'openseadragon'
+import ZoneComponent from './ZoneComponent.vue'
 // import ZoneComponent from '@/components/ZoneComponent.vue'
 /**
  * Component for one page. Collect all measure-zones
@@ -26,6 +35,7 @@ import OpenSeadragon from 'openseadragon'
  * @vue-computed {number} height - scaled height for OpenSeadragon
  */
 export default {
+  components: { ZoneComponent },
   // components: { ZoneComponent },
   name: 'PageComponent',
   props: {
@@ -37,12 +47,12 @@ export default {
       type: Object,
       required: true
     },
-    level: { // TODO push up -> watch!
-      type: Number,
-      default: 1
-    },
     divid: {
       type: String,
+      required: true
+    },
+    active: {
+      type: Boolean,
       required: true
     }
   },
@@ -50,28 +60,36 @@ export default {
     return {
       pgdata: this.page ? this.page.id : null,
       tiurl: null,
-      tidata: null
+      tidata: null,
+      topsource: false
     }
   },
   mounted () {
     this.updateTI()
   },
   updated () {
-    console.log('updated ' + this.page.id)
+    // console.log('updated ' + this.page ? this.page.id : '[null]')
     this.updateTI()
   },
   watch: {
     page () {
-      console.log('change page')
+      // console.log('change page')
       this.updateTI()
     },
     pos () {
       // console.log(this.divid + ' ' + this.x + ', ' + this.y)
       this.updatePosition()
+    },
+    active () {
+      const ci = this.viewer.world.getItemCount()
+      if (this.tiledimage && !this.topsource && this.active) {
+        this.viewer.world.setItemIndex(this.tiledimage, ci - 1)
+      }
+      this.topsource = this.active
     }
   },
   computed: {
-    ...mapGetters(['viewer', 'scale']),
+    ...mapGetters(['viewer']),
     tiledimage: {
       get () {
         return this.tidata
@@ -122,6 +140,12 @@ export default {
     },
     height () {
       return this.isActive ? this.page.dimensions.height : 0
+    },
+    zones () {
+      if (this.page) {
+        return this.page.measures
+      }
+      return []
     }
   },
   methods: {
@@ -134,7 +158,7 @@ export default {
       }
     },
     updateTI () {
-      console.log('update TI ' + (this.pgdata !== this.pageID))
+      // console.log('update TI ' + (this.pgdata !== this.pageID))
       if (!this.tiledimage || this.pgdata !== this.pageID) {
         // new page
         if (this.isActive) {

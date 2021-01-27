@@ -120,10 +120,10 @@ export default {
       return ''
     },
     hasPrev () {
-      return this.source && this.source.component.hasPrev
+      return this.source && this.source.pagenr > 0
     },
     hasNext () {
-      return this.source && this.source.component.hasNext
+      return this.source && this.source.pagenr < (this.source.pages.length - 1)
     },
     position () {
       if (this.source) {
@@ -135,10 +135,10 @@ export default {
   },
   methods: {
     prevPage () {
-      return this.source && this.source.component.prevPage()
+      return this.hasPrev && this.source.pagenr--
     },
     nextPage () {
-      return this.source && this.source.component.nextPage()
+      return this.hasNext && this.source.pagenr++
     },
     /**
      * unselect source / reset component
