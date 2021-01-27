@@ -7,7 +7,7 @@
       v-for="zone in zones"
       :key="zone.zone"
       :x="(width > 0) ? (zone.x / width) : 0"
-      :y="(height > 0) ? (zone.x / height) : 0"
+      :y="(height > 0) ? (zone.y / height) : 0"
       :width="(width > 0) ? (zone.width / width) : 0"
       :height="(height > 0) ? (zone.height / height) : 0"
     />

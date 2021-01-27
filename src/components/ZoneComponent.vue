@@ -34,10 +34,11 @@ export default {
   computed: {
     style () {
       return {
-        left: (100 * this.x) + '%',
-        top: (100 * this.y) + '%',
-        width: (100 * this.width) + '%',
-        height: (100 * this.height) + '%'
+        position: 'absolute',
+        left: (10 * this.x) + '%',
+        top: (10 * this.y) + '%',
+        width: (10 * this.width) + '%',
+        height: (10 * this.height) + '%'
       }
     }
   }
@@ -48,7 +49,6 @@ export default {
 @import "@/scss/variables.scss";
 
 .zone-component {
-  position: absolute;
   border: .5px solid $border-color;
   // border-radius: 5px;
   // box-shadow: 0 0 .5rem #00000099;

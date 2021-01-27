@@ -167,9 +167,11 @@ export default {
         // center page, if no recto page
         const x = this.position.x - (pp.v ? pp.v.dimensions.width : (pp.r.dimensions.width / 2))
         const y = this.position.y - (pp.r.dimensions.height / 2)
-        return new OpenSeadragon.Point(x, y)
+        const width = pp.r.dimensions.width
+        const height = pp.r.dimensions.height
+        return new OpenSeadragon.Rect(x, y, width, height)
       }
-      return new OpenSeadragon.Point(0, 0)
+      return new OpenSeadragon.Rect(0, 0, 0, 0)
     },
     versoPos () {
       const pp = this.source.pages[this.pagenr]
@@ -177,9 +179,11 @@ export default {
         // center page, if no recto page
         const x = this.position.x - (pp.r ? 0 : (pp.v.dimensions.width / 2))
         const y = this.position.y - (pp.v.dimensions.height / 2)
-        return new OpenSeadragon.Point(x, y)
+        const width = pp.v.dimensions.width
+        const height = pp.v.dimensions.height
+        return new OpenSeadragon.Rect(x, y, width, height)
       }
-      return new OpenSeadragon.Point(0, 0)
+      return new OpenSeadragon.Rect(0, 0, 0, 0)
     }
   },
   methods: {
