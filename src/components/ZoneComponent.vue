@@ -35,10 +35,10 @@ export default {
     style () {
       return {
         position: 'absolute',
-        left: (10 * this.x) + '%',
-        top: (10 * this.y) + '%',
-        width: (10 * this.width) + '%',
-        height: (10 * this.height) + '%'
+        left: (1 * this.x) + '%',
+        top: (1 * this.y) + '%',
+        width: (1 * this.width) + '%',
+        height: (1 * this.height) + '%'
       }
     }
   }
