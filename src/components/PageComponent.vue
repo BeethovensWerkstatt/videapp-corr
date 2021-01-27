@@ -17,8 +17,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import OpenSeadragon from 'openseadragon'
-import ZoneComponent from './ZoneComponent.vue'
-// import ZoneComponent from '@/components/ZoneComponent.vue'
+import ZoneComponent from '@/components/ZoneComponent.vue'
 /**
  * Component for one page. Collect all measure-zones
  *
@@ -36,7 +35,6 @@ import ZoneComponent from './ZoneComponent.vue'
  */
 export default {
   components: { ZoneComponent },
-  // components: { ZoneComponent },
   name: 'PageComponent',
   props: {
     page: {
@@ -59,7 +57,6 @@ export default {
   data () {
     return {
       pgdata: this.page ? this.page.id : null,
-      tiurl: null,
       tidata: null,
       topsource: false
     }

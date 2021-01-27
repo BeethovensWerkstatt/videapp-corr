@@ -14,6 +14,9 @@
           </btn-group>
         </div>
       </div>
+      <div>
+        {{ this.scale }}
+      </div>
       <zone-info />
       <source-info />
     </div>
@@ -21,6 +24,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import DesktopComponent from '@/components/DesktopComponent'
 import SourceInfo from '@/components/SourceInfo'
 import ZoneInfo from '@/components/ZoneInfo.vue'
@@ -44,6 +48,7 @@ export default {
     // console.log(this.sources)
   },
   computed: {
+    ...mapGetters(['scale']),
     sources () {
       // TODO query
       return this.$store.getters.sources

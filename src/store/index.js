@@ -57,6 +57,7 @@ export default new Vuex.Store({
       }
     },
     UPDATE_SCALE (state) {
+      // console.log(state.viewer)
       if (state.viewer) {
         // state.scale = state.viewer.viewport.viewportToImageZoom(state.viewer.viewport.getZoom(true))
         var p0 = new OpenSeadragon.Point(0, 0)
@@ -64,7 +65,9 @@ export default new Vuex.Store({
         p0 = state.viewer.viewport.viewerElementToViewportCoordinates(p0)
         p1 = state.viewer.viewport.viewerElementToViewportCoordinates(p1)
         // avoid large scale value for p0 and p1 approx 0
-        state.scale = 1 / Math.max(p1.x - p0.x, 0.05)
+        // state.scale = 1 / Math.max(p1.x - p0.x, 0.05)
+        state.scale = 1 / (p1.x - p0.x)
+        // console.log('update scale ' + state.scale)
       } else {
         state.scale = 1
       }

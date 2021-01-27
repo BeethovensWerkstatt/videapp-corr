@@ -39,8 +39,7 @@ export default {
   },
   data: function () {
     return {
-      viewerprops: { ...osddef, ...this.osdinit },
-      scaleCache: 0
+      viewerprops: { ...osddef, ...this.osdinit }
     }
   },
   props: {
@@ -80,15 +79,10 @@ export default {
   },
   methods: {
     updateView (e) {
-      // console.log(e)
       if (e.zoom) {
         // console.log('zoom: ' + this.viewer.viewport.viewportToImageZoom(e.zoom))
       }
-      if (this.scale !== this.scaleCache) {
-        // console.log(this.scale)
-        this.scaleCache = this.scale
-        this.$store.commit('UPDATE_SCALE')
-      }
+      this.$store.commit('UPDATE_SCALE')
     }
   },
   created () {

@@ -87,8 +87,15 @@ export default {
       this.overlay.update(new OpenSeadragon.Point(this.dashX, this.dashY), OpenSeadragon.TOP_CENTER)
     }
   },
+  watch: {
+    scale () {
+      if (this.overlay) {
+        this.overlay.update(new OpenSeadragon.Point(this.dashX, this.dashY), OpenSeadragon.TOP_CENTER)
+      }
+    }
+  },
   computed: {
-    ...mapGetters(['viewer']),
+    ...mapGetters(['viewer', 'scale']),
     source () {
       const source = this.$store.getters.getSourceById(this.sourceId)
       if (source) {
@@ -146,9 +153,10 @@ export default {
       return this.$el.querySelector('#draghandle')
     },
     dashX () {
-      // const dim = new OpenSeadragon.Point(this.$el.clientWidth, this.$el.clientHeight)
-      // const ow = this.viewer.viewport.viewerElementToViewportCoordinates(dim).x
-      return this.position.x // - (ow / 2)
+      const ow = (this.dashboard.clientWidth / this.scale)
+      // console.log('dashX ' + ow)
+      // TODO isSingle
+      return this.position.x - (ow / 2)
     },
     dashY () {
       return this.position.y + (this.source.maxDimensions.height / 2)
