@@ -6,10 +6,12 @@
     <zone-component
       v-for="zone in zones"
       :key="zone.zone"
-      :x="(width > 0) ? (zone.x / width) : 0"
-      :y="(height > 0) ? (zone.y / height) : 0"
-      :width="(width > 0) ? (zone.width / width) : 0"
-      :height="(height > 0) ? (zone.height / height) : 0"
+      :sourceId="sourceId"
+      :zoneId="zone.zone"
+      :x="(width > 0) ? (zone.x * scaleFactor / width) : 0"
+      :y="(height > 0) ? (zone.y * scaleFactor / height) : 0"
+      :width="(width > 0) ? (zone.width * scaleFactor / width) : 0"
+      :height="(height > 0) ? (zone.height * scaleFactor / height) : 0"
     />
   </div>
 </template>
@@ -37,6 +39,10 @@ export default {
   components: { ZoneComponent },
   name: 'PageComponent',
   props: {
+    sourceId: {
+      type: String,
+      required: true
+    },
     page: {
       type: Object,
       required: false

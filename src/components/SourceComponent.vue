@@ -2,12 +2,14 @@
   <div>
     <page-component
       :divid="divid + '_recto'"
+      :sourceId="sourceId"
       :page="source.pages[pagenr].r"
       :pos="rectoPos"
       :active="isActive"
     />
     <page-component
       :divid="divid + '_verso'"
+      :sourceId="sourceId"
       :page="source.pages[pagenr].v"
       :pos="versoPos"
       :active="isActive"

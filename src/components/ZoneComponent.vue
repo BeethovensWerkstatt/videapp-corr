@@ -1,5 +1,5 @@
 <template>
-    <div class="zone-component" :style="style">
+    <div class="zone-component" :style="style" @click.prevent="activateZone">
     </div>
 </template>
 
@@ -14,6 +14,14 @@
 export default {
   name: 'ZoneComponent',
   props: {
+    sourceId: {
+      type: String,
+      required: true
+    },
+    zoneId: {
+      type: String,
+      required: true
+    },
     x: {
       type: Number,
       required: true
@@ -35,11 +43,16 @@ export default {
     style () {
       return {
         position: 'absolute',
-        left: (1 * this.x) + '%',
-        top: (1 * this.y) + '%',
-        width: (1 * this.width) + '%',
-        height: (1 * this.height) + '%'
+        left: (100 * this.x) + '%',
+        top: (100 * this.y) + '%',
+        width: (100 * this.width) + '%',
+        height: (100 * this.height) + '%'
       }
+    }
+  },
+  methods: {
+    activateZone (e) {
+      this.$store.dispatch('activateZone', { source: this.sourceId, zone: this.zoneId })
     }
   }
 }

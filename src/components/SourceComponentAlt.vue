@@ -35,6 +35,7 @@ import { OverlayContainer } from '@/mixins/OverlayContainer'
 const SourceOverlayVue = Vue.extend(SourceOverlay)
 
 /**
+ * @deprecated
  * Source components are created dynamically. See {@tutorial vue-components-programmatically}.
  * If a source is selected it may be accessed globally. See {@link module:components/SourceInfo}.
  *

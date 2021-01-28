@@ -19,6 +19,7 @@
 import ZoneOverlay from '@/components/ZoneOverlay'
 
 /**
+ * @deprecated
  * @module components/SourceOverlay
  * @vue-prop {object} source - source object
  * @vue-prop {SourceFacsimile} SrcCmp - SourceFacsimile component

@@ -32,7 +32,7 @@ export default {
      * clears information widget
      */
     clearInfo () {
-      this.$store.commit('ACTIVATE_ZONE', null)
+      this.$store.dispatch('activateZone', {})
     },
     // TODO test
     destroyZone () {

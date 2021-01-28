@@ -177,6 +177,12 @@ export default new Vuex.Store({
         commit('SET_VIEWER', null)
       }
     },
+    activateZone ({ commit, getters }, { source, zone }) {
+      commit('ACTIVATE_SOURCE', source)
+      if (getters.activeSource) {
+        getters.activeSource.activeZone = zone
+      }
+    },
     /**
      * **TODO: load from REST API**
      * load sources
