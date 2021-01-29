@@ -178,9 +178,10 @@ export default new Vuex.Store({
       }
     },
     activateZone ({ commit, getters }, { source, zone }) {
-      commit('ACTIVATE_SOURCE', source)
-      if (getters.activeSource) {
-        getters.activeSource.activeZone = zone
+      const src = getters.getSourceById(source)
+      if (src) {
+        src.activeZoneId = zone
+        commit('ACTIVATE_SOURCE', source)
       }
     },
     /**
@@ -335,7 +336,9 @@ export default new Vuex.Store({
     },
     activeZoneId: (state, getters) => {
       const source = getters.activeSource
+      // console.log(source)
       if (source) {
+        // console.log(source.activeZoneId)
         return source.activeZoneId
       }
       return null
@@ -344,9 +347,11 @@ export default new Vuex.Store({
      * @memberof store.getters
      * @returns {object} selected zone object or null
      */
-    activeZone: (state, getters) => () => {
-      if (getters.activeSource) {
-        return getters.activeSource.activeZone
+    activeZone: (state, getters) => {
+      const source = getters.activeSource
+      const zoneId = getters.activeZoneId
+      if (source && zoneId) {
+        return source.pages[source.pagenr].measures.find(zone => zone.zone === zoneId)
       }
       return null
     },
