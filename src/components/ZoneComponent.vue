@@ -1,9 +1,14 @@
 <template>
     <div class="zone-component" :style="style" @click.prevent="activateZone">
+      <div class="zone-label">
+        {{ zoneLabel }}
+      </div>
     </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 /**
  * @module components/ZoneComponent
  * @vue-prop {number} x - horizontal coordinate on page
@@ -40,14 +45,19 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['scale']),
     style () {
       return {
         position: 'absolute',
         left: (100 * this.x) + '%',
         top: (100 * this.y) + '%',
         width: (100 * this.width) + '%',
-        height: (100 * this.height) + '%'
+        height: (100 * this.height) + '%',
+        'font-size': (100 * this.scale + '%')
       }
+    },
+    zoneLabel () {
+      return 'zone'
     }
   },
   methods: {
@@ -86,5 +96,15 @@ export default {
   &.hide {
     display: none
   }
+}
+.zone-label {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  margin: 0%;
+  text-align: center;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  background-color: rgba($color: #ffffff, $alpha: .5);
 }
 </style>
