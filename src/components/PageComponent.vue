@@ -115,7 +115,9 @@ export default {
           }
         } else {
           if (this.overlay) {
-            this.overlay.destroy()
+            // TODO update overlay ...
+            // TODO css display none ...
+            // this.overlay.destroy()
           }
         }
       }
