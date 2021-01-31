@@ -2,6 +2,7 @@
   <div
     class="page-component"
     :id="divid"
+    :class="{ hideovl: !tiledimage }"
   >
     <zone-component
       v-for="zone in zones"
@@ -206,5 +207,8 @@ export default {
 .page-component {
   position: absolute;
   border: 1px solid green;
+}
+.hideovl {
+  display: none
 }
 </style>
