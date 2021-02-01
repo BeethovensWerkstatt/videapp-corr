@@ -351,7 +351,12 @@ export default new Vuex.Store({
       const source = getters.activeSource
       const zoneId = getters.activeZoneId
       if (source && zoneId) {
-        return source.pages[source.pagenr].measures.find(zone => zone.zone === zoneId)
+        const pagenr = source.pagenr ? source.pagenr : 0
+        const rzones = source.pages[pagenr].r ? source.pages[pagenr].r.measures : []
+        const vzones = source.pages[pagenr].v ? source.pages[pagenr].v.measures : []
+        const zone = [...rzones, ...vzones].find(zone => zone.zone === zoneId)
+        console.log(zone)
+        return zone
       }
       return null
     },

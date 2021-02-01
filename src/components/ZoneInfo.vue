@@ -30,12 +30,6 @@ export default {
      */
     clearInfo () {
       this.$store.dispatch('activateZone', {})
-    },
-    // TODO test
-    destroyZone () {
-      if (this.ovl_zone) {
-        this.ovl_zone.destroyZone()
-      }
     }
   }
 }
