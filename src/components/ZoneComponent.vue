@@ -53,7 +53,7 @@ export default {
         top: (100 * this.y) + '%',
         width: (100 * this.width) + '%',
         height: (100 * this.height) + '%',
-        'font-size': (100 * this.scale + '%')
+        'font-size': 'min(14pt,' + (100 * this.scale + '%') + ')'
       }
     },
     zoneLabel () {
