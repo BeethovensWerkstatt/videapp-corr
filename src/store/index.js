@@ -177,11 +177,21 @@ export default new Vuex.Store({
         commit('SET_VIEWER', null)
       }
     },
+    /**
+     * activate zone
+     * @param {*} param0
+     * @param {*} param1
+     */
     activateZone ({ commit, getters }, { source, zone }) {
-      const src = getters.getSourceById(source)
-      if (src) {
-        src.activeZoneId = zone
-        commit('ACTIVATE_SOURCE', source)
+      if (source) {
+        const src = getters.getSourceById(source)
+        if (src) {
+          // console.log(source, zone)
+          commit('MODIFY_SOURCE', { ...src, activeZoneId: zone })
+          commit('ACTIVATE_SOURCE', source)
+        }
+      } else {
+        commit('ACTIVATE_SOURCE', null)
       }
     },
     /**
@@ -355,7 +365,6 @@ export default new Vuex.Store({
         const rzones = source.pages[pagenr].r ? source.pages[pagenr].r.measures : []
         const vzones = source.pages[pagenr].v ? source.pages[pagenr].v.measures : []
         const zone = [...rzones, ...vzones].find(zone => zone.zone === zoneId)
-        console.log(zone)
         return zone
       }
       return null

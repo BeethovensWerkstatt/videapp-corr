@@ -1,5 +1,13 @@
 <template>
-    <div class="zone-component" :style="style" @click.prevent="activateZone">
+    <div
+      class="zone-component"
+      :style="style"
+      :class="{
+        active: this.isActive,
+        anno: this.hasAnno
+      }"
+      @click.prevent="activateZone"
+    >
       <div class="zone-label">
         {{ zoneLabel }}
       </div>
@@ -45,7 +53,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['scale']),
+    ...mapGetters(['scale', 'activeZoneId']),
     style () {
       return {
         position: 'absolute',
@@ -55,6 +63,17 @@ export default {
         height: (100 * this.height) + '%',
         'font-size': 'min(14pt,' + (100 * this.scale + '%') + ')'
       }
+    },
+    activeZoneId () {
+      const src = this.$store.getters.getSourceById(this.sourceId)
+      // console.log(src.activeZoneId)
+      return src.activeZoneId
+    },
+    isActive () {
+      return (this.activeZoneId === this.zoneId)
+    },
+    hasAnno () {
+      return this.label && this.label.length > 0
     },
     zoneLabel () {
       return 'zone'
