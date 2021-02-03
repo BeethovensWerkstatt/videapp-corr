@@ -49,6 +49,27 @@ import PageComponent from '@/components/PageComponent.vue'
 
 /**
  * @module components/SourceComponent
+ * @vue-prop {String} sourceId - id of source object
+ * @vue-prop {Number} [defaultPage=0] - first opend page on load
+ * @vue-data {String} [divid=sourceId + '_dash'] - HTML id for dashboard overlay element
+ * @vue-data {Object} position_ - private position variable (x, y)
+ * @vue-data {Object} tracker - OpenSeadragon.MouseTracker object
+ * @vue-computed {OpenSeadragon.Viewer} viewer - Viewer object
+ * @vue-computed {Number} scale - current scale of viewer
+ * @vue-computed {Object} source - source object retrieved by sourceId
+ * @vue-computed {String} label - label/title of source
+ * @vue-computed {Number} pagenr - index of page pair (recto/verso)
+ * @vue-computed {Object} position - position (x,y) of component (viewport coordinate), move page components and overlay on change
+ * @vue-computed {Boolean} hasPrev - previous page available
+ * @vue-computed {Boolean} hasNext - next page available
+ * @vue-computed {Boolean} isActive - sourceId === $store.activeSourceId
+ * @vue-computed {OpenSeadragon.Overlay} overlay - overlay of control elements
+ * @vue-computed {Object} dashboard - DOM control elements
+ * @vue-computed {Object} dashHandle - DOM drag element
+ * @vue-computed {Number} dashX - horizontal position of overlay
+ * @vue-computed {Number} dashY - vertical position of overlay
+ * @vue-computed {OpenSeadragon.Rect} rectoPos - position of recto page
+ * @vue-computed {OpenSeadragon.Rect} versoPos - position of verso page
  */
 export default {
   components: { PageComponent },
@@ -71,25 +92,29 @@ export default {
     }
   },
   mounted () {
+    // create MouseTracker for moving component via drag and drop
     this.tracker = new OpenSeadragon.MouseTracker({
       element: this.dragHandle,
       clickHandler: () => { this.selectSource() },
       dragHandler: this.dragHandler,
       dragEndHandler: this.dragEndHandler,
-      releaseHandler: this.dragEndHandler
+      releaseHandler: this.dragEndHandler // do we need this?
     })
+    // create overlay for control buttons
     this.viewer.addOverlay(
       this.dashboard,
       new OpenSeadragon.Point(this.dashX, this.dashY),
       OpenSeadragon.TOP_CENTER)
   },
   updated () {
+    // update position of overlay on update of component
     // console.log('dashX: ' + this.dashX)
     if (this.overlay) {
       this.overlay.update(new OpenSeadragon.Point(this.dashX, this.dashY), OpenSeadragon.TOP_CENTER)
     }
   },
   watch: {
+    // adjust position of overlay on change of scale
     scale () {
       if (this.overlay) {
         this.overlay.update(new OpenSeadragon.Point(this.dashX, this.dashY), OpenSeadragon.TOP_CENTER)
@@ -189,25 +214,29 @@ export default {
     }
   },
   methods: {
+    /**
+     * check if page number is in range
+     * @param {Number} pnr - page number to check
+     * @returns {Boolean} true if `pnr` is in range
+     */
     checkPageNr (pnr) {
       return (pnr >= 0 && pnr < this.source.pages.length)
     },
-    prevPage (e) {
+    /**
+     * flip pages forward
+     */
+    prevPage () {
       if (this.hasPrev) {
         this.$store.commit('SET_PAGE', { id: this.sourceId, page: this.pagenr - 1 })
       }
     },
-    nextPage (e) {
+    /**
+     * flip pages backward
+     */
+    nextPage () {
       if (this.hasNext) {
         this.$store.commit('SET_PAGE', { id: this.sourceId, page: this.pagenr + 1 })
       }
-    },
-    /**
-     * place source on top of the stack
-     */
-    placeOnTop () {
-      const ci = this.viewer.world.getItemCount()
-      console.log('TODO place on top: ' + ci)
     },
     /**
      * select this source
@@ -219,14 +248,29 @@ export default {
         e.preventDefault()
       }
       this.$store.commit('ACTIVATE_SOURCE', this.sourceId)
-      // this.placeOnTop()
     },
+    /**
+     * handle drag and drop
+     *
+     * @param {Object} e - drag event
+     */
     dragHandler (e) {
       const delta = this.viewer.viewport.deltaPointsFromPixels(e.delta)
       this.moveTo(this.position.x + delta.x, this.position.y + delta.y)
     },
+    /**
+     * handle drag drop
+     *
+     * @param {Object} e - drag event
+     */
     dragEndHandler (e) {
     },
+    /**
+     * move SourceComponent to new position
+     *
+     * @param {Number} x - horizontal coordinate (viewport)
+     * @param {Number} y - vertical coordinate (viewport)
+     */
     moveTo (x, y) {
       this.position = { x: x, y: y }
       this.$store.commit('MOVE_SOURCE', { id: this.sourceId, ...this.position })

@@ -31,6 +31,8 @@ import { desktopTile } from '@/toolbox'
  * @vue-prop {Number} [height=1000] - desktop height
  * @vue-prop {URL} [backsrc=data] - source of tiled background image (default is beige rectangle)
  * @vue-computed {Viewer} viewer - OpenSeaDragon Viewer object (placed in vuex store)
+ * @vue-computed {Object[]} sources - source objects
+ * @vue-computed {Number} scale - current viewer scale
  */
 export default {
   name: 'DesktopComponent',
@@ -78,6 +80,9 @@ export default {
     }
   },
   methods: {
+    /**
+     * adjust view for current scale
+     */
     updateView (e) {
       if (e.zoom) {
         // console.log('zoom: ' + this.viewer.viewport.viewportToImageZoom(e.zoom))
@@ -85,9 +90,8 @@ export default {
       this.$store.commit('UPDATE_SCALE')
     }
   },
-  created () {
-  },
   mounted () {
+    // create OpenSeadragon viewer
     this.$store.dispatch('createOpenSeaDragon', {
       divid: this.divid,
       handler: {
@@ -112,6 +116,7 @@ export default {
     }
   },
   beforeDestroy () {
+    // destroy OpenSeadragon viewer
     this.$store.dispatch('destroyOpenSeaDragon')
   },
   computed: {
