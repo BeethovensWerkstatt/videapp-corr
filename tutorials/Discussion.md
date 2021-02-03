@@ -1,3 +1,10 @@
+
+
+---
+
+## history
+### OpenSeadragon
+
 * The `OpenSeadragonComponent` is not generic for any OSD aware application.
 * Some code should be prepared by mixins to allow component inheritance.
 
