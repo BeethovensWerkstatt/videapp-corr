@@ -9,7 +9,7 @@
     "include": ["./src_docs/README.md", "./src/"],
     "exclude": ["./src/openseadragon/"],
     "includePattern": "\\.(vue|js)$",
-    "excludePattern": "(^|\\/|\\\\)__tests__"
+    "excludePattern": "(^|\\/|\\\\)(__tests__|_[^\\/\\\\]*\\.vue)"
   },
   "opts": {
     "template": "node_modules/docdash",
