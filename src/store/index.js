@@ -30,32 +30,13 @@ export default new Vuex.Store({
     annotations: [],
     activeAnnotationId: null,
     sources: [],
-    activeSourceId: null,
-    initImages: [],
-    initOverlays: []
+    activeSourceId: null
   },
   /**
    * @namespace store.mutations
    * @memberof store
    */
   mutations: {
-    /**
-     * set OpenSeadragon Viewer
-     * @memberof store.mutations
-     * @param {object} state
-     * @param {object} viewer
-     */
-    SET_VIEWER (state, viewer) {
-      if (state.viewer) {
-        console.warn('viewer set twice!')
-      }
-      state.viewer = viewer
-      while (state.initOverlays.length > 0) {
-        console.log('init overlay')
-        const args = state.initOverlays.shift()
-        state.viewer.addOverlay(...args)
-      }
-    },
     UPDATE_SCALE (state) {
       // console.log(state.viewer)
       if (state.viewer) {
@@ -161,7 +142,10 @@ export default new Vuex.Store({
 
       viewer.addTiledImage(TIback)
 
-      commit('SET_VIEWER', viewer)
+      if (state.viewer) {
+        console.warn('viewer set twice!')
+      }
+      state.viewer = viewer
 
       for (const k in handler) {
         // console.log('handler :' + k)
