@@ -19,10 +19,18 @@ import { mapGetters } from 'vuex'
 
 /**
  * @module components/ZoneComponent
- * @vue-prop {number} x - horizontal coordinate on page
- * @vue-prop {number} y - vertical coordinate on page
- * @vue-prop {number} width - width of measure zone
- * @vue-prop {number} height - height of measure zone
+ * @vue-prop {String} sourceId - id of source object
+ * @vue-prop {String} zoneId - id of measure zone
+ * @vue-prop {Number} x - horizontal coordinate on page
+ * @vue-prop {Number} y - vertical coordinate on page
+ * @vue-prop {Number} width - width of measure zone
+ * @vue-prop {Number} height - height of measure zone
+ * @vue-computed {Number} scale - current scaling of viewer
+ * @vue-computed {String} activeZoneId - active zone id for countaining source
+ * @vue-computed {Object} style - styles for measure zone (percent size for page overlay)
+ * @vue-computed {Boolean} isActive - zone is selected for corresponding source
+ * @vue-computed {Boolean} hasAnno - annotation registered for measure zone
+ * @vue-computed {String} zoneLabel - label/title for zone
  */
 export default {
   name: 'ZoneComponent',
@@ -53,7 +61,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['scale', 'activeZoneId']),
+    ...mapGetters(['scale']),
     style () {
       return {
         position: 'absolute',
@@ -80,6 +88,9 @@ export default {
     }
   },
   methods: {
+    /**
+     * activate zone
+     */
     activateZone (e) {
       this.$store.dispatch('activateZone', { source: this.sourceId, zone: this.zoneId })
     }

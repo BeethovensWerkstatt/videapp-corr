@@ -14,9 +14,6 @@
           </btn-group>
         </div>
       </div>
-      <div>
-        {{ this.scale }}
-      </div>
       <zone-info />
       <source-info />
     </div>

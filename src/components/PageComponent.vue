@@ -22,19 +22,25 @@ import { mapGetters } from 'vuex'
 import OpenSeadragon from 'openseadragon'
 import ZoneComponent from '@/components/ZoneComponent.vue'
 /**
- * Component for one page. Collect all measure-zones
+ * Component for one page (recto or verso). Collect all measure-zones
  *
  * @module components/PageComponent
- * @vue-data {object} pagedata - data for displayed page
- * @vue-data {OpenSeadragon.TiledImage} tidata
- * @vue-prop {number} x - horizontal position on desktop
- * @vue-prop {number} y - vertical position on desktop
- * @vue-computed {object} page - data for displayed page
+ * @vue-data {object} pagedata - id of displayed page or null
+ * @vue-data {OpenSeadragon.TiledImage} tidata - tiled image object of displayed page
+ * @vue-data {Boolean} topsource - image is displayed in front of all
+ * @vue-prop {String} sourceId - id of source object
+ * @vue-prop {Object} page - page data object
+ * @vue-prop {OpenSeadragon.Rect} pos - position (x,y) of page (viewport coordinate)
+ * @vue-prop {String} divid - id of overlay element
+ * @vue-prop {Boolean} active - source is selected
+ * @vue-computed {OpenSeadragon.Viewer} viewer
  * @vue-computed {OpenSeadragon.TiledImage} tiledimage
- * @vue-computed {boolean} isActive - if pagedata ist valid
- * @vue-computed {number} scaleFactor - dimension.width / pixels.width
- * @vue-computed {number} width - scaled width for OpenSeadragon
- * @vue-computed {number} height - scaled height for OpenSeadragon
+ * @vue-computed {OpenSeadragon.Overlay} overlay
+ * @vue-computed {Boolean} isActive - if pagedata ist valid | recto or verso page is available
+ * @vue-computed {Number} scaleFactor - dimension.width / pixels.width
+ * @vue-computed {Number} width - scaled width for OpenSeadragon
+ * @vue-computed {Number} height - scaled height for OpenSeadragon
+ * @vue-computed {Object[]} zones - array of measure zones for displayed page
  */
 export default {
   components: { ZoneComponent },
@@ -155,6 +161,9 @@ export default {
     }
   },
   methods: {
+    /**
+     * reposition tiled image and overlay
+     */
     updatePosition () {
       if (this.overlay) {
         this.overlay.update(this.pos)
@@ -163,6 +172,9 @@ export default {
         this.tiledimage.setPosition(this.pos, true)
       }
     },
+    /**
+     * load new tiled image on start or page flip
+     */
     updateTI () {
       // console.log('update TI ' + (this.pgdata !== this.pageID))
       if (!this.tiledimage || this.pgdata !== this.pageID) {
