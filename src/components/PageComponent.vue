@@ -98,6 +98,16 @@ export default {
       this.topsource = this.active
     }
   },
+  beforeDestroy () {
+    console.log('bye bye Page')
+    if (this.tiledimage) {
+      this.tiledimage.setOpacity(0)
+      this.tiledimage.destroy()
+    }
+    if (this.overlay) {
+      this.overlay.destroy()
+    }
+  },
   computed: {
     ...mapGetters(['viewer']),
     tiledimage: {
@@ -120,17 +130,11 @@ export default {
               location: this.pos
             }, this.pos, OpenSeadragon.TOP_CENTER)
           }
-        } else {
-          if (this.overlay) {
-            // TODO update overlay ...
-            // TODO css display none ...
-            // this.overlay.destroy()
-          }
         }
       }
     },
     overlay () {
-      return this.viewer.getOverlayById(this.divid)
+      return this.viewer ? this.viewer.getOverlayById(this.divid) : null
     },
     pageID () {
       return (this.page ? this.page.id : null)

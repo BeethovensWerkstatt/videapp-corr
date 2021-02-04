@@ -121,6 +121,12 @@ export default {
       }
     }
   },
+  beforeDestroy () {
+    console.log('bye bye Source')
+    if (this.overlay) {
+      this.overlay.destroy()
+    }
+  },
   computed: {
     ...mapGetters(['viewer', 'scale']),
     source () {
@@ -171,7 +177,7 @@ export default {
       return this.sourceId === this.$store.getters.activeSourceId
     },
     overlay () {
-      return this.viewer.getOverlayById(this.divid)
+      return this.viewer ? this.viewer.getOverlayById(this.divid) : null
     },
     dashboard () {
       return this.$el.querySelector('#' + this.divid)

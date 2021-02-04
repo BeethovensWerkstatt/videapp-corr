@@ -16,12 +16,12 @@ Vue.use(Vuex)
 /**
  * @typedef {object} store.state
  * @memberof store
- * @property {object} viewer - OpenSeadragon Viewer object
- * @property {object} desktop - OpenSeadragon Vue component
- * @property {object[]} annotations - list of annotations
- * @property {string} activeAnnotationId - ID of selected annotation
- * @property {object[]} sources - list of source objects
- * @property {string} activeSourceId - ID of selected source
+ * @property {Object} viewer - OpenSeadragon Viewer object
+ * @property {Number} scale - current scale of OpenSeadragon.Viewer
+ * @property {Object[]} annotations - list of annotations
+ * @property {String} activeAnnotationId - ID of selected annotation
+ * @property {Object[]} sources - list of source objects
+ * @property {String} activeSourceId - ID of selected source
  */
 export default new Vuex.Store({
   state: {
@@ -37,6 +37,11 @@ export default new Vuex.Store({
    * @memberof store
    */
   mutations: {
+    /**
+     * update scale variable
+     * @memberof store.mutations
+     * @param {Object} state
+     */
     UPDATE_SCALE (state) {
       // console.log(state.viewer)
       if (state.viewer) {
@@ -66,6 +71,7 @@ export default new Vuex.Store({
     },
     /**
      * replace source
+     * @memberof store.mutations
      * @param {object} state
      * @param {object} source
      */
@@ -74,6 +80,7 @@ export default new Vuex.Store({
     },
     /**
      * move source on the OSD space
+     * @memberof store.mutations
      * @param {object} state
      * @param {object} src
      */
@@ -84,6 +91,12 @@ export default new Vuex.Store({
         state.sources = state.sources.map(src => src.id === msrc.id ? msrc : src)
       }
     },
+    /**
+     * open page pair (recto/verso)
+     * @memberof store.mutations
+     * @param {Object} state
+     * @param {Object} payload id: String, page: Number
+     */
     SET_PAGE (state, { id, page }) {
       const msrc = { ...state.sources.find(src => src.id === id), pagenr: page }
       if (msrc.id) {
@@ -133,6 +146,7 @@ export default new Vuex.Store({
   actions: {
     /**
      * create OpenSeadragon canvas
+     * @memberof store.actions
      */
     createOpenSeaDragon ({ commit, state }, { config, TIback, handler }) {
       // console.log(payload)
@@ -154,17 +168,19 @@ export default new Vuex.Store({
     },
     /**
      * destroy OpenSeadragon canvas
+     * @memberof store.actions
      */
     destroyOpenSeaDragon ({ commit, state }) {
       if (state.viewer) {
         state.viewer.destroy()
-        commit('SET_VIEWER', null)
+        state.viewer = null
       }
     },
     /**
      * activate zone
-     * @param {*} param0
-     * @param {*} param1
+     * @memberof store.actions
+     * @param {Object} callback commit, getters
+     * @param {Object} payload source: String, zone: String
      */
     activateZone ({ commit, getters }, { source, zone }) {
       if (source) {
@@ -180,6 +196,7 @@ export default new Vuex.Store({
     },
     /**
      * **TODO: load from REST API**
+     *
      * load sources
      * @memberof store.actions
      * @param {function} commit
@@ -286,10 +303,13 @@ export default new Vuex.Store({
   /**
    * @namespace store.getters
    * @memberof store
-   * @property {object} viewer - OpenSeadragon Viewer object
-   * @property {object[]} sources - list of source objects loaded
-   * @property {string} activeSourceId - ID of selected source object
-   * @property {string} activeZoneId - ID of selected source object
+   * @property {Object} viewer - OpenSeadragon Viewer object
+   * @property {Object[]} sources - list of source objects loaded
+   * @property {Number} scale - current scale of OpenSeqdragon Viewer
+   * @property {String} activeSourceId - id of selected source object
+   * @property {Object} activeSource - selected source object
+   * @property {String} activeZoneId - id of selected zone object
+   * @property {Object} activeZone - selected zone object
    */
   getters: {
     viewer: (state) => {
@@ -304,10 +324,6 @@ export default new Vuex.Store({
     activeSourceId: (state) => {
       return state.activeSourceId
     },
-    /**
-     * @memberof store.getters
-     * @returns {object} selected source object or null
-     */
     activeSource: (state, getters) => {
       if (state.activeSourceId) {
         const source = getters.getSourceById(state.activeSourceId)
@@ -317,9 +333,9 @@ export default new Vuex.Store({
       return null
     },
     /**
+     * find source object by id
      * @memberof store.getters
-     * @param {string} id
-     * @returns {object} source object of id or null
+     * @param {String} id - id of source object
      */
     getSourceById: (state) => (id) => {
       // console.log('get source: ' + id)
@@ -337,10 +353,6 @@ export default new Vuex.Store({
       }
       return null
     },
-    /**
-     * @memberof store.getters
-     * @returns {object} selected zone object or null
-     */
     activeZone: (state, getters) => {
       const source = getters.activeSource
       const zoneId = getters.activeZoneId
@@ -354,15 +366,44 @@ export default new Vuex.Store({
       return null
     },
     /**
-     * **not implemented yet!**
+     * find zone by id. If `sourceId` is null, all sources are searched,
+     * until a zone with a matching id is found.
+     *
      * @memberof store.getters
-     * @param {string} id
-     * @returns {object} source zone of id or null
+     * @param {String} sourceId - id of containing source object or null
+     * @param {String} zoneId - id of zone object
      */
-    getZoneById: (state) => (id) => {
-      state.sources.forEach((source) => {
-        console.log(source)
-      })
+    getZoneById: (state, getters) => (sourceId, zoneId) => {
+      const findZone = function (source, zoneId) {
+        for (const p in source.pages) {
+          if (p.r) {
+            for (const zone in p.r.measures) {
+              if (zone.zone === zoneId) {
+                return zone
+              }
+            }
+          }
+          if (p.v) {
+            for (const zone in p.v.measures) {
+              if (zone.zone === zoneId) {
+                return zone
+              }
+            }
+          }
+        }
+      }
+      const source = sourceId ? getters.getSourceById(sourceId) : null
+      if (source) {
+        return findZone(source, zoneId)
+      }
+      if (!sourceId) {
+        state.sources.forEach((source) => {
+          const zone = findZone(source, zoneId)
+          if (zone) {
+            return zone
+          }
+        })
+      }
       return null
     }
   }

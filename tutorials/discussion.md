@@ -1,4 +1,6 @@
+## Vue lifecycle
 
+* Do we need `beforeDestroy()` for Page and Source or is it killed with OpenSeadragon?
 
 ---
 
