@@ -19,6 +19,7 @@
 import ZoneOverlay from '@/components/ZoneOverlay'
 
 /**
+ * @deprecated
  * @module components/SourceOverlay
  * @vue-prop {object} source - source object
  * @vue-prop {SourceFacsimile} SrcCmp - SourceFacsimile component
@@ -49,7 +50,7 @@ export default {
   },
   computed: {
     viewer () {
-      return this.SrcCmp.viewer
+      return this.$store.getters.viewer
     },
     divid () {
       return 'ovl_' + this.source.id
@@ -62,6 +63,7 @@ export default {
     styles () {
       // console.log(this.SrcCmp.getPageX(this.page))
       return {
+        position: 'absolute'
       }
     },
     styleForZone (zone) {

@@ -63,11 +63,11 @@ export default {
   name: 'SourceInfo',
   computed: {
     source () {
-      return this.$store.getters.activeSource()
+      return this.$store.getters.activeSource
     },
     activePage () {
       if (this.source) {
-        return this.source.component.pagenr
+        return this.source.pagenr
       }
       return 0
     },
@@ -90,13 +90,13 @@ export default {
     },
     verso_label () {
       if (this.source) {
-        return this.source.component.left_label
+        return this.source.left_label
       }
       return '---'
     },
     recto_label () {
       if (this.source) {
-        return this.source.component.right_label
+        return this.source.right_label
       }
       return '---'
     },
@@ -120,25 +120,39 @@ export default {
       return ''
     },
     hasPrev () {
-      return this.source && this.source.component.hasPrev
+      // pagenr can only be greater zero if it is already defined as a number
+      return this.source && this.source.pagenr > 0
     },
     hasNext () {
-      return this.source && this.source.component.hasNext
+      var pn = this.source ? this.source.pagenr : 0
+      if (!pn) {
+        pn = 0
+      }
+      return this.source && pn < (this.source.pages.length - 1)
     },
     position () {
       if (this.source) {
-        return this.source.component.position.x.toFixed(2) + ' / ' +
-               this.source.component.position.y.toFixed(2)
+        return this.source.position.x.toFixed(2) + ' / ' +
+               this.source.position.y.toFixed(2)
       }
       return '---'
     }
   },
   methods: {
     prevPage () {
-      return this.source && this.source.component.prevPage()
+      if (this.hasPrev) {
+        // pagenr can only be greater zero if it is already defined as a number
+        this.$store.commit('MODIFY_SOURCE', { ...this.source, pagenr: this.source.pagenr - 1 })
+      }
     },
     nextPage () {
-      return this.source && this.source.component.nextPage()
+      if (this.hasNext) {
+        var pn = this.source ? this.source.pagenr : 0
+        if (!pn) {
+          pn = 0
+        }
+        this.$store.commit('MODIFY_SOURCE', { ...this.source, pagenr: pn + 1 })
+      }
     },
     /**
      * unselect source / reset component

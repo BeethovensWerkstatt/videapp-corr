@@ -1,10 +1,10 @@
 <template>
-    <div :class="cls">{{ content}}</div>
+    <div :class="cls" :id="id">{{ content}}</div>
 </template>
 
 <script>
 import OpenSeadragon from 'openseadragon'
-import AssociatedOverlay from '@/mixins'
+import { AssociatedOverlay } from '@/mixins/AssociatedOverlay'
 
 /**
  * Simple Overlay component
@@ -21,20 +21,8 @@ export default {
   },
   props () {
     return {
-      viewer: {
-        type: OpenSeadragon.Viewer,
-        required: true
-      },
       id: {
         type: String,
-        required: true
-      },
-      x: {
-        type: Number,
-        required: true
-      },
-      y: {
-        type: Number,
         required: true
       },
       cls: {
@@ -43,39 +31,47 @@ export default {
       },
       content: {
         default: 'X'
-      },
-      register: {
-        type: Function,
-        default: null
       }
     }
   },
   mounted () {
     this.createOverlay()
-    if (this.register) {
-      this.register(this)
+    if (this.container) {
+      this.container.addOverlay(this)
     }
   },
   computed: {
+    '$store' () {
+      return this.container.$store
+    },
     overlay () {
       return this.viewer.getOverlayById(this.id)
+    },
+    overlayType () {
+      return 'simple'
     }
   },
   methods: {
-    createOverlay () {
+    create () {
       this.viewer.addOverlay(this.$el, this.position)
     },
-    destroyOverlay () {
+    destroy () {
       const ovl = this.overlay
       if (ovl) {
         ovl.destroy()
       }
     },
-    updateView () {
+    updateView (position) {
       const ovl = this.overlay
+      this.position.x = position.x
+      this.position.y = position.y
       if (ovl) {
         ovl.update(this.position)
       }
+    },
+    startUpdate () {
+    },
+    finishUpdate () {
     }
   }
 }

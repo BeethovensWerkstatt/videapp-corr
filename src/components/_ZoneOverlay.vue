@@ -4,6 +4,7 @@
       class="measure-ovl"
       :title="divtitle"
       @click.prevent="activateZone"
+      :style="{ position: 'absolute', top: this.zoneposY, left: this.zoneposX }"
       :class="{ active: this.isActive, anno: this.hasLabel, hide: this.updating }"
     >
     {{ (this.zone.label.length > 0) ? '&bullet;' : '' }}
@@ -15,9 +16,10 @@ import OpenSeadragon from 'openseadragon'
 import { AssociatedOverlay } from '@/mixins/AssociatedOverlay'
 
 /**
+ * @deprecated
  * @module components/ZoneOverlay
  * @vue-prop {Object} source - source object
- * @vue-prop {SourceComponent} container - SourceComponent component
+ * @vue-prop {SourceComponent} container - SourceComponent component (AssociatedOverlay mixin)
  * @vue-prop {Object} page - page object
  * @vue-prop {Object} zone - measure zone
  * @vue-computed {Object} $store - this component is created dynamically, so $store has to be retrieved from container
@@ -95,10 +97,12 @@ export default {
       return this.zone.label && this.zone.label.length > 0
     },
     zoneposX () {
-      return (parseInt(this.zone.x) * this.scaleFactor)
+      const x = (parseInt(this.zone.x) * this.scaleFactor)
+      return x
     },
     zoneposY () {
-      return (parseInt(this.zone.y) * this.scaleFactor)
+      const y = (parseInt(this.zone.y) * this.scaleFactor)
+      return y
     },
     zonePos () {
       const zonepos = new OpenSeadragon.Rect(10, 10, 10, 10)
@@ -116,6 +120,7 @@ export default {
      * update position of overlay if not updating (drag and drop)
      */
     updateView (position) {
+      // console.log(position)
       this.position = { x: position.x, y: position.y }
       // if (this.isActive || !this.updating) {
       this.overlay.update(this.zonePos, OpenSeadragon.TOP_LEFT)

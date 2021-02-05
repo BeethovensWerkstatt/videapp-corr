@@ -3,28 +3,32 @@ import Vuex from 'vuex'
 
 import uuidv4 from '@/toolbox'
 
+import OpenSeadragon from 'openseadragon'
+
 import pageSetup from '@/temp/pageSetup.json'
 
 Vue.use(Vuex)
 
 /**
+ * TODO: mutation and action names should be const strings
+ *
  * @namespace store
  */
 
 /**
  * @typedef {object} store.state
  * @memberof store
- * @property {object} viewer - OpenSeadragon Viewer object
- * @property {object} osd_component - OpenSeadragon Vue component
- * @property {object[]} annotations - list of annotations
- * @property {string} activeAnnotationId - ID of selected annotation
- * @property {object[]} sources - list of source objects
- * @property {string} activeSourceId - ID of selected source
+ * @property {Object} viewer - OpenSeadragon Viewer object
+ * @property {Number} scale - current scale of OpenSeadragon.Viewer
+ * @property {Object[]} annotations - list of annotations
+ * @property {String} activeAnnotationId - ID of selected annotation
+ * @property {Object[]} sources - list of source objects
+ * @property {String} activeSourceId - ID of selected source
  */
 export default new Vuex.Store({
   state: {
     viewer: null,
-    desktop: null,
+    scale: 1,
     annotations: [],
     activeAnnotationId: null,
     sources: [],
@@ -36,22 +40,25 @@ export default new Vuex.Store({
    */
   mutations: {
     /**
-     * set OpenSeadragon Viewer
+     * update scale variable
      * @memberof store.mutations
-     * @param {object} state
-     * @param {object} viewer
+     * @param {Object} state
      */
-    SET_VIEWER (state, viewer) {
-      state.viewer = viewer
-    },
-    /**
-     * set OpenSeadragon component
-     * @memberof store.mutations
-     * @param {object} state
-     * @param {module:OpenSeadragonComponent} OSDComponent
-     */
-    SET_DESKTOP (state, OSDComponent) {
-      state.OSDComponent = OSDComponent
+    UPDATE_SCALE (state) {
+      // console.log(state.viewer)
+      if (state.viewer) {
+        // state.scale = state.viewer.viewport.viewportToImageZoom(state.viewer.viewport.getZoom(true))
+        var p0 = new OpenSeadragon.Point(0, 0)
+        var p1 = new OpenSeadragon.Point(1, 1)
+        p0 = state.viewer.viewport.viewerElementToViewportCoordinates(p0)
+        p1 = state.viewer.viewport.viewerElementToViewportCoordinates(p1)
+        // avoid large scale value for p0 and p1 approx 0
+        // state.scale = 1 / Math.max(p1.x - p0.x, 0.05)
+        state.scale = 1 / (p1.x - p0.x)
+        // console.log('update scale ' + state.scale)
+      } else {
+        state.scale = 1
+      }
     },
     /**
      * set load source
@@ -63,6 +70,40 @@ export default new Vuex.Store({
       const sources = [...state.sources]
       sources.push(source)
       state.sources = sources
+    },
+    /**
+     * replace source
+     * @memberof store.mutations
+     * @param {object} state
+     * @param {object} source
+     */
+    MODIFY_SOURCE (state, source) {
+      state.sources = state.sources.map(src => src.id === source.id ? source : src)
+    },
+    /**
+     * move source on the OSD space
+     * @memberof store.mutations
+     * @param {object} state
+     * @param {object} src
+     */
+    MOVE_SOURCE (state, { id, x, y }) {
+      // console.log('move source ' + id + ': ' + x + ',' + y)
+      const msrc = { ...state.sources.find(src => src.id === id), position: { x: x, y: y } }
+      if (msrc.id) {
+        state.sources = state.sources.map(src => src.id === msrc.id ? msrc : src)
+      }
+    },
+    /**
+     * open page pair (recto/verso)
+     * @memberof store.mutations
+     * @param {Object} state
+     * @param {Object} payload id: String, page: Number
+     */
+    SET_PAGE (state, { id, page }) {
+      const msrc = { ...state.sources.find(src => src.id === id), pagenr: page }
+      if (msrc.id) {
+        state.sources = state.sources.map(src => src.id === msrc.id ? msrc : src)
+      }
     },
     /**
      * set active source component
@@ -106,11 +147,62 @@ export default new Vuex.Store({
    */
   actions: {
     /**
+     * create OpenSeadragon canvas
+     * @memberof store.actions
+     */
+    createOpenSeaDragon ({ commit, state }, { config, TIback, handler }) {
+      // console.log(payload)
+      // console.log(state)
+
+      const viewer = OpenSeadragon(config)
+
+      viewer.addTiledImage(TIback)
+
+      if (state.viewer) {
+        console.warn('viewer set twice!')
+      }
+      state.viewer = viewer
+
+      for (const k in handler) {
+        // console.log('handler :' + k)
+        viewer.addHandler(k, handler[k])
+      }
+    },
+    /**
+     * destroy OpenSeadragon canvas
+     * @memberof store.actions
+     */
+    destroyOpenSeaDragon ({ commit, state }) {
+      if (state.viewer) {
+        state.viewer.destroy()
+        state.viewer = null
+      }
+    },
+    /**
+     * activate zone
+     * @memberof store.actions
+     * @param {Object} callback commit, getters
+     * @param {Object} payload source: String, zone: String
+     */
+    activateZone ({ commit, getters }, { source, zone }) {
+      if (source) {
+        const src = getters.getSourceById(source)
+        if (src) {
+          // console.log(source, zone)
+          commit('MODIFY_SOURCE', { ...src, activeZoneId: zone })
+          commit('ACTIVATE_SOURCE', source)
+        }
+      } else {
+        commit('ACTIVATE_SOURCE', null)
+      }
+    },
+    /**
      * **TODO: load from REST API**
+     *
      * load sources
      * @memberof store.actions
-     * @param {*} commit
-     * @param {*} state
+     * @param {function} commit
+     * @param {object} state
      */
     loadSources ({ commit, state }) {
       // this needs to be replaced with dynamic content
@@ -213,83 +305,107 @@ export default new Vuex.Store({
   /**
    * @namespace store.getters
    * @memberof store
-   * @property {object} viewer - OpenSeadragon Viewer object
-   * @property {object} desktop - Desktop Component
-   * @property {object[]} sources - list of source objects loaded
-   * @property {string} activeSourceId - ID of selected source object
-   * @property {string} activeZoneId - ID of selected source object
+   * @property {Object} viewer - OpenSeadragon Viewer object
+   * @property {Object[]} sources - list of source objects loaded
+   * @property {Number} scale - current scale of OpenSeqdragon Viewer
+   * @property {String} activeSourceId - id of selected source object
+   * @property {Object} activeSource - selected source object
+   * @property {String} activeZoneId - id of selected zone object
+   * @property {Object} activeZone - selected zone object
    */
   getters: {
     viewer: (state) => {
       return state.viewer
     },
-    desktop: (state) => {
-      return state.desktop
-    },
     sources: (state) => {
       return state.sources
+    },
+    scale: (state) => {
+      return state.scale
     },
     activeSourceId: (state) => {
       return state.activeSourceId
     },
-    /**
-     * @memberof store.getters
-     * @returns {object} selected source object or null
-     */
-    activeSource: (state) => () => {
-      const source = state.sources.find(source => { return source.id === state.activeSourceId })
-      // console.log('active source: ' + source)
-      return source
+    activeSource: (state, getters) => {
+      if (state.activeSourceId) {
+        const source = getters.getSourceById(state.activeSourceId)
+        // console.log('active source: ' + source)
+        return source
+      }
+      return null
     },
     /**
+     * find source object by id
      * @memberof store.getters
-     * @param {string} id
-     * @returns {object} source object of id or null
+     * @param {String} id - id of source object
      */
     getSourceById: (state) => (id) => {
       // console.log('get source: ' + id)
       if (!id) {
         throw new Error('source id undefined!')
       }
-      return state.sources.find(source => {
-        // console.log(source.id)
-        return source.id === id
-      })
+      return state.sources.find(source => source.id === id)
     },
-    activeZoneId: (state) => {
-      const source = state.sources.find(source => {
-        return source.id === state.activeSourceId
-      })
+    activeZoneId: (state, getters) => {
+      const source = getters.activeSource
+      // console.log(source)
       if (source) {
-        return source.component.activeZoneId
+        // console.log(source.activeZoneId)
+        return source.activeZoneId
+      }
+      return null
+    },
+    activeZone: (state, getters) => {
+      const source = getters.activeSource
+      const zoneId = getters.activeZoneId
+      if (source && zoneId) {
+        const pagenr = source.pagenr ? source.pagenr : 0
+        const rzones = source.pages[pagenr].r ? source.pages[pagenr].r.measures : []
+        const vzones = source.pages[pagenr].v ? source.pages[pagenr].v.measures : []
+        const zone = [...rzones, ...vzones].find(zone => zone.zone === zoneId)
+        return zone
       }
       return null
     },
     /**
+     * find zone by id. If `sourceId` is null, all sources are searched,
+     * until a zone with a matching id is found.
+     *
      * @memberof store.getters
-     * @returns {object} selected zone object or null
+     * @param {String} sourceId - id of containing source object or null
+     * @param {String} zoneId - id of zone object
      */
-    activeZone: (state) => () => {
-      if (state.activeSourceId) {
-        const source = state.sources.find(source => {
-          return source.id === state.activeSourceId
-        })
-        if (source) {
-          return source.component.activeZone
+    getZoneById: (state, getters) => (sourceId, zoneId) => {
+      const findZone = function (source, zoneId) {
+        for (const p in source.pages) {
+          if (p.r) {
+            for (const zone in p.r.measures) {
+              if (zone.zone === zoneId) {
+                return zone
+              }
+            }
+          }
+          if (p.v) {
+            for (const zone in p.v.measures) {
+              if (zone.zone === zoneId) {
+                return zone
+              }
+            }
+          }
         }
       }
-      return null
-    },
-    /**
-     * **not implemented yet!**
-     * @memberof store.getters
-     * @param {string} id
-     * @returns {object} source zone of id or null
-     */
-    getZoneById: (state) => (id) => {
-      state.sources.forEach((source) => {
-        console.log(source)
-      })
+      const source = sourceId ? getters.getSourceById(sourceId) : null
+      if (source) {
+        return findZone(source, zoneId)
+      }
+      if (!sourceId) {
+        state.sources.forEach((source) => {
+          const zone = findZone(source, zoneId)
+          if (zone) {
+            return zone
+          }
+        })
+      }
       return null
     }
   }

@@ -1,9 +1,9 @@
 <template>
   <div class="zone-info">
     <strong>Measure Information</strong>
-    <div v-if="activeZone()">
-      <div class="smaller">{{ activeZone().zone }}</div>
-      <input v-model="activeZone().label" />
+    <div v-if="activeZone">
+      <div class="smaller">{{ activeZone.zone }}</div>
+      <input v-model="activeZone.label" />
       <btn-group>
         <btn @click.prevent="clearInfo">close</btn>
       </btn-group>
@@ -12,6 +12,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 /**
  * Zone information widget
  *
@@ -20,25 +22,14 @@
 export default {
   name: 'ZoneInfo',
   computed: {
+    ...mapGetters(['activeZone'])
   },
   methods: {
-    /**
-     * @returns {object} selected zone
-     */
-    activeZone () {
-      return this.$store.getters.activeZone()
-    },
     /**
      * clears information widget
      */
     clearInfo () {
-      this.$store.commit('ACTIVATE_ZONE', null)
-    },
-    // TODO test
-    destroyZone () {
-      if (this.ovl_zone) {
-        this.ovl_zone.destroyZone()
-      }
+      this.$store.dispatch('activateZone', { source: this.$store.getters.activeSourceId, zone: null })
     }
   }
 }
