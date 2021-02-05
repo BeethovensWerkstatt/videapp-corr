@@ -214,6 +214,9 @@ export default {
         }
       }
       this.pgdata = this.page ? this.page.id : null
+      if (!this.page) {
+        this.tiledimage = null
+      }
     }
   }
 }
