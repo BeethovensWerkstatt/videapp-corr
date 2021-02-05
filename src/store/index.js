@@ -10,9 +10,9 @@ import pageSetup from '@/temp/pageSetup.json'
 Vue.use(Vuex)
 
 /**
- * @namespace store
- *
  * TODO: mutation and action names should be const strings
+ *
+ * @namespace store
  */
 
 /**
