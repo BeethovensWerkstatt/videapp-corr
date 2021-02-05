@@ -1,7 +1,3 @@
-## Vue lifecycle
-
-* Do we need `beforeDestroy()` for Page and Source or is it killed with OpenSeadragon?
-
 ## source, page datastructurtes
 
 * we should define classes for `source` and `page` that contains logic for page flipping and positioning
