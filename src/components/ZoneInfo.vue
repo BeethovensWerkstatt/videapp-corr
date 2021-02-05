@@ -29,7 +29,7 @@ export default {
      * clears information widget
      */
     clearInfo () {
-      this.$store.dispatch('activateZone', {})
+      this.$store.dispatch('activateZone', { source: this.$store.getters.activeSourceId, zone: null })
     }
   }
 }
