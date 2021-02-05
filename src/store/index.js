@@ -75,10 +75,16 @@ export default new Vuex.Store({
      * replace source
      * @memberof store.mutations
      * @param {object} state
-     * @param {object} source
+     * @param {object} source - properties to modify with id
      */
     MODIFY_SOURCE (state, source) {
-      state.sources = state.sources.map(src => src.id === source.id ? source : src)
+      state.sources = state.sources.map(src => {
+        if (src.id === source.id) {
+          return { ...src, ...source }
+        } else {
+          return src
+        }
+      })
     },
     /**
      * move source on the OSD space
