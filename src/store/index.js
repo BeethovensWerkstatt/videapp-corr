@@ -6,6 +6,7 @@ import uuidv4 from '@/toolbox'
 import OpenSeadragon from 'openseadragon'
 
 import pageSetup from '@/temp/pageSetup.json'
+import complaintsSetup from '@/temp/complaintsSetup.json'
 
 Vue.use(Vuex)
 
@@ -285,6 +286,10 @@ export default new Vuex.Store({
           commit('LOAD_SOURCE', obj)
         }
       })
+    },
+    loadComplaints ({ commit, state }) {
+      const json = complaintsSetup
+      console.log(json)
     },
     createAnnotation ({ commit, state }, annot) {
       const annotation = {
