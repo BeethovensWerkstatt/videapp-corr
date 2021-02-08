@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import uuidv4 from '@/toolbox'
+import { mutations, actions } from './names'
 
 import OpenSeadragon from 'openseadragon'
 
@@ -33,7 +34,9 @@ export default new Vuex.Store({
     annotations: [],
     activeAnnotationId: null,
     sources: [],
-    activeSourceId: null
+    activeSourceId: null,
+    complaints: [],
+    activeComplaint: null
   },
   /**
    * @namespace store.mutations
@@ -45,7 +48,7 @@ export default new Vuex.Store({
      * @memberof store.mutations
      * @param {Object} state
      */
-    UPDATE_SCALE (state) {
+    [mutations.UPDATE_SCALE] (state) {
       // console.log(state.viewer)
       if (state.viewer) {
         // state.scale = state.viewer.viewport.viewportToImageZoom(state.viewer.viewport.getZoom(true))
@@ -211,7 +214,7 @@ export default new Vuex.Store({
      * @param {function} commit
      * @param {object} state
      */
-    loadSources ({ commit, state }) {
+    [actions.loadSources] ({ commit, state }) {
       // this needs to be replaced with dynamic content
       const json = pageSetup
       json.sources.forEach((source, index) => {
@@ -287,7 +290,7 @@ export default new Vuex.Store({
         }
       })
     },
-    loadComplaints ({ commit, state }) {
+    [actions.loadComplaints] ({ commit, state }) {
       const json = complaintsSetup
       console.log(json)
     },
