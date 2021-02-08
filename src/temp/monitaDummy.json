@@ -1,0 +1,645 @@
+{
+  "composer" : {
+    "name" : "Ludwig van Beethoven",
+    "internalId" : "LvB",
+    "@id" : "http://d-nb.info/gnd/118508288"
+  },
+  "complaints" : [ {
+    "staves" : [ {
+      "n" : "1",
+      "abbr" : "V I",
+      "label" : "Violino Primo"
+    }, {
+      "n" : "19",
+      "abbr" : "Pf",
+      "label" : "Pianoforte"
+    } ],
+    "annots" : [ "g_d42c8f9d-2dcd-4cb9-b325-884fc963e1b0" ],
+    "movement" : {
+      "n" : "1",
+      "label" : "Allegro",
+      "id" : "x7828dde9-c1f2-40b4-bc94-2b6295669c4a"
+    },
+    "measures" : [ {
+      "label" : "39",
+      "id" : "xcdbf0735-07d8-40a4-bd8c-a5495cb14d10"
+    } ],
+    "@id" : "https://api.beethovens-werkstatt.de/module3/complaints/g_d42c8f9d-2dcd-4cb9-b325-884fc963e1b0.json"
+  }, {
+    "staves" : [ {
+      "n" : "1",
+      "abbr" : "V I",
+      "label" : "Violino Primo"
+    }, {
+      "n" : "4",
+      "abbr" : "Vc",
+      "label" : "Violoncelli"
+    }, {
+      "n" : "5",
+      "abbr" : "B",
+      "label" : "Bassi"
+    }, {
+      "n" : "19",
+      "abbr" : "Pf",
+      "label" : "Pianoforte"
+    }, {
+      "n" : "20",
+      "abbr" : "Pf",
+      "label" : "Pianoforte"
+    } ],
+    "annots" : [ "g_576d23b9-3b8b-4c2f-9efa-742ca71b2956" ],
+    "movement" : {
+      "n" : "1",
+      "label" : "Allegro",
+      "id" : "x7828dde9-c1f2-40b4-bc94-2b6295669c4a"
+    },
+    "measures" : [ {
+      "label" : "60",
+      "id" : "xdad5cccc-3c90-4569-94be-bbe4c9f528e3"
+    }, {
+      "label" : "61",
+      "id" : "xd14a714a-9c68-4f28-9110-462a77674ec4"
+    } ],
+    "@id" : "https://api.beethovens-werkstatt.de/module3/complaints/g_576d23b9-3b8b-4c2f-9efa-742ca71b2956.json"
+  }, {
+    "staves" : [ {
+      "n" : "19",
+      "abbr" : "Pf",
+      "label" : "Pianoforte"
+    }, {
+      "n" : "20",
+      "abbr" : "Pf",
+      "label" : "Pianoforte"
+    } ],
+    "annots" : [ "g_61d56c58-a7d7-4a4a-878a-2e2564ad0c6f" ],
+    "movement" : {
+      "n" : "1",
+      "label" : "Allegro",
+      "id" : "x7828dde9-c1f2-40b4-bc94-2b6295669c4a"
+    },
+    "measures" : [ {
+      "label" : "211",
+      "id" : "x7edd8495-4727-439c-ab45-009d5fef9897"
+    }, {
+      "label" : "212",
+      "id" : "xbfdc78d8-f4a3-42ce-bdb0-c89ae7ff2c59"
+    }, {
+      "label" : "213",
+      "id" : "x873674e5-2e1d-4eb9-b4f3-ceeab56255bd"
+    }, {
+      "label" : "214",
+      "id" : "xdf88b5a2-3a39-479c-9e3b-64f0d891b316"
+    }, {
+      "label" : "215",
+      "id" : "xc2e43ce2-61df-44b6-bec3-d4647756dfb7"
+    }, {
+      "label" : "216",
+      "id" : "x01d8e52d-db5b-417e-96a4-7c473477d68d"
+    } ],
+    "@id" : "https://api.beethovens-werkstatt.de/module3/complaints/g_61d56c58-a7d7-4a4a-878a-2e2564ad0c6f.json"
+  }, {
+    "staves" : [ {
+      "n" : "1",
+      "abbr" : "V I",
+      "label" : "Violino Primo"
+    } ],
+    "annots" : [ "g_0c43fca2-3015-406e-87f5-62833e888785" ],
+    "movement" : {
+      "n" : "1",
+      "label" : "Allegro",
+      "id" : "x7828dde9-c1f2-40b4-bc94-2b6295669c4a"
+    },
+    "measures" : [ {
+      "label" : "234",
+      "id" : "x4bcfd2f1-3aa6-40f3-97bf-d4d695ff78db"
+    } ],
+    "@id" : "https://api.beethovens-werkstatt.de/module3/complaints/g_0c43fca2-3015-406e-87f5-62833e888785.json"
+  }, {
+    "staves" : [ {
+      "n" : "19",
+      "abbr" : "Pf",
+      "label" : "Pianoforte"
+    }, {
+      "n" : "20",
+      "abbr" : "Pf",
+      "label" : "Pianoforte"
+    } ],
+    "annots" : [ "g_cb0fa992-7383-4079-97e0-a9e98aa547bc" ],
+    "movement" : {
+      "n" : "1",
+      "label" : "Allegro",
+      "id" : "x7828dde9-c1f2-40b4-bc94-2b6295669c4a"
+    },
+    "measures" : [ {
+      "label" : "369",
+      "id" : "x968c22bf-5a58-4525-91df-e956eb1c8570"
+    } ],
+    "@id" : "https://api.beethovens-werkstatt.de/module3/complaints/g_cb0fa992-7383-4079-97e0-a9e98aa547bc.json"
+  }, {
+    "staves" : [ {
+      "n" : "19",
+      "abbr" : "Pf",
+      "label" : "Pianoforte"
+    } ],
+    "annots" : [ "g_d7c1b561-aaad-4345-a49a-f4215dc16e80" ],
+    "movement" : {
+      "n" : "1",
+      "label" : "Allegro",
+      "id" : "x7828dde9-c1f2-40b4-bc94-2b6295669c4a"
+    },
+    "measures" : [ {
+      "label" : "371",
+      "id" : "x510ebd13-4be4-4950-be7d-41d826b7ff02"
+    } ],
+    "@id" : "https://api.beethovens-werkstatt.de/module3/complaints/g_d7c1b561-aaad-4345-a49a-f4215dc16e80.json"
+  }, {
+    "staves" : [ {
+      "n" : "19",
+      "abbr" : "Pf",
+      "label" : "Pianoforte"
+    } ],
+    "annots" : [ "g_f87791bf-f4eb-46e5-b102-bf232da620d5" ],
+    "movement" : {
+      "n" : "1",
+      "label" : "Allegro",
+      "id" : "x7828dde9-c1f2-40b4-bc94-2b6295669c4a"
+    },
+    "measures" : [ {
+      "label" : "457",
+      "id" : "xeb353826-47ee-4b2a-9ac8-20156c457177"
+    } ],
+    "@id" : "https://api.beethovens-werkstatt.de/module3/complaints/g_f87791bf-f4eb-46e5-b102-bf232da620d5.json"
+  }, {
+    "staves" : [ ],
+    "annots" : [ "g_c930dfb1-4b92-44e9-8402-cd89cdbfa361" ],
+    "movement" : {
+      "n" : "1",
+      "label" : "Allegro",
+      "id" : "x7828dde9-c1f2-40b4-bc94-2b6295669c4a"
+    },
+    "measures" : [ {
+      "label" : "468",
+      "id" : "x0731a695-175a-4739-96f5-b5b5d1058323"
+    }, {
+      "label" : "469",
+      "id" : "x026d81ad-5bd5-4d67-86cb-04505cb6e3ba"
+    }, {
+      "label" : "470",
+      "id" : "xabf4a3be-3eff-4052-a1b1-1512334092c3"
+    }, {
+      "label" : "471",
+      "id" : "x3916b529-57b6-4a55-b5ab-a0cc7a4c49e9"
+    }, {
+      "label" : "472",
+      "id" : "x52462f61-b3a4-4ba5-9aff-895866ed03c1"
+    }, {
+      "label" : "473",
+      "id" : "x2ab33c00-db6a-4c3f-a4de-9b893b88587f"
+    } ],
+    "@id" : "https://api.beethovens-werkstatt.de/module3/complaints/g_c930dfb1-4b92-44e9-8402-cd89cdbfa361.json"
+  }, {
+    "staves" : [ {
+      "n" : "1",
+      "abbr" : "V I",
+      "label" : "Violino Primo"
+    } ],
+    "annots" : [ "g_cd0c9a3c-9408-4252-9d66-097e8cd1abae" ],
+    "movement" : {
+      "n" : "2",
+      "label" : "Adagio",
+      "id" : "x23c773ce-5239-4321-878e-4679274666fe"
+    },
+    "measures" : [ {
+      "label" : "14",
+      "id" : "x458515ce-bbb4-453b-8096-b39fb2490ef7"
+    }, {
+      "label" : "15",
+      "id" : "x0e6f8f5e-bb1d-4140-b379-8143015e977a"
+    } ],
+    "@id" : "https://api.beethovens-werkstatt.de/module3/complaints/g_cd0c9a3c-9408-4252-9d66-097e8cd1abae.json"
+  }, {
+    "staves" : [ {
+      "n" : "19",
+      "abbr" : "Pf",
+      "label" : "Pianoforte"
+    } ],
+    "annots" : [ "g_7d9a6ddf-85a9-47f9-b905-47bb2b2625c6" ],
+    "movement" : {
+      "n" : "2",
+      "label" : "Adagio",
+      "id" : "x23c773ce-5239-4321-878e-4679274666fe"
+    },
+    "measures" : [ {
+      "label" : "32",
+      "id" : "xb28acd40-ec38-4114-88dc-3803f6a8f96c"
+    } ],
+    "@id" : "https://api.beethovens-werkstatt.de/module3/complaints/g_7d9a6ddf-85a9-47f9-b905-47bb2b2625c6.json"
+  }, {
+    "staves" : [ {
+      "n" : "20",
+      "abbr" : "Pf",
+      "label" : "Pianoforte"
+    } ],
+    "annots" : [ "g_cd2f564e-d9e5-453f-9443-73c607071329" ],
+    "movement" : {
+      "n" : "2",
+      "label" : "Adagio",
+      "id" : "x23c773ce-5239-4321-878e-4679274666fe"
+    },
+    "measures" : [ {
+      "label" : "34",
+      "id" : "x0208e7c6-197d-4408-aff9-dcd3f130243b"
+    } ],
+    "@id" : "https://api.beethovens-werkstatt.de/module3/complaints/g_cd2f564e-d9e5-453f-9443-73c607071329.json"
+  }, {
+    "staves" : [ {
+      "n" : "19",
+      "abbr" : "Pf",
+      "label" : "Pianoforte"
+    } ],
+    "annots" : [ "g_038f92a5-c034-4c07-a860-8813ffa3afa7" ],
+    "movement" : {
+      "n" : "2",
+      "label" : "Adagio",
+      "id" : "x23c773ce-5239-4321-878e-4679274666fe"
+    },
+    "measures" : [ {
+      "label" : "40",
+      "id" : "xae100c7a-434b-4ae3-ac61-0059a2a72a8e"
+    }, {
+      "label" : "41",
+      "id" : "xd5c15867-0842-4c1b-8f3f-6671ef74a67d"
+    }, {
+      "label" : "42",
+      "id" : "x736c054d-b21f-41f9-8bd4-c97dfc5237fd"
+    }, {
+      "label" : "43",
+      "id" : "x0d368f2e-6b41-4c63-a18f-789d6768fd4b"
+    }, {
+      "label" : "44",
+      "id" : "x04718bf3-6968-43f2-aca5-2cc724a4972b"
+    } ],
+    "@id" : "https://api.beethovens-werkstatt.de/module3/complaints/g_038f92a5-c034-4c07-a860-8813ffa3afa7.json"
+  }, {
+    "staves" : [ {
+      "n" : "19",
+      "abbr" : "Pf",
+      "label" : "Pianoforte"
+    } ],
+    "annots" : [ "g_fe5ba449-9bfe-41d7-8c4f-2d7ca54f662a" ],
+    "movement" : {
+      "n" : "2",
+      "label" : "Adagio",
+      "id" : "x23c773ce-5239-4321-878e-4679274666fe"
+    },
+    "measures" : [ {
+      "label" : "81",
+      "id" : "xc98a9cc7-80e2-456c-bcf2-cd0a1a7dbab5"
+    }, {
+      "label" : "82",
+      "id" : "x15d26f50-1b8f-4ddf-93e5-79cf1079937b"
+    } ],
+    "@id" : "https://api.beethovens-werkstatt.de/module3/complaints/g_fe5ba449-9bfe-41d7-8c4f-2d7ca54f662a.json"
+  }, {
+    "staves" : [ ],
+    "annots" : [ "g_84ab3cae-709e-4935-ac4d-d16e66f83188" ],
+    "movement" : {
+      "n" : "3",
+      "label" : "Rondo",
+      "id" : "x9b2a45af-0e3e-4509-844d-c61dec54015e"
+    },
+    "measures" : [ {
+      "label" : "49",
+      "id" : "xc6e4e94e-a4fc-4ced-a30f-8eed7fafbb84"
+    } ],
+    "@id" : "https://api.beethovens-werkstatt.de/module3/complaints/g_84ab3cae-709e-4935-ac4d-d16e66f83188.json"
+  }, {
+    "staves" : [ {
+      "n" : "19",
+      "abbr" : "Pf",
+      "label" : "Pianoforte"
+    }, {
+      "n" : "20",
+      "abbr" : "Pf",
+      "label" : "Pianoforte"
+    } ],
+    "annots" : [ "g_59eecfaf-e134-4772-a9f0-7e833c4e734d" ],
+    "movement" : {
+      "n" : "3",
+      "label" : "Rondo",
+      "id" : "x9b2a45af-0e3e-4509-844d-c61dec54015e"
+    },
+    "measures" : [ {
+      "label" : "58",
+      "id" : "xd107d894-5d55-42cb-aec8-4e2247a68949"
+    } ],
+    "@id" : "https://api.beethovens-werkstatt.de/module3/complaints/g_59eecfaf-e134-4772-a9f0-7e833c4e734d.json"
+  }, {
+    "staves" : [ {
+      "n" : "19",
+      "abbr" : "Pf",
+      "label" : "Pianoforte"
+    }, {
+      "n" : "20",
+      "abbr" : "Pf",
+      "label" : "Pianoforte"
+    } ],
+    "annots" : [ "g_b298f39e-fd61-46e8-937d-47e3b508e1a7" ],
+    "movement" : {
+      "n" : "3",
+      "label" : "Rondo",
+      "id" : "x9b2a45af-0e3e-4509-844d-c61dec54015e"
+    },
+    "measures" : [ {
+      "label" : "60",
+      "id" : "x59df1bf6-6ecb-45b5-b3a2-65866cf440d1"
+    } ],
+    "@id" : "https://api.beethovens-werkstatt.de/module3/complaints/g_b298f39e-fd61-46e8-937d-47e3b508e1a7.json"
+  }, {
+    "staves" : [ {
+      "n" : "20",
+      "abbr" : "Pf",
+      "label" : "Pianoforte"
+    } ],
+    "annots" : [ "x7c6fd82c-0d24-4111-840f-489e4b624055" ],
+    "movement" : {
+      "n" : "3",
+      "label" : "Rondo",
+      "id" : "x9b2a45af-0e3e-4509-844d-c61dec54015e"
+    },
+    "measures" : [ {
+      "label" : "97",
+      "id" : "xb3873820-a175-45dd-85ba-f9f0c74d0e59"
+    } ],
+    "@id" : "https://api.beethovens-werkstatt.de/module3/complaints/x7c6fd82c-0d24-4111-840f-489e4b624055.json"
+  }, {
+    "staves" : [ {
+      "n" : "19",
+      "abbr" : "Pf",
+      "label" : "Pianoforte"
+    } ],
+    "annots" : [ "x8f1526ea-902f-4775-8f39-55ff1c69c8d9" ],
+    "movement" : {
+      "n" : "3",
+      "label" : "Rondo",
+      "id" : "x9b2a45af-0e3e-4509-844d-c61dec54015e"
+    },
+    "measures" : [ {
+      "label" : "103",
+      "id" : "x3fc1c773-3f81-4233-b201-e0ba368185d3"
+    } ],
+    "@id" : "https://api.beethovens-werkstatt.de/module3/complaints/x8f1526ea-902f-4775-8f39-55ff1c69c8d9.json"
+  }, {
+    "staves" : [ {
+      "n" : "19",
+      "abbr" : "Pf",
+      "label" : "Pianoforte"
+    } ],
+    "annots" : [ "x33084807-2fba-4292-a95a-f4dda2e3793b", "x97cdf83d-f7f9-4415-b7eb-ca36632f14bf" ],
+    "movement" : {
+      "n" : "3",
+      "label" : "Rondo",
+      "id" : "x9b2a45af-0e3e-4509-844d-c61dec54015e"
+    },
+    "measures" : [ {
+      "label" : "117",
+      "id" : "xbbeaab19-ea06-4ce9-9a59-c4cdd39ae501"
+    }, {
+      "label" : "118",
+      "id" : "x966959d3-f816-4209-b888-2c4aaf69ffcb"
+    }, {
+      "label" : "119",
+      "id" : "x2b0777af-a0ef-4715-b5fb-e8cd450def85"
+    } ],
+    "@id" : "https://api.beethovens-werkstatt.de/module3/complaints/x33084807-2fba-4292-a95a-f4dda2e3793b.json"
+  }, {
+    "staves" : [ {
+      "n" : "19",
+      "abbr" : "Pf",
+      "label" : "Pianoforte"
+    }, {
+      "n" : "20",
+      "abbr" : "Pf",
+      "label" : "Pianoforte"
+    } ],
+    "annots" : [ "x67de7816-6b73-402b-ad68-93429e5372d6" ],
+    "movement" : {
+      "n" : "3",
+      "label" : "Rondo",
+      "id" : "x9b2a45af-0e3e-4509-844d-c61dec54015e"
+    },
+    "measures" : [ {
+      "label" : "125",
+      "id" : "xa9a4e994-b4b7-42a7-8ebb-388295744d1a"
+    } ],
+    "@id" : "https://api.beethovens-werkstatt.de/module3/complaints/x67de7816-6b73-402b-ad68-93429e5372d6.json"
+  }, {
+    "staves" : [ {
+      "n" : "19",
+      "abbr" : "Pf",
+      "label" : "Pianoforte"
+    } ],
+    "annots" : [ "x38b562d8-5c80-4513-abea-c7e34295ae81", "xf3cabe1b-a1e2-47a5-b9f9-2046edc05be8" ],
+    "movement" : {
+      "n" : "3",
+      "label" : "Rondo",
+      "id" : "x9b2a45af-0e3e-4509-844d-c61dec54015e"
+    },
+    "measures" : [ {
+      "label" : "144",
+      "id" : "x2a503068-4169-4ccb-9fee-f0400025584e"
+    }, {
+      "label" : "145",
+      "id" : "xed1734b3-54be-4bfb-a9d6-4153babd915e"
+    }, {
+      "label" : "146",
+      "id" : "xff46cc6f-4d43-4bad-8b2c-c3555ea7cd93"
+    } ],
+    "@id" : "https://api.beethovens-werkstatt.de/module3/complaints/x38b562d8-5c80-4513-abea-c7e34295ae81.json"
+  }, {
+    "staves" : [ {
+      "n" : "8",
+      "abbr" : "Ob I",
+      "label" : "Oboe Primo"
+    }, {
+      "n" : "12",
+      "abbr" : "Fg I",
+      "label" : "Fagotto Primo"
+    }, {
+      "n" : "19",
+      "abbr" : "Pf",
+      "label" : "Pianoforte"
+    }, {
+      "n" : "20",
+      "abbr" : "Pf",
+      "label" : "Pianoforte"
+    } ],
+    "annots" : [ "g_0bc6142f-ed13-48ec-b933-3d39ef2b8b63" ],
+    "movement" : {
+      "n" : "3",
+      "label" : "Rondo",
+      "id" : "x9b2a45af-0e3e-4509-844d-c61dec54015e"
+    },
+    "measures" : [ {
+      "label" : "187",
+      "id" : "x8581e4bb-4266-4e24-99a0-db623fd827c5"
+    } ],
+    "@id" : "https://api.beethovens-werkstatt.de/module3/complaints/g_0bc6142f-ed13-48ec-b933-3d39ef2b8b63.json"
+  }, {
+    "staves" : [ {
+      "n" : "19",
+      "abbr" : "Pf",
+      "label" : "Pianoforte"
+    } ],
+    "annots" : [ "x2c24b971-5d4f-4b2f-9ebc-30f2909df020" ],
+    "movement" : {
+      "n" : "3",
+      "label" : "Rondo",
+      "id" : "x9b2a45af-0e3e-4509-844d-c61dec54015e"
+    },
+    "measures" : [ {
+      "label" : "297",
+      "id" : "x38bce0af-5963-4e20-985f-581744ea33e1"
+    } ],
+    "@id" : "https://api.beethovens-werkstatt.de/module3/complaints/x2c24b971-5d4f-4b2f-9ebc-30f2909df020.json"
+  }, {
+    "staves" : [ {
+      "n" : "19",
+      "abbr" : "Pf",
+      "label" : "Pianoforte"
+    }, {
+      "n" : "20",
+      "abbr" : "Pf",
+      "label" : "Pianoforte"
+    } ],
+    "annots" : [ "x131aa2bc-940a-4298-a542-554e86f35435", "xea6ef4b9-ce40-4e5a-b6de-be21b366c736" ],
+    "movement" : {
+      "n" : "3",
+      "label" : "Rondo",
+      "id" : "x9b2a45af-0e3e-4509-844d-c61dec54015e"
+    },
+    "measures" : [ {
+      "label" : "305",
+      "id" : "xd6042630-80bf-42fc-9dd5-9dc1e164afcf"
+    }, {
+      "label" : "307",
+      "id" : "xef3a554a-a8a6-482d-b10b-b7ea9d7c8c2c"
+    } ],
+    "@id" : "https://api.beethovens-werkstatt.de/module3/complaints/x131aa2bc-940a-4298-a542-554e86f35435.json"
+  }, {
+    "staves" : [ {
+      "n" : "1",
+      "abbr" : "V I",
+      "label" : "Violino Primo"
+    }, {
+      "n" : "19",
+      "abbr" : "Pf",
+      "label" : "Pianoforte"
+    } ],
+    "annots" : [ "x35d83f3e-1de3-4027-81d8-73477945be46", "x3b9deffe-0cb0-4ee2-9980-3f49db04855e", "x4bc56f56-1adc-4965-9297-56faf37c3af5", "xb06e955e-1161-434d-8233-f748e62c290f" ],
+    "movement" : {
+      "n" : "3",
+      "label" : "Rondo",
+      "id" : "x9b2a45af-0e3e-4509-844d-c61dec54015e"
+    },
+    "measures" : [ {
+      "label" : "342",
+      "id" : "x705b07ce-a11b-410c-b38f-ad3e7d8420ca"
+    }, {
+      "label" : "343",
+      "id" : "x77c73fc1-bd5b-4e8a-ac7f-3cbc6fc42140"
+    }, {
+      "label" : "344",
+      "id" : "xd35a00f7-fc25-4f15-b110-66a3c96c2110"
+    }, {
+      "label" : "346",
+      "id" : "x4b35b523-7896-47aa-aaf7-e01348beb005"
+    }, {
+      "label" : "347",
+      "id" : "x9d6c1b04-e416-43a5-888f-d30ef2ce63b8"
+    }, {
+      "label" : "348",
+      "id" : "xa21dfa93-835c-4b11-a49e-04694a03ce33"
+    } ],
+    "@id" : "https://api.beethovens-werkstatt.de/module3/complaints/x35d83f3e-1de3-4027-81d8-73477945be46.json"
+  }, {
+    "staves" : [ {
+      "n" : "19",
+      "abbr" : "Pf",
+      "label" : "Pianoforte"
+    } ],
+    "annots" : [ "xa3ab7531-259d-4e01-8f88-ee54c51dfbb8" ],
+    "movement" : {
+      "n" : "3",
+      "label" : "Rondo",
+      "id" : "x9b2a45af-0e3e-4509-844d-c61dec54015e"
+    },
+    "measures" : [ {
+      "label" : "378",
+      "id" : "x50d5c97a-edba-4a33-8386-e7ec7df1a2b0"
+    } ],
+    "@id" : "https://api.beethovens-werkstatt.de/module3/complaints/xa3ab7531-259d-4e01-8f88-ee54c51dfbb8.json"
+  } ],
+  "manifestations" : [ {
+    "label" : "Ausgangsdokument",
+    "@id" : "xa92f937f-e614-4fa6-ae94-7d8e6f4d40c8",
+    "file" : {
+      "@ns" : "http://www.music-encoding.org/ns/mei",
+      "name" : "D-BNba_C73-9.xml",
+      "uri" : "https://api.beethovens-werkstatt.de/file/xa92f937f-e614-4fa6-ae94-7d8e6f4d40c8.xml"
+    },
+    "frbr" : {
+      "level" : "manifestation"
+    },
+    "iiif" : {
+      "manifest" : "https://api.beethovens-werkstatt.de/iiif/document/xa92f937f-e614-4fa6-ae94-7d8e6f4d40c8/manifest.json"
+    }
+  }, {
+    "label" : "Zieldokument",
+    "@id" : "x2848a4a6-d77d-4ee1-b01a-e14eddfc3602",
+    "file" : {
+      "@ns" : "http://www.music-encoding.org/ns/mei",
+      "name" : "A-Wn_SH.Beethoven.323.xml",
+      "uri" : "https://api.beethovens-werkstatt.de/file/x2848a4a6-d77d-4ee1-b01a-e14eddfc3602.xml"
+    },
+    "frbr" : {
+      "level" : "manifestation"
+    },
+    "iiif" : {
+      "manifest" : "https://api.beethovens-werkstatt.de/iiif/document/x2848a4a6-d77d-4ee1-b01a-e14eddfc3602/manifest.json"
+    }
+  }, {
+    "label" : "Revisionsliste 1",
+    "@id" : "x9af2790d-4fea-466d-b937-a74e4dffaa4e",
+    "file" : {
+      "@ns" : "http://www.music-encoding.org/ns/mei",
+      "name" : "US-NYj_31_B393cp_no.5_errata.xml",
+      "uri" : "https://api.beethovens-werkstatt.de/file/x9af2790d-4fea-466d-b937-a74e4dffaa4e.xml"
+    },
+    "frbr" : {
+      "level" : "manifestation"
+    },
+    "iiif" : {
+      "manifest" : "https://api.beethovens-werkstatt.de/iiif/document/x9af2790d-4fea-466d-b937-a74e4dffaa4e/manifest.json"
+    }
+  }, {
+    "label" : "Revisionsliste 2",
+    "@id" : "x26f83b49-782e-43ac-95a7-12967c0a4ff8",
+    "file" : {
+      "@ns" : "http://www.tei-c.org/ns/1.0",
+      "name" : "D-BNba_Slg.H.C.Bodmer_HCB_Br_94.xml",
+      "uri" : "https://api.beethovens-werkstatt.de/file/x26f83b49-782e-43ac-95a7-12967c0a4ff8.xml"
+    },
+    "frbr" : {
+      "level" : "manifestation"
+    },
+    "iiif" : {
+      "manifest" : "https://api.beethovens-werkstatt.de/iiif/document/x26f83b49-782e-43ac-95a7-12967c0a4ff8/manifest.json"
+    }
+  } ],
+  "title" : [ {
+    "@lang" : "de",
+    "title" : "Konzert für Klavier und Orchester Nr. 5 (Es-Dur) op. 73"
+  } ],
+  "@id" : "https://api.beethovens-werkstatt.de/module3/xf07b16aa-ddbe-4548-9e78-0b3f1752bf0c.json"
+}
