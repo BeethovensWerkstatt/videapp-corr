@@ -1,0 +1,29 @@
+{
+  "app": {
+    "title": "application overview",
+    "children": {
+      "component-hierarchy": {
+        "title": "component hierarchy"
+      }
+    }
+  },
+  "dev": {
+    "title": "development",
+    "children": {
+      "vue-components-programmatically": {
+        "title": "create Vue components programmatically"
+      }
+    }
+  },
+  "org": {
+    "title": "organizational",
+    "children": {
+      "devQA": {
+        "title": "development QA"
+      },
+      "discussion": {
+        "title": "discussion"
+      }
+    }
+  }
+}
