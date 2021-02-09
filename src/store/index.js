@@ -388,22 +388,22 @@ export default new Vuex.Store({
      */
     getZoneById: (state, getters) => (sourceId, zoneId) => {
       const findZone = function (source, zoneId) {
-        for (const p in source.pages) {
-          if (p.r) {
-            for (const zone in p.r.measures) {
-              if (zone.zone === zoneId) {
-                return zone
-              }
+        for (var p = 0; p < source.pages.length; p++) {
+          const pp = source.pages[p]
+          if (pp.r) {
+            const zone = pp.r.measures.find(zone => zone.zone === zoneId)
+            if (zone) {
+              return zone
             }
           }
-          if (p.v) {
-            for (const zone in p.v.measures) {
-              if (zone.zone === zoneId) {
-                return zone
-              }
+          if (pp.v) {
+            const zone = pp.v.measures.find(zone => zone.zone === zoneId)
+            if (zone) {
+              return zone
             }
           }
         }
+        return null
       }
       const source = sourceId ? getters.getSourceById(sourceId) : null
       if (source) {

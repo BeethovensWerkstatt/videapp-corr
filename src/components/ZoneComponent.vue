@@ -83,8 +83,15 @@ export default {
     hasAnno () {
       return this.label && this.label.length > 0
     },
+    label () {
+      const zone = this.$store.getters.getZoneById(this.sourceId, this.zoneId)
+      if (zone) {
+        return zone.label
+      }
+      return null
+    },
     zoneLabel () {
-      return 'zone'
+      return this.hasAnno ? this.label : 'zone'
     }
   },
   methods: {
