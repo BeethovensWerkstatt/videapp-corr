@@ -101,6 +101,7 @@ export default {
   beforeDestroy () {
     console.log('bye bye Page')
     if (this.tiledimage) {
+      this.viewer.world.setItemIndex(this.tiledimage, 0)
       this.tiledimage.setOpacity(0)
       this.tiledimage.destroy()
     }
@@ -117,6 +118,7 @@ export default {
       set (ti) {
         if (this.tidata) {
           // remove previous image
+          this.viewer.world.setItemIndex(this.tidata, 0)
           this.tidata.setOpacity(0)
           this.tidata.destroy()
         }

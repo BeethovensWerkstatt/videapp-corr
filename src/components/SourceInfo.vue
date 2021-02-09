@@ -141,17 +141,18 @@ export default {
   methods: {
     prevPage () {
       if (this.hasPrev) {
+        var pn = this.source.pagenr
         // pagenr can only be greater zero if it is already defined as a number
-        this.$store.commit('MODIFY_SOURCE', { ...this.source, pagenr: this.source.pagenr - 1 })
+        this.$store.commit('SET_PAGE', { id: this.source.id, page: pn - 1 })
       }
     },
     nextPage () {
       if (this.hasNext) {
-        var pn = this.source ? this.source.pagenr : 0
+        var pn = this.source.pagenr
         if (!pn) {
           pn = 0
         }
-        this.$store.commit('MODIFY_SOURCE', { ...this.source, pagenr: pn + 1 })
+        this.$store.commit('SET_PAGE', { id: this.source.id, page: pn + 1 })
       }
     },
     /**
