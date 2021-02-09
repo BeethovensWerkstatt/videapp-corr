@@ -88,7 +88,8 @@ export default {
     return {
       divid: this.sourceId + '_dash',
       position_: { ...this.$store.getters.getSourceById(this.sourceId).position },
-      tracker: null
+      tracker: null,
+      dragDelta: null
     }
   },
   mounted () {
@@ -122,7 +123,7 @@ export default {
     }
   },
   beforeDestroy () {
-    console.log('bye bye Source')
+    // console.log('bye bye Source')
     if (this.overlay) {
       this.overlay.destroy()
     }
@@ -261,8 +262,18 @@ export default {
      * @param {Object} e - drag event
      */
     dragHandler (e) {
-      const delta = this.viewer.viewport.deltaPointsFromPixels(e.delta)
-      this.moveTo(this.position.x + delta.x, this.position.y + delta.y)
+      // console.log(e)
+      var pos = new OpenSeadragon.Point(e.originalEvent.clientX, e.originalEvent.clientY)
+      pos = this.viewer.viewport.windowToViewportCoordinates(pos)
+      if (!this.dragDelta) {
+        this.dragDelta = {
+          x: pos.x - this.position.x,
+          y: pos.y - this.position.y
+        }
+        // console.log(this.dragDelta)
+      }
+      pos = new OpenSeadragon.Point(pos.x - this.dragDelta.x, pos.y - this.dragDelta.y)
+      this.moveTo(pos.x, pos.y)
     },
     /**
      * handle drag drop
@@ -270,6 +281,7 @@ export default {
      * @param {Object} e - drag event
      */
     dragEndHandler (e) {
+      this.dragDelta = null
     },
     /**
      * move SourceComponent to new position

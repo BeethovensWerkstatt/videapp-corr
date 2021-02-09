@@ -99,7 +99,7 @@ export default {
     }
   },
   beforeDestroy () {
-    console.log('bye bye Page')
+    // console.log('bye bye Page')
     if (this.tiledimage) {
       this.viewer.world.setItemIndex(this.tiledimage, 0)
       this.tiledimage.setOpacity(0)
