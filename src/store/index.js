@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import uuidv4 from '@/toolbox'
+import { mutations, actions } from './names'
 
 import OpenSeadragon from 'openseadragon'
 
@@ -24,7 +25,9 @@ Vue.use(Vuex)
  * @property {Object[]} annotations - list of annotations
  * @property {String} activeAnnotationId - ID of selected annotation
  * @property {Object[]} sources - list of source objects
- * @property {String} activeSourceId - ID of selected source
+ * @property {String} activeSourceId - id of selected source
+ * @property {Object[]} complaints - list of complaints
+ * @property {String} activeComplaintId - id of selected complaint
  */
 export default new Vuex.Store({
   state: {
@@ -33,7 +36,9 @@ export default new Vuex.Store({
     annotations: [],
     activeAnnotationId: null,
     sources: [],
-    activeSourceId: null
+    activeSourceId: null,
+    complaints: [],
+    activeComplaintId: null
   },
   /**
    * @namespace store.mutations
@@ -45,7 +50,7 @@ export default new Vuex.Store({
      * @memberof store.mutations
      * @param {Object} state
      */
-    UPDATE_SCALE (state) {
+    [mutations.UPDATE_SCALE] (state) {
       // console.log(state.viewer)
       if (state.viewer) {
         // state.scale = state.viewer.viewport.viewportToImageZoom(state.viewer.viewport.getZoom(true))
@@ -53,8 +58,6 @@ export default new Vuex.Store({
         var p1 = new OpenSeadragon.Point(1, 1)
         p0 = state.viewer.viewport.viewerElementToViewportCoordinates(p0)
         p1 = state.viewer.viewport.viewerElementToViewportCoordinates(p1)
-        // avoid large scale value for p0 and p1 approx 0
-        // state.scale = 1 / Math.max(p1.x - p0.x, 0.05)
         state.scale = 1 / (p1.x - p0.x)
         // console.log('update scale ' + state.scale)
       } else {
@@ -67,7 +70,7 @@ export default new Vuex.Store({
      * @param {object} state
      * @param {object} source - (*TBD typedef source object*)
      */
-    LOAD_SOURCE (state, source) {
+    [mutations.LOAD_SOURCE] (state, source) {
       const sources = [...state.sources]
       sources.push(source)
       state.sources = sources
@@ -78,7 +81,7 @@ export default new Vuex.Store({
      * @param {object} state
      * @param {object} source - properties to modify with id
      */
-    MODIFY_SOURCE (state, source) {
+    [mutations.MODIFY_SOURCE] (state, source) {
       state.sources = state.sources.map(src => {
         if (src.id === source.id) {
           return { ...src, ...source }
@@ -93,7 +96,7 @@ export default new Vuex.Store({
      * @param {object} state
      * @param {object} src
      */
-    MOVE_SOURCE (state, { id, x, y }) {
+    [mutations.MOVE_SOURCE] (state, { id, x, y }) {
       // console.log('move source ' + id + ': ' + x + ',' + y)
       const msrc = { ...state.sources.find(src => src.id === id), position: { x: x, y: y } }
       if (msrc.id) {
@@ -106,7 +109,7 @@ export default new Vuex.Store({
      * @param {Object} state
      * @param {Object} payload id: String, page: Number
      */
-    SET_PAGE (state, { id, page }) {
+    [mutations.SET_PAGE] (state, { id, page }) {
       const msrc = { ...state.sources.find(src => src.id === id), pagenr: page }
       if (msrc.id) {
         state.sources = state.sources.map(src => src.id === msrc.id ? msrc : src)
@@ -118,10 +121,10 @@ export default new Vuex.Store({
      * @param {object} state
      * @param {String} src source id
      */
-    ACTIVATE_SOURCE (state, src) {
+    [mutations.ACTIVATE_SOURCE] (state, src) {
       state.activeSourceId = src
     },
-    ADD_ANNOTATION (state, annotation) {
+    [mutations.ADD_ANNOTATION] (state, annotation) {
       const annots = [...state.annotations]
       let existingAnnot = annots.find(annot => annot.id === annotation.id)
 
@@ -132,10 +135,10 @@ export default new Vuex.Store({
       }
       state.annotations = annots
     },
-    ACTIVATE_ANNOTATION (state, id) {
+    [mutations.ACTIVATE_ANNOTATION] (state, id) {
       state.activeAnnotationId = id
     },
-    MODIFY_ANNOTATION (state, body) {
+    [mutations.MODIFY_ANNOTATION] (state, body) {
       const annots = [...state.annotations]
       if (state.activeAnnotationId !== null) {
         const annot = annots.find(annot => annot.id === state.activeAnnotationId)
@@ -157,7 +160,7 @@ export default new Vuex.Store({
      * create OpenSeadragon canvas
      * @memberof store.actions
      */
-    createOpenSeaDragon ({ commit, state }, { config, TIback, handler }) {
+    [actions.createOpenSeaDragon] ({ commit, state }, { config, TIback, handler }) {
       // console.log(payload)
       // console.log(state)
 
@@ -179,7 +182,7 @@ export default new Vuex.Store({
      * destroy OpenSeadragon canvas
      * @memberof store.actions
      */
-    destroyOpenSeaDragon ({ commit, state }) {
+    [actions.destroyOpenSeaDragon] ({ commit, state }) {
       if (state.viewer) {
         state.viewer.destroy()
         state.viewer = null
@@ -191,7 +194,7 @@ export default new Vuex.Store({
      * @param {Object} callback commit, getters
      * @param {Object} payload source: String, zone: String
      */
-    activateZone ({ commit, getters }, { source, zone }) {
+    [actions.activateZone] ({ commit, getters }, { source, zone }) {
       if (source) {
         const src = getters.getSourceById(source)
         if (src) {
@@ -211,7 +214,7 @@ export default new Vuex.Store({
      * @param {function} commit
      * @param {object} state
      */
-    loadSources ({ commit, state }) {
+    [actions.loadSources] ({ commit, state }) {
       // this needs to be replaced with dynamic content
       const json = pageSetup
       json.sources.forEach((source, index) => {
@@ -287,11 +290,15 @@ export default new Vuex.Store({
         }
       })
     },
-    loadComplaints ({ commit, state }) {
+    /**
+     * load complaints
+     * @memberof store.actions
+     */
+    [actions.loadComplaints] ({ commit, state }) {
       const json = complaintsSetup
       console.log(json)
     },
-    createAnnotation ({ commit, state }, annot) {
+    [actions.createAnnotation] ({ commit, state }, annot) {
       const annotation = {
         '@context': 'http://www.w3.org/ns/anno.jsonld#',
         id: uuidv4(),
@@ -309,7 +316,7 @@ export default new Vuex.Store({
       commit('ADD_ANNOTATION', annotation)
       commit('ACTIVATE_ANNOTATION', annotation.id)
     },
-    modifyAnnotation ({ commit, state }, body) {
+    [actions.modifyAnnotation] ({ commit, state }, body) {
       commit('MODIFY_ANNOTATION', body)
     }
   },
