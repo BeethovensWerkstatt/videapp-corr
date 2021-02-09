@@ -6,8 +6,6 @@ import { mutations, actions } from './names'
 
 import OpenSeadragon from 'openseadragon'
 
-import OpenSeadragon from 'openseadragon'
-
 import pageSetup from '@/temp/pageSetup.json'
 import complaintsSetup from '@/temp/complaintsSetup.json'
 
