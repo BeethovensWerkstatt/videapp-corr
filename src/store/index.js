@@ -6,6 +6,8 @@ import { mutations, actions } from './names'
 
 import OpenSeadragon from 'openseadragon'
 
+import OpenSeadragon from 'openseadragon'
+
 import pageSetup from '@/temp/pageSetup.json'
 import complaintsSetup from '@/temp/complaintsSetup.json'
 
@@ -110,6 +112,40 @@ export default new Vuex.Store({
      * @param {Object} payload id: String, page: Number
      */
     [mutations.SET_PAGE] (state, { id, page }) {
+      const msrc = { ...state.sources.find(src => src.id === id), pagenr: page }
+      if (msrc.id) {
+        state.sources = state.sources.map(src => src.id === msrc.id ? msrc : src)
+      }
+    },
+    /**
+     * replace source
+     * @memberof store.mutations
+     * @param {object} state
+     * @param {object} source
+     */
+    MODIFY_SOURCE (state, source) {
+      state.sources = state.sources.map(src => src.id === source.id ? source : src)
+    },
+    /**
+     * move source on the OSD space
+     * @memberof store.mutations
+     * @param {object} state
+     * @param {object} src
+     */
+    MOVE_SOURCE (state, { id, x, y }) {
+      // console.log('move source ' + id + ': ' + x + ',' + y)
+      const msrc = { ...state.sources.find(src => src.id === id), position: { x: x, y: y } }
+      if (msrc.id) {
+        state.sources = state.sources.map(src => src.id === msrc.id ? msrc : src)
+      }
+    },
+    /**
+     * open page pair (recto/verso)
+     * @memberof store.mutations
+     * @param {Object} state
+     * @param {Object} payload id: String, page: Number
+     */
+    SET_PAGE (state, { id, page }) {
       const msrc = { ...state.sources.find(src => src.id === id), pagenr: page }
       if (msrc.id) {
         state.sources = state.sources.map(src => src.id === msrc.id ? msrc : src)
