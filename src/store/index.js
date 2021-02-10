@@ -340,6 +340,7 @@ export default new Vuex.Store({
      * @memberof store.actions
      */
     [actions.loadComplaints] ({ commit, state }) {
+      // TODO dynamic source
       const json = complaintsSetup
       json.complaints.forEach(complaint => commit(mutations.LOAD_COMPLAINT, complaint))
     },
@@ -382,6 +383,9 @@ export default new Vuex.Store({
     },
     sources: (state) => {
       return state.sources
+    },
+    complaints: (state) => {
+      return state.complaints
     },
     scale: (state) => {
       return state.scale

@@ -14,6 +14,7 @@
           </btn-group>
         </div>
       </div>
+      <complaints-list />
       <zone-info />
       <source-info />
     </div>
@@ -25,6 +26,7 @@ import { mapGetters } from 'vuex'
 import DesktopComponent from '@/components/DesktopComponent'
 import SourceInfo from '@/components/SourceInfo'
 import ZoneInfo from '@/components/ZoneInfo.vue'
+import ComplaintsList from '@/components/ComplaintsList.vue'
 // import ZoneAnnotation from '@/components/ZoneAnnotation'
 // import osdConfiguration from '@/config/osd.config.js'
 
@@ -39,7 +41,8 @@ export default {
   components: {
     DesktopComponent,
     SourceInfo,
-    ZoneInfo
+    ZoneInfo,
+    ComplaintsList
   },
   mounted () {
     // console.log(this.sources)
