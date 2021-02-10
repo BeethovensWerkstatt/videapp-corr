@@ -132,7 +132,7 @@ export default new Vuex.Store({
      * @param {object} state
      * @param {object} source
      */
-    MODIFY_SOURCE (state, source) {
+    [mutations.MODIFY_SOURCE] (state, source) {
       state.sources = state.sources.map(src => src.id === source.id ? source : src)
     },
     /**
@@ -141,7 +141,7 @@ export default new Vuex.Store({
      * @param {object} state
      * @param {object} src
      */
-    MOVE_SOURCE (state, { id, x, y }) {
+    [mutations.MOVE_SOURCE] (state, { id, x, y }) {
       // console.log('move source ' + id + ': ' + x + ',' + y)
       const msrc = { ...state.sources.find(src => src.id === id), position: { x: x, y: y } }
       if (msrc.id) {
@@ -154,7 +154,7 @@ export default new Vuex.Store({
      * @param {Object} state
      * @param {Object} payload id: String, page: Number
      */
-    SET_PAGE (state, { id, page }) {
+    [mutations.SET_PAGE] (state, { id, page }) {
       const msrc = { ...state.sources.find(src => src.id === id), pagenr: page }
       if (msrc.id) {
         state.sources = state.sources.map(src => src.id === msrc.id ? msrc : src)
