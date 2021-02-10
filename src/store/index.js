@@ -76,6 +76,17 @@ export default new Vuex.Store({
       state.sources = sources
     },
     /**
+     * load complaint
+     * @memberof store.mutations
+     * @param {Object} state
+     * @param {Object} source
+     */
+    [mutations.LOAD_COMPLAINT] (state, complaint) {
+      const complaints = [...state.complaints]
+      complaints.push(complaint)
+      state.complaints = complaints
+    },
+    /**
      * replace source
      * @memberof store.mutations
      * @param {object} state
@@ -330,7 +341,7 @@ export default new Vuex.Store({
      */
     [actions.loadComplaints] ({ commit, state }) {
       const json = complaintsSetup
-      console.log(json)
+      json.complaints.forEach(complaint => commit(mutations.LOAD_COMPLAINT, complaint))
     },
     [actions.createAnnotation] ({ commit, state }, annot) {
       const annotation = {

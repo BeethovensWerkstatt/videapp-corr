@@ -271,6 +271,7 @@ export default {
           y: pos.y - this.position.y
         }
         // console.log(this.dragDelta)
+        this.selectSource()
       }
       pos = new OpenSeadragon.Point(pos.x - this.dragDelta.x, pos.y - this.dragDelta.y)
       this.moveTo(pos.x, pos.y)
