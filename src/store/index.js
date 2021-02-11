@@ -33,6 +33,7 @@ export default new Vuex.Store({
   state: {
     viewer: null,
     scale: 1,
+    works: [],
     annotations: [],
     activeAnnotationId: null,
     sources: [],
@@ -238,22 +239,13 @@ export default new Vuex.Store({
       }
     },
     /**
-     * activate zone
+     * load works
      * @memberof store.actions
-     * @param {Object} callback commit, getters
-     * @param {Object} payload source: String, zone: String
+     * @param {function} commit
+     * @param {Object} state
      */
-    [actions.activateZone] ({ commit, getters }, { source, zone }) {
-      if (source) {
-        const src = getters.getSourceById(source)
-        if (src) {
-          // console.log(source, zone)
-          commit('MODIFY_SOURCE', { ...src, activeZoneId: zone })
-          commit('ACTIVATE_SOURCE', source)
-        }
-      } else {
-        commit('ACTIVATE_SOURCE', null)
-      }
+    [actions.loadWorks] ({ commit, state }) {
+      // https://api.beethovens-werkstatt.de/module3/works.json
     },
     /**
      * **TODO: load from REST API**
@@ -347,6 +339,24 @@ export default new Vuex.Store({
       // TODO dynamic source
       const json = complaintsSetup
       json.complaints.forEach(complaint => commit(mutations.LOAD_COMPLAINT, complaint))
+    },
+    /**
+     * activate zone
+     * @memberof store.actions
+     * @param {Object} callback commit, getters
+     * @param {Object} payload source: String, zone: String
+     */
+    [actions.activateZone] ({ commit, getters }, { source, zone }) {
+      if (source) {
+        const src = getters.getSourceById(source)
+        if (src) {
+          // console.log(source, zone)
+          commit('MODIFY_SOURCE', { ...src, activeZoneId: zone })
+          commit('ACTIVATE_SOURCE', source)
+        }
+      } else {
+        commit('ACTIVATE_SOURCE', null)
+      }
     },
     [actions.createAnnotation] ({ commit, state }, annot) {
       const annotation = {

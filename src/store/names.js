@@ -4,9 +4,10 @@
 export const actions = {
   createOpenSeaDragon: 'createOpenSeaDragon',
   destroyOpenSeaDragon: 'destroyOpenSeaDragon',
-  activateZone: 'activateZone',
+  loadWorks: 'loadWorks',
   loadSources: 'loadSources',
   loadComplaints: 'loadComplaints',
+  activateZone: 'activateZone',
   createAnnotation: 'createAnnotation',
   modifyAnnotation: 'modifyAnnotation'
 }
