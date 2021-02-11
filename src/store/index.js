@@ -196,7 +196,7 @@ export default new Vuex.Store({
       }
     },
     [mutations.ACTIVATE_COMPLAINT] (state, id) {
-      console.log(id)
+      console.log(mutations.ACTIVATE_COMPLAINT, id)
       state.activeComplaintId = id
     }
   },
@@ -484,6 +484,7 @@ export default new Vuex.Store({
     },
     activeComplaint (state, getters) {
       const complaintId = getters.activeComplaintId
+      // console.log(complaintId)
       if (complaintId) {
         const complaint = state.complaints.find(c => c['@id'] === complaintId)
         return complaint

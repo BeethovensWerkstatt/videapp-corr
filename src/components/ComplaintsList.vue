@@ -1,14 +1,15 @@
 <template>
   <div class="complaint-container">
-    <complaint-dialog :complaint="activeComplaint" />
+    <complaint-dialog />
     <div class="complaint-list">
       <div class="complaint-caption">
         Monita
       </div>
       <complaint-item
         :key="complaint['@id']"
-        v-for="complaint in complaints"
+        v-for="(complaint, ci) in complaints"
         :complaint="complaint"
+        :index="ci"
       />
     </div>
   </div>

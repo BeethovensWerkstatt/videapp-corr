@@ -3,15 +3,20 @@
     :title="complaint.movement.id"
     class="complaint-item"
     :class="{ 'complaint-active': isActive }"
-    @click.prevent="activate"
+    @click.prevent="toggleActivate"
   >
+    <div class="complaint-attribute">{{ index + 1 }}</div>
     <div class="complaint-attribute">{{ complaint.movement.n }}</div>
     <div class="complaint-attribute">{{ complaint.movement.label }}</div>
+    <div class="complaint-attribute">
+      <span v-for="(m, i) in complaint.measures" :key="m.id"><span v-if="i > 0">, </span>{{ m.label }}</span>
+    </div>
   </div>
 </template>
 
 <script>
 
+import { mapGetters } from 'vuex'
 import { mutations } from '@/store/names'
 
 export default {
@@ -20,9 +25,14 @@ export default {
     complaint: {
       type: Object,
       required: true
+    },
+    index: {
+      type: Number,
+      default: 0
     }
   },
   computed: {
+    ...mapGetters(['activeComplaintId']),
     complaintId () {
       return this.complaint['@id']
     },
@@ -31,14 +41,18 @@ export default {
     }
   },
   methods: {
-    activate () {
-      this.$store.commit(mutations.ACTIVATE_COMPLAINT, this.complaintId)
+    toggleActivate () {
+      if (this.complaintId === this.activeComplaintId) {
+        this.$store.commit(mutations.ACTIVATE_COMPLAINT, null)
+      } else {
+        this.$store.commit(mutations.ACTIVATE_COMPLAINT, this.complaintId)
+      }
     }
   }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
 .complaint-item {
   display: table-row;
@@ -51,8 +65,10 @@ export default {
 }
 
 .complaint-active {
-  background-color: rosybrown;
-  border: 1px solid red;
+  background-color: yellow;
+  div {
+    border: 1px solid red;
+  }
 }
 
 </style>

@@ -1,7 +1,12 @@
 <template>
   <div class="dialog" :class="{ 'inactive': !this.active }">
-    <div id="body">
-      <pre style="text-align: left;">{{ JSON.stringify(this.complaint, null, 2) }}</pre>
+    <div id="body" v-if="active">
+      <div class="title">{{ activeComplaint.movement.n }}. {{ activeComplaint.movement.label }}</div>
+      <div class="measures">
+        Takte:
+        <span v-for="(m, i) in activeComplaint.measures" :key="m.id"><span v-if="i > 0">, </span>{{ m.label }}</span>
+      </div>
+      <pre style="text-align: left;">{{ JSON.stringify(this.activeComplaint, null, 2) }}</pre>
     </div>
     <div id="close">
       <btn @click.prevent="closeDialog">close</btn>
@@ -10,18 +15,20 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import { mutations } from '@/store/names'
 
 export default {
   name: 'ComplaintDialog',
   props: {
-    complaint: {
-      required: true
-    }
   },
   computed: {
+    ...mapGetters(['activeComplaintId', 'activeComplaint']),
     active () {
-      return this.$store.getters.activeComplaintId
+      if (this.activeComplaintId) {
+        return true
+      }
+      return false
     }
   },
   methods: {
@@ -53,6 +60,13 @@ export default {
     width: 100%;
     height: 100%;
     overflow: scroll;
+    .title {
+      font-weight: bold;
+      font-size: 110%;
+    }
+    .measures {
+      font-size: 90%;
+    }
   }
   #close {
     position: absolute;
