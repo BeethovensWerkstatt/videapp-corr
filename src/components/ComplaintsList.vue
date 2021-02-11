@@ -1,5 +1,6 @@
 <template>
   <div class="complaint-container">
+    <complaint-dialog :complaint="activeComplaint" />
     <div class="complaint-list">
       <div class="complaint-caption">
         Monita
@@ -17,19 +18,20 @@
 
 import { mapGetters } from 'vuex'
 import ComplaintItem from '@/components/ComplaintItem.vue'
+import ComplaintDialog from './ComplaintDialog.vue'
 
 export default {
-  components: { ComplaintItem },
+  components: { ComplaintItem, ComplaintDialog },
   name: 'ComplaintsList',
   computed: {
-    ...mapGetters(['complaints'])
+    ...mapGetters(['complaints', 'activeComplaint'])
   }
 }
 </script>
 
 <style lang="scss" scoped>
 .complaint-container {
-  height: 450px;
+  max-height: 450px;
   overflow: scroll;
 }
 .complaint-list {

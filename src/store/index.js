@@ -194,6 +194,10 @@ export default new Vuex.Store({
           state.annotations = annots
         }
       }
+    },
+    [mutations.ACTIVATE_COMPLAINT] (state, id) {
+      console.log(id)
+      state.activeComplaintId = id
     }
   },
   /**
@@ -472,6 +476,17 @@ export default new Vuex.Store({
             return zone
           }
         })
+      }
+      return null
+    },
+    activeComplaintId (state) {
+      return state.activeComplaintId
+    },
+    activeComplaint (state, getters) {
+      const complaintId = getters.activeComplaintId
+      if (complaintId) {
+        const complaint = state.complaints.find(c => c['@id'] === complaintId)
+        return complaint
       }
       return null
     }
