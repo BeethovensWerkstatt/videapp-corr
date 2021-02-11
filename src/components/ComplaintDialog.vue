@@ -6,6 +6,7 @@
         Takte:
         <span v-for="(m, i) in activeComplaint.measures" :key="m.id"><span v-if="i > 0">, </span>{{ m.label }}</span>
       </div>
+      <hr>
       <pre style="text-align: left;">{{ JSON.stringify(this.activeComplaint, null, 2) }}</pre>
     </div>
     <div id="close">

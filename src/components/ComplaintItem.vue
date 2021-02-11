@@ -66,9 +66,7 @@ export default {
 
 .complaint-active {
   background-color: yellow;
-  div {
-    border: 1px solid red;
-  }
+  outline: 1px solid red;
 }
 
 </style>
