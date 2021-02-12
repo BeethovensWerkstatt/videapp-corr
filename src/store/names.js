@@ -1,9 +1,10 @@
 /**
- * @namespace store.actions
+ * register action and mutation names
+ *
+ * @namespace store.names
  */
+
 export const actions = {
-  // createOpenSeaDragon: 'createOpenSeaDragon',
-  // destroyOpenSeaDragon: 'destroyOpenSeaDragon',
   loadWorks: 'loadWorks',
   loadSources: 'loadSources',
   loadComplaints: 'loadComplaints',
@@ -14,6 +15,7 @@ export const actions = {
 
 /**
  * register action name
+ * @memberof store.names
  * @param {Object} actions
  */
 export const registerActions = function (obj) {
@@ -39,6 +41,7 @@ export const mutations = {
 
 /**
  * register action name
+ * @memberof store.names
  * @param {Object} actions
  */
 export const registerMutations = function (obj) {
