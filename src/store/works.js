@@ -9,6 +9,7 @@ const toStore = {
   mutations: {
     /**
      * load work
+     * @memberof store.mutations
      * @param {object} state
      * @param {object} work
      */
