@@ -5,21 +5,24 @@
       <table id="worksList" class="table">
         <thead>
           <tr>
+            <th>Komponist</th>
             <th>Werk</th>
             <th>Modul</th>
             <th>Sonstwas</th>
           </tr>
         </thead>
         <tbody>
-          <tr class="active">
-            <td>Op. 111</td>
-            <td>Modul 1</td>
-            <td>trulala</td>
-          </tr>
           <tr>
+            <td>Ludwig van Beethoven</td>
             <td>Op. 73</td>
             <td>Modul 3</td>
             <td><router-link to="/work/op73">Link</router-link></td>
+          </tr>
+          <tr v-for="work in works" :key="work['@id']">
+            <td><a :href="work.composer['@id']">{{ work.composer.name }}</a></td>
+            <td><router-link :to="getLink(work['@id'])">{{ work.title[0].title }}</router-link></td>
+            <td>Modul 3</td>
+            <td><router-link :to="getLink(work['@id'])">Link</router-link></td>
           </tr>
         </tbody>
       </table>
@@ -28,13 +31,27 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import { actions } from '@/store/names'
+
 /**
  * list of works component
  *
  * @module views/WorksList
  */
 export default {
-  name: 'WorksList'
+  name: 'WorksList',
+  beforeCreate () {
+    this.$store.dispatch(actions.loadWorks)
+  },
+  computed: {
+    ...mapGetters(['works'])
+  },
+  methods: {
+    getLink (atid) {
+      return '/work/op73'
+    }
+  }
 }
 </script>
 

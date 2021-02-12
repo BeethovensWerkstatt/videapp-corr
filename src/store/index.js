@@ -5,6 +5,9 @@ import uuidv4 from '@/toolbox'
 import { mutations, actions } from './names'
 
 import OpenSeadragon from 'openseadragon'
+import axios from 'axios'
+
+import config from '@/config'
 
 import pageSetup from '@/temp/pageSetup.json'
 import complaintsSetup from '@/temp/complaintsSetup.json'
@@ -64,6 +67,16 @@ export default new Vuex.Store({
       } else {
         state.scale = 1
       }
+    },
+    /**
+     * load work
+     * @param {object} state
+     * @param {object} work
+     */
+    [mutations.LOAD_WORK] (state, work) {
+      const works = [...state.works]
+      works.push(work)
+      state.works = works
     },
     /**
      * set load source
@@ -244,8 +257,23 @@ export default new Vuex.Store({
      * @param {function} commit
      * @param {Object} state
      */
-    [actions.loadWorks] ({ commit, state }) {
+    async [actions.loadWorks] ({ commit, state }) {
       // https://api.beethovens-werkstatt.de/module3/works.json
+      const url = config.api.works.url
+      console.log(axios, url)
+      const { data } = await axios.get(config.api.works.url)
+      for (const work of data) {
+        console.log(work)
+        commit(mutations.LOAD_WORK, work)
+      }
+      /*
+      async getPost(context, { id }) {
+        const { data } = await axios.get(
+          `https://jsonplaceholder.typicode.com/posts/${id}`
+        );
+        context.commit("setPost", data);
+      }
+      */
     },
     /**
      * **TODO: load from REST API**
@@ -394,6 +422,9 @@ export default new Vuex.Store({
   getters: {
     viewer: (state) => {
       return state.viewer
+    },
+    works: (state) => {
+      return state.works
     },
     sources: (state) => {
       return state.sources

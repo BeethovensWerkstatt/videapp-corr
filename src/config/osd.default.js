@@ -26,5 +26,4 @@ export default {
     dblClickToZoom: true
   },
   collectionMode: false
-
 }

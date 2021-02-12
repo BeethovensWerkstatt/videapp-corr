@@ -14,11 +14,8 @@
 // import Vue from 'vue'
 import { mapGetters } from 'vuex'
 import SourceComponent from '@/components/SourceComponent'
-import osddef from '@/config/osd.default.js'
+import config from '@/config'
 import { desktopTile } from '@/toolbox'
-
-// create SourceComponent component-constructor
-// const SourceComponent = Vue.extend(SourceComponentFactory)
 
 /**
  * OpenSeadragon component
@@ -41,7 +38,7 @@ export default {
   },
   data: function () {
     return {
-      viewerprops: { ...osddef, ...this.osdinit }
+      viewerprops: { ...config.osd, ...this.osdinit }
     }
   },
   props: {

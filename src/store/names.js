@@ -14,6 +14,7 @@ export const actions = {
 
 export const mutations = {
   UPDATE_SCALE: 'UPDATE_SCALE',
+  LOAD_WORK: 'LOAD_WORK',
   LOAD_SOURCE: 'LOAD_SOURCE',
   LOAD_COMPLAINT: 'LOAD_COMPLAINT',
   MODIFY_SOURCE: 'MODIFY_SOURCE',
