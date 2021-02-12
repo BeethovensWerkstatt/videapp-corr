@@ -15,6 +15,7 @@
 import { mapGetters } from 'vuex'
 import SourceComponent from '@/components/SourceComponent'
 import config from '@/config'
+import names from '@/store/names'
 import { desktopTile } from '@/toolbox'
 
 /**
@@ -89,7 +90,7 @@ export default {
   },
   mounted () {
     // create OpenSeadragon viewer
-    this.$store.dispatch('createOpenSeaDragon', {
+    this.$store.dispatch(names.actions.createOpenSeaDragon, {
       divid: this.divid,
       handler: {
         resize: this.updateView,

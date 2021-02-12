@@ -32,7 +32,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { actions } from '@/store/names'
+// import { actions } from '@/store/names'
 
 /**
  * list of works component
@@ -42,7 +42,7 @@ import { actions } from '@/store/names'
 export default {
   name: 'WorksList',
   beforeCreate () {
-    this.$store.dispatch(actions.loadWorks)
+    // this.$store.dispatch(actions.loadWorks)
   },
   computed: {
     ...mapGetters(['works'])

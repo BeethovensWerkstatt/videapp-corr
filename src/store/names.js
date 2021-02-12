@@ -2,8 +2,8 @@
  * @namespace store.actions
  */
 export const actions = {
-  createOpenSeaDragon: 'createOpenSeaDragon',
-  destroyOpenSeaDragon: 'destroyOpenSeaDragon',
+  // createOpenSeaDragon: 'createOpenSeaDragon',
+  // destroyOpenSeaDragon: 'destroyOpenSeaDragon',
   loadWorks: 'loadWorks',
   loadSources: 'loadSources',
   loadComplaints: 'loadComplaints',
@@ -12,9 +12,19 @@ export const actions = {
   modifyAnnotation: 'modifyAnnotation'
 }
 
+/**
+ * register action name
+ * @param {Object} actions
+ */
+export const registerActions = function (obj) {
+  for (const n in obj) {
+    if (obj[n] instanceof Function) {
+      actions[n] = n
+    }
+  }
+}
+
 export const mutations = {
-  UPDATE_SCALE: 'UPDATE_SCALE',
-  LOAD_WORK: 'LOAD_WORK',
   LOAD_SOURCE: 'LOAD_SOURCE',
   LOAD_COMPLAINT: 'LOAD_COMPLAINT',
   MODIFY_SOURCE: 'MODIFY_SOURCE',
@@ -27,4 +37,16 @@ export const mutations = {
   MODIFY_ANNOTATION: 'MODIFY_ANNOTATION'
 }
 
-export default { actions }
+/**
+ * register action name
+ * @param {Object} actions
+ */
+export const registerMutations = function (obj) {
+  for (const n in obj) {
+    if (obj[n] instanceof Function) {
+      mutations[n] = n
+    }
+  }
+}
+
+export default { actions, mutations, registerMutations, registerActions }

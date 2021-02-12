@@ -4,10 +4,8 @@ import Vuex from 'vuex'
 import uuidv4 from '@/toolbox'
 import { mutations, actions } from './names'
 
-import OpenSeadragon from 'openseadragon'
-import axios from 'axios'
-
-import config from '@/config'
+import storeOSD from './osd'
+import storeWorks from './works'
 
 import pageSetup from '@/temp/pageSetup.json'
 import complaintsSetup from '@/temp/complaintsSetup.json'
@@ -15,7 +13,7 @@ import complaintsSetup from '@/temp/complaintsSetup.json'
 Vue.use(Vuex)
 
 /**
- * TODO: mutation and action names should be const strings
+ * TODO: mutation and action names should be const strings -> names.js registerActions, registerMutations
  *
  * @namespace store
  */
@@ -34,9 +32,8 @@ Vue.use(Vuex)
  */
 export default new Vuex.Store({
   state: {
-    viewer: null,
-    scale: 1,
-    works: [],
+    ...storeOSD.state,
+    ...storeWorks.state,
     annotations: [],
     activeAnnotationId: null,
     sources: [],
@@ -49,35 +46,8 @@ export default new Vuex.Store({
    * @memberof store
    */
   mutations: {
-    /**
-     * update scale variable
-     * @memberof store.mutations
-     * @param {Object} state
-     */
-    [mutations.UPDATE_SCALE] (state) {
-      // console.log(state.viewer)
-      if (state.viewer) {
-        // state.scale = state.viewer.viewport.viewportToImageZoom(state.viewer.viewport.getZoom(true))
-        var p0 = new OpenSeadragon.Point(0, 0)
-        var p1 = new OpenSeadragon.Point(1, 1)
-        p0 = state.viewer.viewport.viewerElementToViewportCoordinates(p0)
-        p1 = state.viewer.viewport.viewerElementToViewportCoordinates(p1)
-        state.scale = 1 / (p1.x - p0.x)
-        // console.log('update scale ' + state.scale)
-      } else {
-        state.scale = 1
-      }
-    },
-    /**
-     * load work
-     * @param {object} state
-     * @param {object} work
-     */
-    [mutations.LOAD_WORK] (state, work) {
-      const works = [...state.works]
-      works.push(work)
-      state.works = works
-    },
+    ...storeOSD.mutations,
+    ...storeWorks.mutations,
     /**
      * set load source
      * @memberof store.mutations
@@ -163,18 +133,6 @@ export default new Vuex.Store({
       }
     },
     /**
-     * open page pair (recto/verso)
-     * @memberof store.mutations
-     * @param {Object} state
-     * @param {Object} payload id: String, page: Number
-     */
-    [mutations.SET_PAGE] (state, { id, page }) {
-      const msrc = { ...state.sources.find(src => src.id === id), pagenr: page }
-      if (msrc.id) {
-        state.sources = state.sources.map(src => src.id === msrc.id ? msrc : src)
-      }
-    },
-    /**
      * set active source component
      * @memberof store.mutations
      * @param {object} state
@@ -219,62 +177,8 @@ export default new Vuex.Store({
    * @memberof store
    */
   actions: {
-    /**
-     * create OpenSeadragon canvas
-     * @memberof store.actions
-     */
-    [actions.createOpenSeaDragon] ({ commit, state }, { config, TIback, handler }) {
-      // console.log(payload)
-      // console.log(state)
-
-      const viewer = OpenSeadragon(config)
-
-      viewer.addTiledImage(TIback)
-
-      if (state.viewer) {
-        console.warn('viewer set twice!')
-      }
-      state.viewer = viewer
-
-      for (const k in handler) {
-        // console.log('handler :' + k)
-        viewer.addHandler(k, handler[k])
-      }
-    },
-    /**
-     * destroy OpenSeadragon canvas
-     * @memberof store.actions
-     */
-    [actions.destroyOpenSeaDragon] ({ commit, state }) {
-      if (state.viewer) {
-        state.viewer.destroy()
-        state.viewer = null
-      }
-    },
-    /**
-     * load works
-     * @memberof store.actions
-     * @param {function} commit
-     * @param {Object} state
-     */
-    async [actions.loadWorks] ({ commit, state }) {
-      // https://api.beethovens-werkstatt.de/module3/works.json
-      const url = config.api.works.url
-      console.log(axios, url)
-      const { data } = await axios.get(config.api.works.url)
-      for (const work of data) {
-        console.log(work)
-        commit(mutations.LOAD_WORK, work)
-      }
-      /*
-      async getPost(context, { id }) {
-        const { data } = await axios.get(
-          `https://jsonplaceholder.typicode.com/posts/${id}`
-        );
-        context.commit("setPost", data);
-      }
-      */
-    },
+    ...storeOSD.actions,
+    ...storeWorks.actions,
     /**
      * **TODO: load from REST API**
      *
