@@ -49,6 +49,7 @@ export default {
   },
   methods: {
     getLink (atid) {
+      // TODO get id from atid (url)
       return '/work/op73'
     }
   }
