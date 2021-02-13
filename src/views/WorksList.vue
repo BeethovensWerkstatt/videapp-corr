@@ -20,9 +20,9 @@
           </tr>
           <tr v-for="work in works" :key="work['@id']">
             <td><a :href="work.composer['@id']">{{ work.composer.name }}</a></td>
-            <td><router-link :to="getLink(work['@id'])">{{ work.title[0].title }}</router-link></td>
+            <td><router-link :to="getLink(work.id)">{{ work.title[0].title }}</router-link></td>
             <td>Modul 3</td>
-            <td><router-link :to="getLink(work['@id'])">Link</router-link></td>
+            <td><router-link :to="getLink(work.id)">Link</router-link></td>
           </tr>
         </tbody>
       </table>
@@ -48,9 +48,9 @@ export default {
     ...mapGetters(['works'])
   },
   methods: {
-    getLink (atid) {
-      // TODO get id from atid (url)
-      return '/work/op73'
+    // TODO link creator?
+    getLink (id) {
+      return '/work/' + id
     }
   }
 }

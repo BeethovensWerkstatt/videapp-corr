@@ -2,6 +2,8 @@ import axios from 'axios'
 import config from '@/config'
 import { mutations, registerMutations, registerActions } from './names'
 
+const AtReId = new RegExp('^.*\\/([^\\/\\.]*)\\.json')
+
 const toStore = {
   state: {
     works: []
@@ -15,8 +17,19 @@ const toStore = {
      */
     LOAD_WORK (state, work) {
       const works = [...state.works]
-      works.push(work)
-      state.works = works
+      if (!work.id) {
+        const atid = work['@id']
+        const m = AtReId.exec(atid)
+        if (m && m[1]) {
+          work.id = m[1]
+        }
+      }
+      if (work.id) {
+        works.push(work)
+        state.works = works
+      } else {
+        console.error('no id', work)
+      }
     }
   },
   actions: {
