@@ -1,6 +1,6 @@
 <template>
   <header>
-    VideApp<sub>corr</sub> (<router-link to="/">Startseite</router-link>)
+    VideApp<sub>corr</sub> &bullet; <router-link to="/">Startseite</router-link> &bullet; <router-link to="/works">Werkliste</router-link>
   </header>
 </template>
 
