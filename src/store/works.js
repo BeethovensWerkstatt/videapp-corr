@@ -1,20 +1,7 @@
 import axios from 'axios'
 import config from '@/config'
 import { mutations, actions, registerMutations, registerActions } from './names'
-
-const AtReId = new RegExp('^.*\\/([^\\/\\.]*)\\.json')
-
-/**
- * extract id from URL
- * @param {String} atid
- */
-export function atId (atid) {
-  const m = AtReId.exec(atid)
-  if (m && m[1]) {
-    return m[1]
-  }
-  return null
-}
+import { atId } from '@/toolbox'
 
 const toStore = {
   state: {
