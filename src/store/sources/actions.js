@@ -2,6 +2,8 @@ import axios from 'axios'
 
 import pageSetup from '@/temp/pageSetup.json'
 
+const demoId = 'op73'
+
 const actions = {
   /**
    * **TODO: load from REST API**
@@ -12,7 +14,7 @@ const actions = {
    * @param {object} state
    */
   async loadSources ({ commit, state }, workId) {
-    if (workId) {
+    if (workId && workId !== demoId) {
       console.log(state.works, workId)
       const work = state.works.find(w => w.id === workId)
       if (work && work['@id'] && !work.sources) {
@@ -35,6 +37,7 @@ const actions = {
         if (existingSource === undefined) {
           const obj = {}
           obj.id = source.id
+          obj.workId = demoId
           obj.label = source.label
           obj.maxDimensions = {}
           // this needs to be updated

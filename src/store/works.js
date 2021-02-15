@@ -35,6 +35,7 @@ const toStore = {
      * @param {Object} state
      */
     async loadWorks ({ commit, dispatch }) {
+      dispatch('loadDemo')
       // https://api.beethovens-werkstatt.de/module3/works.json
       const url = config.api.works.url
       // console.log(axios, url)
@@ -44,6 +45,23 @@ const toStore = {
         commit(mutations.LOAD_WORK, work)
         dispatch(actions.loadSources, work.id)
       }
+    },
+    loadDemo ({ commit }) {
+      const demo = {
+        composer: {
+          name: 'Ludwig van Beethoven',
+          internalId: 'LvB',
+          '@id': 'http://d-nb.info/gnd/118508288'
+        },
+        title: [
+          {
+            '@lang': 'de',
+            title: 'op. 73'
+          }
+        ],
+        id: 'op73'
+      }
+      commit(mutations.LOAD_WORK, demo)
     }
   },
   getters: {

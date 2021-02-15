@@ -1,6 +1,6 @@
 <template>
   <div class="desk">
-    <desktop-component divid="canvas"></desktop-component>
+    <desktop-component divid="canvas" workId="$router.param.id"></desktop-component>
     <div id="sidebar">
       <div>
         <div id="navigatorBox">
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+// import { mapGetters } from 'vuex'
 import DesktopComponent from '@/components/DesktopComponent'
 import SourceInfo from '@/components/SourceInfo'
 import ZoneInfo from '@/components/ZoneInfo.vue'
@@ -48,11 +48,6 @@ export default {
     // console.log(this.sources)
   },
   computed: {
-    ...mapGetters(['scale']),
-    sources () {
-      // TODO query
-      return this.$store.getters.sources
-    }
   }
 }
 </script>

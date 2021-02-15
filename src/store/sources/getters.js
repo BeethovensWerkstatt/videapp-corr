@@ -2,6 +2,12 @@ const getters = {
   sources: (state) => {
     return state.sources
   },
+  workSources: (state) => (workId) => {
+    // TODO sources should be stored per work
+    const sources = state.sources.filter(src => src.workId === workId)
+    console.log(workId, sources)
+    return sources
+  },
   activeSourceId: (state) => {
     return state.activeSourceId
   },

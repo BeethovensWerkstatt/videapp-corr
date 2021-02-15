@@ -12,12 +12,6 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Ludwig van Beethoven</td>
-            <td>Op. 73</td>
-            <td>Modul 3</td>
-            <td><router-link to="/work/op73">Link</router-link></td>
-          </tr>
           <tr v-for="work in works" :key="work['@id']">
             <td><a :href="work.composer['@id']">{{ work.composer.name }}</a></td>
             <td><router-link :to="getLink(work.id)">{{ work.title[0].title }}</router-link></td>
