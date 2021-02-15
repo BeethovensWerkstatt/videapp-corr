@@ -5,7 +5,6 @@
  */
 
 export const actions = {
-  loadWorks: 'loadWorks',
   loadSources: 'loadSources',
   loadComplaints: 'loadComplaints',
   activateZone: 'activateZone',

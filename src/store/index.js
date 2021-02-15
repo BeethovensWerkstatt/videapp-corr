@@ -6,15 +6,13 @@ import { mutations, actions } from './names'
 
 import storeOSD from './osd'
 import storeWorks from './works'
+import storeSources from './sources'
 
-import pageSetup from '@/temp/pageSetup.json'
 import complaintsSetup from '@/temp/complaintsSetup.json'
 
 Vue.use(Vuex)
 
 /**
- * TODO: mutation and action names should be const strings -> names.js registerActions, registerMutations
- *
  * @namespace store
  */
 
@@ -23,21 +21,20 @@ Vue.use(Vuex)
  * @memberof store
  * @property {Object} viewer - OpenSeadragon Viewer object
  * @property {Number} scale - current scale of OpenSeadragon.Viewer
- * @property {Object[]} annotations - list of annotations
- * @property {String} activeAnnotationId - ID of selected annotation
  * @property {Object[]} sources - list of source objects
  * @property {String} activeSourceId - id of selected source
  * @property {Object[]} complaints - list of complaints
  * @property {String} activeComplaintId - id of selected complaint
+ * @property {Object[]} annotations - list of annotations
+ * @property {String} activeAnnotationId - ID of selected annotation
  */
 export default new Vuex.Store({
   state: {
     ...storeOSD.state,
     ...storeWorks.state,
+    ...storeSources.state,
     annotations: [],
     activeAnnotationId: null,
-    sources: [],
-    activeSourceId: null,
     complaints: [],
     activeComplaintId: null
   },
@@ -48,6 +45,7 @@ export default new Vuex.Store({
   mutations: {
     ...storeOSD.mutations,
     ...storeWorks.mutations,
+    ...storeSources.mutations,
     /**
      * set load source
      * @memberof store.mutations
@@ -179,90 +177,7 @@ export default new Vuex.Store({
   actions: {
     ...storeOSD.actions,
     ...storeWorks.actions,
-    /**
-     * **TODO: load from REST API**
-     *
-     * load sources
-     * @memberof store.actions
-     * @param {function} commit
-     * @param {object} state
-     */
-    [actions.loadSources] ({ commit, state }) {
-      // this needs to be replaced with dynamic content
-      const json = pageSetup
-      json.sources.forEach((source, index) => {
-        const existingSource = state.sources.find(elem => elem.id === source.id)
-
-        if (existingSource === undefined) {
-          const obj = {}
-          obj.id = source.id
-          obj.label = source.label
-          obj.maxDimensions = {}
-          // this needs to be updated
-          obj.position = { x: (150 + index * 400), y: 400 }
-          obj.rotation = (index - 1) * 20
-          let maxRheight = 0
-          let maxRwidth = 0
-          let maxVheight = 0
-          let maxVwidth = 0
-          obj.pages = []
-          const startsWithSingle = source.pages[0].pos === 'r'
-          const singleLeaf = startsWithSingle && ((source.pages.length === 2 && source.pages[1].pos === 'v') || source.pages.length === 1)
-          obj.singleLeaf = singleLeaf
-
-          source.pages.forEach((page, i) => {
-            if (page.pos === 'r') {
-              maxRheight = Math.max(maxRheight, page.mmHeight)
-              maxRwidth = Math.max(maxRwidth, page.mmWidth)
-            } else {
-              maxVheight = Math.max(maxVheight, page.mmHeight)
-              maxVwidth = Math.max(maxVwidth, page.mmWidth)
-            }
-            // when first page starts recto
-            if (startsWithSingle && i === 0) {
-              const v = null
-              const r = {
-                uri: page.uri,
-                id: page.id,
-                label: page.label,
-                pixels: { width: page.width, height: page.height },
-                dimensions: { width: page.mmWidth, height: page.mmHeight },
-                measures: page.measures,
-                place: 'recto'
-              }
-              obj.pages.push({ v, r })
-            } else if ((startsWithSingle && i % 2 === 1) || (!startsWithSingle && i % 2 === 0)) {
-              const leftPage = page
-              const rightPage = source.pages[i + 1]
-              const v = {
-                uri: leftPage.uri,
-                id: leftPage.id,
-                label: leftPage.label,
-                pixels: { width: leftPage.width, height: leftPage.height },
-                dimensions: { width: leftPage.mmWidth, height: leftPage.mmHeight },
-                measures: leftPage.measures,
-                place: 'verso'
-              }
-              const r = (rightPage !== undefined) ? {
-                uri: rightPage.uri,
-                id: rightPage.id,
-                label: rightPage.label,
-                pixels: { width: rightPage.width, height: rightPage.height },
-                dimensions: { width: rightPage.mmWidth, height: rightPage.mmHeight },
-                measures: rightPage.measures,
-                place: 'recto'
-              } : null
-              obj.pages.push({ v, r })
-            }
-          })
-          obj.maxDimensions.width = (!singleLeaf) ? maxRwidth + maxVwidth : Math.max(maxRwidth, maxVwidth)
-          obj.maxDimensions.height = Math.max(maxVheight, maxRheight)
-          obj.activePage = 0
-
-          commit('LOAD_SOURCE', obj)
-        }
-      })
-    },
+    ...storeSources.actions,
     /**
      * load complaints
      * @memberof store.actions
@@ -324,105 +239,11 @@ export default new Vuex.Store({
    * @property {Object} activeZone - selected zone object
    */
   getters: {
-    viewer: (state) => {
-      return state.viewer
-    },
-    works: (state) => {
-      return state.works
-    },
-    sources: (state) => {
-      return state.sources
-    },
+    ...storeOSD.getters,
+    ...storeWorks.getters,
+    ...storeSources.getters,
     complaints: (state) => {
       return state.complaints
-    },
-    scale: (state) => {
-      return state.scale
-    },
-    activeSourceId: (state) => {
-      return state.activeSourceId
-    },
-    activeSource: (state, getters) => {
-      if (state.activeSourceId) {
-        const source = getters.getSourceById(state.activeSourceId)
-        // console.log('active source: ' + source)
-        return source
-      }
-      return null
-    },
-    /**
-     * find source object by id
-     * @memberof store.getters
-     * @param {String} id - id of source object
-     */
-    getSourceById: (state) => (id) => {
-      // console.log('get source: ' + id)
-      if (!id) {
-        throw new Error('source id undefined!')
-      }
-      return state.sources.find(source => source.id === id)
-    },
-    activeZoneId: (state, getters) => {
-      const source = getters.activeSource
-      // console.log(source)
-      if (source) {
-        // console.log(source.activeZoneId)
-        return source.activeZoneId
-      }
-      return null
-    },
-    activeZone: (state, getters) => {
-      const source = getters.activeSource
-      const zoneId = getters.activeZoneId
-      if (source && zoneId) {
-        const pagenr = source.pagenr ? source.pagenr : 0
-        const rzones = source.pages[pagenr].r ? source.pages[pagenr].r.measures : []
-        const vzones = source.pages[pagenr].v ? source.pages[pagenr].v.measures : []
-        const zone = [...rzones, ...vzones].find(zone => zone.zone === zoneId)
-        return zone
-      }
-      return null
-    },
-    /**
-     * find zone by id. If `sourceId` is null, all sources are searched,
-     * until a zone with a matching id is found.
-     *
-     * @memberof store.getters
-     * @param {String} sourceId - id of containing source object or null
-     * @param {String} zoneId - id of zone object
-     */
-    getZoneById: (state, getters) => (sourceId, zoneId) => {
-      const findZone = function (source, zoneId) {
-        for (var p = 0; p < source.pages.length; p++) {
-          const pp = source.pages[p]
-          if (pp.r) {
-            const zone = pp.r.measures.find(zone => zone.zone === zoneId)
-            if (zone) {
-              return zone
-            }
-          }
-          if (pp.v) {
-            const zone = pp.v.measures.find(zone => zone.zone === zoneId)
-            if (zone) {
-              return zone
-            }
-          }
-        }
-        return null
-      }
-      const source = sourceId ? getters.getSourceById(sourceId) : null
-      if (source) {
-        return findZone(source, zoneId)
-      }
-      if (!sourceId) {
-        state.sources.forEach((source) => {
-          const zone = findZone(source, zoneId)
-          if (zone) {
-            return zone
-          }
-        })
-      }
-      return null
     },
     activeComplaintId (state) {
       return state.activeComplaintId

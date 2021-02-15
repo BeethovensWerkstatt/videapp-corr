@@ -60,6 +60,14 @@ const toStore = {
         state.viewer = null
       }
     }
+  },
+  getters: {
+    viewer: (state) => {
+      return state.viewer
+    },
+    scale: (state) => {
+      return state.scale
+    }
   }
 }
 

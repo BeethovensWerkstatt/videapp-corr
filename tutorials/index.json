@@ -10,6 +10,9 @@
   "dev": {
     "title": "development",
     "children": {
+      "store-splitting": {
+        "title": "Splitting the store into several files"
+      },
       "vue-components-programmatically": {
         "title": "create Vue components programmatically"
       }

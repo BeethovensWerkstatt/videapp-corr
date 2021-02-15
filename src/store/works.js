@@ -49,6 +49,11 @@ const toStore = {
         commit(mutations.LOAD_WORK, work)
       }
     }
+  },
+  getters: {
+    works: (state) => {
+      return state.works
+    }
   }
 }
 
