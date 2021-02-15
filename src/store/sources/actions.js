@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 import pageSetup from '@/temp/pageSetup.json'
 
 const actions = {
@@ -9,9 +11,21 @@ const actions = {
    * @param {function} commit
    * @param {object} state
    */
-  loadSources ({ commit, state }, workId) {
+  async loadSources ({ commit, state }, workId) {
     if (workId) {
-      console.log(workId)
+      console.log(state.works, workId)
+      const work = state.works.find(w => w.id === workId)
+      if (work && work['@id'] && !work.sources) {
+        // TODO select language
+        console.log(work.title[0].title)
+        work.sources = []
+        const url = work['@id']
+        const { data } = await axios.get(url)
+        data.manifestations.forEach(m => {
+          console.log(m.label)
+        })
+        work.sourcesLoadFinished = true
+      }
     } else {
       // this needs to be replaced with dynamic content
       const json = pageSetup

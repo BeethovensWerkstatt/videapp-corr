@@ -1,8 +1,20 @@
 import axios from 'axios'
 import config from '@/config'
-import { mutations, registerMutations, registerActions } from './names'
+import { mutations, actions, registerMutations, registerActions } from './names'
 
 const AtReId = new RegExp('^.*\\/([^\\/\\.]*)\\.json')
+
+/**
+ * extract id from URL
+ * @param {String} atid
+ */
+export function atId (atid) {
+  const m = AtReId.exec(atid)
+  if (m && m[1]) {
+    return m[1]
+  }
+  return null
+}
 
 const toStore = {
   state: {
@@ -18,11 +30,7 @@ const toStore = {
     LOAD_WORK (state, work) {
       const works = [...state.works]
       if (!work.id) {
-        const atid = work['@id']
-        const m = AtReId.exec(atid)
-        if (m && m[1]) {
-          work.id = m[1]
-        }
+        work.id = atId(work['@id'])
       }
       if (work.id) {
         works.push(work)
@@ -39,7 +47,7 @@ const toStore = {
      * @param {function} commit
      * @param {Object} state
      */
-    async loadWorks ({ commit, state }) {
+    async loadWorks ({ commit, dispatch }) {
       // https://api.beethovens-werkstatt.de/module3/works.json
       const url = config.api.works.url
       // console.log(axios, url)
@@ -47,6 +55,7 @@ const toStore = {
       for (const work of data) {
         // console.log(work)
         commit(mutations.LOAD_WORK, work)
+        dispatch(actions.loadSources, work.id)
       }
     }
   },
