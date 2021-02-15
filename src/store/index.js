@@ -105,24 +105,6 @@ export default new Vuex.Store({
       const json = complaintsSetup
       json.complaints.forEach(complaint => commit(mutations.LOAD_COMPLAINT, complaint))
     },
-    /**
-     * activate zone
-     * @memberof store.actions
-     * @param {Object} callback commit, getters
-     * @param {Object} payload source: String, zone: String
-     */
-    [actions.activateZone] ({ commit, getters }, { source, zone }) {
-      if (source) {
-        const src = getters.getSourceById(source)
-        if (src) {
-          // console.log(source, zone)
-          commit('MODIFY_SOURCE', { ...src, activeZoneId: zone })
-          commit('ACTIVATE_SOURCE', source)
-        }
-      } else {
-        commit('ACTIVATE_SOURCE', null)
-      }
-    },
     [actions.createAnnotation] ({ commit, state }, annot) {
       const annotation = {
         '@context': 'http://www.w3.org/ns/anno.jsonld#',
