@@ -30,7 +30,7 @@ const actions = {
             id: m['@id'],
             workId,
             label: m.label,
-            maxDimensions: {},
+            maxDimensions: { width: 0, height: 0 },
             // this still needs to be updated
             position: { x: (150 + index * 400), y: 400 },
             pages: [],
@@ -51,7 +51,7 @@ const actions = {
                   : (300 / canvas.height)
                 return {
                   id: canvas['@id'],
-                  place: ci % 2 ? 'verso' : 'recto',
+                  place,
                   dimensions: { width: canvas.width * physScale, height: canvas.height * physScale },
                   pixels: { width: canvas.width, height: canvas.height },
                   uri: canvas.images[0].resource.service['@id'],
@@ -60,10 +60,18 @@ const actions = {
               }
               for (var ci = 0; ci <= canvases.length; ci += 2) {
                 const pagepair = {
-                  r: ci > 0 ? ctop(canvases[ci - 1]) : null,
-                  v: ci < canvases.length ? ctop(canvases[ci]) : null
+                  r: ci > 0 ? ctop(canvases[ci - 1], 'recto') : null,
+                  v: ci < canvases.length ? ctop(canvases[ci], 'verso') : null
                 }
                 source.pages.push(pagepair)
+                source.maxDimensions.width =
+                  Math.max(source.maxDimensions.width,
+                    ((pagepair.r ? pagepair.r.dimensions.width : 0) +
+                     (pagepair.v ? pagepair.v.dimensions.width : 0)))
+                source.maxDimensions.height =
+                  Math.max(source.maxDimensions.height,
+                    (pagepair.r ? pagepair.r.dimensions.height : 0),
+                    (pagepair.v ? pagepair.v.dimensions.height : 0))
               }
               console.log(source)
               commit(mutations.LOAD_SOURCE, source)

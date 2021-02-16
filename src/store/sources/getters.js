@@ -5,7 +5,7 @@ const getters = {
   workSources: (state) => (workId) => {
     // TODO sources should be stored per work
     const sources = state.sources.filter(src => src.workId === workId)
-    console.log(workId, sources)
+    // console.log(workId, sources)
     return sources
   },
   activeSourceId: (state) => {
