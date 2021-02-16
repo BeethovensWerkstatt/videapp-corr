@@ -23,8 +23,50 @@ const actions = {
         work.sources = []
         const url = work['@id']
         const { data } = await axios.get(url)
-        data.manifestations.forEach(m => {
+        data.manifestations.forEach((m, index) => {
           console.log(m.label)
+          const source = {
+            id: m['@id'],
+            workId,
+            label: m.label,
+            maxDimensions: {},
+            // this still needs to be updated
+            position: { x: (150 + index * 400), y: 400 },
+            pages: [],
+            rotation: 0,
+            singleLeaf: false
+          }
+          axios.get(m.iiif.manifest).then(res => {
+            const iiif = res.data
+            // console.log(iiif)
+            if (iiif.sequences && iiif.sequences.length > 0) {
+              const canvases = iiif.sequences[0].canvases
+              const ctop = (canvas, place) => {
+                if (!canvas) {
+                  return null
+                }
+                const physScale = (canvas.service && canvas.service.physicalScale)
+                  ? canvas.service.physicalScale
+                  : (300 / canvas.height)
+                return {
+                  id: canvas['@id'],
+                  place: ci % 2 ? 'verso' : 'recto',
+                  dimensions: { width: canvas.width * physScale, height: canvas.height * physScale },
+                  pixels: { width: canvas.width, height: canvas.height },
+                  uri: canvas.images[0].resource.service['@id'],
+                  measures: []
+                }
+              }
+              for (var ci = 0; ci <= canvases.length; ci += 2) {
+                const pagepair = {
+                  r: ci > 0 ? ctop(canvases[ci - 1]) : null,
+                  v: ci < canvases.length ? ctop(canvases[ci]) : null
+                }
+                console.log(ci, pagepair)
+              }
+            }
+          })
+          console.log(source)
         })
         work.sourcesLoadFinished = true
       }
