@@ -5,7 +5,7 @@
       <select @change="changeSource" :value="source ? source.id : ''">
         <option key="---none---" value="">--- select source ---</option>
         <option
-          v-for="src in $store.getters.sources"
+          v-for="src in $store.getters.workSources(this.$route.params.id)"
           :key="src.id"
           :value="src.id"
         >
