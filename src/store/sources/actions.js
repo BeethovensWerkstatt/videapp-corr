@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { mutations } from '../names'
 
 import pageSetup from '@/temp/pageSetup.json'
 
@@ -62,11 +63,14 @@ const actions = {
                   r: ci > 0 ? ctop(canvases[ci - 1]) : null,
                   v: ci < canvases.length ? ctop(canvases[ci]) : null
                 }
-                console.log(ci, pagepair)
+                source.pages.push(pagepair)
               }
+              console.log(source)
+              commit(mutations.LOAD_SOURCE, source)
+            } else {
+              console.warn('no sequence for "' + m.label + '"', iiif)
             }
           })
-          console.log(source)
         })
         work.sourcesLoadFinished = true
       }
