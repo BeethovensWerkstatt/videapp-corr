@@ -13,9 +13,14 @@ function uuidv4 () {
 
 const AtReId = new RegExp('^.*\\/([^\\/\\.]*)\\.json')
 /**
- * extract id from URL
+ * extract id from URL. For example from
+ * `https://api.beethovens-werkstatt.de/module3/xf07b16aa-ddbe-4548-9e78-0b3f1752bf0c.json`
+ *
+ * extract `xf07b16aa-ddbe-4548-9e78-0b3f1752bf0c`
+ *
  * @memberof toolbox
  * @param {String} atid
+ * @returns {String} - uuid part of url
  */
 function atId (atid) {
   const m = AtReId.exec(atid)
