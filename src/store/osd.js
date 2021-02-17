@@ -4,9 +4,18 @@ import { registerMutations, registerActions } from './names'
 const toStore = {
   state: {
     viewer: null,
-    scale: 1
+    scale: 1,
+    deskDimensions: { width: 1600, height: 1000 }
   },
   mutations: {
+    /**
+     * set dimension of desktop in mm
+     * @param {Object} state
+     * @param {Object} dim - { width, height }
+     */
+    SET_DESK_DIMENSIONS (state, dim) {
+      state.deskDimensions = dim
+    },
     /**
      * update scale variable
      * @memberof store.mutations
@@ -67,6 +76,9 @@ const toStore = {
     },
     scale: (state) => {
       return state.scale
+    },
+    deskDimensions: (state) => {
+      return state.deskDimensions
     }
   }
 }

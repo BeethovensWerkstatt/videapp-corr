@@ -93,6 +93,7 @@ export default {
     }
   },
   mounted () {
+    this.$store.commit(names.mutations.SET_DESK_DIMENSIONS, { width: this.width, height: this.height })
     // create OpenSeadragon viewer
     this.$store.dispatch(names.actions.createOpenSeaDragon, {
       divid: this.divid,
