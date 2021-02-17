@@ -89,7 +89,7 @@ export default {
       if (e.zoom) {
         // console.log('zoom: ' + this.viewer.viewport.viewportToImageZoom(e.zoom))
       }
-      this.$store.commit('UPDATE_SCALE')
+      this.$store.commit(names.mutations.UPDATE_SCALE)
     }
   },
   mounted () {
@@ -111,7 +111,7 @@ export default {
     })
   },
   updated () {
-    this.$store.commit('UPDATE_SCALE')
+    this.$store.commit(names.mutations.UPDATE_SCALE)
     if (this.scale !== this.scaleCache) {
       // console.log(this.scale)
       this.scaleCache = this.scale
@@ -119,7 +119,7 @@ export default {
   },
   beforeDestroy () {
     // destroy OpenSeadragon viewer
-    this.$store.dispatch('destroyOpenSeaDragon')
+    this.$store.dispatch(names.actions.destroyOpenSeaDragon)
   },
   computed: {
     ...mapGetters(['viewer', 'scale']),

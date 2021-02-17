@@ -5,9 +5,7 @@
  */
 
 export const actions = {
-  loadSources: 'loadSources',
   loadComplaints: 'loadComplaints',
-  activateZone: 'activateZone',
   createAnnotation: 'createAnnotation',
   modifyAnnotation: 'modifyAnnotation'
 }
@@ -26,12 +24,7 @@ export const registerActions = function (obj) {
 }
 
 export const mutations = {
-  LOAD_SOURCE: 'LOAD_SOURCE',
   LOAD_COMPLAINT: 'LOAD_COMPLAINT',
-  MODIFY_SOURCE: 'MODIFY_SOURCE',
-  MOVE_SOURCE: 'MOVE_SOURCE',
-  SET_PAGE: 'SET_PAGE',
-  ACTIVATE_SOURCE: 'ACTIVATE_SOURCE',
   ACTIVATE_COMPLAINT: 'ACTIVATE_COMPLAINT',
   ADD_ANNOTATION: 'ADD_ANNOTATION',
   ACTIVATE_ANNOTATION: 'ACTIVATE_ANNOTATION',
