@@ -17,8 +17,8 @@
         <tr><td>Titel:</td><td class="smaller">{{ title }}</td></tr>
         <tr><td>Seiten:</td><td>{{ pagecount }} <span v-if="this.source" class="smaller"> [{{ first_label }} &ndash; {{ last_label }}]</span></td></tr>
         <tr><td colspan="2"><hr /></td></tr>
-        <tr><td>Verso:</td><td>{{ verso_label }}</td></tr>
         <tr><td>Recto:</td><td>{{ recto_label }}</td></tr>
+        <tr><td>Verso:</td><td>{{ verso_label }}</td></tr>
         <tr><td>Position:</td><td>{{ position }}</td></tr>
       </table>
     </div>
@@ -90,13 +90,20 @@ export default {
     },
     verso_label () {
       if (this.source) {
-        return this.source.left_label
+        const page = this.source.pages[this.source.pagenr]
+        if (page && page.v) {
+          return page.v.label
+        }
       }
       return '---'
     },
     recto_label () {
       if (this.source) {
-        return this.source.right_label
+        const pn = this.source.pagenr ? this.source.pagenr : 0
+        const page = this.source.pages[pn]
+        if (page && page.r) {
+          return page.r.label
+        }
       }
       return '---'
     },

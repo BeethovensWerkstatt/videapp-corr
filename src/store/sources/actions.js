@@ -51,6 +51,7 @@ const actions = {
                   : (300 / canvas.height)
                 return {
                   id: canvas['@id'],
+                  label: canvas.label,
                   place,
                   dimensions: { width: canvas.width * physScale, height: canvas.height * physScale },
                   pixels: { width: canvas.width, height: canvas.height },
