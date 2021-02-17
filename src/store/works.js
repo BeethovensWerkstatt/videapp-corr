@@ -1,7 +1,7 @@
 import axios from 'axios'
 import config from '@/config'
 import { mutations, actions, registerMutations, registerActions } from './names'
-import { atId } from '@/toolbox'
+import tb from '@/toolbox'
 
 const toStore = {
   state: {
@@ -17,7 +17,7 @@ const toStore = {
     LOAD_WORK (state, work) {
       const works = [...state.works]
       if (!work.id) {
-        work.id = atId(work['@id'])
+        work.id = tb.atId(work['@id'])
       }
       if (work.id) {
         works.push(work)

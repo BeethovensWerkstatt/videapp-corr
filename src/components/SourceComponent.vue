@@ -199,7 +199,7 @@ export default {
       const pp = this.source.pages[this.pagenr]
       if (pp.r) {
         // center page, if no recto page
-        const x = this.position.x - (pp.v ? pp.v.dimensions.width : (pp.r.dimensions.width / 2))
+        const x = this.position.x - (pp.v ? pp.r.dimensions.width : (pp.r.dimensions.width / 2))
         const y = this.position.y - (pp.r.dimensions.height / 2)
         const width = pp.r.dimensions.width
         const height = pp.r.dimensions.height

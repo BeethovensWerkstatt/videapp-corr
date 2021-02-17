@@ -24,6 +24,13 @@ const actions = {
         work.sources = []
         const url = work['@id']
         const { data } = await axios.get(url)
+
+        // default placement of sources
+        const hgap = 10
+        const vgap = 50
+        var px = hgap
+        var py = 0
+        var ph = 0
         data.manifestations.forEach((m, index) => {
           console.log(m.label)
           const source = {
@@ -75,6 +82,20 @@ const actions = {
                     (pagepair.v ? pagepair.v.dimensions.height : 0))
               }
               console.log(source)
+              if (px > hgap && (px + hgap + source.maxDimensions.width) > 1600) {
+                // start new line
+                px = 0
+                py += ph + vgap
+                ph = source.maxDimensions.height
+                source.position.x = px + hgap + (source.maxDimensions.width / 2)
+                source.position.y = py + vgap + (source.maxDimensions.height / 2)
+              } else {
+                // next horizontal position
+                source.position.x = px + hgap + (source.maxDimensions.width / 2)
+                source.position.y = py + vgap + (source.maxDimensions.height / 2)
+                px += source.maxDimensions.width + hgap
+                ph = Math.max(ph, source.maxDimensions.height)
+              }
               commit(mutations.LOAD_SOURCE, source)
             } else {
               console.warn('no sequence for "' + m.label + '"', iiif)

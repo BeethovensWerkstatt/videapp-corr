@@ -90,7 +90,8 @@ export default {
     },
     verso_label () {
       if (this.source) {
-        const page = this.source.pages[this.source.pagenr]
+        const pn = this.source.pagenr ? this.source.pagenr : 0
+        const page = this.source.pages[pn]
         if (page && page.v) {
           return page.v.label
         }
