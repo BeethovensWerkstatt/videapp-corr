@@ -21,6 +21,8 @@
 import { mapGetters } from 'vuex'
 import OpenSeadragon from 'openseadragon'
 import ZoneComponent from '@/components/ZoneComponent.vue'
+import { actions } from '@/store/names'
+
 /**
  * Component for one page (recto or verso). Collect all measure-zones
  *
@@ -80,11 +82,17 @@ export default {
   updated () {
     // console.log('updated ' + this.page ? this.page.id : '[null]')
     this.updateTI()
+    if (this.page.measures_uri) {
+      this.$store.dispatch(actions.loadZones, this.page)
+    }
   },
   watch: {
     page () {
       // console.log('change page')
       this.updateTI()
+      if (this.page.measures_uri) {
+        this.$store.dispatch(actions.loadZones, this.page)
+      }
     },
     pos () {
       // console.log(this.divid + ' ' + this.x + ', ' + this.y)

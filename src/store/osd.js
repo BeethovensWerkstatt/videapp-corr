@@ -14,7 +14,8 @@ const toStore = {
      * @param {Object} dim - { width, height }
      */
     SET_DESK_DIMENSIONS (state, dim) {
-      state.deskDimensions = dim
+      const { width, height } = dim
+      state.deskDimensions = { width, height }
     },
     /**
      * update scale variable

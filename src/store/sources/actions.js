@@ -4,6 +4,7 @@ import { mutations } from '../names'
 import pageSetup from '@/temp/pageSetup.json'
 
 const demoId = 'op73'
+const TAG_MEASURE_POSITIONS = 'measure positions'
 
 const actions = {
   /**
@@ -65,7 +66,7 @@ const actions = {
                   const physScale = (canvas.service && canvas.service.physicalScale)
                     ? canvas.service.physicalScale
                     : (300 / canvas.height)
-                  return {
+                  const page = {
                     id: canvas['@id'],
                     label: canvas.label,
                     place,
@@ -74,6 +75,17 @@ const actions = {
                     uri: canvas.images[0].resource.service['@id'],
                     measures: []
                   }
+
+                  // load measure zones
+                  const otherContent = canvas.otherContent
+                  if (otherContent) {
+                    const mpos = otherContent.find(oc => oc.label === TAG_MEASURE_POSITIONS)
+                    if (mpos) {
+                      page.measures_uri = mpos['@id']
+                    }
+                  }
+
+                  return page
                 }
 
                 // iterate over pagepairs. First page is assumed verso.
@@ -119,7 +131,7 @@ const actions = {
         })
         work.sourcesLoadFinished = true
       }
-    } else {
+    } else { // ---------------- op73 DEMO ---------------------------
       // this needs to be replaced with dynamic content
       const json = pageSetup
 
@@ -218,6 +230,37 @@ const actions = {
 
           commit('LOAD_SOURCE', obj)
         }
+      })
+    } // ---------------- op73 DEMO END ------------------------
+  },
+  /**
+   * load measure zones for a specific page
+   * @param {Object} context
+   * @param {Object} payload - sourceId, pagenr, place, uri
+   */
+  loadZones (context, page) {
+    if (!page) {
+      return
+    }
+    const rexywh = new RegExp('xywh=(\\d+),(\\d+),(\\d+),(\\d+)')
+    const uri = page.measures_uri
+    page.measures_uri = null
+    if (uri && (!page.measures || page.measures.length === 0)) {
+      axios.get(uri).then(resp => {
+        const zonedata = resp.data
+        const measures = zonedata.resources.map(r => {
+          const m = rexywh.exec(r.on.selector.value)
+          if (m) {
+            return {
+              x: parseInt(m[1]),
+              y: parseInt(m[2]),
+              width: parseInt(m[3]),
+              height: parseInt(m[4])
+            }
+          }
+          return { }
+        })
+        console.log(measures)
       })
     }
   },
