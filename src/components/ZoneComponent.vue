@@ -6,6 +6,7 @@
         active: this.isActive,
         anno: this.hasAnno
       }"
+      :title="zoneTitle"
       @click.prevent="activateZone"
     >
       <div class="zone-label">
@@ -83,15 +84,33 @@ export default {
     hasAnno () {
       return this.label && this.label.length > 0
     },
-    label () {
+    zone () {
       const zone = this.$store.getters.getZoneById(this.sourceId, this.zoneId)
+      return zone
+    },
+    label () {
+      const zone = this.zone
       if (zone) {
         return zone.label
       }
       return null
     },
+    zoneNr () {
+      const zone = this.zone
+      if (zone) {
+        return zone.measure
+      }
+      return null
+    },
+    zoneTitle () {
+      const zone = this.zone
+      if (zone) {
+        return zone.title
+      }
+      return null
+    },
     zoneLabel () {
-      return this.hasAnno ? this.label : 'zone'
+      return this.hasAnno ? this.label : ('' + this.zoneNr)
     }
   },
   methods: {

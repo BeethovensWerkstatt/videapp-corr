@@ -10,6 +10,8 @@ const TAG_MEASURE_POSITIONS = 'measure positions'
 // regex to extract position data from `xywh`
 const rexywh = new RegExp('xywh=(\\d+),(\\d+),(\\d+),(\\d+)')
 
+const relabel = new RegExp('measure (\\d+)')
+
 const actions = {
   /**
    * **TODO: load from REST API**
@@ -256,13 +258,17 @@ const actions = {
         const zonedata = resp.data
         const measures = zonedata.resources.map(r => {
           const m = rexywh.exec(r.on.selector.value)
+          const l = relabel.exec(r.resource.chars)
+
           if (m) {
             return {
               x: parseInt(m[1]),
               y: parseInt(m[2]),
               width: parseInt(m[3]),
               height: parseInt(m[4]),
-              label: r.resource.chars,
+              measure: l ? parseInt(l[1]) : null,
+              label: '',
+              title: r.resource.chars,
               zone: r['@id'],
               id: r['@id']
             }
