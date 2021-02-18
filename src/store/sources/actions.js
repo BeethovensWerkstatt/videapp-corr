@@ -3,8 +3,12 @@ import { mutations } from '../names'
 
 import pageSetup from '@/temp/pageSetup.json'
 
+// first demo ... to be removed later.
 const demoId = 'op73'
+// otherContent label for measure positions URL
 const TAG_MEASURE_POSITIONS = 'measure positions'
+// regex to extract position data from `xywh`
+const rexywh = new RegExp('xywh=(\\d+),(\\d+),(\\d+),(\\d+)')
 
 const actions = {
   /**
@@ -76,11 +80,12 @@ const actions = {
                     measures: []
                   }
 
-                  // load measure zones
+                  // get measure zones uri
                   const otherContent = canvas.otherContent
                   if (otherContent) {
                     const mpos = otherContent.find(oc => oc.label === TAG_MEASURE_POSITIONS)
                     if (mpos) {
+                      // zones are loaded when page is opened first time
                       page.measures_uri = mpos['@id']
                     }
                   }
@@ -243,7 +248,7 @@ const actions = {
     if (!page) {
       return
     }
-    const rexywh = new RegExp('xywh=(\\d+),(\\d+),(\\d+),(\\d+)')
+    // only load once
     const uri = page.measures_uri
     page.measures_uri = null
     if (uri && (!page.measures || page.measures.length === 0)) {
