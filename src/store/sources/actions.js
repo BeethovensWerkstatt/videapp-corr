@@ -235,6 +235,7 @@ const actions = {
   },
   /**
    * load measure zones for a specific page
+   * @memberof store.actions
    * @param {Object} context
    * @param {Object} payload - sourceId, pagenr, place, uri
    */
@@ -255,12 +256,17 @@ const actions = {
               x: parseInt(m[1]),
               y: parseInt(m[2]),
               width: parseInt(m[3]),
-              height: parseInt(m[4])
+              height: parseInt(m[4]),
+              label: r.resource.chars,
+              zone: r['@id'],
+              id: r['@id']
             }
           }
+          console.warn('no zone data', r)
           return { }
         })
-        console.log(measures)
+        // console.log(measures)
+        page.measures = measures
       })
     }
   },
