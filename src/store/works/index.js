@@ -1,6 +1,6 @@
 import axios from 'axios'
 import config from '@/config'
-import { mutations, actions, registerMutations, registerActions } from './names'
+import { mutations, actions, registerMutations, registerActions } from '../names'
 import tb from '@/toolbox'
 
 const toStore = {

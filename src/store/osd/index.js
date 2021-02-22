@@ -1,5 +1,5 @@
 import OpenSeadragon from 'openseadragon'
-import { registerMutations, registerActions } from './names'
+import { registerMutations, registerActions } from '../names'
 
 const toStore = {
   state: {

@@ -14,6 +14,7 @@
           </btn-group>
         </div>
       </div>
+      <div v-if="viewer">zoom: {{ scale }}</div>
       <complaints-list />
       <zone-info />
       <source-info />
@@ -22,7 +23,7 @@
 </template>
 
 <script>
-// import { mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 import DesktopComponent from '@/components/DesktopComponent'
 import SourceInfo from '@/components/SourceInfo'
 import ZoneInfo from '@/components/ZoneInfo.vue'
@@ -48,6 +49,7 @@ export default {
     // console.log(this.sources)
   },
   computed: {
+    ...mapGetters(['viewer', 'scale'])
   }
 }
 </script>

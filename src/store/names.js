@@ -4,11 +4,7 @@
  * @namespace store.names
  */
 
-export const actions = {
-  loadComplaints: 'loadComplaints',
-  createAnnotation: 'createAnnotation',
-  modifyAnnotation: 'modifyAnnotation'
-}
+export const actions = {}
 
 /**
  * register action name
@@ -23,13 +19,7 @@ export const registerActions = function (obj) {
   }
 }
 
-export const mutations = {
-  LOAD_COMPLAINT: 'LOAD_COMPLAINT',
-  ACTIVATE_COMPLAINT: 'ACTIVATE_COMPLAINT',
-  ADD_ANNOTATION: 'ADD_ANNOTATION',
-  ACTIVATE_ANNOTATION: 'ACTIVATE_ANNOTATION',
-  MODIFY_ANNOTATION: 'MODIFY_ANNOTATION'
-}
+export const mutations = {}
 
 /**
  * register action name
