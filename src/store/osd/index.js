@@ -5,7 +5,8 @@ const toStore = {
   state: {
     viewer: null,
     scale: 1,
-    deskDimensions: { width: 1600, height: 1000 }
+    deskDimensions: { width: 1600, height: 1000 },
+    displayMeasures: false
   },
   mutations: {
     /**
@@ -27,14 +28,21 @@ const toStore = {
       if (state.viewer) {
         // state.scale = state.viewer.viewport.viewportToImageZoom(state.viewer.viewport.getZoom(true))
         var p0 = new OpenSeadragon.Point(0, 0)
-        var p1 = new OpenSeadragon.Point(1, 1)
+        var p1 = new OpenSeadragon.Point(10, 10)
         p0 = state.viewer.viewport.viewerElementToViewportCoordinates(p0)
         p1 = state.viewer.viewport.viewerElementToViewportCoordinates(p1)
-        state.scale = 1 / (p1.x - p0.x)
+        state.scale = 10 / (p1.x - p0.x)
         // console.log('update scale ' + state.scale)
       } else {
         state.scale = 1
       }
+    },
+    /**
+     * toggle display of measure numbers
+     * @param {Object} state
+     */
+    SET_DISPLAY_MEASURES (state, display) {
+      state.displayMeasures = display
     }
   },
   actions: {
@@ -80,6 +88,9 @@ const toStore = {
     },
     deskDimensions: (state) => {
       return state.deskDimensions
+    },
+    displayMeasures: (state) => {
+      return state.displayMeasures
     }
   }
 }

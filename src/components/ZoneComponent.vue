@@ -9,7 +9,7 @@
       :title="zoneTitle"
       @click.prevent="activateZone"
     >
-      <div class="zone-label">
+      <div class="zone-label" v-if="displayMeasures">
         {{ zoneLabel }}
       </div>
     </div>
@@ -17,6 +17,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+// import { mutations } from '@/store/names'
 
 /**
  * @module components/ZoneComponent
@@ -61,8 +62,12 @@ export default {
       required: true
     }
   },
+  watch: {
+    displayMeasures () {
+    }
+  },
   computed: {
-    ...mapGetters(['scale']),
+    ...mapGetters(['scale', 'displayMeasures']),
     style () {
       return {
         position: 'absolute',
@@ -79,7 +84,7 @@ export default {
       return src.activeZoneId
     },
     isActive () {
-      return (this.activeZoneId === this.zoneId)
+      return this.displayMeasures || (this.activeZoneId === this.zoneId)
     },
     hasAnno () {
       return this.label && this.label.length > 0

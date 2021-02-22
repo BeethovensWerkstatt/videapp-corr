@@ -4,16 +4,21 @@
     :id="divid"
     :class="{ hideovl: !tiledimage }"
   >
-    <zone-component
-      v-for="zone in zones"
-      :key="zone.zone"
-      :sourceId="sourceId"
-      :zoneId="zone.zone"
-      :x="(width > 0) ? (zone.x * scaleFactor / width) : 0"
-      :y="(height > 0) ? (zone.y * scaleFactor / height) : 0"
-      :width="(width > 0) ? (zone.width * scaleFactor / width) : 0"
-      :height="(height > 0) ? (zone.height * scaleFactor / height) : 0"
-    />
+    <div v-if="showDetail">
+      <zone-component
+        v-for="zone in zones"
+        :key="zone.zone"
+        :sourceId="sourceId"
+        :zoneId="zone.zone"
+        :x="(width > 0) ? (zone.x * scaleFactor / width) : 0"
+        :y="(height > 0) ? (zone.y * scaleFactor / height) : 0"
+        :width="(width > 0) ? (zone.width * scaleFactor / width) : 0"
+        :height="(height > 0) ? (zone.height * scaleFactor / height) : 0"
+      />
+    </div>
+    <div v-else :style="completeStyle">
+      <span class="range-info">{{ measureRange }}</span>
+    </div>
   </div>
 </template>
 
@@ -82,7 +87,7 @@ export default {
   updated () {
     // console.log('updated ' + this.page ? this.page.id : '[null]')
     this.updateTI()
-    if (this.page.measures_uri) {
+    if (this.page && this.page.measures_uri) {
       this.$store.dispatch(actions.loadZones, this.page)
     }
   },
@@ -90,7 +95,7 @@ export default {
     page () {
       // console.log('change page')
       this.updateTI()
-      if (this.page.measures_uri) {
+      if (this.page && this.page.measures_uri) {
         this.$store.dispatch(actions.loadZones, this.page)
       }
     },
@@ -104,6 +109,8 @@ export default {
         this.viewer.world.setItemIndex(this.tiledimage, ci - 1)
       }
       this.topsource = this.active
+    },
+    scale () {
     }
   },
   beforeDestroy () {
@@ -120,7 +127,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['viewer']),
+    ...mapGetters(['viewer', 'scale', 'displayMeasures']),
     tiledimage: {
       get () {
         return this.tidata
@@ -144,6 +151,9 @@ export default {
           }
         }
       }
+    },
+    showDetail () {
+      return this.scale > 1.2
     },
     overlay () {
       return this.viewer ? this.viewer.getOverlayById(this.divid) : null
@@ -174,6 +184,65 @@ export default {
         return this.page.measures
       }
       return []
+    },
+    measureRange () {
+      if (this.zones.length === 0) {
+        return '---'
+      }
+      const mrange = { min: this.zones[0].measure, max: this.zones[0].measure }
+      for (var z = 0; z < this.zones.length; z++) {
+        const zone = this.zones[z]
+        if (!mrange.min || +zone.measure < mrange.min) {
+          mrange.min = zone.measure
+        }
+        if (!mrange.max || +zone.measure > mrange.max) {
+          mrange.max = zone.measure
+        }
+      }
+      return mrange.min + '-' + mrange.max
+    },
+    completeStyle () {
+      const rect = this.fullRect
+      const fact = 100 * this.scaleFactor
+      // console.log(this.displayMeasures, rect)
+      const style = (this.displayMeasures && rect) ? {
+        position: 'absolute',
+        left: (fact * rect.x / this.width) + '%',
+        top: (fact * rect.y / this.height) + '%',
+        width: (fact * rect.width / this.width) + '%',
+        height: (fact * rect.height / this.height) + '%',
+        outline: '1px solid rgba(0,0,255,.5)'
+      } : {
+        display: 'none'
+      }
+      // console.log(rect, style)
+      return style
+    },
+    fullRect () {
+      if (this.zones.length === 0) {
+        return null
+      }
+      const minPos = {}
+      const maxPos = {}
+
+      for (const zone of this.zones) {
+        if (!minPos.x || zone.x < minPos.x) {
+          minPos.x = zone.x
+        }
+        if (!minPos.y || zone.y < minPos.y) {
+          minPos.y = zone.y
+        }
+        if (!maxPos.x || (zone.x + zone.width) > maxPos.x) {
+          maxPos.x = zone.x + zone.width
+        }
+        if (!maxPos.y || (zone.y + zone.height) > maxPos.y) {
+          maxPos.y = zone.y + zone.height
+        }
+      }
+
+      const rect = { x: minPos.x, y: minPos.y, width: (maxPos.x - minPos.x), height: (maxPos.y - minPos.y) }
+      // console.log(rect)
+      return rect
     }
   },
   methods: {
@@ -241,5 +310,9 @@ export default {
 }
 .hideovl {
   display: none
+}
+.range-info {
+  background-color: rgba(255, 255, 255, .5);
+  padding: 3pt;
 }
 </style>
