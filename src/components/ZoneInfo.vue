@@ -2,7 +2,7 @@
   <div class="zone-info">
     <strong>Measure Information</strong>
     <div v-if="activeZone">
-      <div class="smaller">{{ activeZone.zone }}</div>
+      <div class="smaller" :title="activeZone.zone">{{ activeZone.measure }}</div>
       <input v-model="activeZone.label" />
       <btn-group>
         <btn @click.prevent="clearInfo">close</btn>
