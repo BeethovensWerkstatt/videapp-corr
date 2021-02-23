@@ -7,7 +7,17 @@
         <span v-for="(m, i) in activeComplaint.measures" :key="m.id"><span v-if="i > 0">, </span>{{ m.label }}</span>
       </div>
       <hr>
-      <pre style="text-align: left;">{{ JSON.stringify(this.activeComplaint, null, 2) }}</pre>
+      <div id="tabview">
+        <div id="tabcol1">
+          <verovio-component id="ausgangsdokument" url="" />
+        </div>
+        <div id="tabcol2">
+          <verovio-component id="revisionsdokument" url="" />
+        </div>
+        <div id="tabcol3">
+          <verovio-component id="zieldokument" url="" />
+        </div>
+      </div>
     </div>
     <div id="close">
       <btn @click.prevent="closeDialog">close</btn>
@@ -18,8 +28,10 @@
 <script>
 import { mapGetters } from 'vuex'
 import { mutations } from '@/store/names'
+import VerovioComponent from './VerovioComponent.vue'
 
 export default {
+  components: { VerovioComponent },
   name: 'ComplaintDialog',
   props: {
   },
@@ -67,6 +79,25 @@ export default {
     }
     .measures {
       font-size: 90%;
+    }
+
+    #tabview {
+      width: 100%;
+      #tabcol1 {
+        display: inline-block;
+        width: 33%;
+        overflow: scroll;
+      }
+      #tabcol2 {
+        display: inline-block;
+        width: 33%;
+        overflow: scroll;
+      }
+      #tabcol3 {
+        display: inline-block;
+        width: 33%;
+        overflow: scroll;
+      }
     }
   }
   #close {
