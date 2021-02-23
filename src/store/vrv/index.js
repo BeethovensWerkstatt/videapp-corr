@@ -24,9 +24,9 @@ const toStore = {
     vrvToolkit: (state) => {
       return state.vrvToolkit
     },
-    vrvRender: (state) => (mei) => {
+    vrvRender: (state) => (mei, options) => {
       if (state.vrvToolkit) {
-        var svg = state.vrvToolkit.renderData(mei)
+        var svg = state.vrvToolkit.renderData(mei, options)
         return svg
       }
       return null

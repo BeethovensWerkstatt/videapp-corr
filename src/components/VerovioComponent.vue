@@ -33,7 +33,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['vrvRender'])
+    ...mapGetters(['vrvRender']),
+    options () {
+      return {}
+    }
   },
   methods: {
     loadMEI () {
