@@ -1,23 +1,35 @@
 import verovio from 'verovio'
 
-import { registerMutations, registerActions } from '../names'
+import { mutations, registerMutations, registerActions } from '../names'
 
 const toStore = {
   state: {
-    // eslint-disable-next-line new-cap
-    vrvToolkit: new verovio.toolkit()
+    vrvToolkit: null
   },
   mutations: {
+    INIT_VEROVIO (state, vrvToolkit) {
+      state.vrvToolkit = vrvToolkit
+    }
   },
   actions: {
+    initVerovio ({ commit }) {
+      verovio.module.onRuntimeInitialized = () => {
+        // eslint-disable-next-line new-cap
+        const vrvToolkit = new verovio.toolkit()
+        commit(mutations.INIT_VEROVIO, vrvToolkit)
+      }
+    }
   },
   getters: {
     vrvToolkit (state) {
       return state.vrvToolkit
     },
     vrvRender (state, mei) {
-      var svg = state.vrvToolkit.renderData(mei)
-      return svg
+      if (state.vrvToolkit) {
+        var svg = state.vrvToolkit.renderData(mei)
+        return svg
+      }
+      return null
     }
   }
 }
