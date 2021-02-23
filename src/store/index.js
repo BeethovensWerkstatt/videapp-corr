@@ -5,6 +5,7 @@ import storeOSD from './osd'
 import storeWorks from './works'
 import storeSources from './sources'
 import storeComplaints from './complaints'
+import storeVerovio from './vrv'
 
 Vue.use(Vuex)
 
@@ -27,7 +28,8 @@ export default new Vuex.Store({
     ...storeOSD.state,
     ...storeWorks.state,
     ...storeSources.state,
-    ...storeComplaints.state
+    ...storeComplaints.state,
+    ...storeVerovio.state
   },
   /**
    * @namespace store.mutations
@@ -37,7 +39,8 @@ export default new Vuex.Store({
     ...storeOSD.mutations,
     ...storeWorks.mutations,
     ...storeSources.mutations,
-    ...storeComplaints.mutations
+    ...storeComplaints.mutations,
+    ...storeVerovio.mutations
   },
   /**
    * @namespace store.actions
@@ -47,7 +50,8 @@ export default new Vuex.Store({
     ...storeOSD.actions,
     ...storeWorks.actions,
     ...storeSources.actions,
-    ...storeComplaints.actions
+    ...storeComplaints.actions,
+    ...storeVerovio.actions
   },
   /**
    * @namespace store.getters
@@ -67,6 +71,7 @@ export default new Vuex.Store({
     ...storeOSD.getters,
     ...storeWorks.getters,
     ...storeSources.getters,
-    ...storeComplaints.getters
+    ...storeComplaints.getters,
+    ...storeVerovio.getters
   }
 })

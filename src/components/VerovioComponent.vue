@@ -25,14 +25,24 @@ export default {
     }
   },
   mounted () {
-    if (this.url && this.url.length > 0) {
-      axios.get(this.url).then(({ data }) => {
-        this.svg = this.vrvRender(data)
-      })
+    this.loadMEI()
+  },
+  watch: {
+    url () {
+      this.loadMEI()
     }
   },
   computed: {
     ...mapGetters(['vrvRender'])
+  },
+  methods: {
+    loadMEI () {
+      if (this.url && this.url.length > 0) {
+        axios.get(this.url).then(({ data }) => {
+          this.svg = this.vrvRender(data)
+        })
+      }
+    }
   }
 }
 </script>

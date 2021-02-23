@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="https://music-encoding.org/schema/4.0.0/mei-all.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="https://music-encoding.org/schema/4.0.0/mei-all.rng" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<mei xmlns="http://www.music-encoding.org/ns/mei" meiversion="4.0.0">
+ <meiHead>
+  <fileDesc>
+   <titleStmt>
+    <title />
+   </titleStmt>
+   <pubStmt />
+  </fileDesc>
+  <encodingDesc>
+   <appInfo>
+    <application isodate="2021-02-23T12:12:56" version="3.3.0-dev-d6e9eed-dirty">
+     <name>Verovio</name>
+     <p>Transcoded from Humdrum</p>
+    </application>
+   </appInfo>
+  </encodingDesc>
+  <workList>
+   <work>
+    <title />
+   </work>
+  </workList>
+  <extMeta>
+   <frames xmlns="http://www.humdrum.org/ns/humxml">
+    <metaFrame n="8" token="!!!system-decoration: s1,s2" xml:id="L9">
+     <frameInfo>
+      <startTime float="1" />
+      <frameType>reference</frameType>
+      <referenceKey>system-decoration</referenceKey>
+      <referenceValue>s1,s2</referenceValue>
+     </frameInfo>
+    </metaFrame>
+   </frames>
+  </extMeta>
+ </meiHead>
+ <music>
+  <body>
+   <mdiv xml:id="mdiv-0000002024128616">
+    <score xml:id="score-0000001374856558">
+     <scoreDef xml:id="scoredef-0000002127401827">
+      <staffGrp xml:id="staffgrp-0000001402139123" bar.thru="false">
+       <staffDef xml:id="staffdef-0000001131236394" n="1" lines="5">
+        <clef xml:id="clef-L4F2" shape="G" line="2" />
+       </staffDef>
+       <staffDef xml:id="staffdef-0000000705426142" n="2" lines="5">
+        <clef xml:id="clef-L4F1" shape="F" line="4" />
+       </staffDef>
+      </staffGrp>
+     </scoreDef>
+     <section xml:id="section-L1F1">
+      <measure xml:id="measure-L1" n="1">
+       <staff xml:id="staff-0000001605128834" n="1">
+        <layer xml:id="layer-L1F2N1" n="1">
+         <note xml:id="note-L6F2" dur="4" oct="5" pname="c" accid.ges="n" />
+        </layer>
+       </staff>
+       <staff xml:id="staff-0000001537994951" n="2">
+        <layer xml:id="layer-L1F1N1" n="1">
+         <note xml:id="note-L6F1" dur="4" oct="3" pname="c" accid.ges="n" />
+        </layer>
+       </staff>
+      </measure>
+     </section>
+    </score>
+   </mdiv>
+  </body>
+ </music>
+</mei>

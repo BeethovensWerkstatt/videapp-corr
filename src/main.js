@@ -32,6 +32,7 @@ new Vue({
   render: h => h(App)
 }).$mount('#app')
 
+store.dispatch(actions.initVerovio)
 store.dispatch(actions.loadWorks)
 store.dispatch(actions.loadSources)
 store.dispatch(actions.loadComplaints)
