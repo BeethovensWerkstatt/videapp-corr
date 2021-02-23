@@ -9,13 +9,16 @@
       <hr>
       <div id="tabview">
         <div id="tabcol1">
+          <h2>Ausgangsdokument</h2>
           <verovio-component id="ausgangsdokument" url="demo.mei" />
         </div>
         <div id="tabcol2">
-          <verovio-component id="revisionsdokument" url="" />
+          <h2>Revisionsdokument</h2>
+          <verovio-component id="revisionsdokument" url="demo.mei" />
         </div>
         <div id="tabcol3">
-          <verovio-component id="zieldokument" url="" />
+          <h2>Zieldokument</h2>
+          <verovio-component id="zieldokument" url="demo.mei" />
         </div>
       </div>
     </div>
