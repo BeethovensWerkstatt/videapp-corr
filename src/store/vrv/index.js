@@ -21,10 +21,10 @@ const toStore = {
     }
   },
   getters: {
-    vrvToolkit (state) {
+    vrvToolkit: (state) => {
       return state.vrvToolkit
     },
-    vrvRender (state, mei) {
+    vrvRender: (state) => (mei) => {
       if (state.vrvToolkit) {
         var svg = state.vrvToolkit.renderData(mei)
         return svg
