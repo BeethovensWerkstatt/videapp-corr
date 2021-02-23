@@ -235,7 +235,7 @@ const actions = {
             ph = Math.max(ph, obj.maxDimensions.height)
           }
 
-          commit('LOAD_SOURCE', obj)
+          commit(mutations.LOAD_SOURCE, obj)
         }
       })
     } // ---------------- op73 DEMO END ------------------------
@@ -292,11 +292,11 @@ const actions = {
       const src = getters.getSourceById(source)
       if (src) {
         // console.log(source, zone)
-        commit('MODIFY_SOURCE', { ...src, activeZoneId: zone })
-        commit('ACTIVATE_SOURCE', source)
+        commit(mutations.MODIFY_SOURCE, { ...src, activeZoneId: zone })
+        commit(mutations.ACTIVATE_SOURCE, source)
       }
     } else {
-      commit('ACTIVATE_SOURCE', null)
+      commit(mutations.ACTIVATE_SOURCE, null)
     }
   }
 }

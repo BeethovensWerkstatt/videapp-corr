@@ -15,7 +15,7 @@
 import { mapGetters } from 'vuex'
 import SourceComponent from '@/components/SourceComponent'
 import config from '@/config'
-import names from '@/store/names'
+import { mutations, actions } from '@/store/names'
 import { desktopTile } from '@/toolbox'
 
 /**
@@ -89,13 +89,13 @@ export default {
       if (e.zoom) {
         // console.log('zoom: ' + this.viewer.viewport.viewportToImageZoom(e.zoom))
       }
-      this.$store.commit(names.mutations.UPDATE_SCALE)
+      this.$store.commit(mutations.UPDATE_SCALE)
     }
   },
   mounted () {
-    this.$store.commit(names.mutations.SET_DESK_DIMENSIONS, { width: this.width, height: this.height })
+    this.$store.commit(mutations.SET_DESK_DIMENSIONS, { width: this.width, height: this.height })
     // create OpenSeadragon viewer
-    this.$store.dispatch(names.actions.createOpenSeaDragon, {
+    this.$store.dispatch(actions.createOpenSeaDragon, {
       divid: this.divid,
       handler: {
         resize: this.updateView,
@@ -112,7 +112,7 @@ export default {
     })
   },
   updated () {
-    this.$store.commit(names.mutations.UPDATE_SCALE)
+    this.$store.commit(mutations.UPDATE_SCALE)
     if (this.scale !== this.scaleCache) {
       // console.log(this.scale)
       this.scaleCache = this.scale
@@ -120,7 +120,7 @@ export default {
   },
   beforeDestroy () {
     // destroy OpenSeadragon viewer
-    this.$store.dispatch(names.actions.destroyOpenSeaDragon)
+    this.$store.dispatch(actions.destroyOpenSeaDragon)
   },
   computed: {
     ...mapGetters(['viewer', 'scale']),

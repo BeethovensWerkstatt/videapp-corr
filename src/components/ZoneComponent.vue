@@ -17,7 +17,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-// import { mutations } from '@/store/names'
+import { actions } from '@/store/names'
 
 /**
  * @module components/ZoneComponent
@@ -123,7 +123,7 @@ export default {
      * activate zone
      */
     activateZone (e) {
-      this.$store.dispatch('activateZone', { source: this.sourceId, zone: this.zoneId })
+      this.$store.dispatch(actions.activateZone, { source: this.sourceId, zone: this.zoneId })
     }
   }
 }

@@ -45,6 +45,8 @@
 </template>
 
 <script>
+import { mutations } from '@/store/names'
+
 /**
  * Display information about current selected/activated source and
  * its display state (displayed page).
@@ -151,7 +153,7 @@ export default {
       if (this.hasPrev) {
         var pn = this.source.pagenr
         // pagenr can only be greater zero if it is already defined as a number
-        this.$store.commit('SET_PAGE', { id: this.source.id, page: pn - 1 })
+        this.$store.commit(mutations.SET_PAGE, { id: this.source.id, page: pn - 1 })
       }
     },
     nextPage () {
@@ -160,14 +162,14 @@ export default {
         if (!pn) {
           pn = 0
         }
-        this.$store.commit('SET_PAGE', { id: this.source.id, page: pn + 1 })
+        this.$store.commit(mutations.SET_PAGE, { id: this.source.id, page: pn + 1 })
       }
     },
     /**
      * unselect source / reset component
      */
     clearInfo () {
-      this.$store.commit('ACTIVATE_SOURCE', null)
+      this.$store.commit(mutations.ACTIVATE_SOURCE, null)
     },
     /**
      * change selected source
@@ -178,7 +180,7 @@ export default {
       } else {
         this.$store.getters.sources.forEach(source => {
           if (source.id === e.target.value) {
-            this.$store.commit('ACTIVATE_SOURCE', source.id)
+            this.$store.commit(mutations.ACTIVATE_SOURCE, source.id)
           }
         })
       }

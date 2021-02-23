@@ -46,6 +46,7 @@
 import { mapGetters } from 'vuex'
 import OpenSeadragon from 'openseadragon'
 import PageComponent from '@/components/PageComponent.vue'
+import { mutations } from '@/store/names'
 
 /**
  * @module components/SourceComponent
@@ -234,7 +235,7 @@ export default {
      */
     prevPage () {
       if (this.hasPrev) {
-        this.$store.commit('SET_PAGE', { id: this.sourceId, page: this.pagenr - 1 })
+        this.$store.commit(mutations.SET_PAGE, { id: this.sourceId, page: this.pagenr - 1 })
       }
     },
     /**
@@ -242,7 +243,7 @@ export default {
      */
     nextPage () {
       if (this.hasNext) {
-        this.$store.commit('SET_PAGE', { id: this.sourceId, page: this.pagenr + 1 })
+        this.$store.commit(mutations.SET_PAGE, { id: this.sourceId, page: this.pagenr + 1 })
       }
     },
     /**
@@ -254,7 +255,7 @@ export default {
       if (e) {
         e.preventDefault()
       }
-      this.$store.commit('ACTIVATE_SOURCE', this.sourceId)
+      this.$store.commit(mutations.ACTIVATE_SOURCE, this.sourceId)
     },
     /**
      * handle drag and drop
@@ -292,7 +293,7 @@ export default {
      */
     moveTo (x, y) {
       this.position = { x: x, y: y }
-      this.$store.commit('MOVE_SOURCE', { id: this.sourceId, ...this.position })
+      this.$store.commit(mutations.MOVE_SOURCE, { id: this.sourceId, ...this.position })
     }
   }
 }
