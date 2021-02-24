@@ -43,11 +43,17 @@ import { actions } from '@/store/names'
  * @vue-computed {OpenSeadragon.Viewer} viewer
  * @vue-computed {OpenSeadragon.TiledImage} tiledimage
  * @vue-computed {OpenSeadragon.Overlay} overlay
+ * @vue-computed {String} pageID - id of displayed page or null
  * @vue-computed {Boolean} isActive - if pagedata ist valid | recto or verso page is available
  * @vue-computed {Number} scaleFactor - dimension.width / pixels.width
  * @vue-computed {Number} width - scaled width for OpenSeadragon
  * @vue-computed {Number} height - scaled height for OpenSeadragon
  * @vue-computed {Object[]} zones - array of measure zones for displayed page
+ * @vue-computed {Boolean} displayMeasures - display all measure numbers (checkbox)
+ * @vue-computed {Boolean} showDetail - display all measure rects (if scale>=1.2)
+ * @vue-computed {String} measureRange - range of measure numbers for full page
+ * @vue-computed {Object} completeStyle - style for overlay if not `showDetail`
+ * @vue-computed {Object} fullRect - rectangle enclosing all zones
  */
 export default {
   components: { ZoneComponent },
