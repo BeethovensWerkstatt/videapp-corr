@@ -1,5 +1,5 @@
 <template>
-  <div :id="id" v-html="svg">
+  <div :id="id" v-html="svg" class="verovio">
   </div>
 </template>
 
@@ -13,8 +13,15 @@ import axios from 'axios'
  * @module components/VerovioComponent
  * @vue-prop {String} id - id of div-container
  * @vue-prop {String} url - url of MEI to display
- * @vue-data {String} svg - SVG or HTML content to display
- * @vue-computed {Number} pageWidth - Verovio page width
+ * @vue-prop {String} [from=null] - format (defaults to `mei` if `from=null`)
+ * @vue-prop {Number} [scale=30] - zoom factor
+ * @vue-prop {Number} [width=0] - pixel width of element or 0
+ * @vue-prop {Number} [height=0] - pixel height of element or 0
+ * @vue-prop {Number} [page=1] - page to display
+ * @vue-data {Object} [toolkit=null] - the Verovio toolkit
+ * @vue-data {String} [svg=...] - SVG or HTML content to display
+ * @vue-data {String} [mei=null] - loaded MEI (or other format)
+ * @vue-computed {Number} pageWidth - Verovio page width (calculated from element-width if width=0)
  * @vue-computed {Number} pageHeight - Verovio page height
  * @vue-computed {Object} options - Verovio options
  */
@@ -47,7 +54,7 @@ export default {
     },
     page: {
       type: Number,
-      default: 0
+      default: 1
     }
   },
   data () {
@@ -146,4 +153,8 @@ export default {
 </script>
 
 <style scoped>
+.verovio {
+  outline: 1px solid yellow;
+  background-color: whitesmoke;
+}
 </style>
