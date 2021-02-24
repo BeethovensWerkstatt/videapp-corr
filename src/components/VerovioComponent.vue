@@ -35,14 +35,16 @@ export default {
   computed: {
     ...mapGetters(['vrvRender']),
     options () {
-      return {}
+      const opts = {}
+      opts.scale = 30
+      return opts
     }
   },
   methods: {
     loadMEI () {
       if (this.url && this.url.length > 0) {
         axios.get(this.url).then(({ data }) => {
-          this.svg = this.vrvRender(data)
+          this.svg = this.vrvRender(data, this.options)
         })
       }
     }
