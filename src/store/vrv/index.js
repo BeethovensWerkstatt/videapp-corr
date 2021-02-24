@@ -1,20 +1,12 @@
 import verovio from 'verovio'
 
-import { mutations, registerMutations, registerActions } from '../names'
+import { registerMutations, registerActions } from '../names'
 
 const toStore = {
   state: {
-    vrvToolkit: null
+    vrvInitFinished: false
   },
   mutations: {
-    /**
-     * set vrvToolkit variable
-     * @memberof store.mutations
-     * @param {Object} vrvToolkit - the toolkit
-     */
-    INIT_VEROVIO (state, vrvToolkit) {
-      state.vrvToolkit = vrvToolkit
-    }
   },
   actions: {
     /**
@@ -22,28 +14,22 @@ const toStore = {
      * @memberof store.actions
      * @param {Object} context
      */
-    initVerovio ({ commit }) {
+    initVerovio ({ state }) {
       verovio.module.onRuntimeInitialized = () => {
-        // eslint-disable-next-line new-cap
-        const vrvToolkit = new verovio.toolkit()
-        commit(mutations.INIT_VEROVIO, vrvToolkit)
+        state.vrvInitFinished = true
       }
     }
   },
   getters: {
-    vrvToolkit: (state) => {
-      return state.vrvToolkit
-    },
     /**
-     * render MEI
-     * @memberof store.getters
-     * @param {String} mei - MEI string
-     * @param {Object} options - Verovio options
+     * Verovio toolkit factory method
+     * @param {Object} state
      */
-    vrvRender: (state) => (mei, options) => {
-      if (state.vrvToolkit) {
-        var svg = state.vrvToolkit.renderData(mei, options)
-        return svg
+    vrvToolkit: (state) => () => {
+      if (state.vrvInitFinished) {
+        // eslint-disable-next-line new-cap
+        const vrvToolkit = new verovio.toolkit()
+        return vrvToolkit
       }
       return null
     }

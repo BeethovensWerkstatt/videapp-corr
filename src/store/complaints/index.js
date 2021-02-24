@@ -26,7 +26,7 @@ const toStore = {
      * @param {String} id
      */
     ACTIVATE_COMPLAINT (state, id) {
-      console.log(mut.ACTIVATE_COMPLAINT, id)
+      // console.log(mut.ACTIVATE_COMPLAINT, id)
       state.activeComplaintId = id
     }
   },

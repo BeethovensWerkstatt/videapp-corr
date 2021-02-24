@@ -38,10 +38,15 @@ export default {
     height: {
       type: Number,
       default: 0
+    },
+    page: {
+      type: Number,
+      default: 0
     }
   },
   data () {
     return {
+      toolkit: null,
       svg: '<span>...|||III|||...</span>',
       mei: null
     }
@@ -54,14 +59,19 @@ export default {
       this.loadMEI()
     },
     scale () {
+      this.redoLayout()
       this.renderMEI()
     },
     width () {
+      this.redoLayout()
+      this.renderMEI()
+    },
+    page () {
       this.renderMEI()
     }
   },
   computed: {
-    ...mapGetters(['vrvRender']),
+    ...mapGetters(['vrvToolkit']),
     options () {
       const opts = {}
       opts.scale = this.scale
@@ -81,8 +91,23 @@ export default {
       if (this.url && this.url.length > 0) {
         axios.get(this.url).then(({ data }) => {
           this.mei = data
-          this.renderMEI()
+          if (this.mei) {
+            if (!this.toolkit) {
+              this.toolkit = this.vrvToolkit()
+            }
+            this.toolkit.setOptions(this.options)
+            this.toolkit.loadData(this.mei)
+            this.renderMEI()
+          }
         })
+      }
+    },
+    /**
+     * recalculate layout
+     */
+    redoLayout () {
+      if (this.toolkit) {
+        this.toolkit.redoLayout()
       }
     },
     /**
@@ -90,8 +115,11 @@ export default {
      */
     renderMEI () {
       const mei = this.mei
-      if (mei && mei.length > 0) {
-        this.svg = this.vrvRender(mei, this.options)
+      if (this.toolkit && mei && mei.length > 0) {
+        const page = this.page > 0 ? this.page : 1
+        // console.log(this.toolkit.getPageCount())
+        var svg = this.toolkit.renderToSVG(page, this.options)
+        this.svg = svg
       }
     }
   }
