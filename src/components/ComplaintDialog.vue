@@ -10,15 +10,15 @@
       <div id="tabview">
         <div id="tabcol1">
           <h2>Ausgangsdokument</h2>
-          <verovio-component id="ausgangsdokument" :height="300" :page="1" url="https://raw.githubusercontent.com/music-encoding/sample-encodings/master/MEI_4.0/Music/Complete_examples/Ahle_Jesu_meines_Herzens_Freud.mei" :width="tabwidth[0]" />
+          <verovio-component id="ausgangsdokument" :height="300" :page="5" from="xml" url="BWV_0009_1.xml" :scale="20" />
         </div>
         <div id="tabcol2">
           <h2>Revisionsdokument</h2>
-          <verovio-component id="revisionsdokument" url="demo.mei" :width="tabwidth[1]" />
+          <verovio-component id="revisionsdokument" url="demo.mei" />
         </div>
         <div id="tabcol3">
           <h2>Zieldokument</h2>
-          <verovio-component id="zieldokument" :height="300" :page="2" url="https://raw.githubusercontent.com/music-encoding/sample-encodings/master/MEI_4.0/Music/Complete_examples/Ahle_Jesu_meines_Herzens_Freud.mei" :width="tabwidth[2]" />
+          <verovio-component id="zieldokument" :height="300" :page="2" url="https://raw.githubusercontent.com/music-encoding/sample-encodings/master/MEI_4.0/Music/Complete_examples/Ahle_Jesu_meines_Herzens_Freud.mei" />
         </div>
       </div>
     </div>
@@ -45,11 +45,6 @@ export default {
   components: { VerovioComponent },
   name: 'ComplaintDialog',
   props: {
-  },
-  data () {
-    return {
-      tabwidth: [400, 400, 400]
-    }
   },
   computed: {
     ...mapGetters(['activeComplaintId', 'activeComplaint']),

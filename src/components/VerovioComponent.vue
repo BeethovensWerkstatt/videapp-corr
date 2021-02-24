@@ -14,6 +14,8 @@ import axios from 'axios'
  * @vue-prop {String} id - id of div-container
  * @vue-prop {String} url - url of MEI to display
  * @vue-data {String} svg - SVG or HTML content to display
+ * @vue-computed {Number} pageWidth - Verovio page width
+ * @vue-computed {Number} pageHeight - Verovio page height
  * @vue-computed {Object} options - Verovio options
  */
 export default {
@@ -27,13 +29,17 @@ export default {
       type: String,
       required: true
     },
+    from: {
+      type: String,
+      default: null
+    },
     scale: {
       type: Number,
       default: 30
     },
     width: {
       type: Number,
-      default: 300
+      default: 0
     },
     height: {
       type: Number,
@@ -72,14 +78,27 @@ export default {
   },
   computed: {
     ...mapGetters(['vrvToolkit']),
+    pageWidth () {
+      const width = this.width > 0 ? this.width : this.$el.clientWidth
+      return width * 100 / this.scale
+    },
+    pageHeight () {
+      if (this.height > 0) {
+        return this.height * 100 / this.scale
+      }
+      return 0
+    },
     options () {
       const opts = {}
       opts.scale = this.scale
-      opts.pageWidth = this.width * 100 / this.scale
-      if (this.height > 0) {
-        opts.pageHeight = this.height * 100 / this.scale
+      opts.pageWidth = this.pageWidth
+      if (this.pageHeight > 0) {
+        opts.pageHeight = this.pageHeight
       }
       opts.adjustPageHeight = true
+      if (this.from) {
+        opts.from = this.from
+      }
       return opts
     }
   },
