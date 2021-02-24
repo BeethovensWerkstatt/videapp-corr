@@ -8,9 +8,7 @@
     <div class="complaint-attribute">{{ index + 1 }}</div>
     <div class="complaint-attribute">{{ complaint.movement.n }}</div>
     <div class="complaint-attribute">{{ complaint.movement.label }}</div>
-    <div class="complaint-attribute">
-      <span v-for="(m, i) in complaint.measures" :key="m.id"><span v-if="i > 0">, </span>{{ m.label }}</span>
-    </div>
+    <div class="complaint-attribute">{{ measures }}</div>
   </div>
 </template>
 
@@ -48,6 +46,25 @@ export default {
     },
     isActive () {
       return this.$store.getters.activeComplaintId === this.complaintId
+    },
+    measures () {
+      const m = {}
+      for (const c of this.complaint.measures) {
+        const mi = +c.label
+        if (!m.min || mi < m.min) {
+          m.min = mi
+        }
+        if (!m.max || mi > m.max) {
+          m.max = mi
+        }
+      }
+      if (m.min === m.max) {
+        return '' + m.min
+      }
+      if (m.max - m.min === 1) {
+        return m.min + ', ' + m.max
+      }
+      return m.min + '-' + m.max
     }
   },
   methods: {

@@ -10,15 +10,15 @@
       <div id="tabview">
         <div id="tabcol1">
           <h2>Ausgangsdokument</h2>
-          <verovio-component id="ausgangsdokument" url="demo.mei" :width="elementWidth('tabcol1')" />
+          <verovio-component id="ausgangsdokument" url="demo.mei" :width="tabwidth[0]" />
         </div>
         <div id="tabcol2">
           <h2>Revisionsdokument</h2>
-          <verovio-component id="revisionsdokument" url="demo.mei" />
+          <verovio-component id="revisionsdokument" url="demo.mei" :width="tabwidth[1]" />
         </div>
         <div id="tabcol3">
           <h2>Zieldokument</h2>
-          <verovio-component id="zieldokument" url="demo.mei" />
+          <verovio-component id="zieldokument" height="300" url="https://raw.githubusercontent.com/music-encoding/sample-encodings/master/MEI_4.0/Music/Complete_examples/Ahle_Jesu_meines_Herzens_Freud.mei" :width="tabwidth[2]" />
         </div>
       </div>
     </div>
@@ -46,6 +46,11 @@ export default {
   name: 'ComplaintDialog',
   props: {
   },
+  data () {
+    return {
+      tabwidth: [400, 400, 400]
+    }
+  },
   computed: {
     ...mapGetters(['activeComplaintId', 'activeComplaint']),
     active () {
@@ -56,17 +61,6 @@ export default {
     }
   },
   methods: {
-    /**
-     * return width of element with id
-     */
-    elementWidth (id) {
-      const elm = this.$el.querySelector('#' + id)
-      if (elm) {
-        console.log(id, elm.clientWidth)
-        return elm.clientWidth
-      }
-      return 0
-    },
     /**
      * close this dialog
      */

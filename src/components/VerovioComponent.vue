@@ -34,6 +34,10 @@ export default {
     width: {
       type: Number,
       default: 300
+    },
+    height: {
+      type: Number,
+      default: 0
     }
   },
   data () {
@@ -60,8 +64,11 @@ export default {
     ...mapGetters(['vrvRender']),
     options () {
       const opts = {}
-      opts.pageWidth = this.width * 100 / this.scale
       opts.scale = this.scale
+      opts.pageWidth = this.width * 100 / this.scale
+      if (this.height > 0) {
+        opts.pageHeight = this.height * 100 / this.scale
+      }
       opts.adjustPageHeight = true
       return opts
     }
