@@ -17,6 +17,7 @@ Vue.use(Vuex)
  * @typedef {object} store.state
  * @memberof store
  * @property {Object} viewer - OpenSeadragon Viewer object
+ * @property {Object} vrvToolkit - Verovio toolkit
  * @property {Number} scale - current scale of OpenSeadragon.Viewer
  * @property {Object[]} sources - list of source objects
  * @property {String} activeSourceId - id of selected source
@@ -57,6 +58,7 @@ export default new Vuex.Store({
    * @namespace store.getters
    * @memberof store
    * @property {Object} viewer - OpenSeadragon Viewer object
+   * @property {Object} vrvToolkit - Verovio toolkit
    * @property {Object[]} sources - list of source objects loaded
    * @property {Number} scale - current scale of OpenSeqdragon Viewer
    * @property {String} activeSourceId - id of selected source object

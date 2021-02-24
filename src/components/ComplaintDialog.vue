@@ -33,6 +33,14 @@ import { mapGetters } from 'vuex'
 import { mutations } from '@/store/names'
 import VerovioComponent from './VerovioComponent.vue'
 
+/**
+ * Complaint dialog component
+ *
+ * @module components/ComplaintDialog
+ * @vue-computed {String} activeComplaintId - id of selected complaint
+ * @vue-computed {Object} activeComplaint - selected complaint object
+ * @vue-computed {boolean} active - if dialog is opened
+ */
 export default {
   components: { VerovioComponent },
   name: 'ComplaintDialog',
@@ -48,6 +56,9 @@ export default {
     }
   },
   methods: {
+    /**
+     * close this dialog
+     */
     closeDialog (e) {
       this.$store.commit(mutations.ACTIVATE_COMPLAINT, null)
     }

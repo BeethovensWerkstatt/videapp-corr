@@ -7,6 +7,15 @@
 import { mapGetters } from 'vuex'
 import axios from 'axios'
 
+/**
+ * Verovio component
+ *
+ * @module components/VerovioComponent
+ * @vue-prop {String} id - id of div-container
+ * @vue-prop {String} url - url of MEI to display
+ * @vue-data {String} svg - SVG or HTML content to display
+ * @vue-computed {Object} options - Verovio options
+ */
 export default {
   name: 'VerovioComponent',
   props: {
@@ -41,6 +50,9 @@ export default {
     }
   },
   methods: {
+    /**
+     * render MEI identified by URL
+     */
     loadMEI () {
       if (this.url && this.url.length > 0) {
         axios.get(this.url).then(({ data }) => {

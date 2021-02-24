@@ -19,6 +19,16 @@
 import { mapGetters } from 'vuex'
 import { mutations } from '@/store/names'
 
+/**
+ * one item in the list of complaints
+ *
+ * @module components/ComplaintItem
+ * @vue-prop {Object} complaint
+ * @vue-prop {Number} index - number in list
+ * @vue-computed {String} activeComplaintId - id of selected complaint
+ * @vue-computed {String} complaintId - id of this complaint
+ * @vue-computed {boolean} isActive - true if this complaint is selected
+ */
 export default {
   name: 'ComplaintItem',
   props: {
@@ -41,6 +51,9 @@ export default {
     }
   },
   methods: {
+    /**
+     * toggle complaint selection
+     */
     toggleActivate () {
       if (this.complaintId === this.activeComplaintId) {
         this.$store.commit(mutations.ACTIVATE_COMPLAINT, null)

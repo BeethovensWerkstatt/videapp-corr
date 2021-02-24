@@ -21,11 +21,17 @@ import { mapGetters } from 'vuex'
 import ComplaintItem from '@/components/ComplaintItem.vue'
 import ComplaintDialog from './ComplaintDialog.vue'
 
+/**
+ * component to display list of complaints
+ *
+ * @module components/ComplaintsList
+ * @vue-computed {Object[]} complaints
+ */
 export default {
   components: { ComplaintItem, ComplaintDialog },
   name: 'ComplaintsList',
   computed: {
-    ...mapGetters(['complaints', 'activeComplaint'])
+    ...mapGetters(['complaints'])
   }
 }
 </script>

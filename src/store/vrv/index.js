@@ -7,11 +7,21 @@ const toStore = {
     vrvToolkit: null
   },
   mutations: {
+    /**
+     * set vrvToolkit variable
+     * @memberof store.mutations
+     * @param {Object} vrvToolkit - the toolkit
+     */
     INIT_VEROVIO (state, vrvToolkit) {
       state.vrvToolkit = vrvToolkit
     }
   },
   actions: {
+    /**
+     * init Verovio toolkit
+     * @memberof store.actions
+     * @param {Object} context
+     */
     initVerovio ({ commit }) {
       verovio.module.onRuntimeInitialized = () => {
         // eslint-disable-next-line new-cap
@@ -24,6 +34,12 @@ const toStore = {
     vrvToolkit: (state) => {
       return state.vrvToolkit
     },
+    /**
+     * render MEI
+     * @memberof store.getters
+     * @param {String} mei - MEI string
+     * @param {Object} options - Verovio options
+     */
     vrvRender: (state) => (mei, options) => {
       if (state.vrvToolkit) {
         var svg = state.vrvToolkit.renderData(mei, options)
