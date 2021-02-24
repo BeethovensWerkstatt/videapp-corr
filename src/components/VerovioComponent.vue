@@ -26,11 +26,20 @@ export default {
     url: {
       type: String,
       required: true
+    },
+    scale: {
+      type: Number,
+      default: 30
+    },
+    width: {
+      type: Number,
+      default: 300
     }
   },
   data () {
     return {
-      svg: '<span>...|||III|||...</span>'
+      svg: '<span>...|||III|||...</span>',
+      mei: null
     }
   },
   mounted () {
@@ -39,25 +48,43 @@ export default {
   watch: {
     url () {
       this.loadMEI()
+    },
+    scale () {
+      this.renderMEI()
+    },
+    width () {
+      this.renderMEI()
     }
   },
   computed: {
     ...mapGetters(['vrvRender']),
     options () {
       const opts = {}
-      opts.scale = 30
+      opts.pageWidth = this.width * 100 / this.scale
+      opts.scale = this.scale
+      opts.adjustPageHeight = true
       return opts
     }
   },
   methods: {
     /**
-     * render MEI identified by URL
+     * load MEI identified by URL
      */
     loadMEI () {
       if (this.url && this.url.length > 0) {
         axios.get(this.url).then(({ data }) => {
-          this.svg = this.vrvRender(data, this.options)
+          this.mei = data
+          this.renderMEI()
         })
+      }
+    },
+    /**
+     * render MEI in `mei` data
+     */
+    renderMEI () {
+      const mei = this.mei
+      if (mei && mei.length > 0) {
+        this.svg = this.vrvRender(mei, this.options)
       }
     }
   }
@@ -65,5 +92,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

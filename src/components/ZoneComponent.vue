@@ -141,11 +141,13 @@ export default {
   &.active {
     opacity: .5;
     background-color: rgba($color: #ffffff, $alpha: .5);
+    outline: .5px solid green !important;
+    border-radius: 3px;
   }
 
   &.anno {
     opacity: .5;
-    border: .5px solid blue !important;
+    outline: .5px solid blue !important;
     border-radius: 3px;
   }
 

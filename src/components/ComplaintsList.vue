@@ -19,7 +19,7 @@
 
 import { mapGetters } from 'vuex'
 import ComplaintItem from '@/components/ComplaintItem.vue'
-import ComplaintDialog from './ComplaintDialog.vue'
+import ComplaintDialog from '@/components/ComplaintDialog.vue'
 
 /**
  * component to display list of complaints

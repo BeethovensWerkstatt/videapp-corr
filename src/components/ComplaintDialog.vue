@@ -10,7 +10,7 @@
       <div id="tabview">
         <div id="tabcol1">
           <h2>Ausgangsdokument</h2>
-          <verovio-component id="ausgangsdokument" url="demo.mei" />
+          <verovio-component id="ausgangsdokument" url="demo.mei" :width="elementWidth('tabcol1')" />
         </div>
         <div id="tabcol2">
           <h2>Revisionsdokument</h2>
@@ -31,7 +31,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import { mutations } from '@/store/names'
-import VerovioComponent from './VerovioComponent.vue'
+import VerovioComponent from '@/components/VerovioComponent.vue'
 
 /**
  * Complaint dialog component
@@ -56,6 +56,17 @@ export default {
     }
   },
   methods: {
+    /**
+     * return width of element with id
+     */
+    elementWidth (id) {
+      const elm = this.$el.querySelector('#' + id)
+      if (elm) {
+        console.log(id, elm.clientWidth)
+        return elm.clientWidth
+      }
+      return 0
+    },
     /**
      * close this dialog
      */
