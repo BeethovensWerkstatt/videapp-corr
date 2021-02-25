@@ -12,18 +12,18 @@ import axios from 'axios'
  *
  * @module components/VerovioComponent
  * @vue-prop {String} id - id of div-container
- * @vue-prop {String} url - url of MEI to display
- * @vue-prop {String} [from=null] - format (defaults to `mei` if `from=null`)
- * @vue-prop {Number} [scale=30] - zoom factor
- * @vue-prop {Number} [width=0] - pixel width of element or 0
- * @vue-prop {Number} [height=0] - pixel height of element or 0
- * @vue-prop {Number} [page=1] - page to display
+ * @vue-prop {Object} options - needs at least property url
  * @vue-data {Object} [toolkit=null] - the Verovio toolkit
  * @vue-data {String} [svg=...] - SVG or HTML content to display
  * @vue-data {String} [mei=null] - loaded MEI (or other format)
+ * @vue-computed {String} url - taken from options
+ * @vue-computed {Number} scale - taken from options (default: 30)
+ * @vue-computed {Number} page - taken from options (default: 1)
+ * @vue-computed {Number} width - taken from options (default: element width)
+ * @vue-computed {Number} height - taken from options (default: 0)
  * @vue-computed {Number} pageWidth - Verovio page width (calculated from element-width if width=0)
  * @vue-computed {Number} pageHeight - Verovio page height
- * @vue-computed {Object} options - Verovio options
+ * @vue-computed {Object} vrvOptions - Verovio options
  */
 export default {
   name: 'VerovioComponent',
@@ -32,29 +32,9 @@ export default {
       type: String,
       required: true
     },
-    url: {
-      type: String,
+    options: {
+      type: Object,
       required: true
-    },
-    from: {
-      type: String,
-      default: null
-    },
-    scale: {
-      type: Number,
-      default: 30
-    },
-    width: {
-      type: Number,
-      default: 0
-    },
-    height: {
-      type: Number,
-      default: 0
-    },
-    page: {
-      type: Number,
-      default: 1
     }
   },
   data () {
@@ -85,9 +65,23 @@ export default {
   },
   computed: {
     ...mapGetters(['vrvToolkit']),
+    url () {
+      return this.options.url
+    },
+    page () {
+      return this.options.page > 1 ? this.options.page : 1
+    },
+    scale () {
+      return this.options.scale > 0 ? this.options.scale : 30
+    },
+    width () {
+      return this.options.width > 0 ? this.options.width : this.$el.clientWidth
+    },
+    height () {
+      return this.options.height > 0 ? this.options.height : 0
+    },
     pageWidth () {
-      const width = this.width > 0 ? this.width : this.$el.clientWidth
-      return width * 100 / this.scale
+      return Math.max(100, this.width * 100 / this.scale)
     },
     pageHeight () {
       if (this.height > 0) {
@@ -95,7 +89,7 @@ export default {
       }
       return 0
     },
-    options () {
+    vrvOptions () {
       const opts = {}
       opts.scale = this.scale
       opts.pageWidth = this.pageWidth
@@ -103,8 +97,8 @@ export default {
         opts.pageHeight = this.pageHeight
       }
       opts.adjustPageHeight = true
-      if (this.from) {
-        opts.from = this.from
+      if (this.options.from) {
+        opts.from = this.options.from
       }
       return opts
     }
@@ -121,7 +115,7 @@ export default {
             if (!this.toolkit) {
               this.toolkit = this.vrvToolkit()
             }
-            this.toolkit.setOptions(this.options)
+            this.toolkit.setOptions(this.vrvOptions)
             this.toolkit.loadData(this.mei)
             this.renderMEI()
           }
@@ -142,9 +136,8 @@ export default {
     renderMEI () {
       const mei = this.mei
       if (this.toolkit && mei && mei.length > 0) {
-        const page = this.page > 0 ? this.page : 1
         // console.log(this.toolkit.getPageCount())
-        var svg = this.toolkit.renderToSVG(page, this.options)
+        var svg = this.toolkit.renderToSVG(this.page, this.vrvOptions)
         this.svg = svg
       }
     }
@@ -154,7 +147,7 @@ export default {
 
 <style scoped>
 .verovio {
-  outline: 1px solid yellow;
+  border: 1px solid yellow;
   background-color: whitesmoke;
 }
 </style>

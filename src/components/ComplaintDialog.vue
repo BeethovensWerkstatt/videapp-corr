@@ -10,15 +10,15 @@
       <div id="tabview">
         <div id="tabcol1">
           <h2>Ausgangsdokument</h2>
-          <verovio-component id="ausgangsdokument" :height="300" :page="5" from="xml" url="BWV_0009_1.xml" :scale="20" />
+          <verovio-component id="ausgangsdokument" :options="source" v-if="vrvValid(source)" />
         </div>
         <div id="tabcol2">
           <h2>Revisionsdokument</h2>
-          <verovio-component id="revisionsdokument" url="demo.mei" />
+          <verovio-component id="revisionsdokument" :options="revision" v-if="vrvValid(revision)" />
         </div>
         <div id="tabcol3">
           <h2>Zieldokument</h2>
-          <verovio-component id="zieldokument" :height="300" :page="2" url="https://raw.githubusercontent.com/music-encoding/sample-encodings/master/MEI_4.0/Music/Complete_examples/Ahle_Jesu_meines_Herzens_Freud.mei" />
+          <verovio-component id="zieldokument" :options="target" v-if="vrvValid(target)" />
         </div>
       </div>
     </div>
@@ -46,6 +46,25 @@ export default {
   name: 'ComplaintDialog',
   props: {
   },
+  data () {
+    return {
+      source: {
+        url: 'BWV_0009_1.xml',
+        from: 'xml',
+        page: 7,
+        height: 300
+      },
+      revision: {
+        url: 'demo.mei',
+        height: 300
+      },
+      target: {
+        url: 'https://raw.githubusercontent.com/music-encoding/sample-encodings/master/MEI_4.0/Music/Complete_examples/Ahle_Jesu_meines_Herzens_Freud.mei',
+        page: 2,
+        height: 300
+      }
+    }
+  },
   computed: {
     ...mapGetters(['activeComplaintId', 'activeComplaint']),
     active () {
@@ -56,6 +75,14 @@ export default {
     }
   },
   methods: {
+    /**
+     * check if options are valid
+     */
+    vrvValid (options) {
+      const valid = (options && options.url && options.url.length > 0)
+      // console.log(options, valid)
+      return valid
+    },
     /**
      * close this dialog
      */
