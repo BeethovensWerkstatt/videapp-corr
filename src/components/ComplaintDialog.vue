@@ -105,7 +105,7 @@ export default {
   top: 1rem;
   // TODO ??
   width: calc(100% - 17rem);
-  height: calc(100% - 2rem);
+  height: calc(100% - 9rem);
   border-radius: 5pt;
   background-color: white;
   border: 1px solid black;
@@ -123,21 +123,23 @@ export default {
     }
 
     #tabview {
-      width: 100%;
+      display: table;
+      width: calc(100%-10pt);
+      margin: 5pt;
       #tabcol1 {
-        display: inline-block;
-        width: 33%;
+        display: table-cell;
         overflow: scroll;
+        vertical-align: middle;
       }
       #tabcol2 {
-        display: inline-block;
-        width: 33%;
+        display: table-cell;
         overflow: scroll;
+        vertical-align: middle;
       }
       #tabcol3 {
-        display: inline-block;
-        width: 33%;
+        display: table-cell;
         overflow: scroll;
+        vertical-align: middle;
       }
     }
   }
