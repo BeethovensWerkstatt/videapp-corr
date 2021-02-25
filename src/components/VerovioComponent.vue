@@ -75,13 +75,18 @@ export default {
       return this.options.scale > 0 ? this.options.scale : 30
     },
     width () {
-      return this.options.width > 0 ? this.options.width : this.$el.clientWidth
+      return this.options.width > 0 ? this.options.width : 0
     },
     height () {
-      return this.options.height > 0 ? this.options.height : 0
+      var width = this.options.height > 0 ? this.options.height : 0
+      if (width === 0 && this.$el) {
+        width = this.$el.clientWidth
+      }
+      return width
     },
     pageWidth () {
-      return Math.max(100, this.width * 100 / this.scale)
+      const width = this.width > 0 ? this.width : this.$el.clientWidth
+      return Math.max(100, width * 100 / this.scale)
     },
     pageHeight () {
       if (this.height > 0) {

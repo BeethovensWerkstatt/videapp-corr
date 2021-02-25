@@ -14,7 +14,7 @@ const toStore = {
      * @memberof store.actions
      * @param {Object} context
      */
-    initVerovio ({ state }) {
+    async initVerovio ({ state }) {
       verovio.module.onRuntimeInitialized = () => {
         state.vrvInitFinished = true
       }

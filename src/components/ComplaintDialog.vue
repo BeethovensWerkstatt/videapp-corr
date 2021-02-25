@@ -1,5 +1,5 @@
 <template>
-  <div class="dialog" :class="{ 'inactive': !this.active }">
+  <div class="dialog" :class="{ 'inactive': !this.active }" :styles="styles">
     <div id="body" v-if="active">
       <div class="title">{{ activeComplaint.movement.n }}. {{ activeComplaint.movement.label }}</div>
       <div class="measures">
@@ -7,18 +7,20 @@
         <span v-for="(m, i) in activeComplaint.measures" :key="m.id"><span v-if="i > 0">, </span>{{ m.label }}</span>
       </div>
       <hr>
-      <div id="tabview">
-        <div id="tabcol1">
-          <h2>Ausgangsdokument</h2>
-          <verovio-component id="ausgangsdokument" :options="source" v-if="vrvValid(source)" />
-        </div>
-        <div id="tabcol2">
-          <h2>Revisionsdokument</h2>
-          <verovio-component id="revisionsdokument" :options="revision" v-if="vrvValid(revision)" />
-        </div>
-        <div id="tabcol3">
-          <h2>Zieldokument</h2>
-          <verovio-component id="zieldokument" :options="target" v-if="vrvValid(target)" />
+      <div class="tabview">
+        <div class="tabrow">
+          <div class="tabcol">
+            <h2>Ausgangsdokument</h2>
+            <verovio-component id="ausgangsdokument" :options="source" v-if="vrvValid(source)" />
+          </div>
+          <div class="tabcol">
+            <h2>Revisionsdokument</h2>
+            <verovio-component id="revisionsdokument" :options="revision" v-if="vrvValid(revision)" />
+          </div>
+          <div class="tabcol">
+            <h2>Zieldokument</h2>
+            <verovio-component id="zieldokument" :options="target" v-if="vrvValid(target)" />
+          </div>
         </div>
       </div>
     </div>
@@ -72,6 +74,11 @@ export default {
         return true
       }
       return false
+    },
+    styles () {
+      return {
+        height: 'calc(' + window.innerHeight + 'px - 2rem)'
+      }
     }
   },
   methods: {
@@ -105,7 +112,7 @@ export default {
   top: 1rem;
   // TODO ??
   width: calc(100% - 17rem);
-  height: calc(100% - 9rem);
+  height: calc(100% - 2rem);
   border-radius: 5pt;
   background-color: white;
   border: 1px solid black;
@@ -122,24 +129,18 @@ export default {
       font-size: 90%;
     }
 
-    #tabview {
+    .tabview {
       display: table;
-      width: calc(100%-10pt);
+      width: calc(100% - 10pt);
       margin: 5pt;
-      #tabcol1 {
-        display: table-cell;
-        overflow: scroll;
-        vertical-align: middle;
-      }
-      #tabcol2 {
-        display: table-cell;
-        overflow: scroll;
-        vertical-align: middle;
-      }
-      #tabcol3 {
-        display: table-cell;
-        overflow: scroll;
-        vertical-align: middle;
+      .tabrow {
+        display: table-row;
+        .tabcol {
+          display: table-cell;
+          overflow: scroll;
+          vertical-align: middle;
+          padding: 3pt;
+        }
       }
     }
   }
