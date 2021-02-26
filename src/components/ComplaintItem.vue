@@ -15,7 +15,7 @@
 <script>
 
 import { mapGetters } from 'vuex'
-import { mutations } from '@/store/names'
+import { actions } from '@/store/names'
 
 /**
  * one item in the list of complaints
@@ -73,9 +73,9 @@ export default {
      */
     toggleActivate () {
       if (this.complaintId === this.activeComplaintId) {
-        this.$store.commit(mutations.ACTIVATE_COMPLAINT, null)
+        this.$store.dispatch(actions.activateComplaint, null)
       } else {
-        this.$store.commit(mutations.ACTIVATE_COMPLAINT, this.complaintId)
+        this.$store.dispatch(actions.activateComplaint, this.complaintId)
       }
     }
   }

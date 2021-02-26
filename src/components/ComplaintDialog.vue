@@ -11,15 +11,15 @@
         <div class="tabrow">
           <div class="tabcol">
             <h2>Ausgangsdokument</h2>
-            <verovio-component id="ausgangsdokument" :options="source" v-if="vrvValid(source)" />
+            <verovio-component id="initialVersion" :options="initialVersion" v-if="vrvValid(initialVersion)" />
           </div>
           <div class="tabcol">
             <h2>Revisionsdokument</h2>
-            <verovio-component id="revisionsdokument" :options="revision" v-if="vrvValid(revision)" />
+            <verovio-component id="revisionInstruction" :options="revisionInstruction" v-if="vrvValid(revisionInstruction)" />
           </div>
           <div class="tabcol">
             <h2>Zieldokument</h2>
-            <verovio-component id="zieldokument" :options="target" v-if="vrvValid(target)" />
+            <verovio-component id="revisedVersion" :options="revisedVersion" v-if="vrvValid(revisedVersion)" />
           </div>
         </div>
       </div>
@@ -32,7 +32,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { mutations } from '@/store/names'
+import { actions } from '@/store/names'
 import VerovioComponent from '@/components/VerovioComponent.vue'
 
 /**
@@ -50,21 +50,22 @@ export default {
   },
   data () {
     return {
-      source: {
-        url: 'BWV_0009_1.xml',
-        from: 'xml',
-        page: 7,
-        height: 300
+      initialVersion: {
+        url: 'demo.mei'
       },
-      revision: {
-        url: 'demo.mei',
-        height: 300
+      revisionInstruction: {
+        url: 'demo.mei'
       },
-      target: {
-        url: 'https://raw.githubusercontent.com/music-encoding/sample-encodings/master/MEI_4.0/Music/Complete_examples/Ahle_Jesu_meines_Herzens_Freud.mei',
-        page: 2,
-        height: 300
+      revisedVersion: {
+        url: 'demo.mei'
       }
+    }
+  },
+  watch: {
+    activeComplaint () {
+      this.initialVersion = this.embodiment('initialVersion')
+      this.revisionInstruction = this.embodiment('revisionInstruction')
+      this.revisedVersion = this.embodiment('revisedVersion')
     }
   },
   computed: {
@@ -82,6 +83,20 @@ export default {
     }
   },
   methods: {
+    embodiment (textStatus) {
+      const complaint = this.activeComplaint
+      console.log(textStatus, complaint)
+      if (complaint && complaint.embodiments) {
+        const emb = complaint.embodiments.find(e => e.textStatus === textStatus)
+        console.log(textStatus, emb)
+        if (emb) {
+          const opts = {}
+          opts.url = emb.mei
+          return opts
+        }
+      }
+      return {}
+    },
     /**
      * check if options are valid
      */
@@ -94,7 +109,7 @@ export default {
      * close this dialog
      */
     closeDialog (e) {
-      this.$store.commit(mutations.ACTIVATE_COMPLAINT, null)
+      this.$store.dispatch(actions.activateComplaint, null)
     }
   }
 }

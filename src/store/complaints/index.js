@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { mutations as mut, registerMutations, registerActions } from '../names'
 
 const toStore = {
@@ -18,17 +19,41 @@ const toStore = {
       state.complaints = complaints
     },
     /**
-     * activate complaint (opens popup)
-     * @memberof store.mutations
+     * replace complaint
      * @param {Object} state
-     * @param {String} id
+     * @param {Object} complaint
      */
-    ACTIVATE_COMPLAINT (state, id) {
-      // console.log(mut.ACTIVATE_COMPLAINT, id)
-      state.activeComplaintId = id
+    MODIFY_COMPLAINT (state, complaint) {
+      const complaints = state.complaints.map(c => c['@id'] === complaint['@id'] ? complaint : c)
+      state.complaints = complaints
     }
   },
   actions: {
+    async activateComplaint ({ commit, state }, complaintId) {
+      console.log('activate ' + complaintId)
+      if (!complaintId) {
+        state.activeComplaintId = null
+        return
+      }
+      var complaint = state.complaints.find(c => c['@id'] === complaintId)
+      if (!complaint) {
+        console.error('complaint not found!', complaintId)
+        return
+      }
+      if (!complaint.embodiments) {
+        commit('SET_WORKING', true)
+        try {
+          const { data } = await axios.get(complaintId)
+          complaint = data
+          commit('MODIFY_COMPLAINT', complaint)
+        } finally {
+          commit('SET_WORKING', false)
+        }
+      }
+      if (complaint.embodiments) {
+        state.activeComplaintId = complaintId
+      }
+    },
     /**
      * load complaints
      * @memberof store.actions

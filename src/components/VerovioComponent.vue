@@ -66,19 +66,19 @@ export default {
   computed: {
     ...mapGetters(['vrvToolkit']),
     url () {
-      return this.options.url
+      return this.options ? this.options.url : 'demo.mei'
     },
     page () {
-      return this.options.page > 1 ? this.options.page : 1
+      return this.options && this.options.page > 1 ? this.options.page : 1
     },
     scale () {
-      return this.options.scale > 0 ? this.options.scale : 30
+      return this.options && this.options.scale > 0 ? this.options.scale : 30
     },
     width () {
-      return this.options.width > 0 ? this.options.width : 0
+      return this.options && this.options.width > 0 ? this.options.width : 0
     },
     height () {
-      var width = this.options.height > 0 ? this.options.height : 0
+      var width = this.options && this.options.height > 0 ? this.options.height : 0
       if (width === 0 && this.$el) {
         width = this.$el.clientWidth
       }
@@ -102,7 +102,7 @@ export default {
         opts.pageHeight = this.pageHeight
       }
       opts.adjustPageHeight = true
-      if (this.options.from) {
+      if (this.option && this.options.from) {
         opts.from = this.options.from
       }
       return opts
