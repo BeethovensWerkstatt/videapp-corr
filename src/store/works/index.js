@@ -35,6 +35,7 @@ const toStore = {
      * @param {Object} state
      */
     async loadWorks ({ commit, dispatch }) {
+      commit('SET_WORKING', true)
       dispatch('loadDemo')
       // https://api.beethovens-werkstatt.de/module3/works.json
       const url = config.api.works.url
@@ -45,6 +46,7 @@ const toStore = {
         commit(mutations.LOAD_WORK, work)
         dispatch(actions.loadSources, work.id)
       }
+      commit('SET_WORKING', false)
     },
     loadDemo ({ commit }) {
       const demo = {

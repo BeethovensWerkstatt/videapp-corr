@@ -30,7 +30,8 @@ export default new Vuex.Store({
     ...storeWorks.state,
     ...storeSources.state,
     ...storeComplaints.state,
-    ...storeVerovio.state
+    ...storeVerovio.state,
+    working: 0
   },
   /**
    * @namespace store.mutations
@@ -41,7 +42,11 @@ export default new Vuex.Store({
     ...storeWorks.mutations,
     ...storeSources.mutations,
     ...storeComplaints.mutations,
-    ...storeVerovio.mutations
+    ...storeVerovio.mutations,
+    SET_WORKING (state, act) {
+      // console.log('set working: ' + act)
+      state.working += act ? 1 : -1
+    }
   },
   /**
    * @namespace store.actions
@@ -74,6 +79,10 @@ export default new Vuex.Store({
     ...storeWorks.getters,
     ...storeSources.getters,
     ...storeComplaints.getters,
-    ...storeVerovio.getters
+    ...storeVerovio.getters,
+    working (state) {
+      console.log('working ' + state.working)
+      return state.working > 0
+    }
   }
 })

@@ -114,6 +114,7 @@ export default {
      */
     loadMEI () {
       if (this.url && this.url.length > 0) {
+        this.$store.commit('SET_WORKING', true)
         axios.get(this.url).then(({ data }) => {
           this.mei = data
           if (this.mei) {
@@ -123,7 +124,11 @@ export default {
             this.toolkit.setOptions(this.vrvOptions)
             this.toolkit.loadData(this.mei)
             this.renderMEI()
+            this.$store.commit('SET_WORKING', false)
           }
+        }).catch(error => {
+          this.svg = '<div class="error">' + error.message + '</div>'
+          this.$store.commit('SET_WORKING', false)
         })
       }
     },
@@ -141,9 +146,11 @@ export default {
     renderMEI () {
       const mei = this.mei
       if (this.toolkit && mei && mei.length > 0) {
+        this.$store.commit('SET_WORKING', true)
         // console.log(this.toolkit.getPageCount())
         var svg = this.toolkit.renderToSVG(this.page, this.vrvOptions)
         this.svg = svg
+        this.$store.commit('SET_WORKING', false)
       }
     }
   }

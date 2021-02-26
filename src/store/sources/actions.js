@@ -28,6 +28,7 @@ const actions = {
         console.log(work.title[0].title)
         work.sources = []
         const url = work['@id']
+        commit('SET_WORKING', true)
         const { data } = await axios.get(url)
 
         // default placement of sources
@@ -137,6 +138,7 @@ const actions = {
             })
           }
         })
+        commit('SET_WORKING', false)
         work.sourcesLoadFinished = true
       }
     } else { // ---------------- op73 DEMO ---------------------------
