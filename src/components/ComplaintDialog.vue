@@ -7,18 +7,19 @@
         <span v-for="(m, i) in activeComplaint.measures" :key="m.id"><span v-if="i > 0">, </span>{{ m.label }}</span>
       </div>
       <hr>
-      <div class="tabview">
+      <div class="loading" v-if="activeComplaint.loading">Lade {{ activeComplaint.label }}</div>
+      <div class="tabview" v-else>
         <div class="tabrow">
           <div class="tabcol">
-            <h2>Ausgangsdokument</h2>
+            <h2>{{ initialVersion && initialVersion.label ? initialVersion.label : 'Ausgangsdokument' }}</h2>
             <verovio-component id="initialVersion" :options="initialVersion" v-if="vrvValid(initialVersion)" />
           </div>
           <div class="tabcol">
-            <h2>Revisionsdokument</h2>
+            <h2>{{ revisionInstruction && revisionInstruction.label ? revisionInstruction.label : 'Revisionsdokument' }}</h2>
             <verovio-component id="revisionInstruction" :options="revisionInstruction" v-if="vrvValid(revisionInstruction)" />
           </div>
           <div class="tabcol">
-            <h2>Zieldokument</h2>
+            <h2>{{ revisedVersion && revisedVersion.label ? revisedVersion.label : 'Zieldokument' }}</h2>
             <verovio-component id="revisedVersion" :options="revisedVersion" v-if="vrvValid(revisedVersion)" />
           </div>
         </div>
@@ -92,6 +93,7 @@ export default {
         if (emb) {
           const opts = {}
           opts.url = emb.mei
+          opts.label = emb.label
           return opts
         }
       }

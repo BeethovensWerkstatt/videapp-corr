@@ -1,5 +1,5 @@
 <template>
-  <div :id="id" v-html="svg" :class="{ verovio: !error, error: error }">
+  <div :id="id" v-html="html" :class="status">
   </div>
 </template>
 
@@ -40,9 +40,9 @@ export default {
   data () {
     return {
       toolkit: null,
-      svg: '<span>...|||III|||...</span>',
+      svg: null,
       mei: null,
-      error: false
+      error: null
     }
   },
   mounted () {
@@ -66,6 +66,24 @@ export default {
   },
   computed: {
     ...mapGetters(['vrvToolkit']),
+    status () {
+      if (this.error) {
+        return 'error'
+      }
+      if (this.svg) {
+        return 'verovio'
+      }
+      return 'processing'
+    },
+    html () {
+      if (this.error) {
+        return this.error
+      }
+      if (this.svg) {
+        return this.svg
+      }
+      return '<span title="' + this.url + '">... lade ...</span>'
+    },
     url () {
       return this.options ? this.options.url : 'demo.mei'
     },
@@ -117,6 +135,7 @@ export default {
       if (this.url && this.url.length > 0) {
         this.$store.commit('SET_WORKING', true)
         console.log('load', this.url)
+        this.svg = null
         axios.get(this.url).then(({ data }) => {
           this.mei = data
           if (this.mei) {
@@ -126,11 +145,10 @@ export default {
             this.toolkit.setOptions(this.vrvOptions)
             this.toolkit.loadData(this.mei)
             this.renderMEI()
-            this.error = false
+            this.error = null
           }
         }).catch(error => {
-          this.svg = '<div class="error">' + error.message + '</div>'
-          this.error = true
+          this.error = '<span title="' + this.url + '">' + error.message + '</span>'
         }).finally(() => {
           this.$store.commit('SET_WORKING', false)
         })
@@ -152,6 +170,7 @@ export default {
       if (this.toolkit && mei && mei.length > 0) {
         this.$store.commit('SET_WORKING', true)
         // console.log(this.toolkit.getPageCount())
+        this.svg = null
         var svg = this.toolkit.renderToSVG(this.page, this.vrvOptions)
         this.svg = svg
         this.$store.commit('SET_WORKING', false)
@@ -161,10 +180,14 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .verovio {
   border: 1px solid yellow;
   background-color: whitesmoke;
+}
+.processing {
+  border: 1px solid blue;
+  background-color: grey;
 }
 .error {
   border: 1px solid red;

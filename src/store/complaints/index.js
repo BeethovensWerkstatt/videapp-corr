@@ -40,8 +40,10 @@ const toStore = {
         console.error('complaint not found!', complaintId)
         return
       }
+      state.activeComplaintId = complaintId
       if (!complaint.embodiments) {
         commit('SET_WORKING', true)
+        complaint.loading = true
         try {
           const { data } = await axios.get(complaintId)
           complaint = data
@@ -49,9 +51,6 @@ const toStore = {
         } finally {
           commit('SET_WORKING', false)
         }
-      }
-      if (complaint.embodiments) {
-        state.activeComplaintId = complaintId
       }
     },
     /**

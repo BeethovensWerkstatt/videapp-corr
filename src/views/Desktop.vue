@@ -14,7 +14,17 @@
           </btn-group>
         </div>
       </div>
-      <div v-if="viewer">zoom: {{ scale }}</div>
+      <div v-if="viewer">
+        <div>
+          <label for="toggleDisplayMeasures">Takte anzeigen </label>
+          <input
+            id="toggleDisplayMeasures"
+            type="checkbox"
+            v-model="displayMeasures"
+          />
+        </div>
+        zoom: {{ scale }}
+      </div>
       <complaints-list />
       <zone-info />
       <source-info />
@@ -28,8 +38,7 @@ import DesktopComponent from '@/components/DesktopComponent'
 import SourceInfo from '@/components/SourceInfo'
 import ZoneInfo from '@/components/ZoneInfo.vue'
 import ComplaintsList from '@/components/ComplaintsList.vue'
-// import ZoneAnnotation from '@/components/ZoneAnnotation'
-// import osdConfiguration from '@/config/osd.config.js'
+import { mutations } from '@/store/names'
 
 /**
  * Desktop View
@@ -49,7 +58,17 @@ export default {
     // console.log(this.sources)
   },
   computed: {
-    ...mapGetters(['viewer', 'scale'])
+    ...mapGetters(['viewer', 'scale']),
+    displayMeasures: {
+      get () {
+        const displayMeasures = this.$store.getters.displayMeasures
+        // console.log('display: ' + displayMeasures)
+        return displayMeasures
+      },
+      set (val) {
+        this.$store.commit(mutations.SET_DISPLAY_MEASURES, val)
+      }
+    }
   }
 }
 </script>

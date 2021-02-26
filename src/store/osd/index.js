@@ -27,12 +27,17 @@ const toStore = {
       // console.log(state.viewer)
       if (state.viewer) {
         // state.scale = state.viewer.viewport.viewportToImageZoom(state.viewer.viewport.getZoom(true))
+        /*
         var p0 = new OpenSeadragon.Point(0, 0)
         var p1 = new OpenSeadragon.Point(10, 10)
         p0 = state.viewer.viewport.viewerElementToViewportCoordinates(p0)
         p1 = state.viewer.viewport.viewerElementToViewportCoordinates(p1)
-        state.scale = 10 / (p1.x - p0.x)
-        // console.log('update scale ' + state.scale)
+        const scale1 = 10 / (p1.x - p0.x)
+        */
+        const scale2 = state.viewer.viewport.getZoom(false) / state.viewer.viewport.getHomeZoom()
+        // const scale3 = state.viewer.viewport.getZoom(true) / state.viewer.viewport.getHomeZoom()
+        // console.log('update scale', scale1, scale2, scale3)
+        state.scale = scale2
       } else {
         state.scale = 1
       }
