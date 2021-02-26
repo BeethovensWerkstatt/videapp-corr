@@ -1,5 +1,6 @@
 import axios from 'axios'
 import config from '@/config'
+import { startProc, finishProc } from '..'
 import { mutations, actions, registerMutations, registerActions } from '../names'
 import tb from '@/toolbox'
 
@@ -35,18 +36,21 @@ const toStore = {
      * @param {Object} state
      */
     async loadWorks ({ commit, dispatch }) {
-      commit('SET_WORKING', true)
-      dispatch('loadDemo')
-      // https://api.beethovens-werkstatt.de/module3/works.json
-      const url = config.api.works.url
-      // console.log(axios, url)
-      const { data } = await axios.get(url)
-      for (const work of data) {
-        // console.log(work)
-        commit(mutations.LOAD_WORK, work)
-        dispatch(actions.loadSources, work.id)
+      startProc()
+      try {
+        dispatch('loadDemo')
+        // https://api.beethovens-werkstatt.de/module3/works.json
+        const url = config.api.works.url
+        // console.log(axios, url)
+        const { data } = await axios.get(url)
+        for (const work of data) {
+          // console.log(work)
+          commit(mutations.LOAD_WORK, work)
+          dispatch(actions.loadSources, work.id)
+        }
+      } finally {
+        finishProc()
       }
-      commit('SET_WORKING', false)
     },
     loadDemo ({ commit }) {
       const demo = {

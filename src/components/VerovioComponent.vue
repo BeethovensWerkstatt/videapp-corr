@@ -6,6 +6,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import axios from 'axios'
+import { startProc, finishProc } from '@/store'
 
 /**
  * Verovio component
@@ -133,7 +134,7 @@ export default {
      */
     loadMEI () {
       if (this.url && this.url.length > 0) {
-        this.$store.commit('SET_WORKING', true)
+        startProc()
         console.log('load', this.url)
         this.svg = null
         axios.get(this.url).then(({ data }) => {
@@ -150,7 +151,7 @@ export default {
         }).catch(error => {
           this.error = '<span title="' + this.url + '">' + error.message + '</span>'
         }).finally(() => {
-          this.$store.commit('SET_WORKING', false)
+          finishProc()
         })
       }
     },
@@ -168,12 +169,12 @@ export default {
     renderMEI () {
       const mei = this.mei
       if (this.toolkit && mei && mei.length > 0) {
-        this.$store.commit('SET_WORKING', true)
+        startProc()
         // console.log(this.toolkit.getPageCount())
         this.svg = null
         var svg = this.toolkit.renderToSVG(this.page, this.vrvOptions)
         this.svg = svg
-        this.$store.commit('SET_WORKING', false)
+        finishProc()
       }
     }
   }

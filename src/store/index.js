@@ -1,58 +1,58 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import storeProcessing from './processing'
 import storeOSD from './osd'
 import storeWorks from './works'
 import storeSources from './sources'
 import storeComplaints from './complaints'
 import storeVerovio from './vrv'
 
+import { mutations } from './names'
+
 Vue.use(Vuex)
 
 /**
  * @namespace store
  */
-
-/**
- * @typedef {object} store.state
- * @memberof store
- * @property {Object} viewer - OpenSeadragon Viewer object
- * @property {Object} vrvToolkit - Verovio toolkit
- * @property {Number} scale - current scale of OpenSeadragon.Viewer
- * @property {Object[]} sources - list of source objects
- * @property {String} activeSourceId - id of selected source
- * @property {Object[]} complaints - list of complaints
- * @property {String} activeComplaintId - id of selected complaint
- */
-export default new Vuex.Store({
+const store = new Vuex.Store({
+  /**
+   * @typedef {object} store.state
+   * @memberof store
+   * @property {Object} viewer - OpenSeadragon Viewer object
+   * @property {Object} vrvToolkit - Verovio toolkit
+   * @property {Number} scale - current scale of OpenSeadragon.Viewer
+   * @property {Object[]} sources - list of source objects
+   * @property {String} activeSourceId - id of selected source
+   * @property {Object[]} complaints - list of complaints
+   * @property {String} activeComplaintId - id of selected complaint
+   */
   state: {
+    ...storeProcessing.state,
     ...storeOSD.state,
     ...storeWorks.state,
     ...storeSources.state,
     ...storeComplaints.state,
-    ...storeVerovio.state,
-    working: 0
+    ...storeVerovio.state
   },
   /**
    * @namespace store.mutations
    * @memberof store
    */
   mutations: {
+    ...storeProcessing.mutations,
     ...storeOSD.mutations,
     ...storeWorks.mutations,
     ...storeSources.mutations,
     ...storeComplaints.mutations,
-    ...storeVerovio.mutations,
-    SET_WORKING (state, act) {
-      // console.log('set working: ' + act)
-      state.working += act ? 1 : -1
-    }
+    ...storeVerovio.mutations
   },
   /**
    * @namespace store.actions
    * @memberof store
    */
   actions: {
+    ...storeProcessing.actions,
     ...storeOSD.actions,
     ...storeWorks.actions,
     ...storeSources.actions,
@@ -75,14 +75,26 @@ export default new Vuex.Store({
    * @property {Object} activeComplaint - selected complaint object
    */
   getters: {
+    ...storeProcessing.getters,
     ...storeOSD.getters,
     ...storeWorks.getters,
     ...storeSources.getters,
     ...storeComplaints.getters,
-    ...storeVerovio.getters,
-    working (state) {
-      // console.log('working ' + state.working)
-      return state.working > 0
-    }
+    ...storeVerovio.getters
   }
 })
+
+/**
+ * start proc indicator
+ */
+export function startProc () {
+  store.commit(mutations.SET_WORKING, true)
+}
+/**
+ * stop proc indicator
+ */
+export function finishProc () {
+  store.commit(mutations.SET_WORKING, false)
+}
+
+export default store

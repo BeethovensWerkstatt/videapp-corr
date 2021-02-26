@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { startProc, finishProc } from '..'
 import { mutations as mut, registerMutations, registerActions } from '../names'
 
 const toStore = {
@@ -42,14 +43,14 @@ const toStore = {
       }
       state.activeComplaintId = complaintId
       if (!complaint.embodiments) {
-        commit('SET_WORKING', true)
+        startProc()
         complaint.loading = true
         try {
           const { data } = await axios.get(complaintId)
           complaint = data
-          commit('MODIFY_COMPLAINT', complaint)
+          commit(mut.MODIFY_COMPLAINT, complaint)
         } finally {
-          commit('SET_WORKING', false)
+          finishProc()
         }
       }
     },

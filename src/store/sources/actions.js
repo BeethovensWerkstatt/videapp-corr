@@ -2,6 +2,7 @@ import axios from 'axios'
 import { mutations, actions as act } from '../names'
 
 import pageSetup from '@/temp/pageSetup.json'
+import { finishProc, startProc } from '..'
 
 // first demo ... to be removed later.
 const demoId = 'op73'
@@ -28,7 +29,7 @@ const actions = {
         console.log(work.title[0].title)
         work.sources = []
         const url = work['@id']
-        commit('SET_WORKING', true)
+        startProc()
         const { data } = await axios.get(url)
 
         // default placement of sources
@@ -113,7 +114,7 @@ const actions = {
                       (pagepair.r ? pagepair.r.dimensions.height : 0),
                       (pagepair.v ? pagepair.v.dimensions.height : 0))
                 }
-                console.log(source)
+                // console.log(source)
 
                 // calc position
                 if (px > hgap && (px + hgap + source.maxDimensions.width) > getters.deskDimensions.width) {
@@ -138,7 +139,7 @@ const actions = {
             })
           }
         })
-        commit('SET_WORKING', false)
+        finishProc()
         work.sourcesLoadFinished = true
       }
     } else { // ---------------- op73 DEMO ---------------------------
