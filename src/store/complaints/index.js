@@ -1,7 +1,5 @@
 import { mutations as mut, registerMutations, registerActions } from '../names'
 
-import complaintsSetup from '@/temp/complaintsSetup.json'
-
 const toStore = {
   state: {
     complaints: [],
@@ -35,10 +33,8 @@ const toStore = {
      * load complaints
      * @memberof store.actions
      */
-    loadComplaints ({ commit, state }) {
-      // TODO dynamic source
-      const json = complaintsSetup
-      json.complaints.forEach(complaint => commit(mut.LOAD_COMPLAINT, complaint))
+    loadComplaints ({ commit }, { complaints }) {
+      complaints.forEach(complaint => commit(mut.LOAD_COMPLAINT, complaint))
     }
   },
   getters: {

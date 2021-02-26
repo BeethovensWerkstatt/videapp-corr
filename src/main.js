@@ -34,5 +34,3 @@ new Vue({
 
 store.dispatch(actions.initVerovio)
 store.dispatch(actions.loadWorks)
-store.dispatch(actions.loadSources)
-store.dispatch(actions.loadComplaints)

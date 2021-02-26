@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { mutations } from '../names'
+import { mutations, actions as act } from '../names'
 
 import pageSetup from '@/temp/pageSetup.json'
 
@@ -14,14 +14,12 @@ const relabel = new RegExp('measure (\\d+)')
 
 const actions = {
   /**
-   * **TODO: load from REST API**
-   *
-   * load sources
+   * load sources and complaints
    * @memberof store.actions
    * @param {function} commit
    * @param {object} state
    */
-  async loadSources ({ commit, state, getters }, workId) {
+  async loadSources ({ commit, dispatch, state, getters }, workId) {
     if (workId && workId !== demoId) {
       console.log(state.works, workId)
       const work = state.works.find(w => w.id === workId)
@@ -39,6 +37,9 @@ const actions = {
         var py = 0
         var ph = 0
 
+        // load complaints for this work
+        dispatch(act.loadComplaints, data)
+
         data.manifestations.forEach((m, index) => {
           console.log(m.label)
 
@@ -47,7 +48,7 @@ const actions = {
             workId,
             label: m.label,
             maxDimensions: { width: 0, height: 0 },
-            // this still needs to be updated
+            // these values are updated later
             position: { x: (150 + index * 400), y: 400 },
             pages: [],
             rotation: 0,
