@@ -18,6 +18,8 @@ import { startProc, finishProc } from '@/store'
  * @vue-data {String} [svg=...] - SVG or HTML content to display
  * @vue-data {String} [mei=null] - loaded MEI (or other format)
  * @vue-computed {String} url - taken from options
+ * @vue-computed {String} status - one of `verovio`, `processing` and `error`
+ * @vue-computed {String} html - html content for component
  * @vue-computed {Number} scale - taken from options (default: 30)
  * @vue-computed {Number} page - taken from options (default: 1)
  * @vue-computed {Number} width - taken from options (default: element width)
