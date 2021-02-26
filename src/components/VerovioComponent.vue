@@ -1,5 +1,5 @@
 <template>
-  <div :id="id" v-html="svg" class="verovio">
+  <div :id="id" v-html="svg" :class="{ verovio: !error, error: error }">
   </div>
 </template>
 
@@ -41,7 +41,8 @@ export default {
     return {
       toolkit: null,
       svg: '<span>...|||III|||...</span>',
-      mei: null
+      mei: null,
+      error: false
     }
   },
   mounted () {
@@ -115,6 +116,7 @@ export default {
     loadMEI () {
       if (this.url && this.url.length > 0) {
         this.$store.commit('SET_WORKING', true)
+        console.log('load', this.url)
         axios.get(this.url).then(({ data }) => {
           this.mei = data
           if (this.mei) {
@@ -124,10 +126,12 @@ export default {
             this.toolkit.setOptions(this.vrvOptions)
             this.toolkit.loadData(this.mei)
             this.renderMEI()
-            this.$store.commit('SET_WORKING', false)
+            this.error = false
           }
         }).catch(error => {
           this.svg = '<div class="error">' + error.message + '</div>'
+          this.error = true
+        }).finally(() => {
           this.$store.commit('SET_WORKING', false)
         })
       }
@@ -161,5 +165,10 @@ export default {
 .verovio {
   border: 1px solid yellow;
   background-color: whitesmoke;
+}
+.error {
+  border: 1px solid red;
+  background-color: yellow;
+  border-radius: 5px;
 }
 </style>
