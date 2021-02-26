@@ -81,7 +81,7 @@ export default new Vuex.Store({
     ...storeComplaints.getters,
     ...storeVerovio.getters,
     working (state) {
-      console.log('working ' + state.working)
+      // console.log('working ' + state.working)
       return state.working > 0
     }
   }
