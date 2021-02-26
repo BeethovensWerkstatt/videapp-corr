@@ -23,7 +23,7 @@
             v-model="displayMeasures"
           />
         </div>
-        zoom: {{ scale }}
+        zoom: {{ scale.toFixed(2) }}
       </div>
       <complaints-list />
       <zone-info />
