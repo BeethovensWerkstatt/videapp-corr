@@ -11,16 +11,40 @@
       <div class="tabview" v-else>
         <div class="tabrow">
           <div class="tabcol">
-            <h2>{{ initialVersion && initialVersion.label ? initialVersion.label : 'Ausgangsdokument' }}</h2>
-            <verovio-component id="initialVersion" :options="initialVersion" v-if="vrvValid(initialVersion)" />
+            <h2>{{ initialDocLabel }}</h2>
+            <div class="docimg" v-if="initialImageUrl">
+              <img :src="initialImageUrl"/>
+            </div>
+            <h2>{{ initialTextLabel }}</h2>
+            <verovio-component
+              id="initialVersion"
+              :options="initialVersion"
+              v-if="vrvValid(initialVersion)"
+            />
           </div>
           <div class="tabcol">
-            <h2>{{ revisionInstruction && revisionInstruction.label ? revisionInstruction.label : 'Revisionsdokument' }}</h2>
-            <verovio-component id="revisionInstruction" :options="revisionInstruction" v-if="vrvValid(revisionInstruction)" />
+            <h2>{{ revisionDocLabel }}</h2>
+            <div class="docimg" v-if="revisionImageUrl">
+              <img :src="revisionImageUrl"/>
+            </div>
+            <h2>{{ revisionTextLabel }}</h2>
+            <verovio-component
+              id="revisionInstruction"
+              :options="revisionInstruction"
+              v-if="vrvValid(revisionInstruction)"
+            />
           </div>
           <div class="tabcol">
-            <h2>{{ revisedVersion && revisedVersion.label ? revisedVersion.label : 'Zieldokument' }}</h2>
-            <verovio-component id="revisedVersion" :options="revisedVersion" v-if="vrvValid(revisedVersion)" />
+            <h2>{{ revisedDocLabel }}</h2>
+            <div class="docimg" v-if="revisedImageUrl">
+              <img :src="revisedImageUrl"/>
+            </div>
+            <h2>{{ revisedTextLabel }}</h2>
+            <verovio-component
+              id="revisedVersion"
+              :options="revisedVersion"
+              v-if="vrvValid(revisedVersion)"
+            />
           </div>
         </div>
       </div>
@@ -81,6 +105,30 @@ export default {
       return {
         height: 'calc(' + window.innerHeight + 'px - 2rem)'
       }
+    },
+    initialDocLabel () {
+      return this.initialVersion && this.initialVersion.label
+        ? this.initialVersion.label
+        : 'Ausgangsdokument'
+    },
+    revisionDocLabel () {
+      return this.revisionInstruction && this.revisionInstruction.label
+        ? this.revisionInstruction.label
+        : 'Revisionsdokument'
+    },
+    revisedDocLabel () {
+      return this.revisedVersion && this.revisedVersion.label
+        ? this.revisedVersion.label
+        : 'Zieldokument'
+    },
+    initialTextLabel () {
+      return 'Ausgangstext'
+    },
+    revisionTextLabel () {
+      return 'Revisionstext'
+    },
+    revisedTextLabel () {
+      return 'Zieltext'
     }
   },
   methods: {
