@@ -5,9 +5,7 @@
     :class="{ 'complaint-active': isActive }"
     @click.prevent="toggleActivate"
   >
-    <div class="complaint-attribute">{{ index + 1 }}</div>
-    <div class="complaint-attribute">{{ complaint.movement.n }}</div>
-    <div class="complaint-attribute">{{ complaint.movement.label }}</div>
+    <div class="complaint-attribute"><sub>{{ index + 1 }}</sub></div>
     <div class="complaint-attribute">{{ measures }}</div>
   </div>
 </template>
@@ -92,6 +90,10 @@ export default {
   display: table-cell;
   text-align: left;
   padding: 0px 1pt;
+
+  sub {
+    color: grey;
+  }
 }
 
 .complaint-active {

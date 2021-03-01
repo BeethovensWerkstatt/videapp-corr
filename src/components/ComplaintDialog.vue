@@ -78,19 +78,25 @@ export default {
       initialVersion: {
         url: 'demo.mei'
       },
+      initialImageUrl: null,
       revisionInstruction: {
         url: 'demo.mei'
       },
+      revisionImageUrl: null,
       revisedVersion: {
         url: 'demo.mei'
-      }
+      },
+      revisedImageUrl: null
     }
   },
   watch: {
     activeComplaint () {
       this.initialVersion = this.embodiment('initialVersion')
+      this.initialImageUrl = this.imageUrl('initialVersion')
       this.revisionInstruction = this.embodiment('revisionInstruction')
+      this.revisionImageUrl = this.imageUrl('revisionInstruction')
       this.revisedVersion = this.embodiment('revisedVersion')
+      this.revisedImageUrl = this.imageUrl('revisedVersion')
     }
   },
   computed: {
@@ -146,6 +152,15 @@ export default {
         }
       }
       return {}
+    },
+    imageUrl (textStatus) {
+      const complaint = this.activeComplaint
+      if (complaint && complaint.embodiments) {
+        const emb = complaint.embodiments.find(e => e.textStatus === textStatus)
+        if (emb) {
+          return emb.iiif[0].target.selector[0]['@id']
+        }
+      }
     },
     /**
      * check if options are valid
@@ -205,6 +220,9 @@ export default {
           overflow: scroll;
           vertical-align: middle;
           padding: 3pt;
+          img {
+            width: 100%;
+          }
         }
       }
     }

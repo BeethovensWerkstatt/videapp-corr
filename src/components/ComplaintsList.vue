@@ -5,12 +5,16 @@
       <div class="complaint-caption">
         Monita
       </div>
-      <complaint-item
+      <div
         :key="complaint['@id']"
         v-for="(complaint, ci) in complaints"
-        :complaint="complaint"
-        :index="ci"
-      />
+      >
+        <div class="complaint-movement" v-if="checkMvt(complaint.movement.n)">{{ complaint.movement.n + '. ' + complaint.movement.label }}</div>
+        <complaint-item
+          :complaint="complaint"
+          :index="ci"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -29,9 +33,20 @@ import ComplaintDialog from '@/components/ComplaintDialog.vue'
  */
 export default {
   components: { ComplaintItem, ComplaintDialog },
+  data () {
+    return {
+    }
+  },
   name: 'ComplaintsList',
   computed: {
     ...mapGetters(['complaints'])
+  },
+  methods: {
+    checkMvt (mvt) {
+      const t = mvt !== this.mvt
+      this.mvt = mvt
+      return t
+    }
   }
 }
 </script>
@@ -47,5 +62,10 @@ export default {
 .complaint-caption {
   display: table-caption;
   font-weight: bold;
+}
+.complaint-movement {
+  display: table-row-group table-caption;
+  font-weight: bold;
+  text-align: center;
 }
 </style>
