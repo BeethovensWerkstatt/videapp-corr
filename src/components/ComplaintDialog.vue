@@ -15,6 +15,22 @@
             <div class="docimg" v-if="initialImageUrl">
               <img :src="initialImageUrl"/>
             </div>
+          </div>
+          <div class="tabcol">
+            <h2>{{ revisionDocLabel }}</h2>
+            <div class="docimg" v-if="revisionImageUrl">
+              <img :src="revisionImageUrl"/>
+            </div>
+          </div>
+          <div class="tabcol">
+            <h2>{{ revisedDocLabel }}</h2>
+            <div class="docimg" v-if="revisedImageUrl">
+              <img :src="revisedImageUrl"/>
+            </div>
+          </div>
+        </div>
+        <div class="tabrow">
+          <div class="tabcol">
             <h2>{{ initialTextLabel }}</h2>
             <verovio-component
               id="initialVersion"
@@ -23,10 +39,6 @@
             />
           </div>
           <div class="tabcol">
-            <h2>{{ revisionDocLabel }}</h2>
-            <div class="docimg" v-if="revisionImageUrl">
-              <img :src="revisionImageUrl"/>
-            </div>
             <h2>{{ revisionTextLabel }}</h2>
             <verovio-component
               id="revisionInstruction"
@@ -35,10 +47,6 @@
             />
           </div>
           <div class="tabcol">
-            <h2>{{ revisedDocLabel }}</h2>
-            <div class="docimg" v-if="revisedImageUrl">
-              <img :src="revisedImageUrl"/>
-            </div>
             <h2>{{ revisedTextLabel }}</h2>
             <verovio-component
               id="revisedVersion"
@@ -140,10 +148,10 @@ export default {
   methods: {
     embodiment (textStatus) {
       const complaint = this.activeComplaint
-      console.log(textStatus, complaint)
+      // console.log(textStatus, complaint)
       if (complaint && complaint.embodiments) {
         const emb = complaint.embodiments.find(e => e.textStatus === textStatus)
-        console.log(textStatus, emb)
+        // console.log(textStatus, emb)
         if (emb) {
           const opts = {}
           opts.url = emb.mei

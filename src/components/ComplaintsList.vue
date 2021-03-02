@@ -9,7 +9,11 @@
         :key="complaint['@id']"
         v-for="(complaint, ci) in complaints"
       >
-        <div class="complaint-movement" v-if="checkMvt(complaint.movement.n)">{{ complaint.movement.n + '. ' + complaint.movement.label }}</div>
+        <div
+          class="complaint-movement"
+          v-if="checkMvt(complaint.movement.n)">
+          <div>{{ complaint.movement.n + '.' }}&nbsp;</div><div>{{ complaint.movement.label }}</div>
+        </div>
         <complaint-item
           :complaint="complaint"
           :index="ci"
@@ -58,14 +62,18 @@ export default {
 }
 .complaint-list {
   display: table;
+  width: 100%;
 }
 .complaint-caption {
   display: table-caption;
   font-weight: bold;
 }
 .complaint-movement {
-  display: table-row-group table-caption;
-  font-weight: bold;
-  text-align: center;
+  display: table-row;
+  div {
+    display: table-cell;
+    font-weight: bold;
+    text-align: center;
+  }
 }
 </style>

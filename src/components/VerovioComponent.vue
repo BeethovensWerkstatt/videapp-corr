@@ -96,11 +96,11 @@ export default {
     scale () {
       return this.options && this.options.scale > 0 ? this.options.scale : 30
     },
-    width () {
-      return this.options && this.options.width > 0 ? this.options.width : 0
-    },
     height () {
-      var width = this.options && this.options.height > 0 ? this.options.height : 0
+      return this.options && this.options.height > 0 ? this.options.height : 0
+    },
+    width () {
+      var width = this.options && this.options.width > 0 ? this.options.width : 0
       if (width === 0 && this.$el) {
         width = this.$el.clientWidth
       }
