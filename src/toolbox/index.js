@@ -31,6 +31,61 @@ function atId (atid) {
 }
 
 /**
+ * create roman numeral string
+ *
+ * @memberof toolbox
+ * @param {Number} num - number to convert
+ */
+function toRoman (num) {
+  num = Math.floor(num)
+  var val
+  var s = ''
+  var i = 0
+  const v = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1]
+  const r = ['M', 'CM', 'D', 'CD', 'C', 'XC', 'L', 'XL', 'X', 'IX', 'V', 'IV', 'I']
+
+  /**
+   * convert bif integer to roaman string
+   * @param {Number} n - n > 39999
+   */
+  function toBigRoman (num) {
+    var ret = ''
+    var n1 = ''
+    var rem = num
+    while (rem > 1000) {
+      var prefix = ''
+      var suffix = ''
+      var n = rem
+      var s = '' + rem
+      var magnitude = 1
+      while (n > 1000) {
+        n /= 1000
+        magnitude *= 1000
+        prefix += '('
+        suffix += ')'
+      }
+      n1 = Math.floor(n)
+      rem = s - (n1 * magnitude)
+      ret += prefix + n1.toRoman() + suffix
+    }
+    return ret + rem.toRoman()
+  }
+
+  if (this - num || num < 1) num = 0
+  if (num > 3999) return toBigRoman(num)
+
+  while (num) {
+    val = v[i]
+    while (num >= val) {
+      num -= val
+      s += r[i]
+    }
+    ++i
+  }
+  return s
+};
+
+/**
  * data URL for desktop background image
  * @memberof toolbox
  */
@@ -40,4 +95,4 @@ export const desktopTile = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAA
  * toolbox of utilities
  * @namespace toolbox
  */
-export default { uuidv4, atId, desktopTile }
+export default { uuidv4, atId, toRoman, desktopTile }
