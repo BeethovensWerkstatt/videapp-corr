@@ -33,6 +33,8 @@ function atId (atid) {
 /**
  * create roman numeral string
  *
+ * taken from <https://stackoverflow.com/questions/9083037/convert-a-number-into-a-roman-numeral-in-javascript?page=1&tab=votes#tab-top>
+ *
  * @memberof toolbox
  * @param {Number} num - number to convert
  */
