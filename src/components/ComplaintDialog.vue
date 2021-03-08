@@ -11,16 +11,48 @@
       <div class="tabview" v-else>
         <div class="tabrow">
           <div class="tabcol">
-            <h2>{{ initialVersion && initialVersion.label ? initialVersion.label : 'Ausgangsdokument' }}</h2>
-            <verovio-component id="initialVersion" :options="initialVersion" v-if="vrvValid(initialVersion)" />
+            <h2>{{ initialDocLabel }}</h2>
+            <div class="docimg" v-if="initialImageUrl">
+              <img :src="initialImageUrl"/>
+            </div>
           </div>
           <div class="tabcol">
-            <h2>{{ revisionInstruction && revisionInstruction.label ? revisionInstruction.label : 'Revisionsdokument' }}</h2>
-            <verovio-component id="revisionInstruction" :options="revisionInstruction" v-if="vrvValid(revisionInstruction)" />
+            <h2>{{ revisionDocLabel }}</h2>
+            <div class="docimg" v-if="revisionImageUrl">
+              <img :src="revisionImageUrl"/>
+            </div>
           </div>
           <div class="tabcol">
-            <h2>{{ revisedVersion && revisedVersion.label ? revisedVersion.label : 'Zieldokument' }}</h2>
-            <verovio-component id="revisedVersion" :options="revisedVersion" v-if="vrvValid(revisedVersion)" />
+            <h2>{{ revisedDocLabel }}</h2>
+            <div class="docimg" v-if="revisedImageUrl">
+              <img :src="revisedImageUrl"/>
+            </div>
+          </div>
+        </div>
+        <div class="tabrow">
+          <div class="tabcol">
+            <h2>{{ initialTextLabel }}</h2>
+            <verovio-component
+              id="initialVersion"
+              :options="initialVersion"
+              v-if="vrvValid(initialVersion)"
+            />
+          </div>
+          <div class="tabcol">
+            <h2>{{ revisionTextLabel }}</h2>
+            <verovio-component
+              id="revisionInstruction"
+              :options="revisionInstruction"
+              v-if="vrvValid(revisionInstruction)"
+            />
+          </div>
+          <div class="tabcol">
+            <h2>{{ revisedTextLabel }}</h2>
+            <verovio-component
+              id="revisedVersion"
+              :options="revisedVersion"
+              v-if="vrvValid(revisedVersion)"
+            />
           </div>
         </div>
       </div>
@@ -54,19 +86,25 @@ export default {
       initialVersion: {
         url: 'demo.mei'
       },
+      initialImageUrl: null,
       revisionInstruction: {
         url: 'demo.mei'
       },
+      revisionImageUrl: null,
       revisedVersion: {
         url: 'demo.mei'
-      }
+      },
+      revisedImageUrl: null
     }
   },
   watch: {
     activeComplaint () {
       this.initialVersion = this.embodiment('initialVersion')
+      this.initialImageUrl = this.imageUrl('initialVersion')
       this.revisionInstruction = this.embodiment('revisionInstruction')
+      this.revisionImageUrl = this.imageUrl('revisionInstruction')
       this.revisedVersion = this.embodiment('revisedVersion')
+      this.revisedImageUrl = this.imageUrl('revisedVersion')
     }
   },
   computed: {
@@ -81,15 +119,39 @@ export default {
       return {
         height: 'calc(' + window.innerHeight + 'px - 2rem)'
       }
+    },
+    initialDocLabel () {
+      return this.initialVersion && this.initialVersion.label
+        ? this.initialVersion.label
+        : 'Ausgangsdokument'
+    },
+    revisionDocLabel () {
+      return this.revisionInstruction && this.revisionInstruction.label
+        ? this.revisionInstruction.label
+        : 'Revisionsdokument'
+    },
+    revisedDocLabel () {
+      return this.revisedVersion && this.revisedVersion.label
+        ? this.revisedVersion.label
+        : 'Zieldokument'
+    },
+    initialTextLabel () {
+      return 'Ausgangstext'
+    },
+    revisionTextLabel () {
+      return 'Revisionstext'
+    },
+    revisedTextLabel () {
+      return 'Zieltext'
     }
   },
   methods: {
     embodiment (textStatus) {
       const complaint = this.activeComplaint
-      console.log(textStatus, complaint)
+      // console.log(textStatus, complaint)
       if (complaint && complaint.embodiments) {
         const emb = complaint.embodiments.find(e => e.textStatus === textStatus)
-        console.log(textStatus, emb)
+        // console.log(textStatus, emb)
         if (emb) {
           const opts = {}
           opts.url = emb.mei
@@ -98,6 +160,15 @@ export default {
         }
       }
       return {}
+    },
+    imageUrl (textStatus) {
+      const complaint = this.activeComplaint
+      if (complaint && complaint.embodiments) {
+        const emb = complaint.embodiments.find(e => e.textStatus === textStatus)
+        if (emb) {
+          return emb.iiif[0].target.selector[0]['@id']
+        }
+      }
     },
     /**
      * check if options are valid
@@ -157,6 +228,9 @@ export default {
           overflow: scroll;
           vertical-align: middle;
           padding: 3pt;
+          img {
+            width: 100%;
+          }
         }
       }
     }
