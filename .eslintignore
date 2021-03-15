@@ -1,2 +1,4 @@
 /docs/
 /src/openseadragon/*.js
+/src/toolbox/net.js
+
