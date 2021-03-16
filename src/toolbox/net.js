@@ -89,6 +89,7 @@ const PathHandler = {
 
 /**
  * Path class
+ * @property {Array} elements - array of decoded path elements
  */
 class Path {
   /**
@@ -115,14 +116,23 @@ class Path {
     list.forEach(p => this.elements.push(decodeURIComponent(p)))
   }
 
+  /**
+   * number of path elements
+   */
   get length () {
     return this._list.length
   }
 
+  /**
+   * is path absolute (starting with '/')
+   */
   get absolute () {
     return this._absolute
   }
 
+  /**
+   * set path absolute
+   */
   set absolute (a) {
     if (a) {
       this._absolute = true
@@ -131,10 +141,16 @@ class Path {
     }
   }
 
+  /**
+   * is path directory (ending with '/')
+   */
   get directory () {
     return this._directory
   }
 
+  /**
+   * set path directory
+   */
   set directory (d) {
     if (d) {
       this._directory = true
@@ -143,12 +159,22 @@ class Path {
     }
   }
 
+  /**
+   * @returns {String} string representation of path
+   */
   toString () {
     return (this._absolute ? '/' : '') + this._list.join('/') + (this._list.length > 0 && this._directory ? '/' : '')
   }
 }
 
+/**
+ * Query class
+ */
 class Query {
+  /**
+   * create Query object from string
+   * @param {String} query - query string
+   */
   constructor (query) {
     const l = query.split('&')
     const kvr = new RegExp('^([^=]*)(=(.*))?$')
@@ -162,6 +188,9 @@ class Query {
     this.str = query
   }
 
+  /**
+   * @returns {Array} array of property keys
+   */
   propertyKeys () {
     const k = {}
     for (const q of this._q) {
@@ -171,6 +200,11 @@ class Query {
     return Reflect.ownKeys(k)
   }
 
+  /**
+   * get URL decoded property value
+   * @param {String} name - property key
+   * @returns {String} property value
+   */
   getProperty (name) {
     const prop = encodeURIComponent(name)
     const val = []
@@ -186,12 +220,22 @@ class Query {
     return val.map(v => decodeURIComponent(v))
   }
 
+  /**
+   * add property to query - appended to existing values
+   * @param {String} name - property key
+   * @param {Object} value - property value
+   */
   addProperty (name, value) {
     const prop = encodeURIComponent(name)
     const val = value ? encodeURIComponent(value) : false
     this._q.push([prop, val])
   }
 
+  /**
+   * set/replace property value
+   * @param {String} name - property key
+   * @param {Object} value - property value
+   */
   setProperty (name, value) {
     const prop = encodeURIComponent(name)
     const q = this._q.filter(p => p[0] !== prop)
@@ -206,6 +250,9 @@ class Query {
     this._q = q
   }
 
+  /**
+   * @returns {String} string serialization of query
+   */
   toString () {
     return this._q.map(q => q[0] + (q[1] ? ('=' + q[1]) : '')).join('&')
   }
@@ -213,11 +260,18 @@ class Query {
 
 const urire = new RegExp('^(([^:/?#]+):)?(//((([^/?#@]*)@)?((\\[([0-9a-f\\:]*)\\])|([^/?#@:]*))(:([0-9]*))?))?([^?#]*)(\\?([^#]*))?(#(.*))?$')
 
+/**
+ * URL class
+ */
 class URL {
+  /**
+   * create URL object from string
+   * @param {String} url - url string
+   */
   constructor (url) {
     const rp = urire.exec(url)
     if (!rp) {
-      throw 'not a URL: ' + url
+      throw new Error('not a URL: ' + url)
     }
     // console.log(rp)
     this._scheme = rp[2]
@@ -230,14 +284,23 @@ class URL {
     this.fragment = rp[17] ? decodeURIComponent(rp[17]) : rp[16] ? '' : undefined
   }
 
+  /**
+   * scheme of url
+   */
   get scheme () {
     return this._scheme
   }
 
+  /**
+   * set scheme of url
+   */
   set scheme (scheme) {
     this._scheme = scheme
   }
 
+  /**
+   * credential part of url
+   */
   get credential () {
     if (this._credential) {
       return decodeURIComponent(this._credential)
@@ -245,6 +308,9 @@ class URL {
     return undefined
   }
 
+  /**
+   * set credential part of url
+   */
   set credential (credential) {
     if (credential) {
       this._credential = encodeURIComponent(credential)
@@ -253,41 +319,68 @@ class URL {
     }
   }
 
+  /**
+   * hostname of url
+   */
   get host () {
     // TODO punycode
     return this._host
   }
 
+  /**
+   * set hostname of url
+   */
   set host (host) {
     // TODO punycode
     this._host = host
   }
 
+  /**
+   * port of url
+   */
   get port () {
     return this._port
   }
 
+  /**
+   * set port
+   */
   set port (port) {
     const p = parseInt(port)
     this._port = (p > 0 && p < 65536) ? ('' + p) : undefined
   }
 
+  /**
+   * @returns {Path} path object inside url
+   */
   get path () {
     return this._path
   }
 
+  /**
+   * creates Path object from path string
+   */
   set path (path) {
     this._path = new Path(path.toString())
   }
 
+  /**
+   * @return {Query} query object of url
+   */
   get query () {
     return this._query
   }
 
+  /**
+   * creates Query object from query string
+   */
   set query (query) {
     this._query = new Query(query.toString())
   }
 
+  /**
+   * fragment part of url
+   */
   get fragment () {
     if (this._fragment) {
       return decodeURI(this._fragment)
@@ -295,6 +388,9 @@ class URL {
     return undefined
   }
 
+  /**
+   * set fragment part of url
+   */
   set fragment (fragment) {
     if (fragment) {
       this._fragment = encodeURI(fragment)
@@ -303,6 +399,9 @@ class URL {
     }
   }
 
+  /**
+   * @returns {String} string serialization of URL object
+   */
   toString () {
     var str = ''
     if (this._scheme && this._scheme.length > 0) {
