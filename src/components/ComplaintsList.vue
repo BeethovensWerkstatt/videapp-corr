@@ -39,6 +39,7 @@ import toolbox from '@/toolbox'
  *
  * @module components/ComplaintsList
  * @vue-computed {Object[]} complaints
+ * @vue-computed {String} activeComplaintId
  */
 export default {
   components: { ComplaintDialog },
@@ -51,15 +52,27 @@ export default {
     ...mapGetters(['complaints', 'activeComplaintId'])
   },
   methods: {
+    /**
+     * check if new movement starts while looping through complaints
+     * @param {String}
+     */
     checkMvt (mvt) {
       const t = mvt !== this.mvt
       this.mvt = mvt
       return t
     },
+    /**
+     * check if complaint is active
+     * @param {Object} complaint
+     */
     isActive (complaint) {
       const complaintId = complaint ? complaint['@id'] : null
       return this.$store.getters.activeComplaintId === complaintId
     },
+    /**
+     * retrieve measures affected by complaint
+     * @param {Object} complaint
+     */
     measures (complaint) {
       const m = {}
       for (const c of complaint.measures) {

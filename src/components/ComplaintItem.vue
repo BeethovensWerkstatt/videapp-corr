@@ -24,6 +24,7 @@ import { actions } from '@/store/names'
  * @vue-computed {String} activeComplaintId - id of selected complaint
  * @vue-computed {String} complaintId - id of this complaint
  * @vue-computed {boolean} isActive - true if this complaint is selected
+ * @vue-computed {String} measures - string info <i>a</i> - <i>b</i> about affected measures <i>a</i> to <i>b</i>
  */
 export default {
   name: 'ComplaintItem',

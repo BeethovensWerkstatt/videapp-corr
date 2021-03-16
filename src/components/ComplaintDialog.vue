@@ -72,9 +72,21 @@ import VerovioComponent from '@/components/VerovioComponent.vue'
  * Complaint dialog component
  *
  * @module components/ComplaintDialog
+ * @vue-data {Object} [initialVersion={url:'demo.mei'}] - initial version MEI source
+ * @vue-data {Object} [initialImageUrl=null] - initial version image url
+ * @vue-data {Object} [revisionInstruction={url:'demo.mei'}] - revision instruction MEI source
+ * @vue-data {Object} [revisionImageUrl=null] - revision instruction image url
+ * @vue-data {Object} [revisesVersion={url:'demo.mei'}] - revised version MEI source
+ * @vue-data {Object} [revisedImageUrl=null] - revised version image url
  * @vue-computed {String} activeComplaintId - id of selected complaint
  * @vue-computed {Object} activeComplaint - selected complaint object
  * @vue-computed {boolean} active - if dialog is opened
+ * @vue-computed {String} initialDocLabel - label for initial document
+ * @vue-computed {String} revisionDocLabel - label for revision document
+ * @vue-computed {String} revisedDocLabel - label for revised docuemnt
+ * @vue-computed {String} initialTextLabel - label for initial text
+ * @vue-computed {String} revisionTextLabel - label for revision text
+ * @vue-computed {String} revisedTextLabel - label for revised text
  */
 export default {
   components: { VerovioComponent },
@@ -146,6 +158,10 @@ export default {
     }
   },
   methods: {
+    /**
+     * @param {String} textStatus - one of 'initialVersion', 'revisionInstruction', 'revisedVersion'
+     * @returns {Object} MEI source information for textStatus
+     */
     embodiment (textStatus) {
       const complaint = this.activeComplaint
       // console.log(textStatus, complaint)
@@ -161,6 +177,10 @@ export default {
       }
       return {}
     },
+    /**
+     * @param {String} textStatus - one of 'initialVersion', 'revisionInstruction', 'revisedVersion'
+     * @returns {Object} IIIF source information for textStatus
+     */
     imageUrl (textStatus) {
       const complaint = this.activeComplaint
       if (complaint && complaint.embodiments) {
