@@ -124,7 +124,7 @@ export default {
         opts.pageHeight = this.pageHeight
       }
       opts.adjustPageHeight = true
-      if (this.option && this.options.from) {
+      if (this.options && this.options.from) {
         opts.from = this.options.from
       }
       return opts
