@@ -204,6 +204,8 @@ export default {
           const reWidth = new RegExp('xywh=\\d+,\\d+,(\\d+),\\d+')
           const m = reWidth.exec(emb.iiif[0].on.selector.value)
           if (m && m.length > 1) {
+            // this fixed scaling factor should be retrieved from the source scaling
+            // ... and this factor should adjustable
             return (+m[1] / 5) + 'px'
           }
         }
