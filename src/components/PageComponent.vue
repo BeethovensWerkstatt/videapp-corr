@@ -17,7 +17,9 @@
       />
     </div>
     <div v-else :style="completeStyle">
-      <span class="range-info">{{ measureRange }}</span>
+      <div class="range-container">
+        <div class="range-info">{{ measureRange }}</div>
+      </div>
     </div>
   </div>
 </template>
@@ -317,7 +319,15 @@ export default {
 .hideovl {
   display: none
 }
+.range-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
 .range-info {
+  display: inline-block;
   background-color: rgba(255, 255, 255, .5);
   padding: 3pt;
 }

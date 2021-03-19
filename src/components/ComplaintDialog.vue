@@ -13,19 +13,19 @@
           <div class="tabcol">
             <h2>{{ initialDocLabel }}</h2>
             <div class="docimg" v-if="initialImageUrl">
-              <img :src="initialImageUrl"/>
+              <img :src="initialImageUrl" :style="{ width: imageWidth('initialVersion') }" />
             </div>
           </div>
           <div class="tabcol">
             <h2>{{ revisionDocLabel }}</h2>
             <div class="docimg" v-if="revisionImageUrl">
-              <img :src="revisionImageUrl"/>
+              <img :src="revisionImageUrl" :style="{ width: imageWidth('revisionInstruction') }" />
             </div>
           </div>
           <div class="tabcol">
             <h2>{{ revisedDocLabel }}</h2>
             <div class="docimg" v-if="revisedImageUrl">
-              <img :src="revisedImageUrl"/>
+              <img :src="revisedImageUrl" :style="{ width: imageWidth('revisedVersion') }" />
             </div>
           </div>
         </div>
@@ -179,7 +179,7 @@ export default {
     },
     /**
      * @param {String} textStatus - one of 'initialVersion', 'revisionInstruction', 'revisedVersion'
-     * @returns {Object} IIIF source information for textStatus
+     * @returns {String} image url
      */
     imageUrl (textStatus) {
       const complaint = this.activeComplaint
@@ -189,6 +189,28 @@ export default {
           return emb.iiif[0].target.selector[0]['@id']
         }
       }
+      return null
+    },
+    /**
+     * @param {String} textStatus - one of 'initialVersion', 'revisionInstruction', 'revisedVersion'
+     * @returns {String} css image width
+     */
+    imageWidth (textStatus) {
+      const complaint = this.activeComplaint
+      if (complaint && complaint.embodiments) {
+        const emb = complaint.embodiments.find(e => e.textStatus === textStatus)
+        if (emb) {
+          console.log(emb.iiif[0])
+          const reWidth = new RegExp('xywh=\\d+,\\d+,(\\d+),\\d+')
+          const m = reWidth.exec(emb.iiif[0].on.selector.value)
+          if (m && m.length > 1) {
+            // this fixed scaling factor should be retrieved from the source scaling
+            // ... and this factor should adjustable
+            return (+m[1] / 5) + 'px'
+          }
+        }
+      }
+      return '100%'
     },
     /**
      * check if options are valid

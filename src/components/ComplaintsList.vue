@@ -121,14 +121,12 @@ export default {
 }
 
 tr.mvt {
-  th {
-  outline: 1px solid lightgray;
-  }
   th.mvt {
-    font-weight: bold;
+    background-color: #eee;
     width: 100%;
     text-align: left;
     border-radius: 3pt;
+    padding: 2pt 3pt 0pt 4pt;
   }
 }
 
