@@ -38,6 +38,8 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.0",
     "eslint-plugin-vue": "^6.2.2",
+    "gulp": "^4.0.2",
+    "gulp-git": "^2.10.1",
     "jsdoc": "^3.6.6",
     "jsdoc-to-markdown": "^6.0.1",
     "jsdoc-vuejs": "^3.0.9",
