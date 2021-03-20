@@ -1,6 +1,6 @@
 <template>
   <header>
-    VideApp<sub>corr</sub> &bullet;
+    <span :title="version()"> VideApp<sub>corr</sub></span> &bullet;
     <router-link to="/">Startseite</router-link> &bullet;
     <router-link to="/works">Werkliste</router-link>
     <div class="progress"><Progress /></div>
@@ -9,6 +9,7 @@
 
 <script>
 import Progress from '@/components/Progress.vue'
+import config from '@/config'
 /**
  * Application header component
  *
@@ -16,7 +17,12 @@ import Progress from '@/components/Progress.vue'
  */
 export default {
   components: { Progress },
-  name: 'AppHeader'
+  name: 'AppHeader',
+  methods: {
+    version () {
+      return config.version
+    }
+  }
 }
 </script>
 

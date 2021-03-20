@@ -12,7 +12,7 @@ gulp.task('gitlog', async function () {
       if (err) throw err
       // store in config/version.json
       const json = { version: stdout }
-      fs.writeFile('src/config/version.json', JSON.stringify(json, null, 2), function () {
+      fs.writeFile('dist/version.json', JSON.stringify(json, null, 2), function () {
         console.log('fertig')
       })
     }
