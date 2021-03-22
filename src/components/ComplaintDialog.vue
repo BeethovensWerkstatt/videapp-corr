@@ -3,8 +3,7 @@
     <div id="body" v-if="active">
       <div class="title">{{ activeComplaint.movement.n }}. {{ activeComplaint.movement.label }}</div>
       <div class="measures">
-        Takte:
-        <span v-for="(m, i) in activeComplaint.measures" :key="m.id"><span v-if="i > 0">, </span>{{ m.label }}</span>
+        Takte: {{ measures }}
       </div>
       <hr>
       <div class="loading" v-if="activeComplaint.loading">Lade {{ activeComplaint.label }}</div>
@@ -155,6 +154,25 @@ export default {
     },
     revisedTextLabel () {
       return 'Zieltext'
+    },
+    measures () {
+      const m = {}
+      for (const c of this.activeComplaint.measures) {
+        const mi = +c.label
+        if (!m.min || mi < m.min) {
+          m.min = mi
+        }
+        if (!m.max || mi > m.max) {
+          m.max = mi
+        }
+      }
+      if (m.min === m.max) {
+        return '' + m.min
+      }
+      if (m.max - m.min === 1) {
+        return m.min + ', ' + m.max
+      }
+      return m.min + '-' + m.max
     }
   },
   methods: {
