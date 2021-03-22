@@ -86,6 +86,7 @@ import VerovioComponent from '@/components/VerovioComponent.vue'
  * @vue-computed {String} initialTextLabel - label for initial text
  * @vue-computed {String} revisionTextLabel - label for revision text
  * @vue-computed {String} revisedTextLabel - label for revised text
+ * @vue-computed {String} measures - indicator for affected measures
  */
 export default {
   components: { VerovioComponent },
