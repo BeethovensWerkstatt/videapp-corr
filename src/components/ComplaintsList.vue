@@ -3,13 +3,13 @@
     <complaint-dialog />
     <table class="complaint-list">
       <thead>
-        <th colspan="2">Monita</th>
+        <th colspan="2">{{ $t('terms.complaints') }}</th>
       </thead>
       <tbody :key="complaint['@id']"
         v-for="(complaint, ci) in complaints"
       >
         <tr
-          v-if="checkMvt(complaint.movement.n)"
+          v-if="complaint.movement && checkMvt(complaint.movement.n)"
           class="mvt"
         >
           <th>{{ toRoman(complaint.movement.n) + '.' }}&nbsp;</th>

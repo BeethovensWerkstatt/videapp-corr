@@ -1,8 +1,8 @@
 <template>
   <header>
     <span :title="version()"> VideApp<sub>corr</sub></span> &bullet;
-    <router-link to="/">Startseite</router-link> &bullet;
-    <router-link to="/works">Werkliste</router-link>
+    <router-link to="/">{{ $t('terms.home') }}</router-link> &bullet;
+    <router-link to="/works">{{ $t('terms.works') }}</router-link>
     <div class="progress"><Progress /></div>
   </header>
 </template>

@@ -7,6 +7,7 @@
     "build": "vue-cli-service build; gulp gitlog",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
+    "i18n:report": "vue-cli-service i18n:report --src \"./src/**/*.?(js|vue)\" --locales \"./src/locales/**/*.json\"",
     "jsdoc": "jsdoc -a all -c jsdoc.json"
   },
   "dependencies": {
@@ -18,10 +19,12 @@
     "typescript": "^4.1.2",
     "verovio": "^3.2.0",
     "vue": "^2.6.11",
+    "vue-i18n": "^8.22.3",
     "vue-router": "^3.4.9",
     "vuex": "^3.6.0"
   },
   "devDependencies": {
+    "@intlify/vue-i18n-loader": "^1.0.0",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-plugin-router": "~4.5.0",
@@ -47,6 +50,7 @@
     "markdown-pdf": "^10.0.0",
     "node-sass": "^4.12.0",
     "sass-loader": "^8.0.2",
+    "vue-cli-plugin-i18n": "~2.0.2",
     "vue-template-compiler": "^2.6.11"
   },
   "gitHooks": {

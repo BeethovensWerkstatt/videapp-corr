@@ -10,6 +10,7 @@ import 'spectre.css/dist/spectre.css'
 import { VectrePlugin } from '@vectrejs/vectre'
 
 import '@/scss/variables.scss'
+import i18n from './i18n'
 
 // add fabricjs- and html-overlay plugins
 // import OpenSeadragon from 'openseadragon'
@@ -29,6 +30,7 @@ Vue.config.productionTip = false
 new Vue({
   router,
   store,
+  i18n,
   render: h => h(App)
 }).$mount('#app')
 

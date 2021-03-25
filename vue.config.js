@@ -6,5 +6,14 @@ module.exports = {
         args[0].title = 'VideApp_corr'
         return args
       })
+  },
+
+  pluginOptions: {
+    i18n: {
+      locale: 'de',
+      fallbackLocale: 'de',
+      localeDir: 'locales',
+      enableInSFC: true
+    }
   }
 }
