@@ -1,6 +1,6 @@
 <template>
   <header>
-    <span :title="version()"> VideApp<sub>corr</sub></span> &bullet;
+    <span :title="version"> VideApp<sub>corr</sub></span> &bullet;
     <router-link to="/">{{ $t('terms.home') }}</router-link> &bullet;
     <router-link to="/works">{{ $t('terms.works') }}</router-link>
     <div class="progress"><Progress /></div>
@@ -8,8 +8,9 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import Progress from '@/components/Progress.vue'
-import config from '@/config'
+
 /**
  * Application header component
  *
@@ -18,10 +19,8 @@ import config from '@/config'
 export default {
   components: { Progress },
   name: 'AppHeader',
-  methods: {
-    version () {
-      return config.version
-    }
+  computed: {
+    ...mapGetters(['version'])
   }
 }
 </script>

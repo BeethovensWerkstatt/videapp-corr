@@ -7,6 +7,7 @@ const mutations = {
    */
   LOAD_SOURCE (state, source) {
     const sources = [...state.sources]
+    // console.log(source)
     sources.push(source)
     state.sources = sources
   },

@@ -1,4 +1,5 @@
 import osdDefault from './osd.default'
+import store from '@/store'
 
 // TODO import from (e.g) public/config.json ?
 
@@ -15,7 +16,7 @@ fetch('./version.json').then(async resp => {
   if (resp.ok) {
     const v = await resp.json()
     config.version = v.version
-    console.log(config.version)
+    store.commit('SET_VERSION', config.version)
   }
 })
 

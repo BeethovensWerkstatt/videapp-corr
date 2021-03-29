@@ -28,6 +28,7 @@ const store = new Vuex.Store({
    * @property {String} activeComplaintId - id of selected complaint
    */
   state: {
+    version: 'N/A',
     ...storeProcessing.state,
     ...storeOSD.state,
     ...storeWorks.state,
@@ -40,6 +41,10 @@ const store = new Vuex.Store({
    * @memberof store
    */
   mutations: {
+    SET_VERSION (state, version) {
+      console.log('Version:\n' + version)
+      state.version = version
+    },
     ...storeProcessing.mutations,
     ...storeOSD.mutations,
     ...storeWorks.mutations,
@@ -75,6 +80,9 @@ const store = new Vuex.Store({
    * @property {Object} activeComplaint - selected complaint object
    */
   getters: {
+    version (state) {
+      return state.version
+    },
     ...storeProcessing.getters,
     ...storeOSD.getters,
     ...storeWorks.getters,

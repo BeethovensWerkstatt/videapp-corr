@@ -5,7 +5,7 @@ const fs = require('fs')
 gulp.task('gitlog', async function () {
   git.exec(
     {
-      args: 'log -n 1 --pretty="%ai %H (%an)%n%s"',
+      args: 'log -n 1 --pretty="%ai%n(%an)%n%s"%H%n',
       log: false
     },
     function (err, stdout) {

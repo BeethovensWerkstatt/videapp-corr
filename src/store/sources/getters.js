@@ -1,5 +1,6 @@
 const getters = {
   sources: (state) => {
+    // console.log(state.sources)
     return state.sources
   },
   workSources: (state) => (workId) => {

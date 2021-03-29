@@ -8,7 +8,6 @@ const toStore = {
     SET_WORKING (state, act) {
       // console.log('set working: ' + act)
       state.working += act ? 1 : -1
-      console.log(Promise)
     }
   },
   actions: {

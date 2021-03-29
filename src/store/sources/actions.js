@@ -23,7 +23,12 @@ const actions = {
   async loadSources ({ commit, dispatch, state, getters }, workId) {
     if (workId && workId !== demoId) {
       console.log(state.works, workId)
-      const work = state.works.find(w => w.id === workId)
+      const work = state.works.find(w => {
+        if (w.id === workId) {
+          console.log(workId, w)
+        }
+        return w.id === workId
+      })
       if (work && work['@id'] && !work.sources) {
         // TODO select language
         console.log(work.title[0].title)
@@ -46,11 +51,11 @@ const actions = {
           console.log(m.label)
 
           const source = {
-            id: m['@id'],
+            id: m.id,
             workId,
             label: m.label,
-            maxDimensions: { width: 0, height: 0 },
             // these values are updated later
+            maxDimensions: { width: 0, height: 0 },
             position: { x: (150 + index * 400), y: 400 },
             pages: [],
             rotation: 0,
@@ -71,6 +76,7 @@ const actions = {
                   if (!canvas) {
                     return null
                   }
+                  // console.log(canvas, place)
                   // default page height is 300mm if physicalScale is not defined
                   const physScale = (canvas.service && canvas.service.physicalScale)
                     ? canvas.service.physicalScale
