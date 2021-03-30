@@ -47,7 +47,7 @@ const toStore = {
         complaint.loading = true
         try {
           const { data } = await axios.get(complaintId)
-          complaint = data
+          complaint = { ...complaint, ...data }
           commit(mut.MODIFY_COMPLAINT, complaint)
         } finally {
           finishProc()
@@ -58,8 +58,12 @@ const toStore = {
      * load complaints
      * @memberof store.actions
      */
-    loadComplaints ({ commit }, { complaints }) {
-      complaints.forEach(complaint => commit(mut.LOAD_COMPLAINT, complaint))
+    loadComplaints ({ commit }, { complaints, movements }) {
+      complaints.forEach(c => {
+        const movement = movements[c.mdiv]
+        const complaint = { ...c, movement }
+        commit(mut.LOAD_COMPLAINT, complaint)
+      })
     }
   },
   getters: {

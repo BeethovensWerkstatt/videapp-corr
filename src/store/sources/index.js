@@ -6,6 +6,7 @@ import { registerMutations, registerActions } from '../names'
 
 const toStore = {
   state: {
+    movements: {},
     sources: [],
     activeSourceId: null
   },

@@ -48,6 +48,7 @@ export default {
     },
     measures () {
       const m = {}
+      console.log(this.complaint)
       for (const c of this.complaint.measures) {
         const mi = +c.label
         if (!m.min || mi < m.min) {
