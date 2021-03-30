@@ -22,10 +22,10 @@ const actions = {
    */
   async loadSources ({ commit, dispatch, state, getters }, workId) {
     if (workId && workId !== demoId) {
-      console.log(state.works, workId)
+      // console.log(state.works, workId)
       const work = state.works.find(w => {
         if (w.id === workId) {
-          console.log(workId, w)
+          // console.log(workId, w)
         }
         return w.id === workId
       })

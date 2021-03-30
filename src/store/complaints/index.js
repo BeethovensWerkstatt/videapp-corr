@@ -61,6 +61,7 @@ const toStore = {
     loadComplaints ({ commit }, { complaints, movements }) {
       complaints.forEach(c => {
         const movement = movements[c.mdiv]
+        // this seems like a workaround
         const complaint = { ...c, movement }
         commit(mut.LOAD_COMPLAINT, complaint)
       })

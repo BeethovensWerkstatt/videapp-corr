@@ -1,4 +1,14 @@
 const getters = {
+  movements: (state) => {
+    return state.movements
+  },
+  getMovementById: (state) => (mvtId) => {
+    const movements = state.movements
+    if (movements) {
+      return movements[mvtId]
+    }
+    return null
+  },
   sources: (state) => {
     // console.log(state.sources)
     return state.sources
