@@ -25,7 +25,17 @@ const toStore = {
      * @param {Object} complaint
      */
     MODIFY_COMPLAINT (state, complaint) {
-      const complaints = state.complaints.map(c => c['@id'] === complaint['@id'] ? complaint : c)
+      let success = false
+      const complaints = state.complaints.map(c => {
+        if (c['@id'] === complaint['@id']) {
+          success = true
+          return complaint
+        }
+        return c
+      })
+      if (!success) {
+        complaints.push(complaint)
+      }
       state.complaints = complaints
     }
   },
@@ -45,9 +55,12 @@ const toStore = {
       if (!complaint.embodiments) {
         startProc()
         complaint.loading = true
+        console.log(complaint)
         try {
           const { data } = await axios.get(complaintId)
-          complaint = { ...complaint, ...data }
+          complaint = { ...data, ...complaint }
+          complaint.loading = false
+          console.log(complaint)
           commit(mut.MODIFY_COMPLAINT, complaint)
         } finally {
           finishProc()
