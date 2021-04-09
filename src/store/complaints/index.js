@@ -52,7 +52,7 @@ const toStore = {
         return
       }
       state.activeComplaintId = complaintId
-      if (!complaint.embodiments) {
+      if (!complaint.revisionDocs) {
         startProc()
         complaint.loading = true
         console.log(complaint)
