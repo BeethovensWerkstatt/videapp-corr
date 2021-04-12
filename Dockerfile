@@ -8,7 +8,10 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY ./ .
+RUN apk add git
+RUN npm install -g gulp-cli gulp-git
 RUN npm run build
+RUN gulp gitlog
 
 #########################
 # now move on to deploying it
