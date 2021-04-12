@@ -52,6 +52,9 @@ export default {
     ...mapGetters(['complaints', 'activeComplaintId'])
   },
   methods: {
+    toRoman (num) {
+      return toolbox.toRoman(num)
+    },
     /**
      * check if new movement starts while looping through complaints
      * @param {String}
@@ -102,9 +105,6 @@ export default {
       } else {
         this.$store.dispatch(actions.activateComplaint, complaintId)
       }
-    },
-    toRoman (num) {
-      return toolbox.toRoman(num)
     }
   }
 }

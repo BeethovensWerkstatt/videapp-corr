@@ -1,7 +1,7 @@
 <template>
   <div class="dialog" :class="{ 'inactive': !this.active }" :styles="styles">
     <div id="body" v-if="active">
-      <div class="title">{{ activeComplaint.movement.n }}. {{ activeComplaint.movement.label }}</div>
+      <div class="title">{{ toRoman(activeComplaint.movement.n) }}. {{ activeComplaint.movement.label }}</div>
       <div class="measures">
         Takte: {{ measures }}
       </div>
@@ -66,6 +66,7 @@
 import { mapGetters } from 'vuex'
 import { actions } from '@/store/names'
 import VerovioComponent from '@/components/VerovioComponent.vue'
+import toolbox from '@/toolbox'
 
 /**
  * Complaint dialog component
@@ -177,6 +178,9 @@ export default {
     }
   },
   methods: {
+    toRoman (num) {
+      return toolbox.toRoman(num)
+    },
     /**
      * @param {String} textStatus - one of 'initialVersion', 'revisionInstruction', 'revisedVersion'
      * @returns {Object} MEI source information for textStatus
