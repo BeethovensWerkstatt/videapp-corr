@@ -1,6 +1,6 @@
 <template>
   <header>
-    <span :title="version"> VideApp<sub>corr</sub></span> &bullet;
+    <span :title="version">VideApp<sub>corr</sub></span> &bullet;
     <router-link to="/">{{ $t('terms.home') }}</router-link> &bullet;
     <router-link to="/works">{{ $t('terms.works') }}</router-link>
     <div class="progress"><Progress /></div>
