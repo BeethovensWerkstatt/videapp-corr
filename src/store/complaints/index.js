@@ -55,7 +55,7 @@ const toStore = {
       if (!complaint.revisionDocs) {
         startProc()
         complaint.loading = true
-        console.log(complaint)
+        // console.log(complaint)
         try {
           const { data } = await axios.get(complaintId)
           complaint = { ...data, ...complaint }

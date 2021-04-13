@@ -1,56 +1,48 @@
 <template>
   <div class="dialog" :class="{ 'inactive': !this.active }" :styles="styles">
     <div id="body" v-if="active">
-      <div class="title">{{ toRoman(activeComplaint.movement.n) }}. {{ activeComplaint.movement.label }}</div>
+      <div class="title">{{ toRoman(activeComplaint.movement.n) }}. {{ activeComplaint.movement.label }}, {{ activeComplaint.label }}</div>
       <div class="measures">
         Takte: {{ measures }}
       </div>
       <hr>
       <div class="loading" v-if="activeComplaint.loading">Lade {{ activeComplaint.label }}</div>
       <div class="tabview" v-else>
-        <div class="tabrow">
+        <div class="tabrow" v-for="(row,i) in docMap" :key="i">
           <div class="tabcol">
             <h2>{{ initialDocLabel }}</h2>
-            <div class="docimg" v-if="initialImageUrl">
-              <img :src="initialImageUrl" :style="{ width: imageWidth('initialVersion') }" />
+            <div class="docimg" v-if="row.ante.img.url">
+              <img :src="row.ante.img.url" :style="{ width: '100%' }" />
             </div>
+            <h2>{{ initialTextLabel }}</h2>
+            <verovio-component
+              id="ante"
+              :options="row.ante.mei"
+              v-if="vrvValid(row.ante.mei)"
+            />
           </div>
           <div class="tabcol">
             <h2>{{ revisionDocLabel }}</h2>
-            <div class="docimg" v-if="revisionImageUrl">
-              <img :src="revisionImageUrl" :style="{ width: imageWidth('revisionInstruction') }" />
+            <div class="docimg" v-if="row.revision.img.url">
+              <img :src="row.revision.img.url" :style="{ width: '100%' }" />
             </div>
+            <h2>{{ revisionTextLabel }}</h2>
+            <verovio-component
+              id="revision"
+              :options="row.revision.mei"
+              v-if="vrvValid(row.revision.mei)"
+            />
           </div>
           <div class="tabcol">
             <h2>{{ revisedDocLabel }}</h2>
-            <div class="docimg" v-if="revisedImageUrl">
-              <img :src="revisedImageUrl" :style="{ width: imageWidth('revisedVersion') }" />
+            <div class="docimg" v-if="row.post.img.url">
+              <img :src="row.post.img.url" :style="{ width: '100%' }" />
             </div>
-          </div>
-        </div>
-        <div class="tabrow">
-          <div class="tabcol">
-            <h2>{{ initialTextLabel }}</h2>
-            <verovio-component
-              id="initialVersion"
-              :options="initialVersion"
-              v-if="vrvValid(initialVersion)"
-            />
-          </div>
-          <div class="tabcol">
-            <h2>{{ revisionTextLabel }}</h2>
-            <verovio-component
-              id="revisionInstruction"
-              :options="revisionInstruction"
-              v-if="vrvValid(revisionInstruction)"
-            />
-          </div>
-          <div class="tabcol">
             <h2>{{ revisedTextLabel }}</h2>
             <verovio-component
-              id="revisedVersion"
-              :options="revisedVersion"
-              v-if="vrvValid(revisedVersion)"
+              id="post"
+              :options="row.post.mei"
+              v-if="vrvValid(row.post.mei)"
             />
           </div>
         </div>
@@ -175,6 +167,23 @@ export default {
         return m.min + ', ' + m.max
       }
       return m.min + '-' + m.max
+    },
+    docMap () {
+      const ante = this.statusDocs(this.activeComplaint?.anteDocs)
+      const revision = this.statusDocs(this.activeComplaint?.revisionDocs)
+      const post = this.statusDocs(this.activeComplaint?.postDocs)
+      const len = Math.max(ante.length, revision.length, post.length)
+      // console.log(len, ante, revision, post)
+      const map = []
+      for (let i = 0; i < len; i++) {
+        const row = {}
+        row.ante = i < ante.length ? ante[i] : {}
+        row.revision = i < revision.length ? revision[i] : {}
+        row.post = i < post.length ? post[i] : {}
+        map.push(row)
+      }
+      console.log(map)
+      return map
     }
   },
   methods: {
@@ -182,58 +191,29 @@ export default {
       return toolbox.toRoman(num)
     },
     /**
-     * @param {String} textStatus - one of 'initialVersion', 'revisionInstruction', 'revisedVersion'
-     * @returns {Object} MEI source information for textStatus
+     * normalize textStatus -- one of `anteDocs`, `revisionDocs` and `postDocs`--
+     * to an array of objects `{ mei: { url }, img: { url } }`
+     *
+     * (TODO width/resolution)
      */
-    embodiment (textStatus) {
-      const complaint = this.activeComplaint
-      // console.log(textStatus, complaint)
-      if (complaint && complaint.embodiments) {
-        const emb = complaint.embodiments.find(e => e.textStatus === textStatus)
-        // console.log(textStatus, emb)
-        if (emb) {
-          const opts = {}
-          opts.url = emb.mei
-          opts.label = emb.label
-          return opts
-        }
-      }
-      return {}
-    },
-    /**
-     * @param {String} textStatus - one of 'initialVersion', 'revisionInstruction', 'revisedVersion'
-     * @returns {String} image url
-     */
-    imageUrl (textStatus) {
-      const complaint = this.activeComplaint
-      if (complaint && complaint.embodiments) {
-        const emb = complaint.embodiments.find(e => e.textStatus === textStatus)
-        if (emb) {
-          return emb.iiif[0].target.selector[0]['@id']
-        }
-      }
-      return null
-    },
-    /**
-     * @param {String} textStatus - one of 'initialVersion', 'revisionInstruction', 'revisedVersion'
-     * @returns {String} css image width
-     */
-    imageWidth (textStatus) {
-      const complaint = this.activeComplaint
-      if (complaint && complaint.embodiments) {
-        const emb = complaint.embodiments.find(e => e.textStatus === textStatus)
-        if (emb) {
-          console.log(emb.iiif[0])
-          const reWidth = new RegExp('xywh=\\d+,\\d+,(\\d+),\\d+')
-          const m = reWidth.exec(emb.iiif[0].on.selector.value)
-          if (m && m.length > 1) {
-            // this fixed scaling factor should be retrieved from the source scaling
-            // ... and this factor should adjustable
-            return (+m[1] / 5) + 'px'
+    statusDocs (textStatus) {
+      const docs = []
+      console.log(textStatus)
+      if (textStatus) {
+        textStatus.forEach(stat => {
+          const doc = {
+            mei: {
+              url: stat.mei
+            }
           }
-        }
+          // check for multiple images?
+          doc.img = { url: stat.iiif[0].target.selector[0]['@id'] }
+          if (doc.mei?.url || doc.img) {
+            docs.push(doc)
+          }
+        })
       }
-      return '100%'
+      return docs
     },
     /**
      * check if options are valid
