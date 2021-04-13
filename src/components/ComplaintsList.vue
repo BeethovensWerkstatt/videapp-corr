@@ -87,13 +87,19 @@ export default {
           m.max = mi
         }
       }
+      let measures = m.min + ' – ' + m.max
       if (m.min === m.max) {
-        return '' + m.min
+        measures = '' + m.min
       }
       if (m.max - m.min === 1) {
-        return m.min + ', ' + m.max
+        measures = m.min + ', ' + m.max
       }
-      return m.min + ' – ' + m.max
+      if (complaint.label) {
+        measures = complaint.label + ', (T. ' + measures + ')'
+      } else {
+        measures = (m.max - m.min > 0 ? 'Takte ' : 'Takt ') + measures
+      }
+      return measures
     },
     /**
      * toggle complaint selection

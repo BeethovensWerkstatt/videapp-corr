@@ -6,7 +6,10 @@
     @click.prevent="toggleActivate"
   >
     <div class="complaint-attribute"><sub>{{ index + 1 }}</sub></div>
-    <div class="complaint-attribute">{{ measures }}</div>
+    <div class="complaint-attribute">
+      <span v-if="complaint.label">{{ complaint.label }}, </span>
+      {{ measures }}
+    </div>
   </div>
 </template>
 

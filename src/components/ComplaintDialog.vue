@@ -88,29 +88,9 @@ export default {
   },
   data () {
     return {
-      initialVersion: {
-        url: 'demo.mei'
-      },
-      initialImageUrl: null,
-      revisionInstruction: {
-        url: 'demo.mei'
-      },
-      revisionImageUrl: null,
-      revisedVersion: {
-        url: 'demo.mei'
-      },
-      revisedImageUrl: null
     }
   },
   watch: {
-    activeComplaint () {
-      this.initialVersion = this.embodiment('initialVersion')
-      this.initialImageUrl = this.imageUrl('initialVersion')
-      this.revisionInstruction = this.embodiment('revisionInstruction')
-      this.revisionImageUrl = this.imageUrl('revisionInstruction')
-      this.revisedVersion = this.embodiment('revisedVersion')
-      this.revisedImageUrl = this.imageUrl('revisedVersion')
-    }
   },
   computed: {
     ...mapGetters(['activeComplaintId', 'activeComplaint']),
@@ -198,7 +178,7 @@ export default {
      */
     statusDocs (textStatus) {
       const docs = []
-      console.log(textStatus)
+      // console.log(textStatus)
       if (textStatus) {
         textStatus.forEach(stat => {
           const doc = {
