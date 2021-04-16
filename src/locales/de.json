@@ -2,6 +2,17 @@
   "message": "Hallo Modul 3",
   "terms": {
     "complaints": "Monita",
+    "complaint": {
+      "title": "Monitum",
+      "state": {
+        "anteDoc": "Ausgangsdokument",
+        "anteText": "Ausgangstext",
+        "revisionDoc": "Revisionsdokument",
+        "revisionText": "Revisionstext",
+        "postDoc": "Zieldokument",
+        "postText": "Zieltext"
+      }
+    },
     "home": "Startseite",
     "works": "Werkliste"
   }

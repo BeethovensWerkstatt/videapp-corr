@@ -108,7 +108,7 @@ export default {
     initialDocLabel () {
       return this.initialVersion && this.initialVersion.label
         ? this.initialVersion.label
-        : 'Ausgangsdokument'
+        : this.$t('terms.complaint.state.anteDoc')
     },
     revisionDocLabel () {
       return this.revisionInstruction && this.revisionInstruction.label
