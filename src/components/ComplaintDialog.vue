@@ -113,21 +113,21 @@ export default {
     revisionDocLabel () {
       return this.revisionInstruction && this.revisionInstruction.label
         ? this.revisionInstruction.label
-        : 'Revisionsdokument'
+        : this.$t('terms.complaint.state.revisionDoc')
     },
     revisedDocLabel () {
       return this.revisedVersion && this.revisedVersion.label
         ? this.revisedVersion.label
-        : 'Zieldokument'
+        : this.$t('terms.complaint.state.postDoc')
     },
     initialTextLabel () {
-      return 'Ausgangstext'
+      return this.$t('terms.complaint.state.anteText')
     },
     revisionTextLabel () {
-      return 'Revisionstext'
+      return this.$t('terms.complaint.state.revisionText')
     },
     revisedTextLabel () {
-      return 'Zieltext'
+      return this.$t('terms.complaint.state.postText')
     },
     measures () {
       const m = {}
@@ -249,6 +249,7 @@ export default {
       .tabrow {
         display: table-row;
         .tabcol {
+          width: 33%;
           display: table-cell;
           overflow: scroll;
           vertical-align: middle;
