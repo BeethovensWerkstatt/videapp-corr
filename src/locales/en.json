@@ -2,6 +2,17 @@
   "message": "Hello Module 3",
   "terms": {
     "complaints": "Complaints",
+    "complaint": {
+      "title": "Complaint",
+      "state": {
+        "anteDoc": "initial document",
+        "anteText": "initial text",
+        "revisionDoc": "revision document",
+        "revisionText": "revision text",
+        "postDoc": "post document",
+        "postText": "post text"
+      }
+    },
     "home": "Home",
     "works": "list of works"
   }
