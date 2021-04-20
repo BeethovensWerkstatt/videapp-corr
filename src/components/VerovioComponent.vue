@@ -187,6 +187,11 @@ export default {
 .verovio {
   border: 1px solid yellow;
   background-color: whitesmoke;
+
+  .out-focus, .out-context {
+    fill: #999999;
+    stroke: #999999;
+  }
 }
 .processing {
   border: 1px solid blue;
