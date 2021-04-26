@@ -1,5 +1,7 @@
 <template>
-  <div :id="id" v-html="html" :class="status">
+  <div class="container">
+    <div :id="id" v-html="html" :class="status">
+    </div>
   </div>
 </template>
 
@@ -88,19 +90,19 @@ export default {
       return '<span title="' + this.url + '">... lade ...</span>'
     },
     url () {
-      return this.options ? this.options.url : 'demo.mei'
+      return this.options?.url ? this.options.url : 'demo.mei'
     },
     page () {
-      return this.options && this.options.page > 1 ? this.options.page : 1
+      return this.options?.page > 1 ? this.options.page : 1
     },
     scale () {
-      return this.options && this.options.scale > 0 ? this.options.scale : 30
+      return this.options?.scale > 0 ? this.options.scale : 30
     },
     height () {
-      return this.options && this.options.height > 0 ? this.options.height : 0
+      return this.options?.height > 0 ? this.options.height : 0
     },
     width () {
-      var width = this.options && this.options.width > 0 ? this.options.width : 0
+      let width = this.options?.width > 0 ? this.options.width : 0
       if (width === 0 && this.$el) {
         width = this.$el.clientWidth
       }
@@ -119,7 +121,9 @@ export default {
     vrvOptions () {
       const opts = {}
       opts.scale = this.scale
-      opts.pageWidth = this.pageWidth
+      // TODO?
+      opts.pageWidth = 10000 // this.pageWidth
+      opts.adjustPageWidth = true
       if (this.pageHeight > 0) {
         opts.pageHeight = this.pageHeight
       }
@@ -184,6 +188,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.container {
+  width: 100%;
+  max-width: 400px;
+  overflow: scroll;
+}
 .verovio {
   border: 1px solid yellow;
   background-color: whitesmoke;
