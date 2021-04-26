@@ -1,7 +1,5 @@
 <template>
-  <div class="container">
-    <div :id="id" v-html="html" :class="status">
-    </div>
+  <div :id="id" v-html="html" :class="status">
   </div>
 </template>
 
@@ -188,12 +186,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.container {
+.verovio {
   width: 100%;
   max-width: 400px;
   overflow: scroll;
-}
-.verovio {
   border: 1px solid yellow;
   background-color: whitesmoke;
 
