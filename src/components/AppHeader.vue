@@ -1,6 +1,6 @@
 <template>
   <header>
-    <span :title="version" @click="openCommit">VideApp<sub>corr</sub></span> &bullet;
+    <span :title="versionText" @click="openCommit">VideApp<sub>corr</sub></span> &bullet;
     <router-link to="/">{{ $t('terms.home') }}</router-link> &bullet;
     <router-link to="/works">{{ $t('terms.works') }}</router-link>
     <div class="progress"><Progress /></div>
@@ -20,7 +20,10 @@ export default {
   components: { Progress },
   name: 'AppHeader',
   computed: {
-    ...mapGetters(['version'])
+    ...mapGetters(['version']),
+    versionText () {
+      return this.version?.version
+    }
   },
   methods: {
     openCommit (e) {
