@@ -1,6 +1,6 @@
 <template>
   <header>
-    <span :title="version">VideApp<sub>corr</sub></span> &bullet;
+    <span :title="version" @click="openCommit">VideApp<sub>corr</sub></span> &bullet;
     <router-link to="/">{{ $t('terms.home') }}</router-link> &bullet;
     <router-link to="/works">{{ $t('terms.works') }}</router-link>
     <div class="progress"><Progress /></div>
@@ -21,6 +21,15 @@ export default {
   name: 'AppHeader',
   computed: {
     ...mapGetters(['version'])
+  },
+  methods: {
+    openCommit (e) {
+      if (e.shiftKey && this.version?.commit) {
+        const url = 'https://github.com/BeethovensWerkstatt/videapp-corr/commit/' + this.version.commit
+        console.log(url)
+        window.open(url, 'videapp-commit')
+      }
+    }
   }
 }
 </script>

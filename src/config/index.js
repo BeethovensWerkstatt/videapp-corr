@@ -15,7 +15,7 @@ const config = {
 fetch('./version.json').then(async resp => {
   if (resp.ok) {
     const v = await resp.json()
-    config.version = v.version
+    config.version = v
     store.commit('SET_VERSION', config.version)
   }
 })
