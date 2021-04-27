@@ -187,7 +187,7 @@ export default {
             }
           }
           // check for multiple images?
-          doc.img = { url: stat.iiif[0].target.selector[0]['@id'] }
+          doc.img = { url: stat.iiif[0]?.target.selector[0]['@id'] }
           if (doc.mei?.url || doc.img) {
             docs.push(doc)
           }
