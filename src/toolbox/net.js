@@ -2,15 +2,12 @@
  * @module toolbox/net
  */
 
-/**
- * @namespace utf8
- */
 const utf8 = {
   /**
-     * encode string to UTF-8
-     * @memberof utf8
-     * @param {String} string
-     */
+   * encode string to UTF-8
+   * @memberof utf8
+   * @param {String} string
+   */
   encode (string) {
     string = string.replace(/\r\n/g, '\n')
     var utftext = ''

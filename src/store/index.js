@@ -1,3 +1,7 @@
+/**
+ * @module store
+ */
+
 import Vue from 'vue'
 import Vuex from 'vuex'
 
@@ -17,11 +21,14 @@ Vue.use(Vuex)
  */
 const store = new Vuex.Store({
   /**
-   * @typedef {object} store.state
+   * @namespace store.state
    * @memberof store
+   * @property {String} version - version string containing date and git hash
+   * @property {Number} working - number of working threads for display of activity
    * @property {Object} viewer - OpenSeadragon Viewer object
    * @property {Object} vrvToolkit - Verovio toolkit
    * @property {Number} scale - current scale of OpenSeadragon.Viewer
+   * @property {Object} movements - movements of displayed work
    * @property {Object[]} sources - list of source objects
    * @property {String} activeSourceId - id of selected source
    * @property {Object[]} complaints - list of complaints
@@ -94,14 +101,17 @@ const store = new Vuex.Store({
 
 /**
  * start proc indicator
+ * @function
  */
-export function startProc () {
+export const startProc = function () {
   store.commit(mutations.SET_WORKING, true)
 }
+
 /**
  * stop proc indicator
+ * @function
  */
-export function finishProc () {
+export const finishProc = function () {
   store.commit(mutations.SET_WORKING, false)
 }
 

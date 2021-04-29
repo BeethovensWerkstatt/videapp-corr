@@ -4,6 +4,10 @@ import VueI18n from 'vue-i18n'
 Vue.use(VueI18n)
 
 /**
+ * @module i18n
+ */
+
+/**
  * read localization data
  * @returns {Object} localized terms
  */

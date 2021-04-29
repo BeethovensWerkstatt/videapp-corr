@@ -30,6 +30,7 @@ export default {
       if (e.shiftKey && this.version?.commit) {
         const url = 'https://github.com/BeethovensWerkstatt/videapp-corr/commit/' + this.version.commit
         console.log(url)
+        // we could open '_blank', but named it will open only one new tab/window
         window.open(url, 'videapp-commit')
       }
     }
