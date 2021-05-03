@@ -197,14 +197,16 @@ export default {
       if (this.zones.length === 0) {
         return '---'
       }
-      const mrange = { min: this.zones[0].measure, max: this.zones[0].measure }
+      const mrange = { min: undefined, max: undefined }
       for (var z = 0; z < this.zones.length; z++) {
         const zone = this.zones[z]
-        if (!mrange.min || +zone.measure < mrange.min) {
-          mrange.min = zone.measure
-        }
-        if (!mrange.max || +zone.measure > mrange.max) {
-          mrange.max = zone.measure
+        if (zone.measure && zone.measure.length > 0) {
+          if (!mrange.min || +zone.measure[0] < mrange.min) {
+            mrange.min = zone.measure
+          }
+          if (!mrange.max || +zone.measure[0] > mrange.max) {
+            mrange.max = zone.measure
+          }
         }
       }
       return mrange.min + '-' + mrange.max
