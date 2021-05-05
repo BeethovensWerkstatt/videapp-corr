@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { mutations, actions as act } from '../names'
+import { mutations as mut, actions as act } from '../names'
 
 import pageSetup from '@/temp/pageSetup.json'
 import { finishProc, startProc } from '..'
@@ -138,7 +138,7 @@ const actions = {
                   ph = Math.max(ph, source.maxDimensions.height)
                 }
 
-                commit(mutations.LOAD_SOURCE, source)
+                commit(mut.LOAD_SOURCE, source)
               } else {
                 console.warn('no sequence for "' + m.label + '"', iiif)
               }
@@ -245,7 +245,7 @@ const actions = {
             ph = Math.max(ph, obj.maxDimensions.height)
           }
 
-          commit(mutations.LOAD_SOURCE, obj)
+          commit(mut.LOAD_SOURCE, obj)
         }
       })
     } // ---------------- op73 DEMO END ------------------------
@@ -322,11 +322,11 @@ const actions = {
       const src = getters.getSourceById(source)
       if (src) {
         // console.log(source, zone)
-        commit(mutations.MODIFY_SOURCE, { ...src, activeZoneId: zone })
-        commit(mutations.ACTIVATE_SOURCE, source)
+        commit(mut.MODIFY_SOURCE, { ...src, activeZoneId: zone })
+        commit(mut.ACTIVATE_SOURCE, source)
       }
     } else {
-      commit(mutations.ACTIVATE_SOURCE, null)
+      commit(mut.ACTIVATE_SOURCE, null)
     }
   }
 }

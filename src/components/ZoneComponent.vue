@@ -96,7 +96,7 @@ export default {
     label () {
       const zone = this.zone
       if (zone) {
-        console.log(zone)
+        // console.log(zone)
         if (zone.measure.length === 0) {
           return this.$t('terms.staff') + ' ' + zone.staff
         }
