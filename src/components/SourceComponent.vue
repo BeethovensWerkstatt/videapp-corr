@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="source-component">
     <page-component
       :divid="divid + '_recto'"
       :sourceId="sourceId"

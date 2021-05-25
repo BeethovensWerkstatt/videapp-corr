@@ -11,6 +11,7 @@ import { VectrePlugin } from '@vectrejs/vectre'
 
 import '@/scss/variables.scss'
 import i18n from './i18n'
+import VueD3 from 'vue2-d3'
 
 // add fabricjs- and html-overlay plugins
 // import OpenSeadragon from 'openseadragon'
@@ -24,6 +25,7 @@ import i18n from './i18n'
 // htmlosd(OpenSeadragon)
 
 Vue.use(VectrePlugin)
+Vue.use(VueD3)
 
 Vue.config.productionTip = false
 
