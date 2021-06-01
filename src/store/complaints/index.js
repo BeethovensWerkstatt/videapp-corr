@@ -18,6 +18,7 @@ const toStore = {
       const complaints = [...state.complaints]
       complaints.push(complaint)
       state.complaints = complaints
+      console.log(complaint)
     },
     /**
      * replace complaint

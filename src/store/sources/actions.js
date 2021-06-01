@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { mutations as mut, actions as act } from '../names'
 
-import pageSetup from '@/temp/pageSetup.json'
 import { finishProc, startProc } from '..'
 
 // first demo ... to be removed later.
@@ -148,107 +147,7 @@ const actions = {
         finishProc()
         work.sourcesLoadFinished = true
       }
-    } else { // ---------------- op73 DEMO ---------------------------
-      // this needs to be replaced with dynamic content
-      const json = pageSetup
-
-      // default placement of sources
-      const hgap = 10
-      const vgap = 50
-      px = hgap
-      py = 0
-      ph = 0
-
-      json.sources.forEach((source, index) => {
-        const existingSource = state.sources.find(elem => elem.id === source.id)
-
-        if (existingSource === undefined) {
-          const obj = {}
-          obj.id = source.id
-          obj.workId = demoId
-          obj.label = source.label
-          obj.maxDimensions = {}
-          // this needs to be updated
-          obj.position = { x: (150 + index * 400), y: 400 }
-          obj.rotation = (index - 1) * 20
-          let maxRheight = 0
-          let maxRwidth = 0
-          let maxVheight = 0
-          let maxVwidth = 0
-          obj.pages = []
-          const startsWithSingle = source.pages[0].pos === 'r'
-          const singleLeaf = startsWithSingle && ((source.pages.length === 2 && source.pages[1].pos === 'v') || source.pages.length === 1)
-          obj.singleLeaf = singleLeaf
-
-          source.pages.forEach((page, i) => {
-            if (page.pos === 'r') {
-              maxRheight = Math.max(maxRheight, page.mmHeight)
-              maxRwidth = Math.max(maxRwidth, page.mmWidth)
-            } else {
-              maxVheight = Math.max(maxVheight, page.mmHeight)
-              maxVwidth = Math.max(maxVwidth, page.mmWidth)
-            }
-            // when first page starts recto
-            if (startsWithSingle && i === 0) {
-              const v = null
-              const r = {
-                uri: page.uri,
-                id: page.id,
-                label: page.label,
-                pixels: { width: page.width, height: page.height },
-                dimensions: { width: page.mmWidth, height: page.mmHeight },
-                measures: page.measures,
-                place: 'recto'
-              }
-              obj.pages.push({ v, r })
-            } else if ((startsWithSingle && i % 2 === 1) || (!startsWithSingle && i % 2 === 0)) {
-              const leftPage = page
-              const rightPage = source.pages[i + 1]
-              const v = {
-                uri: leftPage.uri,
-                id: leftPage.id,
-                label: leftPage.label,
-                pixels: { width: leftPage.width, height: leftPage.height },
-                dimensions: { width: leftPage.mmWidth, height: leftPage.mmHeight },
-                measures: leftPage.measures,
-                place: 'verso'
-              }
-              const r = (rightPage !== undefined) ? {
-                uri: rightPage.uri,
-                id: rightPage.id,
-                label: rightPage.label,
-                pixels: { width: rightPage.width, height: rightPage.height },
-                dimensions: { width: rightPage.mmWidth, height: rightPage.mmHeight },
-                measures: rightPage.measures,
-                place: 'recto'
-              } : null
-              obj.pages.push({ v, r })
-            }
-          })
-          obj.maxDimensions.width = (!singleLeaf) ? maxRwidth + maxVwidth : Math.max(maxRwidth, maxVwidth)
-          obj.maxDimensions.height = Math.max(maxVheight, maxRheight)
-          obj.activePage = 0
-
-          // calc position
-          if (px > hgap && (px + hgap + obj.maxDimensions.width) > getters.deskDimensions.width) {
-            // start new line
-            px = 0
-            py += ph + vgap
-            ph = obj.maxDimensions.height
-            obj.position.x = px + hgap + (obj.maxDimensions.width / 2)
-            obj.position.y = py + vgap + (obj.maxDimensions.height / 2)
-          } else {
-            // next horizontal position
-            obj.position.x = px + hgap + (obj.maxDimensions.width / 2)
-            obj.position.y = py + vgap + (obj.maxDimensions.height / 2)
-            px += obj.maxDimensions.width + hgap
-            ph = Math.max(ph, obj.maxDimensions.height)
-          }
-
-          commit(mut.LOAD_SOURCE, obj)
-        }
-      })
-    } // ---------------- op73 DEMO END ------------------------
+    }
   },
   /**
    * load measure zones for a specific page
