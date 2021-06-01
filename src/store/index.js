@@ -49,7 +49,7 @@ const store = new Vuex.Store({
    */
   mutations: {
     SET_VERSION (state, version) {
-      console.log('Version:\n' + version)
+      console.log('Version:\n' + version?.version)
       state.version = version
     },
     ...storeProcessing.mutations,

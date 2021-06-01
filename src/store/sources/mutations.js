@@ -12,6 +12,14 @@ const mutations = {
     state.sources = sources
   },
   /**
+  */
+  LOAD_MOVEMENT (state, movement) {
+    const movements = { ...state.movements }
+    movements[movement['@id']] = movement
+    state.movements = movements
+    // console.log(state.movements)
+  },
+  /**
    * replace source
    * @memberof store.mutations
    * @param {object} state

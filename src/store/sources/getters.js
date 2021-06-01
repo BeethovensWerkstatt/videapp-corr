@@ -7,7 +7,7 @@ const getters = {
     if (movements) {
       return movements[mvtId]
     }
-    return null
+    return undefined
   },
   sources: (state) => {
     // console.log(state.sources)

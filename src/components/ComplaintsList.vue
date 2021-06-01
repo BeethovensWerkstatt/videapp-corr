@@ -77,29 +77,11 @@ export default {
      * @param {Object} complaint
      */
     measures (complaint) {
-      const m = {}
-      for (const c of complaint.measures) {
-        const mi = +c.label
-        if (!m.min || mi < m.min) {
-          m.min = mi
-        }
-        if (!m.max || mi > m.max) {
-          m.max = mi
-        }
+      // console.log(complaint)
+      if (complaint.affects?.length > 0) {
+        return complaint.affects[0].measures.label
       }
-      let measures = m.min + ' – ' + m.max
-      if (m.min === m.max) {
-        measures = '' + m.min
-      }
-      if (m.max - m.min === 1) {
-        measures = m.min + ', ' + m.max
-      }
-      if (complaint.label) {
-        measures = complaint.label + ', (T. ' + measures + ')'
-      } else {
-        measures = (m.max - m.min > 0 ? 'Takte ' : 'Takt ') + measures
-      }
-      return measures
+      return ''
     },
     /**
      * toggle complaint selection

@@ -16,9 +16,10 @@ const toStore = {
      */
     LOAD_COMPLAINT (state, complaint) {
       const complaints = [...state.complaints]
+      // console.log(complaint)
       complaints.push(complaint)
       state.complaints = complaints
-      console.log(complaint)
+      // console.log(complaint)
     },
     /**
      * replace complaint
@@ -41,6 +42,20 @@ const toStore = {
     }
   },
   actions: {
+    /**
+     * load complaints
+     * @memberof store.actions
+     */
+    loadComplaints ({ state, commit }, { complaints }) {
+      complaints.forEach(c => {
+        const mdiv = c.affects[0]?.mdiv
+        // console.log(state.movements, mdiv)
+        const movement = mdiv ? state.movements[mdiv] : undefined
+        // this seems like a workaround
+        const complaint = movement ? { ...c, movement } : { ...c }
+        commit(mut.LOAD_COMPLAINT, complaint)
+      })
+    },
     async activateComplaint ({ commit, state }, complaintId) {
       console.log('activate ' + complaintId)
       if (!complaintId) {
@@ -67,23 +82,17 @@ const toStore = {
           finishProc()
         }
       }
-    },
-    /**
-     * load complaints
-     * @memberof store.actions
-     */
-    loadComplaints ({ commit }, { complaints, movements }) {
-      complaints.forEach(c => {
-        const movement = movements[c.mdiv]
-        // this seems like a workaround
-        const complaint = { ...c, movement }
-        commit(mut.LOAD_COMPLAINT, complaint)
-      })
     }
   },
   getters: {
-    complaints: (state) => {
-      return state.complaints
+    complaints: (state, getters) => {
+      return state.complaints.map(c => {
+        const mdiv = c.affects[0]?.mdiv
+        return {
+          ...c,
+          movement: getters.getMovementById(mdiv)
+        }
+      })
     },
     activeComplaintId (state) {
       return state.activeComplaintId
@@ -93,6 +102,10 @@ const toStore = {
       // console.log(complaintId)
       if (complaintId) {
         const complaint = state.complaints.find(c => c['@id'] === complaintId)
+        if (!complaint.movement) {
+          const mdiv = complaint.affects[0]?.mdiv
+          complaint.movement = getters.getMovementById(mdiv)
+        }
         return complaint
       }
       return null

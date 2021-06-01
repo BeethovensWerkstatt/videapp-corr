@@ -130,23 +130,11 @@ export default {
       return this.$t('terms.complaint.state.postText')
     },
     measures () {
-      const m = {}
-      for (const c of this.activeComplaint.measures) {
-        const mi = +c.label
-        if (!m.min || mi < m.min) {
-          m.min = mi
-        }
-        if (!m.max || mi > m.max) {
-          m.max = mi
-        }
+      const complaint = this.activeComplaint
+      if (complaint.affects?.length > 0) {
+        return complaint.affects[0].measures.label
       }
-      if (m.min === m.max) {
-        return '' + m.min
-      }
-      if (m.max - m.min === 1) {
-        return m.min + ', ' + m.max
-      }
-      return m.min + '-' + m.max
+      return ''
     },
     docMap () {
       const ante = this.statusDocs(this.activeComplaint?.anteDocs)
