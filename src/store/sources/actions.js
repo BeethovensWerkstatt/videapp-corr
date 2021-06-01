@@ -48,6 +48,8 @@ const actions = {
         // load complaints for this work
         dispatch(act.loadComplaints, data)
 
+        console.log(data.manifestations)
+
         data.manifestations.forEach((m, index) => {
           console.log(m.label)
 
