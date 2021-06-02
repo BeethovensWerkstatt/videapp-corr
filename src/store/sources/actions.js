@@ -3,8 +3,6 @@ import { mutations as mut, actions as act } from '../names'
 
 import { finishProc, startProc } from '..'
 
-// first demo ... to be removed later.
-const demoId = 'op73'
 // otherContent label for measure positions URL
 const TAG_MEASURE_POSITIONS = 'measure positions'
 // regex to extract position data from `xywh`
@@ -20,7 +18,7 @@ const actions = {
    * @param {object} state
    */
   async loadSources ({ commit, dispatch, state, getters }, workId) {
-    if (workId && workId !== demoId) {
+    if (workId) {
       // console.log(state.works, workId)
       const work = state.works.find(w => {
         if (w.id === workId) {
@@ -50,8 +48,10 @@ const actions = {
 
         console.log(data.manifestations)
 
-        data.manifestations.forEach((m, index) => {
-          console.log(m.label)
+        data.manifestations.forEach(async (murl, index) => {
+          const resp = await axios.get(murl)
+          const m = resp.data
+          console.log(m)
 
           const source = {
             id: m.id,
@@ -70,7 +70,7 @@ const actions = {
             // get manifestation json
             axios.get(m.iiif.manifest).then(res => {
               const iiif = res.data
-              // console.log(iiif)
+              console.log(iiif)
               if (iiif.sequences && iiif.sequences.length > 0) {
                 const canvases = iiif.sequences[0].canvases
 
