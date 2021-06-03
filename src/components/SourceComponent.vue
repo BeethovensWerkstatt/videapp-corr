@@ -47,6 +47,7 @@ import { mapGetters } from 'vuex'
 import OpenSeadragon from 'openseadragon'
 import PageComponent from '@/components/PageComponent.vue'
 import { mutations } from '@/store/names'
+import { Url } from '@/toolbox/net'
 
 /**
  * @module components/SourceComponent
@@ -87,7 +88,6 @@ export default {
   },
   data: function () {
     return {
-      divid: this.sourceId + '_dash',
       position_: { ...this.$store.getters.getSourceById(this.sourceId).position },
       tracker: null,
       dragDelta: null
@@ -131,6 +131,13 @@ export default {
   },
   computed: {
     ...mapGetters(['viewer', 'scale']),
+    divid () {
+      const atId = new Url(this.sourceId)
+      let id = atId.path.elements.pop()
+      id = id.split('.').filter(e => e !== 'json').join('_')
+      console.log(id)
+      return id + '_dash'
+    },
     source () {
       const source = this.$store.getters.getSourceById(this.sourceId)
       if (source) {

@@ -54,7 +54,7 @@ const actions = {
           console.log(m)
 
           const source = {
-            id: m.id,
+            id: m['@id'],
             workId,
             label: m.label,
             // these values are updated later

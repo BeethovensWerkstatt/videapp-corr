@@ -2,7 +2,7 @@
  * @module toolbox/net
  */
 
-const utf8 = {
+export const utf8 = {
   /**
    * encode string to UTF-8
    * @memberof utf8
@@ -88,7 +88,7 @@ const PathHandler = {
  * Path class
  * @property {Array} elements - array of decoded path elements
  */
-class Path {
+export class Path {
   /**
    * construct Path object from string
    * @param {String} path
@@ -167,7 +167,7 @@ class Path {
 /**
  * Query class
  */
-class Query {
+export class Query {
   /**
    * create Query object from string
    * @param {String} query - query string
@@ -260,7 +260,7 @@ const urire = new RegExp('^(([^:/?#]+):)?(//((([^/?#@]*)@)?((\\[([0-9a-f\\:]*)\\
 /**
  * URL class
  */
-class URL {
+export class Url {
   /**
    * create URL object from string
    * @param {String} url - url string
@@ -428,4 +428,4 @@ class URL {
   }
 }
 
-export default { utf8, Path, Query, URL }
+export default { utf8, Path, Query, Url }

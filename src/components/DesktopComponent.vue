@@ -125,8 +125,10 @@ export default {
   computed: {
     ...mapGetters(['viewer', 'scale']),
     sources () {
+      const sources = this.$store.getters.workSources(this.$route.params.id)
+      // console.log(sources)
       // TODO query
-      return this.$store.getters.workSources(this.$route.params.id)
+      return sources
     }
   }
 }
