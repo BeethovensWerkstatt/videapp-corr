@@ -1,9 +1,18 @@
-## source, page datastructurtes
+## JSON validation
+
+* use <https://ajv.js.org/> for JSON validation
+* introduce classes for JSON data from eXist server
+* think typescript interfaces and classes
+
+---
+
+## Q1 2021
+
+### history
+#### data structures/classes
 
 * we should define classes for `source` and `page` that contains logic for page flipping and positioning
 * *extra* data like position and pagenr should be stored separate to the core source data.
-
----
 
 ## Dec. 2020
 
