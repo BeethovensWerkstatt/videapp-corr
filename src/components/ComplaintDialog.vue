@@ -166,7 +166,7 @@ export default {
      */
     statusDocs (textStatus) {
       const docs = []
-      // console.log(textStatus)
+      console.log(textStatus)
       if (textStatus) {
         textStatus.forEach(stat => {
           const doc = {

@@ -1,6 +1,6 @@
 ## JSON validation
 
-* use <https://ajv.js.org/> for JSON validation
+* use <https://ajv.js.org/> for JSON validation -- sync with swagger?
 * introduce classes for JSON data from eXist server
 * think typescript interfaces and classes
 

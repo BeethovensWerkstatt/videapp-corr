@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { startProc, finishProc } from '..'
 import { mutations as mut, registerMutations, registerActions } from '../names'
+// import Complaint from '@/data/Complaint'
 
 const toStore = {
   state: {
@@ -53,6 +54,7 @@ const toStore = {
         const movement = mdiv ? state.movements[mdiv] : undefined
         // this seems like a workaround
         const complaint = movement ? { ...c, movement } : { ...c }
+        // console.log(new Complaint(complaint))
         commit(mut.LOAD_COMPLAINT, complaint)
       })
     },
@@ -102,6 +104,7 @@ const toStore = {
       // console.log(complaintId)
       if (complaintId) {
         const complaint = state.complaints.find(c => c['@id'] === complaintId)
+        console.log(complaint)
         if (!complaint.movement) {
           const mdiv = complaint.affects[0]?.mdiv
           complaint.movement = getters.getMovementById(mdiv)
