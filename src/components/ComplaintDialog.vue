@@ -3,7 +3,7 @@
     <div id="body" v-if="active">
       <div class="title">{{ toRoman(activeComplaint.movement.n) }}. {{ activeComplaint.movement.label }}, {{ activeComplaint.label }}</div>
       <div class="measures">
-        Takte: {{ measures }}
+        Takte: {{ measures }} (<a :href="activeComplaint['@id']">link</a>)
       </div>
       <hr>
       <div class="loading" v-if="activeComplaint.loading">Lade {{ activeComplaint.label }}</div>
@@ -11,7 +11,7 @@
         <div class="tabrow" v-for="(row,i) in docMap" :key="i">
           <div class="tabcol">
             <h2>{{ initialDocLabel }}</h2>
-            <div class="docimg" v-if="row.ante.img.url">
+            <div class="docimg" v-if="row.ante.img && row.ante.img.url">
               <img :src="row.ante.img.url" :style="{ width: '100%' }" />
             </div>
             <h2>{{ initialTextLabel }}</h2>
@@ -23,7 +23,7 @@
           </div>
           <div class="tabcol">
             <h2>{{ revisionDocLabel }}</h2>
-            <div class="docimg" v-if="row.revision.img.url">
+            <div class="docimg" v-if="row.revision.img && row.revision.img.url">
               <img :src="row.revision.img.url" :style="{ width: '100%' }" />
             </div>
             <h2>{{ revisionTextLabel }}</h2>
@@ -35,7 +35,7 @@
           </div>
           <div class="tabcol">
             <h2>{{ revisedDocLabel }}</h2>
-            <div class="docimg" v-if="row.post.img.url">
+            <div class="docimg" v-if="row.post.img && row.post.img.url">
               <img :src="row.post.img.url" :style="{ width: '100%' }" />
             </div>
             <h2>{{ revisedTextLabel }}</h2>

@@ -16,7 +16,10 @@
           <th class="mvt">{{ complaint.movement.label }}</th>
         </tr>
         <tr
-          :class="{ 'complaint-active': isActive(complaint) }"
+          :class="{
+            'complaint-active': isActive(complaint),
+            'complaint-error': (measures === 'N/A')
+          }"
           @click.prevent="toggleActivate(complaint)"
         >
           <td class="complaint-attribute"><sub>{{ ci + 1 }}</sub></td>
@@ -77,11 +80,11 @@ export default {
      * @param {Object} complaint
      */
     measures (complaint) {
-      // console.log(complaint)
       if (complaint.affects?.length > 0) {
         return complaint.affects[0].measures.label
       }
-      return ''
+      console.warn(complaint)
+      return 'N/A'
     },
     /**
      * toggle complaint selection
@@ -132,5 +135,10 @@ tr.mvt {
 .complaint-active {
   background-color: yellow;
   outline: 1px solid red;
+}
+
+.complaint-error {
+  color: gray;
+  text-decoration: line-through;
 }
 </style>

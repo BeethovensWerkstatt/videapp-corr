@@ -1,0 +1,90 @@
+{
+  "1": {
+    "@id": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/complaints/m1101ed99-ba09-4ea3-baa6-7b8f58ee9029.json",
+    "comment": "ante, post 4/4, revision 6/8?"
+  },
+  "2": {
+    "@id": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/complaints/m3af6cc3d-5fd7-40bd-a0d2-f1467e645f5e.json",
+    "comment": "ante, post 4/4, revision 6/8?"
+  },
+  "3": {
+    "measures": 211,
+    "ante": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/snippet/g_ccd10c39-f00b-4410-bca9-4083b20314fe.mei?source=D-BNba_C73-9&state=anteRevision",
+    "post": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/snippet/g_bf012a6c-a549-41d8-a1b0-21b925595a90.mei?source=A-Wn_SH.Beethoven.323&state=postRevision"
+  },
+  "4": {
+    "@id": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/complaints/m65dbb86f-f49c-4e5a-8915-0f0ce0efcf44.json",
+    "measures": 234,
+    "comment": "strange ante MEI, missing revision, post"
+  },
+  "5": {
+    "@id": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/complaints/m86959c35-022c-423e-a341-b4d8342be1f8.json",
+    "comment": "ante, post 4/4, revision 6/8?"
+  },
+  "6": {
+    "@id": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/complaints/m05163587-f5db-47cf-b274-e65d331769bb.json",
+    "measures": 371,
+    "comment": "missing revision"
+  },
+  "7": {
+    "@id": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/complaints/m25f0c3c5-b82c-441b-8de1-48fb42b710f0.json",
+    "comment": "ante, post 4/4, revision 6/8?"
+  },
+  "8": {
+    "@id": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/complaints/m429e1d15-b7a2-43c0-9485-584e83562f75.json",
+    "measures": 468,
+    "ante": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/snippet/g_32983467-8921-4735-972e-d694d9901069.mei?source=D-BNba_C73-9&state=anteRevision",
+    "post": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/snippet/g_ed0908d8-79a8-4b69-a994-c47b940edcb3.mei?source=A-Wn_SH.Beethoven.323&state=postRevision"
+  },
+  "9": {
+    "@id": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/complaints/me6f78f69-e743-4b3c-9726-660c6ac326c8.json",
+    "comment": "strange ante MEI"
+  },
+  "11": {
+    "@id": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/complaints/m81dc2fe3-186a-48f5-849a-c5419e8cf39e.json",
+    "measures": 34,
+    "revi": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/snippet/g_d33c286d-81ff-417a-a196-0fae0476a1da.mei?source=US-NYj_31_B393cp_no.5_errata&state=postRevision&focus=m81dc2fe3-186a-48f5-849a-c5419e8cf39e"
+  },
+  "12": {
+    "@id": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/complaints/m66f0d133-8828-4397-bdef-26bb73a8ccec.json",
+    "measures": 40,
+    "ante": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/snippet/g_6ca701d5-e87e-4b72-a155-fb922e0b73c8.mei?source=D-BNba_C73-9&state=anteRevision",
+    "post": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/snippet/g_9d4469f1-78b5-4065-8d6e-c1fd3f7a218a.mei?source=A-Wn_SH.Beethoven.323&state=postRevision"
+  },
+  "13": {
+    "@id": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/complaints/m8a6d7580-dfa5-415f-9896-1fb795915077.json",
+    "measures": 81,
+    "revi": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/snippet/g_21bb6577-18de-461a-a978-0eea5144ec6d.mei?source=US-NYj_31_B393cp_no.5_errata&state=postRevision&focus=m8a6d7580-dfa5-415f-9896-1fb795915077"
+  },
+  "15": {
+    "measures": "N/A"
+  },
+  "16": {
+    "measures": "N/A"
+  },
+  "17": {
+    "@id": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/complaints/x81d58d46-56cd-42fb-8a95-32400e3dec2b.json",
+    "measures": 95,
+    "ante": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/snippet/xe7b67a7f-e5d6-4959-abd4-7af05f4525bb.mei?source=D-BNba_C73-9&state=anteRevision",
+    "post": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/snippet/x385f292e-b012-46c3-a020-aea389c342d3.mei?source=A-Wn_SH.Beethoven.323&state=postRevision",
+    "revi": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/snippet/x8e7dde7e-affd-4e17-8ae5-6faf94616408.mei?source=US-NYj_31_B393cp_no.5_errata&state=postRevision&focus=x81d58d46-56cd-42fb-8a95-32400e3dec2b"
+  },
+  "20": {
+    "@id": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/complaints/xf775548e-0cf7-4829-9517-82ccaa5ff0ed.json"
+  },
+  "21": {
+    "@id": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/complaints/xb7f6b7b1-900c-4ef4-9c9e-1558c01525a9.json",
+    "measures": 342,
+    "ante": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/snippet/x9eb7d195-36e8-497e-abed-f96d7f4b6f47.mei?source=D-BNba_C73-9&state=anteRevision",
+    "post": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/snippet/x0ac1d25a-e384-46c4-b368-41f5460e261d.mei?source=A-Wn_SH.Beethoven.323&state=postRevision"
+  },
+  "25": {
+    "@id": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/complaints/x5fd7485e-cb54-4840-ac0a-4d8270deb71d.json",
+    "measures": 305,
+    "ante": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/snippet/x80d229f3-3dc8-4e32-9a78-c86d56fda024.mei?source=D-BNba_C73-9&state=anteRevision",
+    "post": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/snippet/x3eba3a1b-3d28-4eb7-8833-9bc3620e5abe.mei?source=A-Wn_SH.Beethoven.323&state=postRevision"
+  },
+  "26": {
+    "measures": "N/A"
+  }
+}
