@@ -1,11 +1,7 @@
 {
-  "1": {
-    "@id": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/complaints/m1101ed99-ba09-4ea3-baa6-7b8f58ee9029.json",
-    "comment": "ante, post 4/4, revision 6/8?"
-  },
   "2": {
     "@id": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/complaints/m3af6cc3d-5fd7-40bd-a0d2-f1467e645f5e.json",
-    "comment": "ante, post 4/4, revision 6/8?"
+    "comment": "left hand G clef?"
   },
   "3": {
     "measures": 211,
@@ -15,7 +11,7 @@
   "4": {
     "@id": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/complaints/m65dbb86f-f49c-4e5a-8915-0f0ce0efcf44.json",
     "measures": 234,
-    "comment": "strange ante MEI, missing revision, post"
+    "comment": "strange ante MEI, missing revision"
   },
   "5": {
     "@id": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/complaints/m86959c35-022c-423e-a341-b4d8342be1f8.json",
