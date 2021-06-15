@@ -11,16 +11,16 @@
   "4": {
     "@id": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/complaints/m65dbb86f-f49c-4e5a-8915-0f0ce0efcf44.json",
     "measures": 234,
-    "comment": "strange ante MEI, missing revision"
+    "comment": "strange ante MEI, missing rvsnsion"
   },
   "5": {
     "@id": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/complaints/m86959c35-022c-423e-a341-b4d8342be1f8.json",
-    "comment": "ante, post 4/4, revision 6/8?"
+    "comment": "ante, post 4/4, rvsnsion 6/8?"
   },
   "6": {
     "@id": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/complaints/m05163587-f5db-47cf-b274-e65d331769bb.json",
     "measures": 371,
-    "comment": "missing revision"
+    "comment": "missing rvsnsion"
   },
   "8": {
     "@id": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/complaints/m429e1d15-b7a2-43c0-9485-584e83562f75.json",
@@ -35,7 +35,7 @@
   "11": {
     "@id": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/complaints/m81dc2fe3-186a-48f5-849a-c5419e8cf39e.json",
     "measures": 34,
-    "revi": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/snippet/g_d33c286d-81ff-417a-a196-0fae0476a1da.mei?source=US-NYj_31_B393cp_no.5_errata&state=postRevision&focus=m81dc2fe3-186a-48f5-849a-c5419e8cf39e"
+    "rvsn": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/snippet/g_d33c286d-81ff-417a-a196-0fae0476a1da.mei?source=US-NYj_31_B393cp_no.5_errata&state=postRevision&focus=m81dc2fe3-186a-48f5-849a-c5419e8cf39e"
   },
   "12": {
     "@id": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/complaints/m66f0d133-8828-4397-bdef-26bb73a8ccec.json",
@@ -46,7 +46,7 @@
   "13": {
     "@id": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/complaints/m8a6d7580-dfa5-415f-9896-1fb795915077.json",
     "measures": 81,
-    "revi": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/snippet/g_21bb6577-18de-461a-a978-0eea5144ec6d.mei?source=US-NYj_31_B393cp_no.5_errata&state=postRevision&focus=m8a6d7580-dfa5-415f-9896-1fb795915077"
+    "rvsn": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/snippet/g_21bb6577-18de-461a-a978-0eea5144ec6d.mei?source=US-NYj_31_B393cp_no.5_errata&state=postRevision&focus=m8a6d7580-dfa5-415f-9896-1fb795915077"
   },
   "15": {
     "measures": "N/A"
@@ -59,7 +59,7 @@
     "measures": 95,
     "ante": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/snippet/xe7b67a7f-e5d6-4959-abd4-7af05f4525bb.mei?source=D-BNba_C73-9&state=anteRevision",
     "post": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/snippet/x385f292e-b012-46c3-a020-aea389c342d3.mei?source=A-Wn_SH.Beethoven.323&state=postRevision",
-    "revi": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/snippet/x8e7dde7e-affd-4e17-8ae5-6faf94616408.mei?source=US-NYj_31_B393cp_no.5_errata&state=postRevision&focus=x81d58d46-56cd-42fb-8a95-32400e3dec2b"
+    "rvsn": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/snippet/x8e7dde7e-affd-4e17-8ae5-6faf94616408.mei?source=US-NYj_31_B393cp_no.5_errata&state=postRevision&focus=x81d58d46-56cd-42fb-8a95-32400e3dec2b"
   },
   "20": {
     "@id": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/complaints/xf775548e-0cf7-4829-9517-82ccaa5ff0ed.json"
