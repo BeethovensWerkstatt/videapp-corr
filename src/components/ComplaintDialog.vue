@@ -9,7 +9,7 @@
       <div class="loading" v-if="activeComplaint.loading">Lade {{ activeComplaint.label }}</div>
       <div class="tabview" v-else>
         <div class="tabrow" v-for="(row,i) in docMap" :key="i">
-          <div class="tabcol">
+          <div class="tabcol" v-if="selectAnte">
             <h2>{{ initialDocLabel }}</h2>
             <div class="docimg" v-if="row.ante.img && row.ante.img.url">
               <img :src="row.ante.img.url" :style="{ width: '100%' }" />
@@ -21,7 +21,7 @@
               v-if="vrvValid(row.ante.mei)"
             />
           </div>
-          <div class="tabcol">
+          <div class="tabcol" v-if="selectRvsn">
             <h2>{{ revisionDocLabel }}</h2>
             <div class="docimg" v-if="row.revision.img && row.revision.img.url">
               <img :src="row.revision.img.url" :style="{ width: '100%' }" />
@@ -33,7 +33,7 @@
               v-if="vrvValid(row.revision.mei)"
             />
           </div>
-          <div class="tabcol">
+          <div class="tabcol" v-if="selectPost">
             <h2>{{ revisedDocLabel }}</h2>
             <div class="docimg" v-if="row.post.img && row.post.img.url">
               <img :src="row.post.img.url" :style="{ width: '100%' }" />
@@ -47,6 +47,11 @@
           </div>
         </div>
       </div>
+    </div>
+    <div id="select">
+      <div @click="toggleAnte" :class="{ TSactive: selectAnte }">ANTE</div>
+      <div @click="toggleRvsn" :class="{ TSactive: selectRvsn }">RVSN</div>
+      <div @click="togglePost" :class="{ TSactive: selectPost }">POST</div>
     </div>
     <div id="close">
       <btn @click.prevent="closeDialog">close</btn>
@@ -88,6 +93,9 @@ export default {
   },
   data () {
     return {
+      selectAnte: true,
+      selectRvsn: true,
+      selectPost: true
     }
   },
   watch: {
@@ -196,6 +204,24 @@ export default {
      */
     closeDialog (e) {
       this.$store.dispatch(actions.activateComplaint, null)
+    },
+    /**
+     * toggle visibility of ante docs
+     */
+    toggleAnte (e) {
+      this.selectAnte = !this.selectAnte
+    },
+    /**
+     * toggle visibility of revision
+     */
+    toggleRvsn (e) {
+      this.selectRvsn = !this.selectRvsn
+    },
+    /**
+     * toggle visibility of post docs
+     */
+    togglePost (e) {
+      this.selectPost = !this.selectPost
     }
   }
 }
@@ -253,6 +279,22 @@ export default {
     position: absolute;
     top: 1em;
     right: 1em;
+  }
+  #select {
+    display: inline-block;
+    position: absolute;
+    top: 1em;
+    left: 1em;
+
+    div {
+      display: inline-block;
+      width: 3em;
+      border: 1px solid gray;
+      background-color: rgb(146, 118, 118);
+    }
+    .TSactive {
+      background-color: lightgreen;
+    }
   }
 }
 
