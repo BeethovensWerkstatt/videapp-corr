@@ -3,7 +3,7 @@
     <div id="body" v-if="active">
       <div class="title">{{ toRoman(activeComplaint.movement.n) }}. {{ activeComplaint.movement.label }}, {{ activeComplaint.label }}</div>
       <div class="measures">
-        Takte: {{ measures }} (<a :href="activeComplaint['@id']">link</a>)
+        Takte: {{ measures }} (<a :href="activeComplaint['@id']" target="_blank">link</a>)
       </div>
       <hr>
       <div class="loading" v-if="activeComplaint.loading">Lade {{ activeComplaint.label }}</div>
@@ -49,9 +49,12 @@
       </div>
     </div>
     <div id="select">
-      <div @click="toggleAnte" :class="{ TSactive: selectAnte }">ANTE</div>
-      <div @click="toggleRvsn" :class="{ TSactive: selectRvsn }">RVSN</div>
-      <div @click="togglePost" :class="{ TSactive: selectPost }">POST</div>
+      <div @click="toggleAnte" :class="{ TSactive: selectAnte }" class="TSbutton">ANTE</div>
+      <div @click="toggleRvsn" :class="{ TSactive: selectRvsn }" class="TSbutton">RVSN</div>
+      <div @click="togglePost" :class="{ TSactive: selectPost }" class="TSbutton">POST</div>
+      <div class="dash">
+        <input id="verovio-zoom" type="number" min="5" max="100" v-model="vzoom" />
+      </div>
     </div>
     <div id="close">
       <btn @click.prevent="closeDialog">close</btn>
@@ -95,13 +98,22 @@ export default {
     return {
       selectAnte: true,
       selectRvsn: true,
-      selectPost: true
+      selectPost: true,
+      zoom: 30
     }
   },
   watch: {
   },
   computed: {
     ...mapGetters(['activeComplaintId', 'activeComplaint']),
+    vzoom: {
+      get () {
+        return parseInt(this.zoom)
+      },
+      set (zoom) {
+        this.zoom = parseInt(zoom)
+      }
+    },
     active () {
       if (this.activeComplaintId) {
         return true
@@ -158,7 +170,7 @@ export default {
         row.post = i < post.length ? post[i] : {}
         map.push(row)
       }
-      console.log(map)
+      // console.log(map)
       return map
     }
   },
@@ -174,12 +186,13 @@ export default {
      */
     statusDocs (textStatus) {
       const docs = []
-      console.log(textStatus)
+      // console.log(textStatus)
       if (textStatus) {
         textStatus.forEach(stat => {
           const doc = {
             mei: {
-              url: stat.mei
+              url: stat.mei,
+              scale: this.vzoom
             }
           }
           // check for multiple images?
@@ -251,6 +264,7 @@ export default {
     .title {
       font-weight: bold;
       font-size: 110%;
+      margin-top: 3pt;
     }
     .measures {
       font-size: 90%;
@@ -286,7 +300,7 @@ export default {
     top: 1em;
     left: 1em;
 
-    div {
+    .TSbutton {
       display: inline-block;
       width: 3em;
       border: 1px solid gray;
@@ -294,6 +308,12 @@ export default {
     }
     .TSactive {
       background-color: lightgreen;
+    }
+    .dash {
+      display: inline-block;
+      input {
+        width: 4em;
+      }
     }
   }
 }

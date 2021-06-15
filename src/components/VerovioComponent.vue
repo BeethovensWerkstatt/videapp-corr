@@ -45,7 +45,8 @@ export default {
       toolkit: null,
       svg: null,
       mei: null,
-      error: null
+      error: null,
+      scale: 30
     }
   },
   mounted () {
@@ -55,9 +56,14 @@ export default {
     url () {
       this.loadMEI()
     },
-    scale () {
-      this.redoLayout()
-      this.renderMEI()
+    options () {
+      // console.log(this.options)
+      const scale = this.options?.scale > 0 ? this.options.scale : 30
+      if (scale !== this.scale) {
+        this.scale = scale
+        this.redoLayout()
+        this.renderMEI()
+      }
     },
     width () {
       this.redoLayout()
@@ -92,9 +98,6 @@ export default {
     },
     page () {
       return this.options?.page > 1 ? this.options.page : 1
-    },
-    scale () {
-      return this.options?.scale > 0 ? this.options.scale : 30
     },
     height () {
       return this.options?.height > 0 ? this.options.height : 0
@@ -164,6 +167,7 @@ export default {
      */
     redoLayout () {
       if (this.toolkit) {
+        this.toolkit.setOptions(this.vrvOptions)
         this.toolkit.redoLayout()
       }
     },
@@ -176,6 +180,7 @@ export default {
         startProc()
         // console.log(this.toolkit.getPageCount())
         this.svg = null
+        this.toolkit.setOptions(this.vrvOptions)
         var svg = this.toolkit.renderToSVG(this.page, this.vrvOptions)
         this.svg = svg
         finishProc()
@@ -188,7 +193,7 @@ export default {
 <style lang="scss" scoped>
 .verovio {
   width: 100%;
-  max-width: 400px;
+  max-width: 100%;
   overflow: scroll;
   border: 1px solid yellow;
   background-color: whitesmoke;
