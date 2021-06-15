@@ -1,7 +1,7 @@
 {
   "2": {
     "@id": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/complaints/m3af6cc3d-5fd7-40bd-a0d2-f1467e645f5e.json",
-    "comment": "left hand G clef?"
+    "comment": "left hand G clef? (ante, post)"
   },
   "3": {
     "measures": 211,
@@ -21,10 +21,6 @@
     "@id": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/complaints/m05163587-f5db-47cf-b274-e65d331769bb.json",
     "measures": 371,
     "comment": "missing revision"
-  },
-  "7": {
-    "@id": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/complaints/m25f0c3c5-b82c-441b-8de1-48fb42b710f0.json",
-    "comment": "ante, post 4/4, revision 6/8?"
   },
   "8": {
     "@id": "http://localhost:8080/exist/apps/api/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/complaints/m429e1d15-b7a2-43c0-9485-584e83562f75.json",
