@@ -9,7 +9,7 @@
       <div class="loading" v-if="activeComplaint.loading">Lade {{ activeComplaint.label }}</div>
       <div class="tabview" v-else>
         <div class="tabrow" v-for="(row,i) in docMap" :key="i">
-          <div class="tabcol" v-if="selectAnte">
+          <div class="tabcol" v-if="selectAnte" :style="colStyles">
             <h2>{{ initialDocLabel }}</h2>
             <div class="docimg" v-if="row.ante.img && row.ante.img.url">
               <img :src="row.ante.img.url" :style="{ width: '100%' }" />
@@ -21,7 +21,7 @@
               v-if="vrvValid(row.ante.mei)"
             />
           </div>
-          <div class="tabcol" v-if="selectRvsn">
+          <div class="tabcol" v-if="selectRvsn" :style="colStyles">
             <h2>{{ revisionDocLabel }}</h2>
             <div class="docimg" v-if="row.revision.img && row.revision.img.url">
               <img :src="row.revision.img.url" :style="{ width: '100%' }" />
@@ -33,7 +33,7 @@
               v-if="vrvValid(row.revision.mei)"
             />
           </div>
-          <div class="tabcol" v-if="selectPost">
+          <div class="tabcol" v-if="selectPost" :style="colStyles">
             <h2>{{ revisedDocLabel }}</h2>
             <div class="docimg" v-if="row.post.img && row.post.img.url">
               <img :src="row.post.img.url" :style="{ width: '100%' }" />
@@ -172,6 +172,35 @@ export default {
       }
       // console.log(map)
       return map
+    },
+    tabWidth () {
+      if (this.$el) {
+        const el = this.$el.querySelector('.tabview')
+        console.log(el.innerWidth)
+        return el?.innerWidth > 0 ? el.innerWidth : this.$el.innerWidth
+      }
+      return 400
+    },
+    colCount () {
+      let cnt = 0
+      if (this.selectAnte) {
+        cnt++
+      }
+      if (this.selectRvsn) {
+        cnt++
+      }
+      if (this.selectPost) {
+        cnt++
+      }
+      return Math.max(1, cnt)
+    },
+    colStyles () {
+      const mw = (this.tabWidth / this.colCount)
+      const styles = {
+        'max-width': mw + 'px'
+      }
+      console.log(styles)
+      return styles
     }
   },
   methods: {
@@ -222,18 +251,30 @@ export default {
      * toggle visibility of ante docs
      */
     toggleAnte (e) {
+      // avoid empty selection
+      if (!this.selectRvsn && !this.selectPost) {
+        this.selectRvsn = true
+      }
       this.selectAnte = !this.selectAnte
     },
     /**
      * toggle visibility of revision
      */
     toggleRvsn (e) {
+      // avoid empty selection
+      if (!this.selectAnte && !this.selectPost) {
+        this.selectPost = true
+      }
       this.selectRvsn = !this.selectRvsn
     },
     /**
      * toggle visibility of post docs
      */
     togglePost (e) {
+      // avoid empty selection
+      if (!this.selectRvsn && !this.selectAnte) {
+        this.selectAnte = true
+      }
       this.selectPost = !this.selectPost
     }
   }
@@ -276,6 +317,7 @@ export default {
       margin: 5pt;
       .tabrow {
         display: table-row;
+        max-width: 100%;
         .tabcol {
           width: 33%;
           display: table-cell;
