@@ -176,7 +176,7 @@ export default {
     tabWidth () {
       if (this.$el) {
         const el = this.$el.querySelector('.tabview')
-        console.log(el.innerWidth)
+        console.log(el?.innerWidth)
         return el?.innerWidth > 0 ? el.innerWidth : this.$el.innerWidth
       }
       return 400
