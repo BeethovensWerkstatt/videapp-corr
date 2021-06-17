@@ -49,7 +49,7 @@ const toStore = {
      */
     loadComplaints ({ state, commit }, { complaints }) {
       complaints.forEach(c => {
-        console.log(c)
+        // console.log(c)
         const mdiv = c.affects[0]?.mdiv
         // console.log(state.movements, mdiv)
         const movement = mdiv ? state.movements[mdiv] : undefined

@@ -103,6 +103,9 @@ export default {
     }
   },
   watch: {
+    tabWidth () {
+      console.log(this.tabWidth)
+    }
   },
   computed: {
     ...mapGetters(['activeComplaintId', 'activeComplaint']),
@@ -176,7 +179,7 @@ export default {
     tabWidth () {
       if (this.$el) {
         const el = this.$el.querySelector('.tabview')
-        console.log(el?.innerWidth)
+        console.log(el?.innerWidth, this.$el)
         return el?.innerWidth > 0 ? el.innerWidth : this.$el.innerWidth
       }
       return 400
@@ -196,6 +199,7 @@ export default {
     },
     colStyles () {
       const mw = (this.tabWidth / this.colCount)
+      console.log(this.tabWidth, this.colCount, mw)
       const styles = {
         'max-width': mw + 'px'
       }
