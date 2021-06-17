@@ -5,6 +5,8 @@ import { finishProc, startProc } from '..'
 
 // otherContent label for measure positions URL
 const TAG_MEASURE_POSITIONS = 'measure positions'
+// otherContent label for measure positions URL
+const TAG_SVG_SHAPES = 'svg shapes'
 // regex to extract position data from `xywh`
 const rexywh = new RegExp('xywh=(\\d+),(\\d+),(\\d+),(\\d+)')
 
@@ -101,6 +103,10 @@ const actions = {
                     if (mpos) {
                       // zones are loaded when page is opened first time
                       page.measures_uri = mpos['@id']
+                    }
+                    const psvg = otherContent.find(oc => oc.label === TAG_SVG_SHAPES)
+                    if (psvg) {
+                      page.svg_shapes = psvg['@id']
                     }
                   }
 

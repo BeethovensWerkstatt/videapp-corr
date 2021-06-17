@@ -11,7 +11,7 @@
     </div>
     <div v-if="activeZone">
       <div class="smaller" :title="activeZone.zone">{{ activeZone.measure }}</div>
-      <input v-model="activeZone.label" />
+      <input v-model="activeZone.anno" />
       <btn-group>
         <btn @click.prevent="clearInfo">close</btn>
       </btn-group>

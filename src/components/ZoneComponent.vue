@@ -75,7 +75,7 @@ export default {
         top: (100 * this.y) + '%',
         width: (100 * this.width) + '%',
         height: (100 * this.height) + '%',
-        'font-size': 'min(14pt,' + (100 * this.scale + '%') + ')'
+        'font-size': 'max(14pt,' + (100 * this.scale + '%') + ')'
       }
     },
     activeZoneId () {
@@ -87,7 +87,7 @@ export default {
       return this.displayMeasures || (this.activeZoneId === this.zoneId)
     },
     hasAnno () {
-      return this.label && this.label.length > 0
+      return this.anno?.length > 0
     },
     zone () {
       const zone = this.$store.getters.getZoneById(this.sourceId, this.zoneId)
@@ -104,6 +104,9 @@ export default {
       }
       return null
     },
+    anno () {
+      return this.zone?.anno
+    },
     zoneNr () {
       const zone = this.zone
       if (zone) {
@@ -112,9 +115,12 @@ export default {
       return null
     },
     zoneTitle () {
-      const zone = this.zone
-      if (zone) {
-        return zone.title
+      const label = this.label
+      if (label) {
+        if (this.anno) {
+          return label + '\n' + this.anno
+        }
+        return label
       }
       return null
     },
@@ -137,7 +143,7 @@ export default {
 @import "@/scss/variables.scss";
 
 .zone-component {
-  border: .5px solid $border-color;
+  // border: .5px solid $border-color;
   // border-radius: 5px;
   // box-shadow: 0 0 .5rem #00000099;
   opacity: 0;

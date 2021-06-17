@@ -4,6 +4,8 @@
     :id="divid"
     :class="{ hideovl: !tiledimage }"
   >
+    <div class="svg-shapes" v-if="svgShapeUrl">
+    </div>
     <div v-if="showDetail">
       <zone-component
         v-for="zone in zones"
@@ -29,6 +31,7 @@ import { mapGetters } from 'vuex'
 import OpenSeadragon from 'openseadragon'
 import ZoneComponent from '@/components/ZoneComponent.vue'
 import { actions } from '@/store/names'
+import axios from 'axios'
 
 /**
  * Component for one page (recto or verso). Collect all measure-zones
@@ -253,6 +256,9 @@ export default {
       const rect = { x: minPos.x, y: minPos.y, width: (maxPos.x - minPos.x), height: (maxPos.y - minPos.y) }
       // console.log(rect)
       return rect
+    },
+    svgShapeUrl () {
+      return this.page?.svg_shapes
     }
   },
   methods: {
@@ -300,6 +306,22 @@ export default {
             // degrees: source.rotation / 5
           }
           this.viewer.addTiledImage(tisrc)
+
+          // TODO add SVG shapes overlay
+          const svgContainer = this.$el.querySelector('.svg-shapes')
+          if (this.svgShapeUrl && svgContainer) {
+            // svgContainer.innerHTML = '<img width="100%" src="' + page.svg_shapes + '" />'
+            axios.get(this.svgShapeUrl).then(({ data }) => {
+              console.log(this.page.svg_shapes)
+              const parser = new DOMParser()
+              const serializer = new XMLSerializer()
+              const svg = parser.parseFromString(data, 'image/svg+xml')
+              const svgroot = svg.documentElement
+              svgroot.setAttribute('width', '100%')
+              svgroot.setAttribute('height', '100%')
+              svgContainer.innerHTML = serializer.serializeToString(svg)
+            })
+          }
         } else {
           this.tiledimage = null
         }
@@ -332,5 +354,15 @@ export default {
   display: inline-block;
   background-color: rgba(255, 255, 255, .5);
   padding: 3pt;
+}
+.svg-shapes {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 1px solid red;
+}
+.svg-shapes img {
+  width: 100%;
+  height: auto;
 }
 </style>
