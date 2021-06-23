@@ -10,11 +10,11 @@
       <div class="tabview" v-else>
         <div class="tabrow" v-for="(row,i) in docMap" :key="i">
           <div class="tabcol" v-if="selectAnte" :style="colStyles">
-            <h2>{{ initialDocLabel }}</h2>
-            <div class="docimg" v-if="row.ante.img && row.ante.img.url">
+            <h2 v-if="selectFacs">{{ initialDocLabel }}</h2>
+            <div class="docimg" v-if="selectFacs && row.ante.img && row.ante.img.url">
               <img :src="row.ante.img.url" :style="{ width: '100%' }" />
             </div>
-            <h2>{{ initialTextLabel }}</h2>
+            <h2 v-if="selectVrv">{{ initialTextLabel }}</h2>
             <verovio-component
               id="ante"
               :options="row.ante.mei"
@@ -22,11 +22,11 @@
             />
           </div>
           <div class="tabcol" v-if="selectRvsn" :style="colStyles">
-            <h2>{{ revisionDocLabel }}</h2>
-            <div class="docimg" v-if="row.revision.img && row.revision.img.url">
+            <h2 v-if="selectFacs">{{ revisionDocLabel }}</h2>
+            <div class="docimg" v-if="selectFacs && row.revision.img && row.revision.img.url">
               <img :src="row.revision.img.url" :style="{ width: '100%' }" />
             </div>
-            <h2>{{ revisionTextLabel }}</h2>
+            <h2 v-if="selectVrv">{{ revisionTextLabel }}</h2>
             <verovio-component
               id="revision"
               :options="row.revision.mei"
@@ -34,11 +34,11 @@
             />
           </div>
           <div class="tabcol" v-if="selectPost" :style="colStyles">
-            <h2>{{ revisedDocLabel }}</h2>
-            <div class="docimg" v-if="row.post.img && row.post.img.url">
+            <h2 v-if="selectFacs">{{ revisedDocLabel }}</h2>
+            <div class="docimg" v-if="selectFacs && row.post.img && row.post.img.url">
               <img :src="row.post.img.url" :style="{ width: '100%' }" />
             </div>
-            <h2>{{ revisedTextLabel }}</h2>
+            <h2 v-if="selectVrv">{{ revisedTextLabel }}</h2>
             <verovio-component
               id="post"
               :options="row.post.mei"
@@ -52,8 +52,12 @@
       <div @click="toggleAnte" :class="{ TSactive: selectAnte }" class="TSbutton">ANTE</div>
       <div @click="toggleRvsn" :class="{ TSactive: selectRvsn }" class="TSbutton">RVSN</div>
       <div @click="togglePost" :class="{ TSactive: selectPost }" class="TSbutton">POST</div>
+      &nbsp;
+      <div @click="toggleFacs" :class="{ TSactive: selectFacs }" class="TSbutton">FACS</div>
+      <div @click="toggleVrv" :class="{ TSactive: selectVrv }" class="TSbutton">TEXT</div>
+      &nbsp;
       <div class="dash">
-        <input id="verovio-zoom" type="number" min="5" max="100" v-model="vzoom" />
+        <input id="verovio-zoom" type="range" min="5" max="100" class="slider" v-model="vzoom" />
       </div>
     </div>
     <div id="close">
@@ -99,6 +103,8 @@ export default {
       selectAnte: true,
       selectRvsn: true,
       selectPost: true,
+      selectFacs: true,
+      selectVrv: true,
       zoom: 30
     }
   },
@@ -243,7 +249,7 @@ export default {
     vrvValid (options) {
       const valid = (options && options.url && options.url.length > 0)
       // console.log(options, valid)
-      return valid
+      return valid && this.selectVrv
     },
     /**
      * close this dialog
@@ -280,6 +286,20 @@ export default {
         this.selectAnte = true
       }
       this.selectPost = !this.selectPost
+    },
+    /**
+     * toggle visibility of post docs
+     */
+    toggleFacs (e) {
+      // avoid empty selection ...
+      this.selectFacs = !this.selectFacs
+    },
+    /**
+     * toggle visibility of post docs
+     */
+    toggleVrv (e) {
+      // avoid empty selection ...
+      this.selectVrv = !this.selectVrv
     }
   }
 }
