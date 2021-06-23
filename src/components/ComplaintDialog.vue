@@ -61,7 +61,7 @@
       </div>
     </div>
     <div id="close">
-      <btn @click.prevent="closeDialog">close</btn>
+      <btn @click.prevent="closeDialog">{{ $t('terms.close') }}</btn>
     </div>
   </div>
 </template>
