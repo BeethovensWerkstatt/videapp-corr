@@ -9,36 +9,36 @@
       <div class="loading" v-if="activeComplaint.loading">Lade {{ activeComplaint.label }}</div>
       <div class="tabview" v-else>
         <div class="tabrow" v-for="(row,i) in docMap" :key="i">
-          <div class="tabcol" v-if="selectAnte" :style="colStyles">
-            <h2 v-if="selectFacs">{{ initialDocLabel }}</h2>
+          <div class="tabcol" v-if="row.ante && selectAnte" :style="colStyles">
+            <h2 v-if="row.ante.img && selectFacs">{{ initialDocLabel }}</h2>
             <div class="docimg" v-if="selectFacs && row.ante.img && row.ante.img.url">
               <img :src="row.ante.img.url" :style="{ width: '100%' }" />
             </div>
-            <h2 v-if="selectVrv">{{ initialTextLabel }}</h2>
+            <h2 v-if="row.ante.mei && selectVrv">{{ initialTextLabel }}</h2>
             <verovio-component
               id="ante"
               :options="row.ante.mei"
               v-if="vrvValid(row.ante.mei)"
             />
           </div>
-          <div class="tabcol" v-if="selectRvsn" :style="colStyles">
-            <h2 v-if="selectFacs">{{ revisionDocLabel }}</h2>
+          <div class="tabcol" v-if="row.revision && selectRvsn" :style="colStyles">
+            <h2 v-if="row.revision.img && selectFacs">{{ revisionDocLabel }}</h2>
             <div class="docimg" v-if="selectFacs && row.revision.img && row.revision.img.url">
               <img :src="row.revision.img.url" :style="{ width: '100%' }" />
             </div>
-            <h2 v-if="selectVrv">{{ revisionTextLabel }}</h2>
+            <h2 v-if="row.revision.mei && selectVrv">{{ revisionTextLabel }}</h2>
             <verovio-component
               id="revision"
               :options="row.revision.mei"
               v-if="vrvValid(row.revision.mei)"
             />
           </div>
-          <div class="tabcol" v-if="selectPost" :style="colStyles">
-            <h2 v-if="selectFacs">{{ revisedDocLabel }}</h2>
+          <div class="tabcol" v-if="row.post && selectPost" :style="colStyles">
+            <h2 v-if="row.post.img && selectFacs">{{ revisedDocLabel }}</h2>
             <div class="docimg" v-if="selectFacs && row.post.img && row.post.img.url">
               <img :src="row.post.img.url" :style="{ width: '100%' }" />
             </div>
-            <h2 v-if="selectVrv">{{ revisedTextLabel }}</h2>
+            <h2 v-if="row.post.mei && selectVrv">{{ revisedTextLabel }}</h2>
             <verovio-component
               id="post"
               :options="row.post.mei"
@@ -177,6 +177,7 @@ export default {
         row.ante = i < ante.length ? ante[i] : {}
         row.revision = i < revision.length ? revision[i] : {}
         row.post = i < post.length ? post[i] : {}
+        console.log(row)
         map.push(row)
       }
       // console.log(map)
@@ -228,17 +229,18 @@ export default {
       // console.log(textStatus)
       if (textStatus) {
         textStatus.forEach(stat => {
-          const doc = {
+          docs.push({
+            img: {
+              url: stat.iiif[0]?.target.selector[0]['@id'],
+              label: 'sigle'
+            }
+          })
+          docs.push({
             mei: {
               url: stat.mei,
               scale: this.vzoom
             }
-          }
-          // check for multiple images?
-          doc.img = { url: stat.iiif[0]?.target.selector[0]['@id'] }
-          if (doc.mei?.url || doc.img) {
-            docs.push(doc)
-          }
+          })
         })
       }
       return docs
@@ -344,9 +346,11 @@ export default {
         max-width: 100%;
         .tabcol {
           width: 33%;
+          overflow: scroll;
+          resize: vertical;
           display: table-cell;
           overflow: scroll;
-          vertical-align: middle;
+          vertical-align: top;
           padding: 3pt;
           img {
             width: 100%;
