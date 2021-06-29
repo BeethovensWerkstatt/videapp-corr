@@ -10,40 +10,46 @@
       <div class="tabview" v-else>
         <div class="tabrow" v-for="(row,i) in docMap" :key="i">
           <div class="tabcol" v-if="row.ante && selectAnte" :style="colStyles">
-            <h2 v-if="row.ante.img && selectFacs">{{ initialDocLabel }}</h2>
+            <h2 v-if="row.ante.img && selectFacs">{{ initialDocLabel(row) }}</h2>
             <div class="docimg" v-if="selectFacs && row.ante.img && row.ante.img.url">
               <img :src="row.ante.img.url" :style="{ width: '100%' }" />
             </div>
-            <h2 v-if="row.ante.mei && selectVrv">{{ initialTextLabel }}</h2>
+            <h2 v-if="row.ante.mei && selectText">{{ initialTextLabel(row) }}</h2>
             <verovio-component
               id="ante"
               :options="row.ante.mei"
               v-if="vrvValid(row.ante.mei)"
             />
+            <h2 v-if="row.ante.annot">Annotationen</h2>
+            <div v-if="row.ante.annot" v-html="row.ante.annot"/>
           </div>
           <div class="tabcol" v-if="row.revision && selectRvsn" :style="colStyles">
-            <h2 v-if="row.revision.img && selectFacs">{{ revisionDocLabel }}</h2>
+            <h2 v-if="row.revision.img && selectFacs">{{ revisionDocLabel(row) }}</h2>
             <div class="docimg" v-if="selectFacs && row.revision.img && row.revision.img.url">
               <img :src="row.revision.img.url" :style="{ width: '100%' }" />
             </div>
-            <h2 v-if="row.revision.mei && selectVrv">{{ revisionTextLabel }}</h2>
+            <h2 v-if="row.revision.mei && selectText">{{ revisionTextLabel(row) }}</h2>
             <verovio-component
               id="revision"
               :options="row.revision.mei"
               v-if="vrvValid(row.revision.mei)"
             />
+            <h2 v-if="row.revision.annot">Annotationen</h2>
+            <div v-if="row.revision.annot" v-html="row.ante.annot"/>
           </div>
           <div class="tabcol" v-if="row.post && selectPost" :style="colStyles">
-            <h2 v-if="row.post.img && selectFacs">{{ revisedDocLabel }}</h2>
+            <h2 v-if="row.post.img && selectFacs">{{ revisedDocLabel(row) }}</h2>
             <div class="docimg" v-if="selectFacs && row.post.img && row.post.img.url">
               <img :src="row.post.img.url" :style="{ width: '100%' }" />
             </div>
-            <h2 v-if="row.post.mei && selectVrv">{{ revisedTextLabel }}</h2>
+            <h2 v-if="row.post.mei && selectText">{{ revisedTextLabel(row) }}</h2>
             <verovio-component
               id="post"
               :options="row.post.mei"
               v-if="vrvValid(row.post.mei)"
             />
+            <h2 v-if="row.post.annot && selectAnno">Annotationen</h2>
+            <div v-if="row.post.annot && selectAnno" v-html="row.post.annot"/>
           </div>
         </div>
       </div>
@@ -54,7 +60,9 @@
       <div @click="togglePost" :class="{ TSactive: selectPost }" class="TSbutton">POST</div>
       &nbsp;
       <div @click="toggleFacs" :class="{ TSactive: selectFacs }" class="TSbutton">FACS</div>
-      <div @click="toggleVrv" :class="{ TSactive: selectVrv }" class="TSbutton">TEXT</div>
+      <div @click="toggleTrns" :class="{ TSactive: selectTrns }" class="TSbutton">DIPL</div>
+      <div @click="toggleText" :class="{ TSactive: selectText }" class="TSbutton">TEXT</div>
+      <div @click="toggleAnno" :class="{ TSactive: selectAnno }" class="TSbutton">ANNO</div>
       &nbsp;
       <div class="dash">
         <input id="verovio-zoom" type="range" min="5" max="100" class="slider" v-model="vzoom" />
@@ -76,12 +84,6 @@ import toolbox from '@/toolbox'
  * Complaint dialog component
  *
  * @module components/ComplaintDialog
- * @vue-data {Object} [initialVersion={url:'demo.mei'}] - initial version MEI source
- * @vue-data {Object} [initialImageUrl=null] - initial version image url
- * @vue-data {Object} [revisionInstruction={url:'demo.mei'}] - revision instruction MEI source
- * @vue-data {Object} [revisionImageUrl=null] - revision instruction image url
- * @vue-data {Object} [revisesVersion={url:'demo.mei'}] - revised version MEI source
- * @vue-data {Object} [revisedImageUrl=null] - revised version image url
  * @vue-computed {String} activeComplaintId - id of selected complaint
  * @vue-computed {Object} activeComplaint - selected complaint object
  * @vue-computed {boolean} active - if dialog is opened
@@ -104,7 +106,9 @@ export default {
       selectRvsn: true,
       selectPost: true,
       selectFacs: true,
-      selectVrv: true,
+      selectTrns: true,
+      selectText: true,
+      selectAnno: true,
       zoom: 30
     }
   },
@@ -133,30 +137,6 @@ export default {
       return {
         height: 'calc(' + window.innerHeight + 'px - 2rem)'
       }
-    },
-    initialDocLabel () {
-      return this.initialVersion && this.initialVersion.label
-        ? this.initialVersion.label
-        : this.$t('terms.complaint.state.anteDoc')
-    },
-    revisionDocLabel () {
-      return this.revisionInstruction && this.revisionInstruction.label
-        ? this.revisionInstruction.label
-        : this.$t('terms.complaint.state.revisionDoc')
-    },
-    revisedDocLabel () {
-      return this.revisedVersion && this.revisedVersion.label
-        ? this.revisedVersion.label
-        : this.$t('terms.complaint.state.postDoc')
-    },
-    initialTextLabel () {
-      return this.$t('terms.complaint.state.anteText')
-    },
-    revisionTextLabel () {
-      return this.$t('terms.complaint.state.revisionText')
-    },
-    revisedTextLabel () {
-      return this.$t('terms.complaint.state.postText')
     },
     measures () {
       const complaint = this.activeComplaint
@@ -218,6 +198,39 @@ export default {
     toRoman (num) {
       return toolbox.toRoman(num)
     },
+    initialDocLabel (row) {
+      return row.ante?.img?.label
+        ? row.ante.img.label
+        : this.$t('terms.complaint.state.anteDoc')
+    },
+    revisionDocLabel (row) {
+      return row.revision?.img?.label
+        ? row.revision.img.label
+        : this.$t('terms.complaint.state.revisionDoc')
+    },
+    revisedDocLabel (row) {
+      return row.post?.img?.label
+        ? row.post.img.label
+        : this.$t('terms.complaint.state.postDoc')
+    },
+    initialTextLabel (row) {
+      if (row.ante?.mei?.label) {
+        return row.ante.mei.label
+      }
+      return this.$t('terms.complaint.state.anteText')
+    },
+    revisionTextLabel (row) {
+      if (row.revision?.mei?.label) {
+        return row.revision.mei.label
+      }
+      return this.$t('terms.complaint.state.revisionText')
+    },
+    revisedTextLabel (row) {
+      if (row.post?.mei?.label) {
+        return row.post.mei.label
+      }
+      return this.$t('terms.complaint.state.postText')
+    },
     /**
      * normalize textStatus -- one of `anteDocs`, `revisionDocs` and `postDocs`--
      * to an array of objects `{ mei: { url }, img: { url } }`
@@ -232,14 +245,25 @@ export default {
           docs.push({
             img: {
               url: stat.iiif[0]?.target.selector[0]['@id'],
-              label: 'sigle'
+              label: 'Siegel / Datum'
             }
           })
           docs.push({
             mei: {
               url: stat.mei,
-              scale: this.vzoom
+              scale: this.vzoom,
+              label: 'Annot. Transkript.'
             }
+          })
+          docs.push({
+            mei: {
+              url: stat.mei,
+              scale: this.vzoom,
+              label: 'Cleartext'
+            }
+          })
+          docs.push({
+            annot: '<p>Erklärungen und Anmerkungen</p>'
           })
         })
       }
@@ -251,7 +275,7 @@ export default {
     vrvValid (options) {
       const valid = (options && options.url && options.url.length > 0)
       // console.log(options, valid)
-      return valid && this.selectVrv
+      return valid && this.selectText
     },
     /**
      * close this dialog
@@ -299,9 +323,23 @@ export default {
     /**
      * toggle visibility of post docs
      */
-    toggleVrv (e) {
+    toggleTrns (e) {
       // avoid empty selection ...
-      this.selectVrv = !this.selectVrv
+      this.selectTrns = !this.selectTrns
+    },
+    /**
+     * toggle visibility of post docs
+     */
+    toggleText (e) {
+      // avoid empty selection ...
+      this.selectText = !this.selectText
+    },
+    /**
+     * toggle visibility of post docs
+     */
+    toggleAnno (e) {
+      // avoid empty selection ...
+      this.selectAnno = !this.selectAnno
     }
   }
 }
@@ -375,6 +413,7 @@ export default {
       width: 3em;
       border: 1px solid gray;
       background-color: rgb(146, 118, 118);
+      border-radius: 5pt;
     }
     .TSactive {
       background-color: lightgreen;
