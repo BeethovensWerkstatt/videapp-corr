@@ -245,7 +245,7 @@ export default {
           docs.push({
             img: {
               url: stat.iiif[0]?.target.selector[0]['@id'],
-              label: 'Siegel / Datum'
+              label: 'Sigel / Datum'
             }
           })
           docs.push({
