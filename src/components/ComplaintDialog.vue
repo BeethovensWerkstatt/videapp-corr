@@ -1,5 +1,5 @@
 <template>
-  <div class="dialog" :class="{ 'inactive': !this.active }" :styles="styles">
+  <div class="dialog" :class="{ 'inactive': !this.active }" :style="styles">
     <div id="body" v-if="active">
       <div class="title">{{ toRoman(activeComplaint.movement.n) }}. {{ activeComplaint.movement.label }}, {{ activeComplaint.label }}</div>
       <div class="measures">
@@ -8,10 +8,12 @@
       <hr>
       <div class="loading" v-if="activeComplaint.loading">Lade {{ activeComplaint.label }}</div>
       <div class="tabview" v-else>
+        <complaint-dialog-tab-row v-for="(row,i) in docMap" :key="i+'x'" :row="row" :select="select">
+        </complaint-dialog-tab-row>
         <div class="tabrow" v-for="(row,i) in docMap" :key="i">
-          <div class="tabcol" v-if="row.ante && selectAnte" :style="colStyles">
-            <h2 v-if="row.ante.img && selectFacs">{{ initialDocLabel(row) }}</h2>
-            <div class="docimg" v-if="selectFacs && row.ante.img && row.ante.img.url">
+          <div class="tabcol" v-if="row.ante && select.ante" :style="colStyles">
+            <h2 v-if="row.ante.img && select.facs">{{ initialDocLabel(row) }}</h2>
+            <div class="docimg" v-if="select.facs && row.ante.img && row.ante.img.url">
               <img :src="row.ante.img.url" :style="{ width: '100%' }" />
             </div>
             <h2 v-if="vrvValid(row.ante.mei)">{{ initialTextLabel(row) }}</h2>
@@ -20,12 +22,12 @@
               :options="row.ante.mei"
               v-if="vrvValid(row.ante.mei)"
             />
-            <h2 v-if="row.ante.annot && selectAnno">Annotationen</h2>
-            <div v-if="row.ante.annot && selectAnno" v-html="row.ante.annot"/>
+            <h2 v-if="row.ante.annot && select.anno">Annotationen</h2>
+            <div v-if="row.ante.annot && select.anno" v-html="row.ante.annot"/>
           </div>
-          <div class="tabcol" v-if="row.revision && selectRvsn" :style="colStyles">
-            <h2 v-if="row.revision.img && selectFacs">{{ revisionDocLabel(row) }}</h2>
-            <div class="docimg" v-if="selectFacs && row.revision.img && row.revision.img.url">
+          <div class="tabcol" v-if="row.revision && select.rvsn" :style="colStyles">
+            <h2 v-if="row.revision.img && select.facs">{{ revisionDocLabel(row) }}</h2>
+            <div class="docimg" v-if="select.facs && row.revision.img && row.revision.img.url">
               <img :src="row.revision.img.url" :style="{ width: '100%' }" />
             </div>
             <h2 v-if="vrvValid(row.revision.mei)">{{ revisionTextLabel(row) }}</h2>
@@ -34,12 +36,12 @@
               :options="row.revision.mei"
               v-if="vrvValid(row.revision.mei)"
             />
-            <h2 v-if="row.revision.annot && selectAnno">Annotationen</h2>
-            <div v-if="row.revision.annot && selectAnno" v-html="row.ante.annot"/>
+            <h2 v-if="row.revision.annot && select.anno">Annotationen</h2>
+            <div v-if="row.revision.annot && select.anno" v-html="row.ante.annot"/>
           </div>
-          <div class="tabcol" v-if="row.post && selectPost" :style="colStyles">
-            <h2 v-if="row.post.img && selectFacs">{{ revisedDocLabel(row) }}</h2>
-            <div class="docimg" v-if="selectFacs && row.post.img && row.post.img.url">
+          <div class="tabcol" v-if="row.post && select.post" :style="colStyles">
+            <h2 v-if="row.post.img && select.facs">{{ revisedDocLabel(row) }}</h2>
+            <div class="docimg" v-if="select.facs && row.post.img && row.post.img.url">
               <img :src="row.post.img.url" :style="{ width: '100%' }" />
             </div>
             <h2 v-if="vrvValid(row.post.mei)">{{ revisedTextLabel(row) }}</h2>
@@ -48,21 +50,21 @@
               :options="row.post.mei"
               v-if="vrvValid(row.post.mei)"
             />
-            <h2 v-if="row.post.annot && selectAnno">Annotationen</h2>
-            <div v-if="row.post.annot && selectAnno" v-html="row.post.annot"/>
+            <h2 v-if="row.post.annot && select.anno">Annotationen</h2>
+            <div v-if="row.post.annot && select.anno" v-html="row.post.annot"/>
           </div>
         </div>
       </div>
     </div>
     <div id="select">
-      <div @click="toggleAnte" :class="{ TSactive: selectAnte }" class="TSbutton">ANTE</div>
-      <div @click="toggleRvsn" :class="{ TSactive: selectRvsn }" class="TSbutton">RVSN</div>
-      <div @click="togglePost" :class="{ TSactive: selectPost }" class="TSbutton">POST</div>
+      <div @click="toggleAnte" :class="{ TSactive: select.ante }" class="TSbutton">ANTE</div>
+      <div @click="toggleRvsn" :class="{ TSactive: select.rvsn }" class="TSbutton">RVSN</div>
+      <div @click="togglePost" :class="{ TSactive: select.post }" class="TSbutton">POST</div>
       &nbsp;
-      <div @click="toggleFacs" :class="{ TSactive: selectFacs }" class="TSbutton">FACS</div>
-      <div @click="toggleTrns" :class="{ TSactive: selectTrns }" class="TSbutton">DIPL</div>
-      <div @click="toggleText" :class="{ TSactive: selectText }" class="TSbutton">TEXT</div>
-      <div @click="toggleAnno" :class="{ TSactive: selectAnno }" class="TSbutton">ANNO</div>
+      <div @click="toggleFacs" :class="{ TSactive: select.facs }" class="TSbutton">FACS</div>
+      <div @click="toggleTrns" :class="{ TSactive: select.trns }" class="TSbutton">DIPL</div>
+      <div @click="toggleText" :class="{ TSactive: select.text }" class="TSbutton">TEXT</div>
+      <div @click="toggleAnno" :class="{ TSactive: select.anno }" class="TSbutton">ANNO</div>
       &nbsp;
       <div class="dash">
         <input id="verovio-zoom" type="range" min="5" max="100" class="slider" v-model="vzoom" />
@@ -79,6 +81,7 @@ import { mapGetters } from 'vuex'
 import { actions } from '@/store/names'
 import VerovioComponent from '@/components/VerovioComponent.vue'
 import toolbox from '@/toolbox'
+import ComplaintDialogTabRow from '@/components/ComplaintDialog/TabRow.vue'
 
 /**
  * Complaint dialog component
@@ -96,25 +99,30 @@ import toolbox from '@/toolbox'
  * @vue-computed {String} measures - indicator for affected measures
  */
 export default {
-  components: { VerovioComponent },
+  components: { VerovioComponent, ComplaintDialogTabRow },
   name: 'ComplaintDialog',
   props: {
   },
   data () {
     return {
-      selectAnte: true,
-      selectRvsn: true,
-      selectPost: true,
-      selectFacs: true,
-      selectTrns: true,
-      selectText: true,
-      selectAnno: true,
+      select: {
+        ante: true,
+        rvsn: true,
+        post: true,
+        facs: true,
+        trns: true,
+        text: true,
+        anno: true
+      },
       zoom: 30
     }
   },
   watch: {
     tabWidth () {
       console.log(this.tabWidth)
+    },
+    styles () {
+      console.log(window.innerHeight)
     }
   },
   computed: {
@@ -173,13 +181,13 @@ export default {
     },
     colCount () {
       let cnt = 0
-      if (this.selectAnte) {
+      if (this.select.ante) {
         cnt++
       }
-      if (this.selectRvsn) {
+      if (this.select.rvsn) {
         cnt++
       }
-      if (this.selectPost) {
+      if (this.select.post) {
         cnt++
       }
       return Math.max(1, cnt)
@@ -247,10 +255,10 @@ export default {
           textTrans = this.activeComplaint.text.ante
           break
         case 'revision':
-          textStatus = this.activeComplaint.anteDocs
+          textStatus = this.activeComplaint.revisionDocs
           break
         case 'post':
-          textStatus = this.activeComplaint.anteDocs
+          textStatus = this.activeComplaint.postDocs
           textTrans = this.activeComplaint.text.post
           break
       }
@@ -293,7 +301,7 @@ export default {
     vrvValid (options) {
       const valid = (options && options.url && options.url.length > 0)
       // console.log(options, valid)
-      return valid && ((this.selectText && options.trans === 'clear') || (this.selectTrns && options.trans === 'dipl'))
+      return valid && ((this.select.text && options.trans === 'clear') || (this.select.trns && options.trans === 'dipl'))
     },
     /**
      * close this dialog
@@ -306,58 +314,58 @@ export default {
      */
     toggleAnte (e) {
       // avoid empty selection
-      if (!this.selectRvsn && !this.selectPost) {
-        this.selectRvsn = true
+      if (!this.select.rvsn && !this.select.post) {
+        this.select.rvsn = true
       }
-      this.selectAnte = !this.selectAnte
+      this.select.ante = !this.select.ante
     },
     /**
      * toggle visibility of revision
      */
     toggleRvsn (e) {
       // avoid empty selection
-      if (!this.selectAnte && !this.selectPost) {
-        this.selectPost = true
+      if (!this.select.ante && !this.select.post) {
+        this.select.post = true
       }
-      this.selectRvsn = !this.selectRvsn
+      this.select.rvsn = !this.select.rvsn
     },
     /**
      * toggle visibility of post docs
      */
     togglePost (e) {
       // avoid empty selection
-      if (!this.selectRvsn && !this.selectAnte) {
-        this.selectAnte = true
+      if (!this.select.rvsn && !this.select.ante) {
+        this.select.ante = true
       }
-      this.selectPost = !this.selectPost
+      this.select.post = !this.select.post
     },
     /**
      * toggle visibility of post docs
      */
     toggleFacs (e) {
       // avoid empty selection ...
-      this.selectFacs = !this.selectFacs
+      this.select.facs = !this.select.facs
     },
     /**
      * toggle visibility of post docs
      */
     toggleTrns (e) {
       // avoid empty selection ...
-      this.selectTrns = !this.selectTrns
+      this.select.trns = !this.select.trns
     },
     /**
      * toggle visibility of post docs
      */
     toggleText (e) {
       // avoid empty selection ...
-      this.selectText = !this.selectText
+      this.select.text = !this.select.text
     },
     /**
      * toggle visibility of post docs
      */
     toggleAnno (e) {
       // avoid empty selection ...
-      this.selectAnno = !this.selectAnno
+      this.select.anno = !this.select.anno
     }
   }
 }
