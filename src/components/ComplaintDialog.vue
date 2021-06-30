@@ -14,7 +14,7 @@
             <div class="docimg" v-if="selectFacs && row.ante.img && row.ante.img.url">
               <img :src="row.ante.img.url" :style="{ width: '100%' }" />
             </div>
-            <h2 v-if="row.ante.mei && selectText">{{ initialTextLabel(row) }}</h2>
+            <h2 v-if="vrvValid(row.ante.mei)">{{ initialTextLabel(row) }}</h2>
             <verovio-component
               id="ante"
               :options="row.ante.mei"
@@ -28,7 +28,7 @@
             <div class="docimg" v-if="selectFacs && row.revision.img && row.revision.img.url">
               <img :src="row.revision.img.url" :style="{ width: '100%' }" />
             </div>
-            <h2 v-if="row.revision.mei && selectText">{{ revisionTextLabel(row) }}</h2>
+            <h2 v-if="vrvValid(row.revision.mei)">{{ revisionTextLabel(row) }}</h2>
             <verovio-component
               id="revision"
               :options="row.revision.mei"
@@ -42,7 +42,7 @@
             <div class="docimg" v-if="selectFacs && row.post.img && row.post.img.url">
               <img :src="row.post.img.url" :style="{ width: '100%' }" />
             </div>
-            <h2 v-if="row.post.mei && selectText">{{ revisedTextLabel(row) }}</h2>
+            <h2 v-if="vrvValid(row.post.mei)">{{ revisedTextLabel(row) }}</h2>
             <verovio-component
               id="post"
               :options="row.post.mei"
@@ -252,6 +252,7 @@ export default {
             mei: {
               url: stat.mei,
               scale: this.vzoom,
+              trans: 'dipl',
               label: 'Annot. Transkript.'
             }
           })
@@ -259,6 +260,7 @@ export default {
             mei: {
               url: stat.mei,
               scale: this.vzoom,
+              trans: 'clear',
               label: 'Cleartext'
             }
           })
@@ -275,7 +277,7 @@ export default {
     vrvValid (options) {
       const valid = (options && options.url && options.url.length > 0)
       // console.log(options, valid)
-      return valid && this.selectText
+      return valid && ((this.selectText && options.trans === 'clear') || (this.selectTrns && options.trans === 'dipl'))
     },
     /**
      * close this dialog
