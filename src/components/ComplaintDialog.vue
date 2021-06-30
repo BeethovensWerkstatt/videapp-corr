@@ -20,8 +20,8 @@
               :options="row.ante.mei"
               v-if="vrvValid(row.ante.mei)"
             />
-            <h2 v-if="row.ante.annot">Annotationen</h2>
-            <div v-if="row.ante.annot" v-html="row.ante.annot"/>
+            <h2 v-if="row.ante.annot && selectAnno">Annotationen</h2>
+            <div v-if="row.ante.annot && selectAnno" v-html="row.ante.annot"/>
           </div>
           <div class="tabcol" v-if="row.revision && selectRvsn" :style="colStyles">
             <h2 v-if="row.revision.img && selectFacs">{{ revisionDocLabel(row) }}</h2>
@@ -34,8 +34,8 @@
               :options="row.revision.mei"
               v-if="vrvValid(row.revision.mei)"
             />
-            <h2 v-if="row.revision.annot">Annotationen</h2>
-            <div v-if="row.revision.annot" v-html="row.ante.annot"/>
+            <h2 v-if="row.revision.annot && selectAnno">Annotationen</h2>
+            <div v-if="row.revision.annot && selectAnno" v-html="row.ante.annot"/>
           </div>
           <div class="tabcol" v-if="row.post && selectPost" :style="colStyles">
             <h2 v-if="row.post.img && selectFacs">{{ revisedDocLabel(row) }}</h2>
