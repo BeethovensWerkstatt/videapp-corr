@@ -146,9 +146,9 @@ export default {
       return ''
     },
     docMap () {
-      const ante = this.statusDocs(this.activeComplaint?.anteDocs)
-      const revision = this.statusDocs(this.activeComplaint?.revisionDocs)
-      const post = this.statusDocs(this.activeComplaint?.postDocs)
+      const ante = this.statusDocs('ante')
+      const revision = this.statusDocs('revision')
+      const post = this.statusDocs('post')
       const len = Math.max(ante.length, revision.length, post.length)
       // console.log(len, ante, revision, post)
       const map = []
@@ -237,9 +237,23 @@ export default {
      *
      * (TODO width/resolution)
      */
-    statusDocs (textStatus) {
+    statusDocs (status) {
       const docs = []
       // console.log(textStatus)
+      let textStatus, textTrans
+      switch (status) {
+        case 'ante':
+          textStatus = this.activeComplaint.anteDocs
+          textTrans = this.activeComplaint.text.ante
+          break
+        case 'revision':
+          textStatus = this.activeComplaint.anteDocs
+          break
+        case 'post':
+          textStatus = this.activeComplaint.anteDocs
+          textTrans = this.activeComplaint.text.post
+          break
+      }
       if (textStatus) {
         textStatus.forEach(stat => {
           docs.push({
@@ -259,7 +273,7 @@ export default {
           })
           docs.push({
             mei: {
-              url: stat.mei,
+              url: textTrans,
               scale: this.vzoom,
               trans: 'clear',
               label: 'Cleartext'
