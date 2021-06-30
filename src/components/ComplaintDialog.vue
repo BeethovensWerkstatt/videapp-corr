@@ -248,6 +248,7 @@ export default {
               label: 'Sigel / Datum'
             }
           })
+          // TODO we need different transcriptions here
           docs.push({
             mei: {
               url: stat.mei,
@@ -264,6 +265,7 @@ export default {
               label: 'Cleartext'
             }
           })
+          // TODO we need the complaint text here
           docs.push({
             annot: '<p>Erklärungen und Anmerkungen</p>'
           })
