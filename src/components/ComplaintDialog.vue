@@ -168,39 +168,6 @@ export default {
     toRoman (num) {
       return toolbox.toRoman(num)
     },
-    initialDocLabel (row) {
-      return row.ante?.img?.label
-        ? row.ante.img.label
-        : this.$t('terms.complaint.state.anteDoc')
-    },
-    revisionDocLabel (row) {
-      return row.revision?.img?.label
-        ? row.revision.img.label
-        : this.$t('terms.complaint.state.revisionDoc')
-    },
-    revisedDocLabel (row) {
-      return row.post?.img?.label
-        ? row.post.img.label
-        : this.$t('terms.complaint.state.postDoc')
-    },
-    initialTextLabel (row) {
-      if (row.ante?.mei?.label) {
-        return row.ante.mei.label
-      }
-      return this.$t('terms.complaint.state.anteText')
-    },
-    revisionTextLabel (row) {
-      if (row.revision?.mei?.label) {
-        return row.revision.mei.label
-      }
-      return this.$t('terms.complaint.state.revisionText')
-    },
-    revisedTextLabel (row) {
-      if (row.post?.mei?.label) {
-        return row.post.mei.label
-      }
-      return this.$t('terms.complaint.state.postText')
-    },
     /**
      * normalize textStatus -- one of `anteDocs`, `revisionDocs` and `postDocs`--
      * to an array of objects `{ mei: { url }, img: { url } }`
@@ -257,14 +224,6 @@ export default {
         })
       }
       return docs
-    },
-    /**
-     * check if options are valid
-     */
-    vrvValid (options) {
-      const valid = (options && options.url && options.url.length > 0)
-      // console.log(options, valid)
-      return valid && ((this.select.text && options.trans === 'clear') || (this.select.trns && options.trans === 'dipl'))
     },
     /**
      * close this dialog
