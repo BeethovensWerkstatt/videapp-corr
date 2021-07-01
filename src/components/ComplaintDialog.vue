@@ -8,52 +8,14 @@
       <hr>
       <div class="loading" v-if="activeComplaint.loading">Lade {{ activeComplaint.label }}</div>
       <div class="tabview" v-else>
-        <complaint-dialog-tab-row v-for="(row,i) in docMap" :key="i+'x'" :row="row" :select="select">
+        <complaint-dialog-tab-row
+          v-for="(row,i) in docMap"
+          :key="i"
+          :row="row"
+          :select="select"
+          :colStyles="colStyles"
+        >
         </complaint-dialog-tab-row>
-        <div class="tabrow" v-for="(row,i) in docMap" :key="i">
-          <div class="tabcol" v-if="row.ante && select.ante" :style="colStyles">
-            <h2 v-if="row.ante.img && select.facs">{{ initialDocLabel(row) }}</h2>
-            <div class="docimg" v-if="select.facs && row.ante.img && row.ante.img.url">
-              <img :src="row.ante.img.url" :style="{ width: '100%' }" />
-            </div>
-            <h2 v-if="vrvValid(row.ante.mei)">{{ initialTextLabel(row) }}</h2>
-            <verovio-component
-              id="ante"
-              :options="row.ante.mei"
-              v-if="vrvValid(row.ante.mei)"
-            />
-            <h2 v-if="row.ante.annot && select.anno">Annotationen</h2>
-            <div v-if="row.ante.annot && select.anno" v-html="row.ante.annot"/>
-          </div>
-          <div class="tabcol" v-if="row.revision && select.rvsn" :style="colStyles">
-            <h2 v-if="row.revision.img && select.facs">{{ revisionDocLabel(row) }}</h2>
-            <div class="docimg" v-if="select.facs && row.revision.img && row.revision.img.url">
-              <img :src="row.revision.img.url" :style="{ width: '100%' }" />
-            </div>
-            <h2 v-if="vrvValid(row.revision.mei)">{{ revisionTextLabel(row) }}</h2>
-            <verovio-component
-              id="revision"
-              :options="row.revision.mei"
-              v-if="vrvValid(row.revision.mei)"
-            />
-            <h2 v-if="row.revision.annot && select.anno">Annotationen</h2>
-            <div v-if="row.revision.annot && select.anno" v-html="row.ante.annot"/>
-          </div>
-          <div class="tabcol" v-if="row.post && select.post" :style="colStyles">
-            <h2 v-if="row.post.img && select.facs">{{ revisedDocLabel(row) }}</h2>
-            <div class="docimg" v-if="select.facs && row.post.img && row.post.img.url">
-              <img :src="row.post.img.url" :style="{ width: '100%' }" />
-            </div>
-            <h2 v-if="vrvValid(row.post.mei)">{{ revisedTextLabel(row) }}</h2>
-            <verovio-component
-              id="post"
-              :options="row.post.mei"
-              v-if="vrvValid(row.post.mei)"
-            />
-            <h2 v-if="row.post.annot && select.anno">Annotationen</h2>
-            <div v-if="row.post.annot && select.anno" v-html="row.post.annot"/>
-          </div>
-        </div>
       </div>
     </div>
     <div id="select">
@@ -79,7 +41,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import { actions } from '@/store/names'
-import VerovioComponent from '@/components/VerovioComponent.vue'
+// import VerovioComponent from '@/components/VerovioComponent.vue'
 import toolbox from '@/toolbox'
 import ComplaintDialogTabRow from '@/components/ComplaintDialog/TabRow.vue'
 
@@ -99,7 +61,7 @@ import ComplaintDialogTabRow from '@/components/ComplaintDialog/TabRow.vue'
  * @vue-computed {String} measures - indicator for affected measures
  */
 export default {
-  components: { VerovioComponent, ComplaintDialogTabRow },
+  components: { ComplaintDialogTabRow },
   name: 'ComplaintDialog',
   props: {
   },
@@ -266,11 +228,12 @@ export default {
         textStatus.forEach(stat => {
           docs.push({
             img: {
+              // TODO scaling?
               url: stat.iiif[0]?.target.selector[0]['@id'],
               label: 'Sigel / Datum'
             }
           })
-          // TODO we need different transcriptions here
+          // TODO where is the right MEI
           docs.push({
             mei: {
               url: stat.mei,
@@ -289,7 +252,7 @@ export default {
           })
           // TODO we need the complaint text here
           docs.push({
-            annot: '<p>Erklärungen und Anmerkungen</p>'
+            anno: '<p>Erklärungen und Anmerkungen</p>'
           })
         })
       }
@@ -313,59 +276,62 @@ export default {
      * toggle visibility of ante docs
      */
     toggleAnte (e) {
+      const select = { ...this.select }
       // avoid empty selection
-      if (!this.select.rvsn && !this.select.post) {
-        this.select.rvsn = true
+      if (!select.rvsn && !select.post) {
+        select.rvsn = true
       }
-      this.select.ante = !this.select.ante
+      select.ante = !select.ante
+      this.select = select
     },
     /**
      * toggle visibility of revision
      */
     toggleRvsn (e) {
+      const select = { ...this.select }
       // avoid empty selection
-      if (!this.select.ante && !this.select.post) {
-        this.select.post = true
+      if (!select.ante && !select.post) {
+        select.post = true
       }
-      this.select.rvsn = !this.select.rvsn
+      select.rvsn = !select.rvsn
+      this.select = select
     },
     /**
      * toggle visibility of post docs
      */
     togglePost (e) {
+      const select = { ...this.select }
       // avoid empty selection
-      if (!this.select.rvsn && !this.select.ante) {
-        this.select.ante = true
+      if (!select.rvsn && !select.ante) {
+        select.ante = true
       }
-      this.select.post = !this.select.post
+      select.post = !select.post
+      this.select = select
     },
     /**
      * toggle visibility of post docs
      */
     toggleFacs (e) {
       // avoid empty selection ...
-      this.select.facs = !this.select.facs
+      this.select = { ...this.select, facs: !this.select.facs }
     },
     /**
      * toggle visibility of post docs
      */
     toggleTrns (e) {
-      // avoid empty selection ...
-      this.select.trns = !this.select.trns
+      this.select = { ...this.select, trns: !this.select.trns }
     },
     /**
      * toggle visibility of post docs
      */
     toggleText (e) {
-      // avoid empty selection ...
-      this.select.text = !this.select.text
+      this.select = { ...this.select, text: !this.select.text }
     },
     /**
      * toggle visibility of post docs
      */
     toggleAnno (e) {
-      // avoid empty selection ...
-      this.select.anno = !this.select.anno
+      this.select = { ...this.select, anno: !this.select.anno }
     }
   }
 }

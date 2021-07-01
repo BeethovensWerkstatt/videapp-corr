@@ -160,13 +160,15 @@ const actions = {
     }
   },
   async loadMovements ({ commit }, { movements }) {
-    for (const m of movements) {
-      // console.log(m)
-      const resp = await axios.get(m)
-      if (resp.data) {
-        commit(mut.LOAD_MOVEMENT, resp.data)
-      } else {
-        console.error(resp)
+    if (movements) {
+      for (const m of movements) {
+        // console.log(m)
+        const resp = await axios.get(m)
+        if (resp.data) {
+          commit(mut.LOAD_MOVEMENT, resp.data)
+        } else {
+          console.error(resp)
+        }
       }
     }
   },
