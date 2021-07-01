@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="annotext">
     <h2>Annotationen</h2>
     <div v-html="anno"/>
   </div>
@@ -18,4 +18,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.annotext {
+  resize: vertical;
+  overflow: auto;
+}
 </style>

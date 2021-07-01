@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="facsView">
     <h2>{{ label }}</h2>
     <img :src="src" :style="{ width: '100%' }" />
   </div>
@@ -22,4 +22,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.facsView {
+  overflow: auto;
+  resize: vertical;
+}
 </style>

@@ -118,7 +118,6 @@ export default {
 .tabcol {
   width: 33%;
   overflow: scroll;
-  resize: vertical;
   display: table-cell;
   overflow: scroll;
   vertical-align: top;

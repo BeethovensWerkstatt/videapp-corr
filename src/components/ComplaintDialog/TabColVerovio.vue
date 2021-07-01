@@ -34,7 +34,7 @@ export default {
 <style lang="scss" scoped>
 .vrvContainer {
   width: 100%;
-  max-width: 100%;
-  overflow: scroll;
+  overflow: auto;
+  resize: vertical;
 }
 </style>
