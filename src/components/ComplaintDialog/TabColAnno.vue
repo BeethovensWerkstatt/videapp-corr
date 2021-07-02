@@ -7,6 +7,7 @@
 
 <script>
 /**
+ * @module components/ComplaintDialog/TabColAnno
  * @vue-prop {String} anno - text/html of annotation
  */
 export default {

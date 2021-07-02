@@ -8,6 +8,7 @@
 
 <script>
 /**
+ * @module components/ComplaintDialog/TabColFacs
  * @vue-data {Number} izoom - image zoom factor in percent of width (TODO get resolution and width of image)
  * @vue-prop {String} src - image url
  * @vue-prop {String} label - label/title of image (facsimile)

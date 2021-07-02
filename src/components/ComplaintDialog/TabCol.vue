@@ -42,6 +42,7 @@ const labels = {
 }
 
 /**
+ * @module components/ComplaintDialog/TabCol
  * @vue-prop {Object} row - the table row with columns for ante, revision and post
  * @vue-prop {String} state - text state - one of `ante`, `revision` and `post`
  * @vue-prop {Object} styles - styles for this column (width)

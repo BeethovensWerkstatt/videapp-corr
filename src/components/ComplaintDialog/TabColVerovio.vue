@@ -12,6 +12,7 @@
 import VerovioComponent from '@/components/VerovioComponent.vue'
 
 /**
+ * @module components/ComplaintDialog/TabColVerovio
  * @vue-prop {String} vid - id for verovio element
  * @vue-prop {Options} options - verovio options
  * @vue-prop {String} label - label/title for this element
