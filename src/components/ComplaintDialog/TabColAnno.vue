@@ -6,6 +6,9 @@
 </template>
 
 <script>
+/**
+ * @vue-prop {String} anno - text/html of annotation
+ */
 export default {
   name: 'ComplaintDialogTabColAnno',
   props: {

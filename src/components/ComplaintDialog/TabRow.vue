@@ -8,6 +8,12 @@
 
 <script>
 import TabCol from './TabCol.vue'
+
+/**
+ * @vue-property {Object} select - flags for flags what to display: ante, rvsn, post, facs, trns, text, anno
+ * @vue-property {Object} row - the table row with columns for ante, revision and post
+ * @vue-property {Object} colStyles - styles for each table row (width)
+ */
 export default {
   components: { TabCol },
   name: 'ComplaintDialogTabRow',

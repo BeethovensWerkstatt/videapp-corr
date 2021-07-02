@@ -49,16 +49,16 @@ import ComplaintDialogTabRow from '@/components/ComplaintDialog/TabRow.vue'
  * Complaint dialog component
  *
  * @module components/ComplaintDialog
+ * @vue-data {Object} select - flags what to display: ante, rvsn, post, facs, trns, text, anno
  * @vue-computed {String} activeComplaintId - id of selected complaint
  * @vue-computed {Object} activeComplaint - selected complaint object
- * @vue-computed {boolean} active - if dialog is opened
- * @vue-computed {String} initialDocLabel - label for initial document
- * @vue-computed {String} revisionDocLabel - label for revision document
- * @vue-computed {String} revisedDocLabel - label for revised docuemnt
- * @vue-computed {String} initialTextLabel - label for initial text
- * @vue-computed {String} revisionTextLabel - label for revision text
- * @vue-computed {String} revisedTextLabel - label for revised text
+ * @vue-computed {Boolean} active - if dialog is opened
+ * @vue-computed {Object} styles - calculated height from `window.innerheight`
  * @vue-computed {String} measures - indicator for affected measures
+ * @vue-computed {Object} docMap - elemnts to display by row (ante, revision, post)
+ * @vue-computed {Number} tabWidth - width of table
+ * @vue-computed {Number} colCount - number of selected columns (ant, revision, post)
+ * @vue-computed {Object} colStyles - styles for all columns: width = tabWidth / colCount
  */
 export default {
   components: { ComplaintDialogTabRow },
@@ -76,6 +76,7 @@ export default {
         text: true,
         anno: true
       },
+      // TODO move to Verovio component
       zoom: 30
     }
   },
@@ -89,6 +90,7 @@ export default {
   },
   computed: {
     ...mapGetters(['activeComplaintId', 'activeComplaint']),
+    // TODO move to Verovio component
     vzoom: {
       get () {
         return parseInt(this.zoom)
@@ -169,10 +171,11 @@ export default {
       return toolbox.toRoman(num)
     },
     /**
-     * normalize textStatus -- one of `anteDocs`, `revisionDocs` and `postDocs`--
-     * to an array of objects `{ mei: { url }, img: { url } }`
+     * create array of objects `[{ mei: { url }}, { img: { url } }, ...]`
      *
-     * (TODO width/resolution)
+     * @todo get width/resolution for facsimile
+     *
+     * @param {String} status - one of `'ante'`, `'revision'` and `'post'`
      */
     statusDocs (status) {
       const docs = []
@@ -268,26 +271,26 @@ export default {
       this.select = select
     },
     /**
-     * toggle visibility of post docs
+     * toggle visibility of facsimiles
      */
     toggleFacs (e) {
       // avoid empty selection ...
       this.select = { ...this.select, facs: !this.select.facs }
     },
     /**
-     * toggle visibility of post docs
+     * toggle visibility of transcriptions
      */
     toggleTrns (e) {
       this.select = { ...this.select, trns: !this.select.trns }
     },
     /**
-     * toggle visibility of post docs
+     * toggle visibility of cleartext
      */
     toggleText (e) {
       this.select = { ...this.select, text: !this.select.text }
     },
     /**
-     * toggle visibility of post docs
+     * toggle visibility of annotation text
      */
     toggleAnno (e) {
       this.select = { ...this.select, anno: !this.select.anno }
@@ -330,22 +333,6 @@ export default {
       display: table;
       width: calc(100% - 10pt);
       margin: 5pt;
-      .tabrow {
-        display: table-row;
-        max-width: 100%;
-        .tabcol {
-          width: 33%;
-          overflow: scroll;
-          resize: vertical;
-          display: table-cell;
-          overflow: scroll;
-          vertical-align: top;
-          padding: 3pt;
-          img {
-            width: 100%;
-          }
-        }
-      }
     }
   }
   #close {

@@ -22,6 +22,7 @@ import TabColAnno from './TabColAnno.vue'
 import TabColFacs from './TabColFacs.vue'
 import TabColVerovio from './TabColVerovio.vue'
 
+// translate text state labels to i18n tags
 const labels = {
   facs: {
     ante: 'terms.complaint.state.anteDoc',
@@ -40,6 +41,19 @@ const labels = {
   }
 }
 
+/**
+ * @vue-prop {Object} row - the table row with columns for ante, revision and post
+ * @vue-prop {String} state - text state - one of `ante`, `revision` and `post`
+ * @vue-prop {Object} styles - styles for this column (width)
+ * @vue-prop {Object} select - flags what to display: ante, rvsn, post, facs, trns, text, anno
+ * @vue-computed {String} facsUrl - url of facsimile or undefined
+ * @vue-computed {String} facsLabel - label/title for facsimile or undefined
+ * @vue-computed {Object} transOptions - options for transcription MEI or undefined
+ * @vue-computed {String} transLabel - label/title for transcription MEI or undefined
+ * @vue-computed {Object} textOptions - options for cleartext MEI or undefined
+ * @vue-computed {String} textLabel - label/title for cleartext MEI or undefined
+ * @vue-computed {String} anno - text/html of annotation or undefined
+ */
 export default {
   components: { TabColFacs, TabColVerovio, TabColAnno },
   name: 'ComplaintDialogTabCol',
