@@ -27,10 +27,6 @@
       <div @click="toggleTrns" :class="{ TSactive: select.trns }" class="TSbutton">DIPL</div>
       <div @click="toggleText" :class="{ TSactive: select.text }" class="TSbutton">TEXT</div>
       <div @click="toggleAnno" :class="{ TSactive: select.anno }" class="TSbutton">ANNO</div>
-      &nbsp;
-      <div class="dash">
-        <input id="verovio-zoom" type="range" min="5" max="100" class="slider" v-model="vzoom" />
-      </div>
     </div>
     <div id="close">
       <btn @click.prevent="closeDialog">{{ $t('terms.close') }}</btn>
@@ -75,9 +71,7 @@ export default {
         trns: true,
         text: true,
         anno: true
-      },
-      // TODO move to Verovio component
-      zoom: 30
+      }
     }
   },
   watch: {
@@ -90,15 +84,6 @@ export default {
   },
   computed: {
     ...mapGetters(['activeComplaintId', 'activeComplaint']),
-    // TODO move to Verovio component
-    vzoom: {
-      get () {
-        return parseInt(this.zoom)
-      },
-      set (zoom) {
-        this.zoom = parseInt(zoom)
-      }
-    },
     active () {
       if (this.activeComplaintId) {
         return true
@@ -207,7 +192,6 @@ export default {
           docs.push({
             mei: {
               url: stat.mei,
-              scale: this.vzoom,
               trans: 'dipl',
               label: 'Annot. Transkript.'
             }
@@ -215,7 +199,6 @@ export default {
           docs.push({
             mei: {
               url: textTrans,
-              scale: this.vzoom,
               trans: 'clear',
               label: 'Cleartext'
             }

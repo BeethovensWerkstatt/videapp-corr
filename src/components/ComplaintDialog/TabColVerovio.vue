@@ -1,10 +1,13 @@
 <template>
-  <div class="vrvContainer">
+  <div>
     <h2>{{ label }}</h2>
-    <verovio-component
-      :id="vid"
-      :options="options"
-    />
+    <input :id="vid+'-zoom'" type="range" min="5" max="100" class="slider" v-model="vzoom" />
+    <div class="vrvContainer">
+      <verovio-component
+        :id="vid"
+        :options="voptions"
+      />
+    </div>
   </div>
 </template>
 
@@ -20,6 +23,11 @@ import VerovioComponent from '@/components/VerovioComponent.vue'
 export default {
   components: { VerovioComponent },
   name: 'ComplaintDialogTabColVerovio',
+  data () {
+    return {
+      zoom: 30
+    }
+  },
   props: {
     vid: {
       type: String,
@@ -32,6 +40,19 @@ export default {
     label: {
       type: String,
       required: true
+    }
+  },
+  computed: {
+    vzoom: {
+      get () {
+        return parseInt(this.zoom)
+      },
+      set (zoom) {
+        this.zoom = parseInt(zoom)
+      }
+    },
+    voptions () {
+      return { ...this.options, scale: this.vzoom }
     }
   }
 }

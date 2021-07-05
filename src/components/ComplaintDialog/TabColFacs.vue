@@ -1,8 +1,10 @@
 <template>
-  <div class="facsView">
+  <div>
     <h2>{{ label }}</h2>
     <input type="range" min="25" max="150" class="slider" v-model="izoom" />
-    <img :src="src" :style="{ width: izoom + '%' }" />
+    <div class="facsView">
+      <img :src="src" :style="{ width: izoom + '%' }" />
+    </div>
   </div>
 </template>
 
