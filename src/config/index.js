@@ -6,8 +6,8 @@ import store from '@/store'
 const config = {
   api: {
     works: {
-      // url: 'https://api.beethovens-werkstatt.de/module3/works.json'
-      url: 'http://localhost:8080/exist/apps/api/module3/works.json'
+      url: 'https://api.beethovens-werkstatt.de/module3/works.json'
+      // url: 'http://localhost:8080/exist/apps/api/module3/works.json'
     }
   },
   osd: osdDefault
