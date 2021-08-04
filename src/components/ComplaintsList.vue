@@ -18,7 +18,7 @@
         <tr
           :class="{
             'complaint-active': isActive(complaint),
-            'complaint-error': (measures === 'N/A')
+            'complaint-error': (measures(complaint) === 'N/A')
           }"
           @click.prevent="toggleActivate(complaint)"
         >
@@ -93,7 +93,7 @@ export default {
       const complaintId = complaint ? complaint['@id'] : null
       if (complaintId === this.activeComplaintId) {
         this.$store.dispatch(actions.activateComplaint, null)
-      } else {
+      } else if (this.measures(complaint) !== 'N/A') { // TODO availability should be marked by another property
         this.$store.dispatch(actions.activateComplaint, complaintId)
       }
     }
