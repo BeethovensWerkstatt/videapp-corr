@@ -86,9 +86,14 @@ const PathHandler = {
 
 /**
  * Path class
- * @property {Array} elements - array of decoded path elements
+ * @function shift remove and return first path element or `undefined`
+ * @function pop remove and return last path element or `undefined`
+ * @property {Number} length number of path elements
+ * @property {Array} elements array of decoded path elements
+ * @property {Boolean} absolute true if path is absolute e.g. starts with '/'
+ * @property {Boolean} directory true if pathe denotes a directory e.g. ends with '/'
  */
-export class Path {
+class Path {
   /**
    * construct Path object from string
    * @param {String} path
@@ -167,7 +172,7 @@ export class Path {
 /**
  * Query class
  */
-export class Query {
+class Query {
   /**
    * create Query object from string
    * @param {String} query - query string
@@ -259,8 +264,15 @@ const urire = new RegExp('^(([^:/?#]+):)?(//((([^/?#@]*)@)?((\\[([0-9a-f\\:]*)\\
 
 /**
  * URL class
+ * @property {String} scheme protocol of url
+ * @property {String} credential authentication data
+ * @property {String} host hostname of url
+ * @property {Number} port port of url
+ * @property {Path} path path part of url
+ * @property {Query} query query part of url
+ * @property {String} fragment fragment part of url (unencoded)
  */
-export class Url {
+class Url {
   /**
    * create URL object from string
    * @param {String} url - url string
@@ -427,5 +439,7 @@ export class Url {
     return str
   }
 }
+
+export { Path, Query, Url }
 
 export default { utf8, Path, Query, Url }

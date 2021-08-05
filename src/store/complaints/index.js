@@ -3,15 +3,26 @@ import { startProc, finishProc } from '..'
 import { mutations as mut, registerMutations, registerActions } from '../names'
 // import Complaint from '@/data/Complaint'
 
-const toStore = {
+/**
+ * @namespace store.complaints
+ */
+const complaintsModule = {
+  /**
+   * @namespace store.complaints.state
+   * @property {Object[]} complaints - list of loaded complaints
+   * @property {String} activeComplaintId - ID of complaint to display
+   */
   state: {
     complaints: [],
     activeComplaintId: null
   },
+  /**
+   * @namespace store.complaints.mutations
+   */
   mutations: {
     /**
      * load complaint
-     * @memberof store.mutations
+     * @memberof store.complaints.mutations
      * @param {Object} state
      * @param {Object} complaint
      */
@@ -24,6 +35,7 @@ const toStore = {
     },
     /**
      * replace complaint
+     * @memberof store.complaints.mutations
      * @param {Object} state
      * @param {Object} complaint
      */
@@ -42,23 +54,32 @@ const toStore = {
       state.complaints = complaints
     }
   },
+  /**
+   * @namespace store.complaints.actions
+   */
   actions: {
     /**
      * load complaints
-     * @memberof store.actions
+     * @memberof store.complaints.actions
+     * @param {Object} payload object containing complaints property `{ complaints: Object[] }`
      */
-    loadComplaints ({ state, commit }, { complaints }) {
+    loadComplaints ({ commit, getters }, { complaints }) {
       complaints.forEach(c => {
         // console.log(c)
         const mdiv = c.affects[0]?.mdiv
         // console.log(state.movements, mdiv)
-        const movement = mdiv ? state.movements[mdiv] : undefined
+        const movement = mdiv ? getters.movements[mdiv] : undefined
         // this looks like a workaround
         const complaint = movement ? { ...c, movement } : { ...c }
         // console.log(new Complaint(complaint))
         commit(mut.LOAD_COMPLAINT, complaint)
       })
     },
+    /**
+     * load complaints
+     * @memberof store.complaints.actions
+     * @param {String} complaintId id of complaint to activate
+     */
     async activateComplaint ({ commit, state }, complaintId) {
       console.log('activate ' + complaintId)
       if (!complaintId) {
@@ -87,6 +108,12 @@ const toStore = {
       }
     }
   },
+  /**
+   * @namespace store.complaints.getters
+   * @property {Object[]} complaints array of complaints
+   * @property {String} activeComplaintId id of displayed complaint
+   * @property {Object} activeComplaint displayed complaint
+   */
   getters: {
     complaints: (state, getters) => {
       return state.complaints.map(c => {
@@ -117,7 +144,7 @@ const toStore = {
   }
 }
 
-registerMutations(toStore.mutations)
-registerActions(toStore.actions)
+registerMutations(complaintsModule.mutations)
+registerActions(complaintsModule.actions)
 
-export default toStore
+export default complaintsModule

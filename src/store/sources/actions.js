@@ -22,7 +22,7 @@ const actions = {
   async loadSources ({ commit, dispatch, state, getters }, workId) {
     if (workId) {
       // console.log(state.works, workId)
-      const work = state.works.find(w => {
+      const work = getters.works.find(w => {
         if (w.id === workId) {
           // console.log(workId, w)
         }
