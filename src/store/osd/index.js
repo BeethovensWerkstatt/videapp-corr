@@ -1,16 +1,30 @@
 import OpenSeadragon from 'openseadragon'
 import { registerMutations, registerActions } from '../names'
 
-const toStore = {
+/**
+ * @namespace store.osd
+ */
+const OSDmodule = {
+  /**
+   * @namespace store.osd.state
+   * @property {OpenSeadragon.Viewer} viewer OpenSeadragon object
+   * @property {Number} scale zoom factor of OpenSeadragon
+   * @property {Object} deskDimensions width and height of desktop in millimeter
+   * @property {Boolean} displayMeasures if true show measure frames
+   */
   state: {
     viewer: null,
     scale: 1,
     deskDimensions: { width: 1600, height: 1000 },
     displayMeasures: false
   },
+  /**
+   * @namespace store.osd.mutations
+   */
   mutations: {
     /**
      * set dimension of desktop in mm
+     * @memberof store.osd.mutations
      * @param {Object} state
      * @param {Object} dim - { width, height }
      */
@@ -20,7 +34,7 @@ const toStore = {
     },
     /**
      * update scale variable
-     * @memberof store.mutations
+     * @memberof store.osd.mutations
      * @param {Object} state
      */
     UPDATE_SCALE (state) {
@@ -44,18 +58,23 @@ const toStore = {
     },
     /**
      * toggle display of measure numbers
+     * @memberof store.osd.mutations
      * @param {Object} state
+     * @param {Boolean} display set displayMeasures flag
      */
     SET_DISPLAY_MEASURES (state, display) {
       state.displayMeasures = display
     }
   },
+  /**
+   * @namespace store.osd.actions
+   */
   actions: {
     /**
      * create OpenSeadragon canvas
-     * @memberof store.actions
+     * @memberof store.osd.actions
      */
-    createOpenSeaDragon ({ commit, state }, { config, TIback, handler }) {
+    createOpenSeaDragon ({ state }, { config, TIback, handler }) {
       // console.log(payload)
       // console.log(state)
 
@@ -75,15 +94,22 @@ const toStore = {
     },
     /**
      * destroy OpenSeadragon canvas
-     * @memberof store.actions
+     * @memberof store.osd.actions
      */
-    destroyOpenSeaDragon ({ commit, state }) {
+    destroyOpenSeaDragon ({ state }) {
       if (state.viewer) {
         state.viewer.destroy()
         state.viewer = null
       }
     }
   },
+  /**
+   * @namespace store.osd.getters
+   * @property {Object} viewer OpenSeadragon object
+   * @property {Number} scale OpenSeadragon zoom factor
+   * @property {Object} deskDimensions desktop dimensions (width, height) in mm
+   * @property {Boolean} displayMeasures if true show measure frames
+   */
   getters: {
     viewer: (state) => {
       return state.viewer
@@ -101,8 +127,8 @@ const toStore = {
 }
 
 // console.log(registerActions)
-registerMutations(toStore.mutations)
-registerActions(toStore.actions)
+registerMutations(OSDmodule.mutations)
+registerActions(OSDmodule.actions)
 // console.log(actions)
 
-export default toStore
+export default OSDmodule
