@@ -4,15 +4,24 @@ import { startProc, finishProc } from '..'
 import { mutations, actions, registerMutations, registerActions } from '../names'
 import tb from '@/toolbox'
 
-const toStore = {
+/**
+ * @namespace store.works
+ */
+const worksModule = {
+  /**
+   * @namespace store.works.state
+   * @property {Object[]} works available works
+   */
   state: {
     works: []
   },
+  /**
+   * @namespace store.works.mutations
+   */
   mutations: {
     /**
      * load work
-     * @memberof store.mutations
-     * @param {object} state
+     * @memberof store.works.mutations
      * @param {object} work
      */
     LOAD_WORK (state, work) {
@@ -28,12 +37,13 @@ const toStore = {
       }
     }
   },
+  /**
+   * @namespace store.works.actions
+   */
   actions: {
     /**
      * load works
-     * @memberof store.actions
-     * @param {function} commit
-     * @param {Object} state
+     * @memberof store.works.actions
      */
     async loadWorks ({ commit, dispatch }) {
       startProc()
@@ -51,6 +61,10 @@ const toStore = {
       }
     }
   },
+  /**
+   * @namespace store.works.getters
+   * @property {Object[]} works array of available works
+   */
   getters: {
     works: (state) => {
       return state.works
@@ -58,7 +72,7 @@ const toStore = {
   }
 }
 
-registerMutations(toStore.mutations)
-registerActions(toStore.actions)
+registerMutations(worksModule.mutations)
+registerActions(worksModule.actions)
 
-export default toStore
+export default worksModule

@@ -1,7 +1,22 @@
+/**
+ * @namespace store.sources.getters
+ * @property {Object} movements
+ * @property {Object[]} sources
+ * @property {String} activeSourceId id of selected source
+ * @property {Object} activeSource selected source
+ * @property {String} activeZoneId id of selected measure zone
+ * @property {Object} activeZone selected measure zone
+ */
 const getters = {
   movements: (state) => {
     return state.movements
   },
+  /**
+   * get movement by id
+   * @memberof store.sources.getters
+   * @param {String} mvtId
+   * @returns {Object} movement of id `mvtId`
+   */
   getMovementById: (state) => (mvtId) => {
     const movements = state.movements
     if (movements) {
@@ -13,6 +28,12 @@ const getters = {
     // console.log(state.sources)
     return state.sources
   },
+  /**
+   * get sources for work
+   * @memberof store.sources.getters
+   * @param {String} workId return sources of work
+   * @returns {Object[]} sources
+   */
   workSources: (state) => (workId) => {
     // TODO sources should be stored per work
     const sources = state.sources.filter(src => src.workId === workId)
@@ -32,8 +53,9 @@ const getters = {
   },
   /**
    * find source object by id
-   * @memberof store.getters
+   * @memberof store.sources.getters
    * @param {String} id - id of source object
+   * @returns {Object} source of id or undefined
    */
   getSourceById: (state) => (id) => {
     // console.log('get source: ' + id)
@@ -67,7 +89,7 @@ const getters = {
    * find zone by id. If `sourceId` is null, all sources are searched,
    * until a zone with a matching id is found.
    *
-   * @memberof store.getters
+   * @memberof store.sources.getters
    * @param {String} sourceId - id of containing source object or null
    * @param {String} zoneId - id of zone object
    */

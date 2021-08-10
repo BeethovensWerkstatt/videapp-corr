@@ -2,16 +2,26 @@ import verovio from 'verovio'
 
 import { registerMutations, registerActions } from '../names'
 
-const toStore = {
+/**
+ * @namespace store.verovio
+ */
+const verovioModule = {
+  /**
+   * @namespace store.verovio.state
+   * @property {Boolean} vrvInitFinished true if verovio is eventually initialized
+   */
   state: {
     vrvInitFinished: false
   },
   mutations: {
   },
+  /**
+   * @namespace store.verovio.actions
+   */
   actions: {
     /**
      * init Verovio toolkit
-     * @memberof store.actions
+     * @memberof store.verovio.actions
      * @param {Object} context
      */
     async initVerovio ({ state }) {
@@ -20,9 +30,13 @@ const toStore = {
       }
     }
   },
+  /**
+   * @namespace store.verovio.getters
+   */
   getters: {
     /**
      * Verovio toolkit factory method
+     * @memberof store.verovio.getters
      * @param {Object} state
      */
     vrvToolkit: (state) => () => {
@@ -36,7 +50,7 @@ const toStore = {
   }
 }
 
-registerMutations(toStore.mutations)
-registerActions(toStore.actions)
+registerMutations(verovioModule.mutations)
+registerActions(verovioModule.actions)
 
-export default toStore
+export default verovioModule

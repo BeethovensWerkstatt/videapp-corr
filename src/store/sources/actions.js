@@ -12,10 +12,13 @@ const rexywh = new RegExp('xywh=(\\d+),(\\d+),(\\d+),(\\d+)')
 
 const relabel = new RegExp('([a-zA-Z0-9-_]+) (\\d+)')
 
+/**
+ * @namespace store.sources.actions
+ */
 const actions = {
   /**
    * load sources and complaints
-   * @memberof store.actions
+   * @memberof store.sources.actions
    * @param {function} commit
    * @param {object} state
    */
@@ -159,6 +162,11 @@ const actions = {
       }
     }
   },
+  /**
+   * load movements
+   * @memberof store.sources.actions
+   * @param {Object} payload object containing property `movements`
+   */
   async loadMovements ({ commit }, { movements }) {
     if (movements) {
       for (const m of movements) {
@@ -174,7 +182,7 @@ const actions = {
   },
   /**
    * load measure zones for a specific page
-   * @memberof store.actions
+   * @memberof store.sources.actions
    * @param {Object} context
    * @param {Object} payload - sourceId, pagenr, place, uri
    */
@@ -235,7 +243,7 @@ const actions = {
   },
   /**
    * activate zone
-   * @memberof store.actions
+   * @memberof store.sources.actions
    * @param {Object} callback commit, getters
    * @param {Object} payload source: String, zone: String
    */
