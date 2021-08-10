@@ -4,7 +4,16 @@ import getters from './getters'
 
 import { registerMutations, registerActions } from '../names'
 
-const toStore = {
+/**
+ * @namespace store.sources
+ */
+const sourcesModule = {
+  /**
+   * @namespace store.sources.state
+   * @property {Object} movements movement objects
+   * @property {Object[]} sources source objects
+   * @property {String} activeSourceId id of selected source
+   */
   state: {
     movements: {},
     sources: [],
@@ -15,7 +24,7 @@ const toStore = {
   getters
 }
 
-registerMutations(toStore.mutations)
-registerActions(toStore.actions)
+registerMutations(sourcesModule.mutations)
+registerActions(sourcesModule.actions)
 
-export default toStore
+export default sourcesModule

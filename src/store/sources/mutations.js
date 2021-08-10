@@ -1,8 +1,10 @@
+/**
+ * @namespace store.sources.mutations
+ */
 const mutations = {
   /**
    * set load source
-   * @memberof store.mutations
-   * @param {object} state
+   * @memberof store.sources.mutations
    * @param {object} source - (*TBD typedef source object*)
    */
   LOAD_SOURCE (state, source) {
@@ -12,7 +14,9 @@ const mutations = {
     state.sources = sources
   },
   /**
-  */
+   * @memberof store.sources.mutations
+   * @param {Object} movement
+   */
   LOAD_MOVEMENT (state, movement) {
     const movements = { ...state.movements }
     movements[movement['@id']] = movement
@@ -21,8 +25,7 @@ const mutations = {
   },
   /**
    * replace source
-   * @memberof store.mutations
-   * @param {object} state
+   * @memberof store.sources.mutations
    * @param {object} source - properties to modify with id
    */
   MODIFY_SOURCE (state, source) {
@@ -36,8 +39,7 @@ const mutations = {
   },
   /**
    * move source on the OSD space
-   * @memberof store.mutations
-   * @param {object} state
+   * @memberof store.sources.mutations
    * @param {object} src
    */
   MOVE_SOURCE (state, { id, x, y }) {
@@ -49,8 +51,7 @@ const mutations = {
   },
   /**
    * open page pair (recto/verso)
-   * @memberof store.mutations
-   * @param {Object} state
+   * @memberof store.sources.mutations
    * @param {Object} payload id: String, page: Number
    */
   SET_PAGE (state, { id, page }) {
@@ -61,8 +62,7 @@ const mutations = {
   },
   /**
    * set active source component
-   * @memberof store.mutations
-   * @param {object} state
+   * @memberof store.sources.mutations
    * @param {String} src source id
    */
   ACTIVATE_SOURCE (state, src) {
