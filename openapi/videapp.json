@@ -1,0 +1,39 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "REST API VideApp (Module 3)",
+    "version": "0.1.0",
+    "title": "VideApp Module 3",
+    "termsOfService": "https://www.beethovens-werkstatt.de/",
+    "contact": {
+      "email": "kepper@edirom.de"
+    },
+    "license": {
+      "name": "GPL 2",
+      "url": "https://www.gnu.org/licenses/gpl-2.0"
+    }
+  },
+  "host": "api.beethovens-werkstatt.de",
+  "basePath": "/module3/",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/works.json": {
+      "get": {
+        "summary": "Available works",
+        "description": "Get all works.\n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      }
+    }
+  }
+}

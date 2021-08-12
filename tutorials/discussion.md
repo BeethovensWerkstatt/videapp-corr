@@ -1,3 +1,8 @@
+## swagger ui
+
+* backend reference here or in api project?
+* right now in openapi folder is a docker-compose file to start Swagger UI at <http://localhost:8088/>.
+
 ## JSON validation
 
 * use <https://ajv.js.org/> for JSON validation -- sync with swagger?

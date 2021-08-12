@@ -1,0 +1,10 @@
+version: "3.3"
+services: 
+  swagger:
+    image: swaggerapi/swagger-ui:latest
+    ports:
+      - "8088:8080"
+    volumes:
+      - ./videapp.json:/usr/lib/VideRest/videapp.json
+    environment: 
+      - SWAGGER_JSON=/usr/lib/VideRest/videapp.json
