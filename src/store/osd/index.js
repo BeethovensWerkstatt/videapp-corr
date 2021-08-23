@@ -10,13 +10,11 @@ const OSDmodule = {
    * @property {OpenSeadragon.Viewer} viewer OpenSeadragon object
    * @property {Number} scale zoom factor of OpenSeadragon
    * @property {Object} deskDimensions width and height of desktop in millimeter
-   * @property {Boolean} displayMeasures if true show measure frames
    */
   state: {
     viewer: null,
     scale: 1,
-    deskDimensions: { width: 1600, height: 1000 },
-    displayMeasures: false
+    deskDimensions: { width: 1600, height: 1000 }
   },
   /**
    * @namespace store.osd.mutations
@@ -55,15 +53,6 @@ const OSDmodule = {
       } else {
         state.scale = 1
       }
-    },
-    /**
-     * toggle display of measure numbers
-     * @memberof store.osd.mutations
-     * @param {Object} state
-     * @param {Boolean} display set displayMeasures flag
-     */
-    SET_DISPLAY_MEASURES (state, display) {
-      state.displayMeasures = display
     }
   },
   /**
@@ -108,7 +97,6 @@ const OSDmodule = {
    * @property {Object} viewer OpenSeadragon object
    * @property {Number} scale OpenSeadragon zoom factor
    * @property {Object} deskDimensions desktop dimensions (width, height) in mm
-   * @property {Boolean} displayMeasures if true show measure frames
    */
   getters: {
     viewer: (state) => {
@@ -119,9 +107,6 @@ const OSDmodule = {
     },
     deskDimensions: (state) => {
       return state.deskDimensions
-    },
-    displayMeasures: (state) => {
-      return state.displayMeasures
     }
   }
 }

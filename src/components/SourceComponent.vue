@@ -1,5 +1,10 @@
 <template>
   <div class="source-component">
+    <document-header-component
+      :position="headerPos"
+      :marginWidth="sourceMarginWidth"
+      :sourceId="sourceId"
+    />
     <page-component
       :divid="divid + '_recto'"
       :sourceId="sourceId"
@@ -48,6 +53,7 @@ import OpenSeadragon from 'openseadragon'
 import PageComponent from '@/components/PageComponent.vue'
 import { mutations } from '@/store/names'
 import { Url } from '@/toolbox/net'
+import DocumentHeaderComponent from './DocumentHeaderComponent.vue'
 
 /**
  * @module components/SourceComponent
@@ -74,7 +80,7 @@ import { Url } from '@/toolbox/net'
  * @vue-computed {OpenSeadragon.Rect} versoPos - position of verso page
  */
 export default {
-  components: { PageComponent },
+  components: { PageComponent, DocumentHeaderComponent },
   name: 'SourceComponent',
   props: {
     sourceId: {
@@ -130,7 +136,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['viewer', 'scale']),
+    ...mapGetters(['viewer', 'scale', 'sourceHeaderHeight', 'sourceMarginWidth']),
     divid () {
       const atId = new Url(this.sourceId)
       let id = atId.path.elements.pop()
@@ -202,6 +208,13 @@ export default {
     },
     dashY () {
       return this.position.y + (this.source.maxDimensions.height / 2)
+    },
+    headerPos () {
+      const pp = this.source.pages[this.pagenr]
+      const x = (pp.r ? this.rectoPos.x : this.versoPos.x) - this.sourceMarginWidth
+      const y = (pp.r ? this.rectoPos.y : this.versoPos.y) - this.sourceHeaderHeight
+      const width = this.rectoPos.width + this.versoPos.width + (2 * this.sourceMarginWidth)
+      return new OpenSeadragon.Rect(x, y, width, this.sourceHeaderHeight)
     },
     rectoPos () {
       const pp = this.source.pages[this.pagenr]
@@ -307,6 +320,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.source-component {
+  position: relative;
+}
+
 .sourceBack {
   background-color: rgba($color: #ffffff, $alpha: 0.5);
   width: 110px;

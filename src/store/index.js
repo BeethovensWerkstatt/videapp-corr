@@ -7,6 +7,7 @@ import Vuex from 'vuex'
 
 import Processing from './processing'
 import OSD from './osd'
+import userDisplayOptions from './userDisplayOptions'
 import Works from './works'
 import Sources from './sources'
 import Complaints from './complaints'
@@ -54,6 +55,7 @@ const store = new Vuex.Store({
   modules: {
     Processing,
     OSD,
+    userDisplayOptions,
     Works,
     Sources,
     Complaints,
