@@ -3,9 +3,15 @@
     class="document-header"
     :id="divid"
   >
-    <div class="top-left" :style="{ width: marginPerc }">
+    <div class="top-left" :style="{ width: marginPerc + '%' }">
     </div>
-    <div class="top-right" :style="{ width: marginPerc }">
+    <div
+      id="draghandle"
+      class="top-title"
+      :style="{ left: marginPerc + '%', width: titlePerc + '%' }"
+    >
+    </div>
+    <div class="top-right" :style="{ width: marginPerc + '%' }">
     </div>
   </div>
 </template>
@@ -58,7 +64,13 @@ export default {
       return this.viewer ? this.viewer.getOverlayById(this.divid) : null
     },
     marginPerc () {
-      return (100 * this.marginWidth / this.position.width) + '%'
+      return (100 * this.marginWidth / this.position.width)
+    },
+    titlePerc () {
+      return 100 - (2 * this.marginPerc)
+    },
+    dragHandle () {
+      return this.$el.querySelector('#draghandle')
     }
   },
   methods: {
@@ -85,6 +97,11 @@ export default {
     right: 0;
     height: 100%;
     background-color: red;
+  }
+  .top-title {
+    position: absolute;
+    height: 100%;
+    background-color: yellow;
   }
 }
 </style>
