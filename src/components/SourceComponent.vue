@@ -4,6 +4,7 @@
       :position="headerPos"
       :marginWidth="sourceMarginWidth"
       :sourceId="sourceId"
+      @move-source="moveTo"
     />
     <page-component
       :divid="divid + '_recto'"

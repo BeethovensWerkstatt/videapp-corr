@@ -46,10 +46,12 @@ const OSDmodule = {
         p1 = state.viewer.viewport.viewerElementToViewportCoordinates(p1)
         const scale1 = 10 / (p1.x - p0.x)
         */
-        const scale2 = state.viewer.viewport.getZoom(false) / state.viewer.viewport.getHomeZoom()
-        // const scale3 = state.viewer.viewport.getZoom(true) / state.viewer.viewport.getHomeZoom()
+        // const scale2 = state.viewer.viewport.getZoom(false) / state.viewer.viewport.getHomeZoom()
+        // const scale3 = state.viewer.world.getItemAt(0).viewportToImageZoom(1)
         // console.log('update scale', scale1, scale2, scale3)
-        state.scale = scale2
+        const zoom = state.viewer.viewport.getZoom(true)
+        const scale4 = state.viewer.viewport._containerInnerSize.x * zoom
+        state.scale = scale4
       } else {
         state.scale = 1
       }

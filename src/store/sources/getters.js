@@ -8,6 +8,7 @@
  * @property {Object} activeZone selected measure zone
  */
 const getters = {
+  // TODO: get source/movement title image, get image from HTML/SVG (canvas.toDataURL)
   movements: (state) => {
     return state.movements
   },
