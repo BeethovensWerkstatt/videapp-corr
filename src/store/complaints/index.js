@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { startProc, finishProc } from '..'
 import { mutations as mut, registerMutations, registerActions } from '../names'
+import tb from '@/toolbox'
 // import Complaint from '@/data/Complaint'
 
 /**
@@ -28,7 +29,6 @@ const complaintsModule = {
      */
     LOAD_COMPLAINT (state, complaint) {
       const complaints = [...state.complaints]
-      // console.log(complaint)
       complaints.push(complaint)
       state.complaints = complaints
       // console.log(complaint)
@@ -123,6 +123,10 @@ const complaintsModule = {
           movement: getters.getMovementById(mdiv)
         }
       })
+    },
+    workComplaints: (state, getters) => (workId) => {
+      // TODO atId in loadComplaints?
+      return getters.complaints.filter(c => tb.atId(c.movement?.work) === workId)
     },
     activeComplaintId (state) {
       return state.activeComplaintId

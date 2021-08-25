@@ -51,12 +51,12 @@ const actions = {
         // load complaints for this work
         dispatch(act.loadComplaints, data)
 
-        console.log(data.manifestations)
+        // console.log(data.manifestations)
 
         data.manifestations.forEach(async (murl, index) => {
           const resp = await axios.get(murl)
           const m = resp.data
-          console.log(m)
+          // console.log(m)
 
           const source = {
             id: m['@id'],
@@ -75,7 +75,7 @@ const actions = {
             // get manifestation json
             axios.get(m.iiif.manifest).then(res => {
               const iiif = res.data
-              console.log(iiif)
+              // console.log(iiif)
               if (iiif.sequences && iiif.sequences.length > 0) {
                 const canvases = iiif.sequences[0].canvases
 

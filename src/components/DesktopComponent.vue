@@ -43,10 +43,6 @@ export default {
     }
   },
   props: {
-    workId: {
-      type: String,
-      required: true
-    },
     divid: {
       type: String,
       default: 'desktop-canvas'

@@ -13,6 +13,7 @@
     <div
       class="top-title"
       :style="{ left: marginPerc + '%', width: titlePerc + '%' }"
+      id="draghandle"
     >
       <!-- <btn id="draghandle"><span :style="{ 'font-size': (scale * sourceHeaderHeight) + 'mm' }">{{ source.label }}</span></btn> -->
       <div class="pagenr recto">
@@ -31,7 +32,7 @@
           <text x="0" y="50%" style="font-size: 8px;" dominant-baseline="middle">{{ versopage }}</text>
         </svg>
       </div>
-      <div class="title" id="draghandle">
+      <div class="title">
         <svg
           viewBox="0 0 100 10"
           xmlns="http://www.w3.org/2000/svg"
@@ -75,7 +76,11 @@ export default {
   },
   data: function () {
     const viewer = this.$store.getters.viewer
-    const scale = viewer.world.getItemAt(0).viewportToImageZoom(viewer.viewport.getZoom())
+    const background = viewer.world.getItemAt(0)
+    let scale = background?.viewportToImageZoom(viewer.viewport.getZoom())
+    if (!scale) {
+      scale = 1
+    }
     return {
       position_: { ...this.$store.getters.getSourceById(this.sourceId).position },
       tracker: null,
@@ -288,6 +293,9 @@ export default {
     padding: 0%;
     font-size: 8pt;
   }
+  #draghandle {
+    cursor: pointer;
+  }
   .top-title {
     position: absolute;
     height: 100%;
@@ -310,10 +318,6 @@ export default {
     }
     .verso {
       right: 0;
-    }
-
-    #draghandle {
-      cursor: pointer;
     }
 
     .title {

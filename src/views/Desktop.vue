@@ -1,6 +1,6 @@
 <template>
   <div class="desk">
-    <desktop-component divid="canvas" workId="$router.param.id"></desktop-component>
+    <desktop-component divid="canvas"></desktop-component>
     <div id="sidebar">
       <div>
         <div id="navigatorBox">

@@ -13,7 +13,7 @@
           class="mvt"
         >
           <th>{{ toRoman(complaint.movement.n) + '.' }}&nbsp;</th>
-          <th class="mvt">{{ complaint.movement.label }}</th>
+          <th class="mvt" :title="complaint.movement.work">{{ complaint.movement.label }}</th>
         </tr>
         <tr
           :class="{
@@ -52,7 +52,13 @@ export default {
   },
   name: 'ComplaintsList',
   computed: {
-    ...mapGetters(['complaints', 'activeComplaintId'])
+    ...mapGetters(['workComplaints', 'activeComplaintId']),
+    workId () {
+      return this.$route.params.id
+    },
+    complaints () {
+      return this.workComplaints(this.workId)
+    }
   },
   methods: {
     toRoman (num) {
