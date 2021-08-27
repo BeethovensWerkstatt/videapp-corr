@@ -102,7 +102,7 @@ export default {
     if (this.viewer) {
       this.viewer.addOverlay({
         element: this.$el,
-        location: new OpenSeadragon.Point(this.position.x, this.position.y)
+        location: this.position
       }, this.position, OpenSeadragon.TOP_CENTER)
       this.viewer.addHandler('zoom', this.doResize)
     }
