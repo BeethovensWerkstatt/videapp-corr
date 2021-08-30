@@ -104,7 +104,7 @@ export default {
   },
   watch: {
     page () {
-      // console.log('change page')
+      // console.log('change page', this.page, this.page?.measures_uri)
       this.updateTI()
       if (this.page && this.page.measures_uri) {
         this.$store.dispatch(actions.loadZones, this.page)
@@ -164,6 +164,7 @@ export default {
       }
     },
     showDetail () {
+      // console.log(this.scale, this.scale > 1.2)
       return this.scale > 1.2
     },
     overlay () {

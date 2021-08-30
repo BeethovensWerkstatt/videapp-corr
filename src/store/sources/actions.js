@@ -101,13 +101,15 @@ const actions = {
 
                   // get measure zones uri
                   const otherContent = canvas.otherContent
+                  // console.log(otherContent)
                   if (otherContent) {
-                    const mpos = otherContent.find(oc => oc.label === TAG_MEASURE_POSITIONS)
+                    const mpos = otherContent.find(oc => oc.within?.label === TAG_MEASURE_POSITIONS)
                     if (mpos) {
+                      // console.log(mpos)
                       // zones are loaded when page is opened first time
                       page.measures_uri = mpos['@id']
                     }
-                    const psvg = otherContent.find(oc => oc.label === TAG_SVG_SHAPES)
+                    const psvg = otherContent.find(oc => oc.within?.label === TAG_SVG_SHAPES)
                     if (psvg) {
                       page.svg_shapes = psvg['@id']
                     }
