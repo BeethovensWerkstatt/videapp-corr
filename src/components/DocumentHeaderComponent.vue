@@ -32,7 +32,7 @@
           <text x="0" y="50%" style="font-size: 8px;" dominant-baseline="middle">{{ versopage }}</text>
         </svg>
       </div>
-      <div class="title">
+      <div class="title" :title="source.label">
         <svg
           viewBox="0 0 100 10"
           xmlns="http://www.w3.org/2000/svg"

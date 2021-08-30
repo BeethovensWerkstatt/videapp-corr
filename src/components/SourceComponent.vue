@@ -20,30 +20,6 @@
       :pos="versoPos"
       :active="isActive"
     />
-    <div
-      class="sourceBack"
-      :class="{ active: isActive }"
-      :id="this.divid"
-      :title="label"
-    >
-      <btn-group>
-        <btn
-          @click="prevPage"
-          :disabled="!hasPrev"
-        >
-        ◄
-        </btn>
-        <btn id="draghandle">
-          ❂
-        </btn>
-        <btn
-          @click="nextPage"
-          :disabled="!hasNext"
-        >
-        ►
-        </btn>
-      </btn-group>
-    </div>
   </div>
 </template>
 
@@ -60,7 +36,6 @@ import DocumentHeaderComponent from './DocumentHeaderComponent.vue'
  * @module components/SourceComponent
  * @vue-prop {String} sourceId - id of source object
  * @vue-prop {Number} [defaultPage=0] - first opend page on load
- * @vue-data {String} [divid=sourceId + '_dash'] - HTML id for dashboard overlay element
  * @vue-data {Object} position_ - private position variable (x, y)
  * @vue-data {Object} tracker - OpenSeadragon.MouseTracker object
  * @vue-computed {OpenSeadragon.Viewer} viewer - Viewer object
@@ -69,14 +44,7 @@ import DocumentHeaderComponent from './DocumentHeaderComponent.vue'
  * @vue-computed {String} label - label/title of source
  * @vue-computed {Number} pagenr - index of page pair (recto/verso)
  * @vue-computed {Object} position - position (x,y) of component (viewport coordinate), move page components and overlay on change
- * @vue-computed {Boolean} hasPrev - previous page available
- * @vue-computed {Boolean} hasNext - next page available
  * @vue-computed {Boolean} isActive - sourceId === $store.activeSourceId
- * @vue-computed {OpenSeadragon.Overlay} overlay - overlay of control elements
- * @vue-computed {Object} dashboard - DOM control elements
- * @vue-computed {Object} dashHandle - DOM drag element
- * @vue-computed {Number} dashX - horizontal position of overlay
- * @vue-computed {Number} dashY - vertical position of overlay
  * @vue-computed {OpenSeadragon.Rect} rectoPos - position of recto page
  * @vue-computed {OpenSeadragon.Rect} versoPos - position of verso page
  */
@@ -96,44 +64,7 @@ export default {
   data: function () {
     return {
       position_: { ...this.$store.getters.getSourceById(this.sourceId).position },
-      tracker: null,
-      dragDelta: null
-    }
-  },
-  mounted () {
-    // create MouseTracker for moving component via drag and drop
-    this.tracker = new OpenSeadragon.MouseTracker({
-      element: this.dragHandle,
-      clickHandler: () => { this.selectSource() },
-      dragHandler: this.dragHandler,
-      dragEndHandler: this.dragEndHandler,
-      releaseHandler: this.dragEndHandler // do we need this?
-    })
-    // create overlay for control buttons
-    this.viewer.addOverlay(
-      this.dashboard,
-      new OpenSeadragon.Point(this.dashX, this.dashY),
-      OpenSeadragon.TOP_CENTER)
-  },
-  updated () {
-    // update position of overlay on update of component
-    // console.log('dashX: ' + this.dashX)
-    if (this.overlay) {
-      this.overlay.update(new OpenSeadragon.Point(this.dashX, this.dashY), OpenSeadragon.TOP_CENTER)
-    }
-  },
-  watch: {
-    // adjust position of overlay on change of scale
-    scale () {
-      if (this.overlay) {
-        this.overlay.update(new OpenSeadragon.Point(this.dashX, this.dashY), OpenSeadragon.TOP_CENTER)
-      }
-    }
-  },
-  beforeDestroy () {
-    // console.log('bye bye Source')
-    if (this.overlay) {
-      this.overlay.destroy()
+      tracker: null
     }
   },
   computed: {
@@ -192,24 +123,6 @@ export default {
     isActive () {
       return this.sourceId === this.$store.getters.activeSourceId
     },
-    overlay () {
-      return this.viewer ? this.viewer.getOverlayById(this.divid) : null
-    },
-    dashboard () {
-      return this.$el.querySelector('#' + this.divid)
-    },
-    dragHandle () {
-      return this.$el.querySelector('#draghandle')
-    },
-    dashX () {
-      const ow = (this.dashboard.clientWidth / this.scale)
-      // console.log('dashX ' + ow)
-      // TODO isSingle
-      return this.position.x - (ow / 2)
-    },
-    dashY () {
-      return this.position.y + (this.source.maxDimensions.height / 2)
-    },
     headerPos () {
       const pp = this.source.pages[this.pagenr]
       const x = (pp.r ? this.rectoPos.x : this.versoPos.x) - this.sourceMarginWidth
@@ -252,68 +165,13 @@ export default {
       return (pnr >= 0 && pnr < this.source.pages.length)
     },
     /**
-     * flip pages forward
-     */
-    prevPage () {
-      if (this.hasPrev) {
-        this.$store.commit(mutations.SET_PAGE, { id: this.sourceId, page: this.pagenr - 1 })
-      }
-    },
-    /**
-     * flip pages backward
-     */
-    nextPage () {
-      if (this.hasNext) {
-        this.$store.commit(mutations.SET_PAGE, { id: this.sourceId, page: this.pagenr + 1 })
-      }
-    },
-    /**
-     * select this source
-     *
-     * @param {Object} e - event object
-     */
-    selectSource (e) {
-      if (e) {
-        e.preventDefault()
-      }
-      this.$store.commit(mutations.ACTIVATE_SOURCE, this.sourceId)
-    },
-    /**
-     * handle drag and drop
-     *
-     * @param {Object} e - drag event
-     */
-    dragHandler (e) {
-      // console.log(e)
-      var pos = new OpenSeadragon.Point(e.originalEvent.clientX, e.originalEvent.clientY)
-      pos = this.viewer.viewport.windowToViewportCoordinates(pos)
-      if (!this.dragDelta) {
-        this.dragDelta = {
-          x: pos.x - this.position.x,
-          y: pos.y - this.position.y
-        }
-        // console.log(this.dragDelta)
-        this.selectSource()
-      }
-      pos = new OpenSeadragon.Point(pos.x - this.dragDelta.x, pos.y - this.dragDelta.y)
-      this.moveTo(pos.x, pos.y)
-    },
-    /**
-     * handle drag drop
-     *
-     * @param {Object} e - drag event
-     */
-    dragEndHandler (e) {
-      this.dragDelta = null
-    },
-    /**
      * move SourceComponent to new position
      *
      * @param {Number} x - horizontal coordinate (viewport)
      * @param {Number} y - vertical coordinate (viewport)
      */
     moveTo (x, y) {
-      this.position = { x: x, y: y }
+      this.position = { x, y }
       this.$store.commit(mutations.MOVE_SOURCE, { id: this.sourceId, ...this.position })
     }
   }
