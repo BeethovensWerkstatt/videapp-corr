@@ -120,8 +120,6 @@ export default {
         this.viewer.world.setItemIndex(this.tiledimage, ci - 1)
       }
       this.topsource = this.active
-    },
-    scale () {
     }
   },
   beforeDestroy () {
