@@ -4,6 +4,7 @@
       :position="headerPos"
       :marginWidth="sourceMarginWidth"
       :sourceId="sourceId"
+      :active="isActive"
       @move-source="moveTo"
     />
     <page-component

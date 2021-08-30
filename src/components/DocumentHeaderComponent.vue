@@ -1,6 +1,7 @@
 <template>
   <div
     class="document-header"
+    :class="{ activeSource: active }"
     :id="divid"
   >
     <div class="top-left" :style="{ width: marginPerc + '%' }">
@@ -72,6 +73,10 @@ export default {
     position: {
       type: Object,
       required: true
+    },
+    active: {
+      type: Boolean,
+      default: false
     }
   },
   data: function () {
@@ -271,27 +276,32 @@ export default {
 
 <style lang="scss" scoped>
 .document-header {
-  outline: 1px solid red;
+  // outline: 1px solid red;
   padding: 0%;
   margin: 0%;
+  // TODO color consts in separate file
+  background: linear-gradient(0deg, #dddddd, #ffffff);
+
+  &:hover {
+    background: linear-gradient(0deg, #ddddee, #ffffff);
+    outline: 1px solid #0000ff22;
+  }
+
   .top-left {
     position: absolute;
     left: 0;
     height: 100%;
-    // background-color: green;
   }
   .top-right {
     position: absolute;
     right: 0;
     height: 100%;
-    // background-color: red;
   }
   .btn {
     width: 100%;
     height: 100%;
     margin: 0%;
     padding: 0%;
-    font-size: 8pt;
   }
   #draghandle {
     cursor: pointer;
@@ -306,10 +316,10 @@ export default {
       top: 0;
       width: 10%;
       height: 100%;
-      outline: 1px solid red;
+      // outline: 1px solid red;
 
       svg {
-        max-width: 100%;
+        // max-width: 100%;
         height: 100%;
       }
     }
@@ -324,12 +334,19 @@ export default {
       position: absolute;
       left: 35%;
       width: 30%;
+      overflow: hidden;
       svg {
         left: 0;
-        max-width: 100%;
+        // max-width: 100%;
         height: 100%;
+        width: auto;
       }
     }
   }
 }
+.activeSource {
+  background: linear-gradient(0deg, #ddddff, #ffffff);
+  outline: 2px solid #ff000011;
+}
+
 </style>

@@ -46,7 +46,6 @@ export default {
 .flip-button {
   width: 100%;
   height: 100%;
-  background-color: white;
 
   svg {
     width: 100%;
