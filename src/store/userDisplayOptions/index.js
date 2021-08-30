@@ -9,6 +9,8 @@ const userDisplayOptions = {
    * @property {Boolean} displayMeasures if true show measure frames
    */
   state: {
+    sourceHorizontalGap: 10, // mm
+    sourceVerticalGap: 50, // mm
     sourceHeaderHeight: 20, // mm
     sourceMarginWidth: 25, // mm
     displayMeasures: false
@@ -30,6 +32,20 @@ const userDisplayOptions = {
      */
     SET_SOURCE_MARGIN_WIDTH (state, width) {
       state.sourceMarginWidth = width
+    },
+    /**
+     * set width of gap between source for automatic alignment
+     * @param {Number} gap width of gap
+     */
+    SET_SOURCE_HORIZONTAL_GAP (state, gap) {
+      state.sourceHorizontalGap = gap
+    },
+    /**
+     * set height of gap between source for automatic alignment
+     * @param {Number} gap height of gap
+     */
+    SET_SOURCE_VERTICAL_GAP (state, gap) {
+      state.sourceVerticalGap = gap
     },
     /**
      * toggle display of measure numbers
@@ -55,6 +71,12 @@ const userDisplayOptions = {
     },
     sourceMarginWidth (state) {
       return state.sourceMarginWidth
+    },
+    sourceHorizontalGap (state) {
+      return state.sourceHorizontalGap
+    },
+    sourceVerticalGap (state) {
+      return state.sourceVerticalGap
     },
     displayMeasures: (state) => {
       return state.displayMeasures

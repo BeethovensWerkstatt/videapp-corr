@@ -40,9 +40,9 @@ const actions = {
         const { data } = await axios.get(url)
 
         // default placement of sources
-        const hgap = 10
-        const vgap = 50
-        var px = hgap
+        const hgap = getters.sourceHorizontalGap + (2 * getters.sourceMarginWidth)
+        const vgap = getters.sourceVerticalGap + getters.sourceHeaderHeight
+        var px = hgap / 2
         var py = 0
         var ph = 0
 
