@@ -89,11 +89,11 @@ export default {
 
   .marker {
     position: absolute;
-    left: 0;
-    width: 100%;
-    background-color: rgba(255, 255, 181, 0.39);
+    left: 5%;
+    width: 90%;
+    background-color: rgba(255, 255, 181, 0.164);
     border-radius: 3px;
-    outline: 1px solid rgba(255, 166, 0, 0.253);
+    outline: 1px solid rgba(255, 166, 0, 0.349);
 
     &:hover {
       outline: 1px solid orange;
