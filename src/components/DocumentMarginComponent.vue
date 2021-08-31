@@ -93,6 +93,7 @@ export default {
     width: 100%;
     background-color: rgba(255, 255, 181, 0.39);
     border-radius: 3px;
+    outline: 1px solid rgba(255, 166, 0, 0.253);
 
     &:hover {
       outline: 1px solid orange;

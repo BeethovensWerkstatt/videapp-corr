@@ -334,10 +334,10 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .page-component {
   position: absolute;
-  border: 1px solid green;
+  // border: 1px solid green;
 }
 .hideovl {
   display: none
@@ -356,9 +356,11 @@ export default {
 }
 .svg-shapes {
   position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  border: 1px solid red;
+  // border: 1px solid red;
 }
 .svg-shapes img {
   width: 100%;
