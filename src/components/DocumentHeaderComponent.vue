@@ -283,7 +283,6 @@ export default {
   background: linear-gradient(0deg, #dddddd, #ffffff);
 
   &:hover {
-    background: linear-gradient(0deg, #ddddee, #ffffff);
     outline: 1px solid #0000ff22;
   }
 
@@ -291,11 +290,13 @@ export default {
     position: absolute;
     left: 0;
     height: 100%;
+    // background: radial-gradient(circle 200% at bottom right, #dddddd, #ffffff);
   }
   .top-right {
     position: absolute;
     right: 0;
     height: 100%;
+    // background: radial-gradient(circle 200% at bottom left, #dddddd, #ffffff);
   }
   .btn {
     width: 100%;
@@ -345,8 +346,7 @@ export default {
   }
 }
 .activeSource {
-  background: linear-gradient(0deg, #ddddff, #ffffff);
-  outline: 2px solid #ff000011;
+  outline: 2px solid #ff000033;
 }
 
 </style>

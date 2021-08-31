@@ -4,8 +4,12 @@
     :id="divid"
   >
     <div class="left-margin" :style="{ width: marginPerc + '%' }">
+      <div class="marker" :style="{ height: '24%', top: '0%' }">1</div>
+      <div class="marker" :style="{ height: '24%', top: '25%' }">2</div>
     </div>
     <div class="right-margin" :style="{ width: marginPerc + '%' }">
+      <div class="marker" :style="{ height: '24%', top: '50%' }">3</div>
+      <div class="marker" :style="{ height: '24%', top: '75%' }">4</div>
     </div>
   </div>
 </template>
@@ -72,7 +76,7 @@ export default {
     top: 0;
     height: 100%;
     // TODO color consts in separate file
-    background: linear-gradient(90deg, #dddddd, #ffffff);
+    background: linear-gradient(270deg, #dddddd, #ffffff);
   }
   .right-margin {
     position: absolute;
@@ -80,7 +84,19 @@ export default {
     top: 0;
     height: 100%;
     // TODO color consts in separate file
-    background: linear-gradient(270deg, #dddddd, #ffffff);
+    background: linear-gradient(90deg, #dddddd, #ffffff);
+  }
+
+  .marker {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    background-color: yellow;
+    border-radius: 3px;
+
+    &:hover {
+      outline: 1px solid orange;
+    }
   }
 }
 </style>
