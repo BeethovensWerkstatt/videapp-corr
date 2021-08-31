@@ -91,7 +91,7 @@ export default {
     position: absolute;
     left: 0;
     width: 100%;
-    background-color: yellow;
+    background-color: rgba(255, 255, 181, 0.39);
     border-radius: 3px;
 
     &:hover {
