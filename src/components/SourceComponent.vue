@@ -2,10 +2,13 @@
   <div class="source-component">
     <document-header-component
       :position="headerPos"
-      :marginWidth="sourceMarginWidth"
       :sourceId="sourceId"
       :active="isActive"
       @move-source="moveTo"
+    />
+    <document-margin-component
+      :position="marginPos"
+      :sourceId="sourceId"
     />
     <page-component
       :divid="divid + '_recto'"
@@ -29,9 +32,10 @@
 import { mapGetters } from 'vuex'
 import OpenSeadragon from 'openseadragon'
 import PageComponent from '@/components/PageComponent.vue'
+import DocumentHeaderComponent from '@/components/DocumentHeaderComponent.vue'
+import DocumentMarginComponent from '@/components/DocumentMarginComponent.vue'
 import { mutations } from '@/store/names'
 import { Url } from '@/toolbox/net'
-import DocumentHeaderComponent from './DocumentHeaderComponent.vue'
 
 /**
  * @module components/SourceComponent
@@ -50,7 +54,7 @@ import DocumentHeaderComponent from './DocumentHeaderComponent.vue'
  * @vue-computed {OpenSeadragon.Rect} versoPos - position of verso page
  */
 export default {
-  components: { PageComponent, DocumentHeaderComponent },
+  components: { PageComponent, DocumentHeaderComponent, DocumentMarginComponent },
   name: 'SourceComponent',
   props: {
     sourceId: {
@@ -130,6 +134,14 @@ export default {
       const y = (pp.r ? this.rectoPos.y : this.versoPos.y) - this.sourceHeaderHeight
       const width = this.rectoPos.width + this.versoPos.width + (2 * this.sourceMarginWidth)
       return new OpenSeadragon.Rect(x, y, width, this.sourceHeaderHeight)
+    },
+    marginPos () {
+      const pp = this.source.pages[this.pagenr]
+      const x = (pp.r ? this.rectoPos.x : this.versoPos.x) - this.sourceMarginWidth
+      const y = (pp.r ? this.rectoPos.y : this.versoPos.y)
+      const width = this.rectoPos.width + this.versoPos.width + (2 * this.sourceMarginWidth)
+      const height = Math.max(this.rectoPos.height, this.versoPos.height)
+      return new OpenSeadragon.Rect(x, y, width, height)
     },
     rectoPos () {
       const pp = this.source.pages[this.pagenr]
