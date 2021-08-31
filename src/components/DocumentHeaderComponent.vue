@@ -290,13 +290,13 @@ export default {
     position: absolute;
     left: 0;
     height: 100%;
-    // background: radial-gradient(circle 200% at bottom right, #dddddd, #ffffff);
+    background: radial-gradient(ellipse 100% 100% at bottom right, #dddddd, #ffffff);
   }
   .top-right {
     position: absolute;
     right: 0;
     height: 100%;
-    // background: radial-gradient(circle 200% at bottom left, #dddddd, #ffffff);
+    background: radial-gradient(ellipse 100% 100% at bottom left, #dddddd, #ffffff);
   }
   .btn {
     width: 100%;

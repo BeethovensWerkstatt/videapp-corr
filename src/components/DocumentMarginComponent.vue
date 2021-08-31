@@ -96,6 +96,7 @@ export default {
 
     &:hover {
       outline: 1px solid orange;
+      background-color: rgba(255, 255, 181, 0.685);
     }
   }
 }
