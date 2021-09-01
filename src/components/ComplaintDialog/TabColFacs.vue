@@ -9,6 +9,9 @@
 </template>
 
 <script>
+// import OpenSeadragon from 'openseadragon'
+// get page by ID -> uri -> OSD()
+
 /**
  * @module components/ComplaintDialog/TabColFacs
  * @vue-data {Number} izoom - image zoom factor in percent of width (TODO get resolution and width of image)

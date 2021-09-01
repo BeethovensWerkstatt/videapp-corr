@@ -181,6 +181,7 @@ export default {
       }
       if (textStatus) {
         textStatus.forEach(stat => {
+          console.log(stat.iiif[0]?.on.full)
           docs.push({
             img: {
               // TODO scaling?
