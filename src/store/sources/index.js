@@ -17,7 +17,8 @@ const sourcesModule = {
   state: {
     movements: {},
     sources: [],
-    activeSourceId: null
+    activeSourceId: null,
+    pages: {}
   },
   mutations,
   actions,

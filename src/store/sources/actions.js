@@ -66,6 +66,7 @@ const actions = {
             maxDimensions: { width: 0, height: 0 },
             position: { x: (150 + index * 400), y: 400 },
             pages: [],
+            pageref: {},
             rotation: 0,
             singleLeaf: false
           }
@@ -120,10 +121,29 @@ const actions = {
 
                 // iterate over pagepairs. First page is assumed verso.
                 for (var ci = 0; ci <= canvases.length; ci += 2) {
-                  const pagepair = {
-                    r: ci > 0 ? ctop(canvases[ci - 1], 'recto') : null,
-                    v: ci < canvases.length ? ctop(canvases[ci], 'verso') : null
+                  const recto = ci > 0 ? ctop(canvases[ci - 1], 'recto') : null
+                  const verso = ci < canvases.length ? ctop(canvases[ci], 'verso') : null
+                  const pagepair = { r: recto, v: verso }
+
+                  // TODO database/webSQL for fast retrievement of source+page for measure and/or complaint
+                  if (recto) {
+                    source.pageref[recto.id] = {
+                      work: workId,
+                      source: source.id,
+                      n: source.pages.length,
+                      page: recto
+                    }
                   }
+                  if (verso) {
+                    source.pageref[verso.id] = {
+                      work: workId,
+                      source: source.id,
+                      n: source.pages.length,
+                      page: verso
+                    }
+                  }
+                  // END TODO
+
                   source.pages.push(pagepair)
                   source.maxDimensions.width =
                     Math.max(source.maxDimensions.width,

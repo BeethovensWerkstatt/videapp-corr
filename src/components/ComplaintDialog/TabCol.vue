@@ -1,6 +1,10 @@
 <template>
   <div class="tabcol" :style="styles">
-    <tab-col-facs v-if="facsUrl" :src="facsUrl" :label="facsLabel" />
+    <tab-col-facs
+      v-if="facsUrl"
+      :src="facsUrl"
+      :label="facsLabel"
+    />
     <tab-col-verovio
       v-if="transOptions"
       :options="transOptions"
@@ -81,6 +85,7 @@ export default {
       if (!this.select.facs) {
         return undefined
       }
+      console.log(this.row[this.state]?.img)
       const url = this.row[this.state]?.img?.url
       // console.log(url)
       return url

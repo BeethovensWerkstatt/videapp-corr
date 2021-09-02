@@ -69,7 +69,7 @@ const complaintsModule = {
         const mdiv = c.affects[0]?.mdiv
         // console.log(state.movements, mdiv)
         const movement = mdiv ? getters.movements[mdiv] : undefined
-        // this looks like a workaround
+        // TODO this looks like a workaround
         const complaint = movement ? { ...c, movement } : { ...c }
         // console.log(new Complaint(complaint))
         commit(mut.LOAD_COMPLAINT, complaint)

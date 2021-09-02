@@ -103,6 +103,7 @@ export default {
       return ''
     },
     docMap () {
+      // console.log('complaint', this.activeComplaint)
       const ante = this.statusDocs('ante')
       const revision = this.statusDocs('revision')
       const post = this.statusDocs('post')
@@ -184,8 +185,10 @@ export default {
           console.log(stat.iiif[0]?.on.full)
           docs.push({
             img: {
-              // TODO scaling?
+              // TODO scaling? NO goto OSD
               url: stat.iiif[0]?.target.selector[0]['@id'],
+              page: stat.iiif[0]?.on.within['@id'],
+              region: stat.iiif[0]?.on.selector.value,
               label: 'Sigel / Datum'
             }
           })
