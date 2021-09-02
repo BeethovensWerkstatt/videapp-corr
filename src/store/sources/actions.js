@@ -91,14 +91,17 @@ const actions = {
                     ? canvas.service.physicalScale
                     : (300 / canvas.height)
                   const page = {
+                    work: workId,
+                    source: source.id,
                     id: canvas['@id'],
                     label: canvas.label,
                     place,
                     dimensions: { width: canvas.width * physScale, height: canvas.height * physScale },
                     pixels: { width: canvas.width, height: canvas.height },
                     uri: canvas.images[0].resource.service['@id'],
-                    measures: []
+                    measures: [] // load measures?
                   }
+                  commit(mut.LOAD_PAGE, page)
 
                   // get measure zones uri
                   const otherContent = canvas.otherContent

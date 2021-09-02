@@ -8,9 +8,9 @@ import Vuex from 'vuex'
 import Processing from './processing'
 import OSD from './osd'
 import userDisplayOptions from './userDisplayOptions'
-import relations from './relations'
 import Works from './works'
 import Sources from './sources'
+import Pages from './pages'
 import Complaints from './complaints'
 import Verovio from './vrv'
 
@@ -57,9 +57,9 @@ const store = new Vuex.Store({
     Processing,
     OSD,
     userDisplayOptions,
-    relations,
     Works,
     Sources,
+    Pages,
     Complaints,
     Verovio
   }

@@ -64,6 +64,7 @@ export default {
   data () {
     return {
       select: {
+        innerHeight: window.innerHeight,
         ante: true,
         rvsn: true,
         post: true,
@@ -74,12 +75,15 @@ export default {
       }
     }
   },
+  mounted () {
+    window.addEventListener('resize', this.resize)
+  },
   watch: {
     tabWidth () {
       console.log(this.tabWidth)
     },
     styles () {
-      console.log(window.innerHeight)
+      console.log(this.innerHeight)
     }
   },
   computed: {
@@ -92,7 +96,7 @@ export default {
     },
     styles () {
       return {
-        height: 'calc(' + window.innerHeight + 'px - 2rem)'
+        height: 'calc(' + this.innerHeight + 'px - 2rem)'
       }
     },
     measures () {
@@ -187,7 +191,7 @@ export default {
             img: {
               // TODO scaling? NO goto OSD
               url: stat.iiif[0]?.target.selector[0]['@id'],
-              page: stat.iiif[0]?.on.within['@id'],
+              page: stat.iiif[0]?.on.full,
               region: stat.iiif[0]?.on.selector.value,
               label: 'Sigel / Datum'
             }
@@ -281,6 +285,10 @@ export default {
      */
     toggleAnno (e) {
       this.select = { ...this.select, anno: !this.select.anno }
+    },
+    resize () {
+      console.log('resize dialog')
+      this.innerHeight = window.innerHeight
     }
   }
 }

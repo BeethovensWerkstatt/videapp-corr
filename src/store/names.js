@@ -1,10 +1,21 @@
+import { pagesNames } from './pages'
+
 /**
  * register action and mutation names
  *
- * @namespace store.names
+ * @module store.names
  */
 
-export const actions = {}
+export const state = {
+  ...pagesNames.state
+}
+export const getters = {
+  ...pagesNames.getters
+}
+
+export const actions = {
+  ...pagesNames.actions
+}
 
 /**
  * register action name
@@ -19,7 +30,9 @@ export const registerActions = function (obj) {
   }
 }
 
-export const mutations = {}
+export const mutations = {
+  ...pagesNames.mutations
+}
 
 /**
  * register action name

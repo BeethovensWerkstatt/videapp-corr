@@ -123,7 +123,6 @@ export default {
     sources () {
       const sources = this.$store.getters.workSources(this.$route.params.id)
       // console.log(sources)
-      // TODO query
       return sources
     }
   }

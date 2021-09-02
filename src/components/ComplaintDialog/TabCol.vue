@@ -4,6 +4,8 @@
       v-if="facsUrl"
       :src="facsUrl"
       :label="facsLabel"
+      :page="facsPage"
+      :region="facsRegion"
     />
     <tab-col-verovio
       v-if="transOptions"
@@ -98,6 +100,12 @@ export default {
         label = this.$t(labeltag)
       }
       return label
+    },
+    facsPage () {
+      return this.row[this.state]?.img?.page
+    },
+    facsRegion () {
+      return this.row[this.state]?.img?.region
     },
     transOptions () {
       if (this.select.trns && this.row[this.state]?.mei?.trans === 'dipl' && this.row[this.state]?.mei?.url) {
