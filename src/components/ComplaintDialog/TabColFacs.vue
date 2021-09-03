@@ -45,7 +45,7 @@ export default {
         return {}
       }
     },
-    page: {
+    pageId: {
       type: String,
       required: true
     },
@@ -68,7 +68,7 @@ export default {
     },
     viewerConfig () {
       console.log(this.page, tb.parsexywh(this.region))
-      const page = this.$store.getters.getPage(this.page)
+      const page = this.$store.getters.getPage(this.pageId)
       console.log(page)
       const tileSource = {
         '@context': 'http://iiif.io/api/image/2/context.json',

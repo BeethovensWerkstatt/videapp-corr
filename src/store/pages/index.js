@@ -28,9 +28,11 @@ const pagesModule = {
   actions: {},
   getters: {
     [pagesNames.getters.getPage]: (state) => (id) => {
+      /*
       for (const page in state.pages) {
         console.log(page, id)
       }
+      */
       return state.pages[id]
     }
   }

@@ -4,7 +4,7 @@
       v-if="facsUrl"
       :src="facsUrl"
       :label="facsLabel"
-      :page="facsPage"
+      :pageId="facsPage"
       :region="facsRegion"
     />
     <tab-col-verovio
@@ -87,7 +87,7 @@ export default {
       if (!this.select.facs) {
         return undefined
       }
-      console.log(this.row[this.state]?.img)
+      // console.log(this.row[this.state]?.img)
       const url = this.row[this.state]?.img?.url
       // console.log(url)
       return url
