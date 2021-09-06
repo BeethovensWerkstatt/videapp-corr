@@ -136,7 +136,10 @@ export default {
       return label
     },
     anno () {
-      return this.row[this.state]?.anno
+      if (this.select.anno) {
+        return this.row[this.state]?.anno
+      }
+      return undefined
     }
   }
 }
