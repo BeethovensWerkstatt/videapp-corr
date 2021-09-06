@@ -2,6 +2,7 @@ import axios from 'axios'
 import { mutations as mut, actions as act } from '../names'
 
 import { finishProc, startProc } from '..'
+import { Url } from '@/toolbox/net'
 
 // otherContent label for measure positions URL
 const TAG_MEASURE_POSITIONS = 'measure positions'
@@ -80,6 +81,13 @@ const actions = {
               if (iiif.sequences && iiif.sequences.length > 0) {
                 const canvases = iiif.sequences[0].canvases
 
+                // TODO workaround!
+                const exuuid = (atid) => {
+                  const path = new Url(atid).path
+                  return path.elements.pop()
+                }
+                // end TODO
+
                 // helper to prepare page object
                 const ctop = (canvas, place) => {
                   if (!canvas) {
@@ -94,6 +102,7 @@ const actions = {
                     work: workId,
                     source: source.id,
                     id: canvas['@id'],
+                    uuid: exuuid(canvas['@id']),
                     label: canvas.label,
                     place,
                     dimensions: { width: canvas.width * physScale, height: canvas.height * physScale },
@@ -126,11 +135,10 @@ const actions = {
                 for (var ci = 0; ci <= canvases.length; ci += 2) {
                   const recto = ci > 0 ? ctop(canvases[ci - 1], 'recto') : null
                   const verso = ci < canvases.length ? ctop(canvases[ci], 'verso') : null
-                  const pagepair = { r: recto, v: verso }
 
                   // TODO database/webSQL for fast retrievement of source+page for measure and/or complaint
                   if (recto) {
-                    source.pageref[recto.id] = {
+                    source.pageref[recto.uuid] = {
                       work: workId,
                       source: source.id,
                       n: source.pages.length,
@@ -138,7 +146,7 @@ const actions = {
                     }
                   }
                   if (verso) {
-                    source.pageref[verso.id] = {
+                    source.pageref[verso.uuid] = {
                       work: workId,
                       source: source.id,
                       n: source.pages.length,
@@ -147,6 +155,7 @@ const actions = {
                   }
                   // END TODO
 
+                  const pagepair = { r: recto, v: verso }
                   source.pages.push(pagepair)
                   source.maxDimensions.width =
                     Math.max(source.maxDimensions.width,

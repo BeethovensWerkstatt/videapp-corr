@@ -47,4 +47,4 @@ export const registerMutations = function (obj) {
   }
 }
 
-export default { actions, mutations, registerMutations, registerActions }
+export default { actions, mutations, getters, state, registerMutations, registerActions }

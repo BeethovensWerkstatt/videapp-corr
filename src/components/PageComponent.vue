@@ -304,6 +304,7 @@ export default {
             // fitBoundsPlacement: placement,
             // degrees: source.rotation / 5
           }
+          console.log(tisrc)
           this.viewer.addTiledImage(tisrc)
 
           // TODO add SVG shapes overlay

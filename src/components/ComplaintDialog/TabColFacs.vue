@@ -12,8 +12,10 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import OpenSeadragon from 'openseadragon'
 import tb from '@/toolbox'
+import { getters } from '@/store/names'
 // get page by ID -> uri -> OSD()
 
 /**
@@ -63,25 +65,35 @@ export default {
     }
   },
   computed: {
+    ...mapGetters([getters.getPage]),
     divid () {
-      return this.sourceId + '_'
+      return this.pageId + '_osd'
     },
     viewerConfig () {
-      console.log(this.page, tb.parsexywh(this.region))
-      const page = this.$store.getters.getPage(this.pageId)
-      console.log(page)
+      // console.log(this.pageId, tb.parsexywh(this.region))
+      const page = this.getPage(this.pageId)
+      // console.log(page)
       const tileSource = {
         '@context': 'http://iiif.io/api/image/2/context.json',
-        '@id': this.page,
+        '@id': this.pageId,
         profile: 'http://iiif.io/api/image/2/level2.json',
-        protocol: 'http://iiif.io/api/image'
+        protocol: 'http://iiif.io/api/image',
+        width: page.pixels.width,
+        height: page.pixels.height
       }
-      return {
+      const props = {
         id: this.divid,
         showNavigator: false,
         ...this.osdinit,
-        tileSources: [tileSource]
+        tileSources: {
+          x: 0,
+          y: 0,
+          width: page.dimensions.width,
+          tileSource
+        }
       }
+      console.log(props)
+      return props
     },
     bounds () {
       return new OpenSeadragon.Rect(...tb.parsexywh(this.region))
@@ -98,5 +110,9 @@ export default {
 }
 .slider {
   width: 90%;
+}
+#divid {
+  width: 100%;
+  height: 400px;
 }
 </style>

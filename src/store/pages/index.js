@@ -1,3 +1,5 @@
+import { Url } from '@/toolbox/net'
+
 export const pagesNames = {
   state: {
     pages: 'pages'
@@ -21,7 +23,7 @@ const pagesModule = {
   mutations: {
     [pagesNames.mutations.LOAD_PAGE] (state, page) {
       const pages = { ...state.pages }
-      pages[page.id] = page
+      pages[page.uuid] = page
       state.pages = pages
     }
   },
@@ -33,7 +35,11 @@ const pagesModule = {
         console.log(page, id)
       }
       */
-      return state.pages[id]
+      // workaround
+      const atid = new Url(id)
+      const uuid = atid.path.elements.pop()
+      console.log(uuid, state.pages)
+      return state.pages[uuid]
     }
   }
 }
