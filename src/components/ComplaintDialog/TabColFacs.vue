@@ -7,7 +7,9 @@
       <img :src="src" :style="{ width: izoom + '%' }" />
     </div>
     -->
-    <div :id="divid" class="ComplaintDialogOSD" />
+    <div :id="divid" class="ComplaintDialogOSD" :style="styles">
+      <div :id="ovlid" class="complaint-region" />
+    </div>
   </div>
 </template>
 
@@ -28,7 +30,8 @@ export default {
   data () {
     return {
       izoom: 100,
-      viewer: undefined
+      viewer: undefined,
+      rezoomTime: Date.now()
     }
   },
   props: {
@@ -57,20 +60,46 @@ export default {
   },
   mounted () {
     const props = this.viewerConfig
-    props.tileSources.success = (e) => {
-      this.viewer.viewport.fitBounds(this.bounds, false)
-    }
     this.viewer = OpenSeadragon(props)
+    this.viewer.addHandler('open', () => {
+      this.viewer.viewport.fitBounds(this.fitBounds, true)
+    })
+    const rezoom = () => {
+      const timeout = 5000
+      this.rezoomTime = Date.now()
+      setTimeout(() => {
+        if (Date.now() - this.rezoomTime >= timeout) {
+          this.viewer.viewport.fitBounds(this.fitBounds, false)
+        }
+      }, timeout)
+    }
+    this.viewer.addHandler('zoom', rezoom)
+    this.viewer.addHandler('pan', rezoom)
+    this.viewer.addHandler('resize', rezoom)
   },
   beforeDestroy () {
     if (this.viewer) {
       this.viewer.destroy()
     }
   },
+  watch: {
+    pageId () {
+      console.log('TODO reload tiled image')
+    },
+    region () {
+      console.log('TODO reload tiled image')
+    }
+  },
   computed: {
-    ...mapGetters([getters.getPage]),
+    ...mapGetters([
+      getters.getPage,
+      'complaintFacsimileHeight'
+    ]),
     divid () {
-      return this.pageId + '_osd'
+      return this.page.uuid + '_osd'
+    },
+    ovlid () {
+      return this.page.uuid + '_ovl'
     },
     page () {
       return this.getPage(this.pageId)
@@ -89,7 +118,10 @@ export default {
             profile: 'http://iiif.io/api/image/2/level2.json',
             protocol: 'http://iiif.io/api/image',
             width: this.page.pixels.width,
-            height: this.page.pixels.height
+            height: this.page.pixels.height,
+            success: (e) => {
+              this.viewer.addOverlay(this.$el.querySelector('#' + this.ovlid), this.bounds)
+            }
           },
           x: 0,
           y: 0,
@@ -99,9 +131,35 @@ export default {
       // console.log(props)
       return props
     },
+    scaleFactor () {
+      return parseInt(this.page.dimensions.width) / parseInt(this.page.pixels.width)
+    },
     bounds () {
       const bounds = tb.parsexywh(this.region)
-      return new OpenSeadragon.Rect(bounds.x, bounds.y, bounds.width, bounds.height)
+      // console.log(this.scaleFactor)
+      const osbounds = new OpenSeadragon.Rect(
+        bounds.x * this.scaleFactor,
+        bounds.y * this.scaleFactor,
+        bounds.width * this.scaleFactor,
+        bounds.height * this.scaleFactor
+      )
+      // console.log(osbounds)
+      return osbounds
+    },
+    fitBounds () {
+      const fitBounds = this.bounds
+      fitBounds.x -= 2
+      fitBounds.y -= 2
+      fitBounds.width += 4
+      fitBounds.height += 4
+      console.log(fitBounds)
+      return fitBounds
+    },
+    styles () {
+      // console.log(this.$store.getters.complaintFacsimileHeight)
+      return {
+        height: this.complaintFacsimileHeight
+      }
     }
   }
 }
@@ -118,6 +176,12 @@ export default {
 }
 .ComplaintDialogOSD {
   width: 100%;
-  height: 400px;
+}
+
+.complaint-region {
+  background-color: transparent;
+  -webkit-box-shadow: 0px 0px 16px 18px rgba(50, 50, 50, 0.75);
+  -moz-box-shadow:    0px 0px 16px 18px rgba(50, 50, 50, 0.75);
+  box-shadow:         0px 0px 16px 18px rgba(50, 50, 50, 0.75);
 }
 </style>

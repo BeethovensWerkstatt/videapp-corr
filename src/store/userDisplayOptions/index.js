@@ -13,7 +13,9 @@ const userDisplayOptions = {
     sourceVerticalGap: 50, // mm
     sourceHeaderHeight: 20, // mm
     sourceMarginWidth: 25, // mm
-    displayMeasures: false
+    displayMeasures: false,
+    complaintFacsimileHeight: 400,
+    complaintFacsimiletUnit: 'px'
   },
   /**
    * @namespace store.userDisplayOptions.mutations
@@ -80,6 +82,13 @@ const userDisplayOptions = {
     },
     displayMeasures: (state) => {
       return state.displayMeasures
+    },
+    complaintFacsimileHeight: (state) => {
+      // console.log(state.complaintFacsimileHeight)
+      return state.complaintFacsimileHeight + state.complaintFacsimiletUnit
+    },
+    complaintFacsimiletUnit: (state) => {
+      return state.complaintFacsimiletUnit
     }
   }
 }
