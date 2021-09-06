@@ -38,7 +38,7 @@ const pagesModule = {
       // workaround
       const atid = new Url(id)
       const uuid = atid.path.elements.pop()
-      console.log(uuid, state.pages)
+      // console.log(uuid, state.pages)
       return state.pages[uuid]
     }
   }

@@ -63,15 +63,15 @@ export default {
   },
   data () {
     return {
+      innerHeight: window.innerHeight,
       select: {
-        innerHeight: window.innerHeight,
         ante: true,
         rvsn: true,
         post: true,
         facs: true,
-        trns: true,
-        text: true,
-        anno: true
+        trns: false,
+        text: false,
+        anno: false
       }
     }
   },
@@ -119,7 +119,7 @@ export default {
         row.ante = i < ante.length ? ante[i] : {}
         row.revision = i < revision.length ? revision[i] : {}
         row.post = i < post.length ? post[i] : {}
-        console.log(row)
+        // console.log(row)
         map.push(row)
       }
       // console.log(map)
@@ -128,7 +128,7 @@ export default {
     tabWidth () {
       if (this.$el) {
         const el = this.$el.querySelector('.tabview')
-        console.log(el?.innerWidth, this.$el)
+        // console.log(el?.innerWidth, this.$el)
         return el?.innerWidth > 0 ? el.innerWidth : this.$el.innerWidth
       }
       return 400
@@ -148,11 +148,11 @@ export default {
     },
     colStyles () {
       const mw = (this.tabWidth / this.colCount)
-      console.log(this.tabWidth, this.colCount, mw)
+      // console.log(this.tabWidth, this.colCount, mw)
       const styles = {
         'max-width': mw + 'px'
       }
-      console.log(styles)
+      // console.log(styles)
       return styles
     }
   },
@@ -186,7 +186,7 @@ export default {
       }
       if (textStatus) {
         textStatus.forEach(stat => {
-          console.log(stat.iiif[0]?.on.full)
+          // console.log(stat.iiif[0]?.on.full)
           docs.push({
             img: {
               // TODO scaling? NO goto OSD

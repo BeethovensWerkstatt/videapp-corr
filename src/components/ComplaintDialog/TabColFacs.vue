@@ -7,7 +7,7 @@
       <img :src="src" :style="{ width: izoom + '%' }" />
     </div>
     -->
-    <div :id="divid" />
+    <div :id="divid" class="ComplaintDialogOSD" />
   </div>
 </template>
 
@@ -16,7 +16,6 @@ import { mapGetters } from 'vuex'
 import OpenSeadragon from 'openseadragon'
 import tb from '@/toolbox'
 import { getters } from '@/store/names'
-// get page by ID -> uri -> OSD()
 
 /**
  * @module components/ComplaintDialog/TabColFacs
@@ -57,7 +56,11 @@ export default {
     }
   },
   mounted () {
-    this.viewer = OpenSeadragon(this.viewerConfig)
+    const props = this.viewerConfig
+    props.tileSources.success = (e) => {
+      this.viewer.viewport.fitBounds(this.bounds, false)
+    }
+    this.viewer = OpenSeadragon(props)
   },
   beforeDestroy () {
     if (this.viewer) {
@@ -69,34 +72,36 @@ export default {
     divid () {
       return this.pageId + '_osd'
     },
+    page () {
+      return this.getPage(this.pageId)
+    },
     viewerConfig () {
       // console.log(this.pageId, tb.parsexywh(this.region))
-      const page = this.getPage(this.pageId)
-      // console.log(page)
-      const tileSource = {
-        '@context': 'http://iiif.io/api/image/2/context.json',
-        '@id': this.pageId,
-        profile: 'http://iiif.io/api/image/2/level2.json',
-        protocol: 'http://iiif.io/api/image',
-        width: page.pixels.width,
-        height: page.pixels.height
-      }
+      // console.log(this.page.uri)
       const props = {
+        ...this.osdinit,
         id: this.divid,
         showNavigator: false,
-        ...this.osdinit,
         tileSources: {
+          tileSource: {
+            '@context': 'http://iiif.io/api/image/2/context.json',
+            '@id': this.page.uri,
+            profile: 'http://iiif.io/api/image/2/level2.json',
+            protocol: 'http://iiif.io/api/image',
+            width: this.page.pixels.width,
+            height: this.page.pixels.height
+          },
           x: 0,
           y: 0,
-          width: page.dimensions.width,
-          tileSource
+          width: this.page.dimensions.width
         }
       }
-      console.log(props)
+      // console.log(props)
       return props
     },
     bounds () {
-      return new OpenSeadragon.Rect(...tb.parsexywh(this.region))
+      const bounds = tb.parsexywh(this.region)
+      return new OpenSeadragon.Rect(bounds.x, bounds.y, bounds.width, bounds.height)
     }
   }
 }
@@ -111,7 +116,7 @@ export default {
 .slider {
   width: 90%;
 }
-#divid {
+.ComplaintDialogOSD {
   width: 100%;
   height: 400px;
 }

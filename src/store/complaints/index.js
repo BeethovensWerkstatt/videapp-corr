@@ -100,7 +100,7 @@ const complaintsModule = {
           const { data } = await axios.get(complaintId)
           complaint = { ...data, ...complaint }
           complaint.loading = false
-          console.log(complaint)
+          // console.log(complaint)
           commit(mut.MODIFY_COMPLAINT, complaint)
         } finally {
           finishProc()
@@ -136,7 +136,7 @@ const complaintsModule = {
       // console.log(complaintId)
       if (complaintId) {
         const complaint = state.complaints.find(c => c['@id'] === complaintId)
-        console.log(complaint)
+        // console.log(complaint)
         if (!complaint.movement) {
           const mdiv = complaint.affects[0]?.mdiv
           complaint.movement = getters.getMovementById(mdiv)
