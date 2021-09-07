@@ -155,6 +155,9 @@ export default {
     }
   },
   methods: {
+    /**
+     * open the corresponding page in the source on the desktop
+     */
     openPage () {
       console.log(this.page.pagenumber)
       this.$store.commit(
@@ -170,11 +173,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.facsView {
-  width: 100%;
-  overflow: auto;
-  resize: vertical;
-}
 .ComplaintDialogOSD {
   width: 100%;
 }
