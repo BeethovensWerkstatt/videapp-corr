@@ -175,9 +175,6 @@ export default {
   overflow: auto;
   resize: vertical;
 }
-.slider {
-  width: 90%;
-}
 .ComplaintDialogOSD {
   width: 100%;
 }
