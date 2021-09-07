@@ -135,23 +135,27 @@ const actions = {
                 for (var ci = 0; ci <= canvases.length; ci += 2) {
                   const recto = ci > 0 ? ctop(canvases[ci - 1], 'recto') : null
                   const verso = ci < canvases.length ? ctop(canvases[ci], 'verso') : null
+                  // corresponding index in pagepair list
+                  const pagenumber = source.pages.length
 
                   // TODO database/webSQL for fast retrievement of source+page for measure and/or complaint
                   if (recto) {
                     source.pageref[recto.uuid] = {
                       work: workId,
                       source: source.id,
-                      n: source.pages.length,
+                      n: pagenumber,
                       page: recto
                     }
+                    recto.pagenumber = pagenumber
                   }
                   if (verso) {
                     source.pageref[verso.uuid] = {
                       work: workId,
                       source: source.id,
-                      n: source.pages.length,
+                      n: pagenumber,
                       page: verso
                     }
+                    verso.pagenumber = pagenumber
                   }
                   // END TODO
 

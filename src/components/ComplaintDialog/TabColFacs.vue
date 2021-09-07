@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>{{ label }}</h2>
+    <h2 @click="openPage">{{ label }}</h2>
     <div :id="divid" class="ComplaintDialogOSD" :style="styles">
       <div :id="ovlid" class="complaint-region" />
     </div>
@@ -11,7 +11,7 @@
 import { mapGetters } from 'vuex'
 import OpenSeadragon from 'openseadragon'
 import tb from '@/toolbox'
-import { getters } from '@/store/names'
+import { mutations, getters } from '@/store/names'
 
 /**
  * @module components/ComplaintDialog/TabColFacs
@@ -152,6 +152,18 @@ export default {
       return {
         height: this.complaintFacsimileHeight
       }
+    }
+  },
+  methods: {
+    openPage () {
+      console.log(this.page.pagenumber)
+      this.$store.commit(
+        mutations.SET_PAGE,
+        {
+          id: this.page.source,
+          page: this.page.pagenumber
+        }
+      )
     }
   }
 }
