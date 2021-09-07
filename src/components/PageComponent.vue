@@ -87,7 +87,7 @@ export default {
   },
   data () {
     return {
-      pgdata: this.page ? this.page.id : null,
+      pgdata: this.page?.id,
       tidata: null,
       topsource: false
     }
