@@ -1,12 +1,6 @@
 <template>
   <div>
     <h2>{{ label }}</h2>
-    <!--
-    <input type="range" min="25" max="150" class="slider" v-model="izoom" />
-    <div class="facsView">
-      <img :src="src" :style="{ width: izoom + '%' }" />
-    </div>
-    -->
     <div :id="divid" class="ComplaintDialogOSD" :style="styles">
       <div :id="ovlid" class="complaint-region" />
     </div>
@@ -22,8 +16,10 @@ import { getters } from '@/store/names'
 /**
  * @module components/ComplaintDialog/TabColFacs
  * @vue-data {Number} izoom - image zoom factor in percent of width (TODO get resolution and width of image)
- * @vue-prop {String} src - image url
  * @vue-prop {String} label - label/title of image (facsimile)
+ * @vue-prop {Object} [osdinit={}] - extra options for OpenSeadragon
+ * @vue-prop {String} pageid - id of page object
+ * @vue-prop {String} region - region of facsimile in iiif format (xywh=1,2,3,4)
  */
 export default {
   name: 'ComplaintDialogTabColFacs',
@@ -35,10 +31,6 @@ export default {
     }
   },
   props: {
-    src: {
-      type: String,
-      required: true
-    },
     label: {
       type: String,
       required: true

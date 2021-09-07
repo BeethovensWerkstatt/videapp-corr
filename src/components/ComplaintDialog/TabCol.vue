@@ -1,8 +1,7 @@
 <template>
   <div class="tabcol" :style="styles">
     <tab-col-facs
-      v-if="facsUrl"
-      :src="facsUrl"
+      v-if="facsPage"
       :label="facsLabel"
       :pageId="facsPage"
       :region="facsRegion"
@@ -53,8 +52,9 @@ const labels = {
  * @vue-prop {String} state - text state - one of `ante`, `revision` and `post`
  * @vue-prop {Object} styles - styles for this column (width)
  * @vue-prop {Object} select - flags what to display: ante, rvsn, post, facs, trns, text, anno
- * @vue-computed {String} facsUrl - url of facsimile or undefined
  * @vue-computed {String} facsLabel - label/title for facsimile or undefined
+ * @vue-computed {String} facsPage - page id
+ * @vue-computed {String} facsRegion - facsimile region (iiif)
  * @vue-computed {Object} transOptions - options for transcription MEI or undefined
  * @vue-computed {String} transLabel - label/title for transcription MEI or undefined
  * @vue-computed {Object} textOptions - options for cleartext MEI or undefined
@@ -83,15 +83,6 @@ export default {
     }
   },
   computed: {
-    facsUrl () {
-      if (!this.select.facs) {
-        return undefined
-      }
-      // console.log(this.row[this.state]?.img)
-      const url = this.row[this.state]?.img?.url
-      // console.log(url)
-      return url
-    },
     facsLabel () {
       let label = this.row[this.state]?.img?.label
       // console.log(label)
@@ -102,6 +93,9 @@ export default {
       return label
     },
     facsPage () {
+      if (!this.select.facs) {
+        return undefined
+      }
       return this.row[this.state]?.img?.page
     },
     facsRegion () {
