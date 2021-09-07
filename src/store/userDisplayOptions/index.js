@@ -79,14 +79,12 @@ const userDisplayOptions = {
      * @param {Object} payload properties ante, rvsn, post, facs, trns, text, anno
      */
     SET_COMPLAINT_DISPLAY_SELECT (state, payload) {
-      const select = {
-        ante: !!payload.ante,
-        rvsn: !!payload.rvsn,
-        post: !!payload.post,
-        facs: !!payload.facs,
-        trns: !!payload.trns,
-        text: !!payload.text,
-        anno: !!payload.anno
+      const select = { ...state.complaintDisplaySelect }
+      const keys = Object.keys(select)
+      for (const k of keys) {
+        if (payload[k] !== undefined) {
+          select[k] = !!payload[k]
+        }
       }
       state.complaintDisplaySelect = select
     }

@@ -63,8 +63,7 @@ export default {
   },
   data () {
     return {
-      innerHeight: window.innerHeight,
-      select: this.$store.getters.complaintDisplaySelect
+      innerHeight: window.innerHeight
     }
   },
   mounted () {
@@ -79,7 +78,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['activeComplaintId', 'activeComplaint']),
+    ...mapGetters(['activeComplaintId', 'activeComplaint', 'complaintDisplaySelect']),
     active () {
       if (this.activeComplaintId) {
         return true
@@ -97,6 +96,14 @@ export default {
         return complaint.affects[0].measures.label
       }
       return ''
+    },
+    select: {
+      get () {
+        return this.complaintDisplaySelect
+      },
+      set (sel) {
+        this.$store.commit('SET_COMPLAINT_DISPLAY_SELECT', sel)
+      }
     },
     docMap () {
       // console.log('complaint', this.activeComplaint)
