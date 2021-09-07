@@ -64,15 +64,7 @@ export default {
   data () {
     return {
       innerHeight: window.innerHeight,
-      select: {
-        ante: true,
-        rvsn: true,
-        post: true,
-        facs: true,
-        trns: false,
-        text: false,
-        anno: false
-      }
+      select: this.$store.getters.complaintDisplaySelect
     }
   },
   mounted () {

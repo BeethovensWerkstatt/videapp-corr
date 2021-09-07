@@ -15,7 +15,16 @@ const userDisplayOptions = {
     sourceMarginWidth: 25, // mm
     displayMeasures: false,
     complaintFacsimileHeight: 400,
-    complaintFacsimiletUnit: 'px'
+    complaintFacsimiletUnit: 'px',
+    complaintDisplaySelect: {
+      ante: true,
+      rvsn: true,
+      post: true,
+      facs: true,
+      trns: true,
+      text: true,
+      anno: true
+    }
   },
   /**
    * @namespace store.userDisplayOptions.mutations
@@ -56,6 +65,30 @@ const userDisplayOptions = {
      */
     SET_DISPLAY_MEASURES (state, display) {
       state.displayMeasures = display
+    },
+    /**
+     * set height of facsimile in complaint dialog (default 400px)
+     * @param {Object} par { value, unit }
+     */
+    SET_COMPLAINT_FACSIMILE_HEIGHT (state, { value, unit }) {
+      state.complaintFacsimileHeight = value
+      state.complaintFacsimiletUnit = typeof unit === 'string' ? unit : 'px'
+    },
+    /**
+     * set default selected views in complaint dialog
+     * @param {Object} payload properties ante, rvsn, post, facs, trns, text, anno
+     */
+    SET_COMPLAINT_DISPLAY_SELECT (state, payload) {
+      const select = {
+        ante: !!payload.ante,
+        rvsn: !!payload.rvsn,
+        post: !!payload.post,
+        facs: !!payload.facs,
+        trns: !!payload.trns,
+        text: !!payload.text,
+        anno: !!payload.anno
+      }
+      state.complaintDisplaySelect = select
     }
   },
   /**
@@ -89,6 +122,9 @@ const userDisplayOptions = {
     },
     complaintFacsimiletUnit: (state) => {
       return state.complaintFacsimiletUnit
+    },
+    complaintDisplaySelect: (state) => {
+      return state.complaintDisplaySelect
     }
   }
 }
