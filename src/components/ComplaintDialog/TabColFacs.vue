@@ -56,18 +56,9 @@ export default {
     this.viewer.addHandler('open', () => {
       this.viewer.viewport.fitBounds(this.fitBounds, true)
     })
-    const rezoom = () => {
-      const timeout = 5000
-      this.rezoomTime = Date.now()
-      setTimeout(() => {
-        if (Date.now() - this.rezoomTime >= timeout) {
-          this.viewer.viewport.fitBounds(this.fitBounds, false)
-        }
-      }, timeout)
-    }
-    this.viewer.addHandler('zoom', rezoom)
-    this.viewer.addHandler('pan', rezoom)
-    this.viewer.addHandler('resize', rezoom)
+    this.viewer.addHandler('zoom', this.rezoom())
+    this.viewer.addHandler('pan', this.rezoom())
+    this.viewer.addHandler('resize', this.rezoom(0))
   },
   beforeDestroy () {
     if (this.viewer) {
@@ -155,6 +146,16 @@ export default {
     }
   },
   methods: {
+    rezoom (timeout = 5000) {
+      return () => {
+        this.rezoomTime = Date.now()
+        setTimeout(() => {
+          if (Date.now() - this.rezoomTime >= timeout) {
+            this.viewer.viewport.fitBounds(this.fitBounds, timeout === 0)
+          }
+        }, timeout)
+      }
+    },
     /**
      * open the corresponding page in the source on the desktop
      */
