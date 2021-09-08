@@ -76,7 +76,7 @@ export default {
     top: 0;
     height: 100%;
     // TODO color consts in separate file
-    background: linear-gradient(270deg, #dddddd, #ffffff);
+    // background: linear-gradient(270deg, #dddddd, #ffffff);
   }
   .right-margin {
     position: absolute;
@@ -84,7 +84,7 @@ export default {
     top: 0;
     height: 100%;
     // TODO color consts in separate file
-    background: linear-gradient(90deg, #dddddd, #ffffff);
+    // background: linear-gradient(90deg, #dddddd, #ffffff);
   }
 
   .marker {
