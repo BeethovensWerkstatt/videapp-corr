@@ -76,7 +76,7 @@ export default {
   computed: {
     ...mapGetters([
       getters.getPage,
-      'complaintFacsimileHeight'
+      'complaintFacsimileAspect'
     ]),
     divid () {
       return this.page.uuid + '_osd'
@@ -141,7 +141,8 @@ export default {
     styles () {
       // console.log(this.$store.getters.complaintFacsimileHeight)
       return {
-        height: this.complaintFacsimileHeight
+        // height: this.complaintFacsimileHeight
+        'aspect-ratio': this.complaintFacsimileAspect
       }
     }
   },
@@ -180,8 +181,9 @@ export default {
 
 .complaint-region {
   background-color: transparent;
-  -webkit-box-shadow: 0px 0px 16px 18px rgba(50, 50, 50, 0.75);
-  -moz-box-shadow:    0px 0px 16px 18px rgba(50, 50, 50, 0.75);
-  box-shadow:         0px 0px 16px 18px rgba(50, 50, 50, 0.75);
+  -webkit-box-shadow: 0px 0px 16px 18px rgba(50, 50, 50, 0.5);
+  -moz-box-shadow:    0px 0px 16px 18px rgba(50, 50, 50, 0.5);
+  box-shadow:         0px 0px 16px 18px rgba(50, 50, 50, 0.5);
+  border-radius: 3px;
 }
 </style>

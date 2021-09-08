@@ -14,8 +14,7 @@ const userDisplayOptions = {
     sourceHeaderHeight: 20, // mm
     sourceMarginWidth: 25, // mm
     displayMeasures: false,
-    complaintFacsimileHeight: 400,
-    complaintFacsimiletUnit: 'px',
+    complaintFacsimileAspect: '16 / 9',
     complaintDisplaySelect: {
       ante: true,
       rvsn: true,
@@ -67,14 +66,6 @@ const userDisplayOptions = {
       state.displayMeasures = display
     },
     /**
-     * set height of facsimile in complaint dialog (default 400px)
-     * @param {Object} par { value, unit }
-     */
-    SET_COMPLAINT_FACSIMILE_HEIGHT (state, { value, unit }) {
-      state.complaintFacsimileHeight = value
-      state.complaintFacsimiletUnit = typeof unit === 'string' ? unit : 'px'
-    },
-    /**
      * set default selected views in complaint dialog
      * @param {Object} payload properties ante, rvsn, post, facs, trns, text, anno
      */
@@ -87,6 +78,12 @@ const userDisplayOptions = {
         }
       }
       state.complaintDisplaySelect = select
+    },
+    /**
+     * @param {String} aspect ratio like '16 / 9'
+     */
+    SET_COMPLAINT_FACSIMILE_ASPECT (state, aspect) {
+      state.complaintFacsimileAspect = aspect
     }
   },
   /**
@@ -99,31 +96,13 @@ const userDisplayOptions = {
    * @property {Boolean} displayMeasures if true show measure frames
    */
   getters: {
-    sourceHeaderHeight (state) {
-      return state.sourceHeaderHeight
-    },
-    sourceMarginWidth (state) {
-      return state.sourceMarginWidth
-    },
-    sourceHorizontalGap (state) {
-      return state.sourceHorizontalGap
-    },
-    sourceVerticalGap (state) {
-      return state.sourceVerticalGap
-    },
-    displayMeasures: (state) => {
-      return state.displayMeasures
-    },
-    complaintFacsimileHeight: (state) => {
-      // console.log(state.complaintFacsimileHeight)
-      return state.complaintFacsimileHeight + state.complaintFacsimiletUnit
-    },
-    complaintFacsimiletUnit: (state) => {
-      return state.complaintFacsimiletUnit
-    },
-    complaintDisplaySelect: (state) => {
-      return state.complaintDisplaySelect
-    }
+    sourceHeaderHeight: (state) => state.sourceHeaderHeight,
+    sourceMarginWidth: (state) => state.sourceMarginWidth,
+    sourceHorizontalGap: (state) => state.sourceHorizontalGap,
+    sourceVerticalGap: (state) => state.sourceVerticalGap,
+    displayMeasures: (state) => state.displayMeasures,
+    complaintFacsimileAspect: (state) => state.complaintFacsimileAspect,
+    complaintDisplaySelect: (state) => state.complaintDisplaySelect
   }
 }
 
