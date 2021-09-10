@@ -279,8 +279,6 @@ export default {
   // outline: 1px solid red;
   padding: 0%;
   margin: 0%;
-  // TODO color consts in separate file
-  background: linear-gradient(0deg, #dddddd, #ffffff);
 
   &:hover {
     outline: 1px solid #0000ff22;
@@ -291,12 +289,14 @@ export default {
     left: 0;
     height: 100%;
     background: radial-gradient(ellipse 100% 100% at bottom right, #dddddd, #ffffff);
+    // border-radius: 100% 0% 0% 0%;
   }
   .top-right {
     position: absolute;
     right: 0;
     height: 100%;
     background: radial-gradient(ellipse 100% 100% at bottom left, #dddddd, #ffffff);
+    // border-radius: 0% 100% 0% 0%;
   }
   .btn {
     width: 100%;
@@ -311,6 +311,8 @@ export default {
     position: absolute;
     height: 100%;
     text-align: center;
+    // TODO color consts in separate file
+    background: linear-gradient(0deg, #dddddd, #ffffff);
 
     .pagenr {
       position: absolute;
