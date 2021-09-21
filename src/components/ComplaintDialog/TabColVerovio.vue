@@ -1,6 +1,7 @@
 <template>
   <div>
     <h2>{{ label }}</h2>
+    <!--
     <input :id="vid+'-zoom'" type="range" min="5" max="100" class="slider" v-model="vzoom" />
     <div class="vrvContainer">
       <verovio-component
@@ -8,11 +9,16 @@
         :options="voptions"
       />
     </div>
+    -->
+    <div :id="divid">
+      <div :id="vid" />
+    </div>
   </div>
 </template>
 
 <script>
-import VerovioComponent from '@/components/VerovioComponent.vue'
+// import VerovioComponent from '@/components/VerovioComponent.vue'
+import OpenSeadragon from 'openseadragon'
 
 /**
  * @module components/ComplaintDialog/TabColVerovio
@@ -21,14 +27,24 @@ import VerovioComponent from '@/components/VerovioComponent.vue'
  * @vue-prop {String} label - label/title for this element
  */
 export default {
-  components: { VerovioComponent },
+  // components: { VerovioComponent },
   name: 'ComplaintDialogTabColVerovio',
   data () {
     return {
-      zoom: 30
+      viewer: undefined
     }
   },
   props: {
+    label: {
+      type: String,
+      required: true
+    },
+    osdinit: {
+      type: Object,
+      default: () => {
+        return {}
+      }
+    },
     vid: {
       type: String,
       required: true
@@ -36,13 +52,21 @@ export default {
     options: {
       type: Object,
       required: true
-    },
-    label: {
-      type: String,
-      required: true
+    }
+  },
+  mounted () {
+    const props = this.viewerConfig
+    this.viewer = OpenSeadragon(props)
+  },
+  beforeDestroy () {
+    if (this.viewer) {
+      this.viewer.destroy()
     }
   },
   computed: {
+    divid () {
+      return this.vid + '_ovl'
+    },
     vzoom: {
       get () {
         return parseInt(this.zoom)
@@ -53,6 +77,17 @@ export default {
     },
     voptions () {
       return { ...this.options, scale: this.vzoom }
+    },
+    viewerConfig () {
+      // console.log(this.pageId, tb.parsexywh(this.region))
+      // console.log(this.page.uri)
+      const props = {
+        ...this.osdinit,
+        id: this.divid,
+        showNavigator: false
+      }
+      // console.log(props)
+      return props
     }
   }
 }

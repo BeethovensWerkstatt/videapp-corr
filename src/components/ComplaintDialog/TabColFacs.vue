@@ -15,7 +15,6 @@ import { mutations, getters } from '@/store/names'
 
 /**
  * @module components/ComplaintDialog/TabColFacs
- * @vue-data {Number} izoom - image zoom factor in percent of width (TODO get resolution and width of image)
  * @vue-prop {String} label - label/title of image (facsimile)
  * @vue-prop {Object} [osdinit={}] - extra options for OpenSeadragon
  * @vue-prop {String} pageid - id of page object
@@ -25,7 +24,6 @@ export default {
   name: 'ComplaintDialogTabColFacs',
   data () {
     return {
-      izoom: 100,
       viewer: undefined,
       rezoomTime: Date.now()
     }
