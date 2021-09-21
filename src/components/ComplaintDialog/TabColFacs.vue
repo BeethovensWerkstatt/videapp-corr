@@ -133,7 +133,7 @@ export default {
       fitBounds.y -= 2
       fitBounds.width += 4
       fitBounds.height += 4
-      console.log(fitBounds)
+      // console.log(fitBounds)
       return fitBounds
     },
     styles () {

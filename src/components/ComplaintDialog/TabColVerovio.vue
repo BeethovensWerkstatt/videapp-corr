@@ -10,15 +10,19 @@
       />
     </div>
     -->
-    <div :id="divid">
+    <div :id="divid" class="ComplaintDialodVOSD">
       <div :id="vid" />
     </div>
   </div>
 </template>
 
 <script>
+// import Vue from 'vue'
+// import { mapGetters } from 'vuex'
 // import VerovioComponent from '@/components/VerovioComponent.vue'
 import OpenSeadragon from 'openseadragon'
+import config from '@/config'
+import { desktopTile } from '@/toolbox'
 
 /**
  * @module components/ComplaintDialog/TabColVerovio
@@ -31,7 +35,8 @@ export default {
   name: 'ComplaintDialogTabColVerovio',
   data () {
     return {
-      viewer: undefined
+      viewer: undefined,
+      viewerprops: { ...config.osd, ...this.osdinit }
     }
   },
   props: {
@@ -57,6 +62,19 @@ export default {
   mounted () {
     const props = this.viewerConfig
     this.viewer = OpenSeadragon(props)
+    const TIback = {
+      height: 1,
+      width: 1,
+      tileSize: 256,
+      minLevel: 8,
+      getTileUrl: function (level, x, y) {
+        // console.log(desktopTile)
+        return desktopTile
+      }
+    }
+    this.viewer.addTiledImage({
+      tileSource: TIback
+    })
   },
   beforeDestroy () {
     if (this.viewer) {
@@ -94,6 +112,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.ComplaintDialodVOSD {
+  width: 100%;
+  aspect-ratio: 16/9;
+  outline: 1px solid green;
+}
+
 .vrvContainer {
   width: 100%;
   overflow: auto;
