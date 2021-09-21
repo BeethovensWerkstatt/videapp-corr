@@ -42,11 +42,12 @@ export default {
   },
   data () {
     return {
-      toolkit: null,
-      svg: null,
-      mei: null,
-      error: null,
-      scale: 30
+      viewer: undefined,
+      toolkit: undefined,
+      svg: undefined,
+      mei: undefined,
+      error: undefined,
+      scale: 30 // TODO userDisplayOptions
     }
   },
   mounted () {
