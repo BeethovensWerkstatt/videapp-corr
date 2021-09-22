@@ -1,6 +1,6 @@
 <template>
   <div class="dialog" :class="{ 'inactive': !this.active }" :style="styles">
-    <div id="head">
+    <div id="head" v-if="active">
       <div class="title">{{ toRoman(activeComplaint.movement.n) }}. {{ activeComplaint.movement.label }}, {{ activeComplaint.label }}</div>
       <div class="measures">
         Takte: {{ measures }} (<a :href="activeComplaint['@id']" target="_blank">link</a>)

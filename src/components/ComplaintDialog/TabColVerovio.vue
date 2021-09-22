@@ -41,7 +41,9 @@ export default {
       viewerprops: { ...config.osd, ...this.osdinit },
       toolkit: undefined,
       mei: undefined,
-      svg: undefined
+      svg: undefined,
+      width: 1,
+      height: 1
     }
   },
   props: {
@@ -68,6 +70,8 @@ export default {
     const props = this.viewerConfig
     this.viewer = OpenSeadragon(props)
     const TIback = {
+      x: 0,
+      y: 0,
       height: 1,
       width: 1,
       tileSize: 256,
@@ -82,9 +86,9 @@ export default {
     })
     this.viewer.addOverlay({
       element: this.$el.querySelector('#' + this.vid),
-      location: OpenSeadragon.Point(0, 0)
+      location: new OpenSeadragon.Rect(0, 0, 1000, 1000)
     },
-    OpenSeadragon.Point(0, 0))
+    new OpenSeadragon.Point(0, 0))
     this.loadMEI()
   },
   beforeDestroy () {
@@ -130,9 +134,15 @@ export default {
       opts.svgBoundingBoxes = true
       opts.svgViewBox = true
       return opts
+    },
+    overlay () {
+      return this.viewer ? this.viewer.getOverlayById(this.vid) : undefined
     }
   },
   methods: {
+    /**
+     * load MEI for transcription, render to SVG and add to overlay
+     */
     loadMEI () {
       // console.log(this.options)
       if (this.options?.url) {
@@ -153,7 +163,31 @@ export default {
             const parser = new DOMParser()
             const renderedSVG = parser.parseFromString(this.svg, 'image/svg+xml')
             const viewBox = renderedSVG.activeElement.viewBox.baseVal
-            console.log(viewBox, viewBox.height / viewBox.width)
+            this.width = viewBox.width
+            this.height = viewBox.height
+            const pos = new OpenSeadragon.Rect(0, 0, this.width, this.height)
+            const TIback = {
+              x: 0,
+              y: 0,
+              height: this.height,
+              width: this.width,
+              tileSize: 256,
+              minLevel: 8,
+              getTileUrl: function (level, x, y) {
+                // console.log(desktopTile)
+                return desktopTile
+              }
+            }
+            this.viewer.world.getItemAt(0).destroy()
+            this.viewer.addTiledImage({
+              tileSource: TIback
+            })
+            const overlay = this.viewer.getOverlayById(this.vid)
+            console.log(pos)
+            if (overlay) {
+              overlay.update(pos)
+              this.viewer.viewport.fitBounds(pos)
+            }
           }
         }).catch(error => {
           console.error(error)
@@ -205,6 +239,10 @@ export default {
   width: 100%;
   aspect-ratio: 16/9;
   outline: 1px solid green;
+
+  svg {
+    width: 100%;
+  }
 }
 
 .vrvContainer {
