@@ -48,6 +48,11 @@ export default {
       required: true
     }
   },
+  /* TODO
+   * - method initOSD() ?
+   * - on pageID exchange tiled image
+   * - on region change fitBounds
+   */
   mounted () {
     const props = this.viewerConfig
     this.viewer = OpenSeadragon(props)

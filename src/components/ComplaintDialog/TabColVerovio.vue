@@ -66,6 +66,15 @@ export default {
       required: true
     }
   },
+  /* TODO
+   * - beforeCreate
+   * 1. load MEI
+   * 2. create and measure SVG
+   * - mounted
+   * 3. create OSD viewer
+   * 4. add tiled image (transparent)
+   * 5. add overlay
+   */
   mounted () {
     const props = this.viewerConfig
     this.viewer = OpenSeadragon(props)
