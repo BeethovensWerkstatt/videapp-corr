@@ -151,8 +151,8 @@ export default {
             this.toolkit.loadData(this.mei)
             this.svg = this.toolkit.renderToSVG(1)
             const parser = new DOMParser()
-            const dsvg = parser.parseFromString(this.svg, 'image/svg+xml')
-            const viewBox = dsvg.activeElement.viewBox.baseVal
+            const renderedSVG = parser.parseFromString(this.svg, 'image/svg+xml')
+            const viewBox = renderedSVG.activeElement.viewBox.baseVal
             console.log(viewBox, viewBox.height / viewBox.width)
           }
         }).catch(error => {

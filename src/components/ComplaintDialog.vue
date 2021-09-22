@@ -1,11 +1,25 @@
 <template>
   <div class="dialog" :class="{ 'inactive': !this.active }" :style="styles">
-    <div id="body" v-if="active">
+    <div id="head">
       <div class="title">{{ toRoman(activeComplaint.movement.n) }}. {{ activeComplaint.movement.label }}, {{ activeComplaint.label }}</div>
       <div class="measures">
         Takte: {{ measures }} (<a :href="activeComplaint['@id']" target="_blank">link</a>)
       </div>
-      <hr>
+      <div id="select">
+        <div @click="toggleAnte" :class="{ TSactive: select.ante }" class="TSbutton">ANTE</div>
+        <div @click="toggleRvsn" :class="{ TSactive: select.rvsn }" class="TSbutton">RVSN</div>
+        <div @click="togglePost" :class="{ TSactive: select.post }" class="TSbutton">POST</div>
+        &nbsp;
+        <div @click="toggleFacs" :class="{ TSactive: select.facs }" class="TSbutton">FACS</div>
+        <div @click="toggleTrns" :class="{ TSactive: select.trns }" class="TSbutton">DIPL</div>
+        <div @click="toggleText" :class="{ TSactive: select.text }" class="TSbutton">TEXT</div>
+        <div @click="toggleAnno" :class="{ TSactive: select.anno }" class="TSbutton">ANNO</div>
+      </div>
+      <div id="close">
+        <btn @click.prevent="closeDialog">{{ $t('terms.close') }}</btn>
+      </div>
+    </div>
+    <div id="body" v-if="active">
       <div class="loading" v-if="activeComplaint.loading">Lade {{ activeComplaint.label }}</div>
       <div class="tabview" v-else>
         <complaint-dialog-tab-row
@@ -17,19 +31,6 @@
         >
         </complaint-dialog-tab-row>
       </div>
-    </div>
-    <div id="select">
-      <div @click="toggleAnte" :class="{ TSactive: select.ante }" class="TSbutton">ANTE</div>
-      <div @click="toggleRvsn" :class="{ TSactive: select.rvsn }" class="TSbutton">RVSN</div>
-      <div @click="togglePost" :class="{ TSactive: select.post }" class="TSbutton">POST</div>
-      &nbsp;
-      <div @click="toggleFacs" :class="{ TSactive: select.facs }" class="TSbutton">FACS</div>
-      <div @click="toggleTrns" :class="{ TSactive: select.trns }" class="TSbutton">DIPL</div>
-      <div @click="toggleText" :class="{ TSactive: select.text }" class="TSbutton">TEXT</div>
-      <div @click="toggleAnno" :class="{ TSactive: select.anno }" class="TSbutton">ANNO</div>
-    </div>
-    <div id="close">
-      <btn @click.prevent="closeDialog">{{ $t('terms.close') }}</btn>
     </div>
   </div>
 </template>
@@ -309,6 +310,11 @@ export default {
   border-radius: 5pt;
   background-color: white;
   border: 1px solid black;
+
+  #head {
+    height: 70px;
+    border-bottom: 1px solid gray;
+  }
 
   #body {
     width: 100%;
