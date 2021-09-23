@@ -70,6 +70,7 @@ export default {
   mounted () {
     window.addEventListener('resize', this.resize)
   },
+  /*
   watch: {
     tabWidth () {
       console.log(this.tabWidth)
@@ -78,6 +79,7 @@ export default {
       console.log(this.innerHeight)
     }
   },
+  */
   computed: {
     ...mapGetters(['activeComplaintId', 'activeComplaint', 'complaintDisplaySelect']),
     active () {
@@ -287,7 +289,7 @@ export default {
       this.select = { ...this.select, anno: !this.select.anno }
     },
     resize () {
-      console.log('resize dialog')
+      // console.log('resize dialog')
       this.innerHeight = window.innerHeight
     }
   }
