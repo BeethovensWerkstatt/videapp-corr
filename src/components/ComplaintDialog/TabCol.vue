@@ -117,7 +117,7 @@ export default {
     },
     textOptions () {
       if (this.select.text && this.row[this.state]?.mei?.trans === 'clear' && this.row[this.state]?.mei?.url) {
-        return this.row[this.state]?.mei
+        return this.row[this.state].mei
       }
       return undefined
     },
