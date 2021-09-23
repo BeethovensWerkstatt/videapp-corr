@@ -1,16 +1,7 @@
 <template>
   <div>
     <h2>{{ label }}</h2>
-    <!--
-    <input :id="vid+'-zoom'" type="range" min="5" max="100" class="slider" v-model="vzoom" />
-    <div class="vrvContainer">
-      <verovio-component
-        :id="vid"
-        :options="voptions"
-      />
-    </div>
-    -->
-    <div :id="divid" class="ComplaintDialodVOSD">
+    <div :id="divid" class="ComplaintDialogVOSD">
       <div :id="vid" v-html="svg" />
     </div>
   </div>
@@ -67,7 +58,7 @@ export default {
     }
   },
   /* TODO
-   * - beforeCreate
+   * - created
    * 1. load MEI
    * 2. create and measure SVG
    * - mounted
@@ -75,34 +66,26 @@ export default {
    * 4. add tiled image (transparent)
    * 5. add overlay
    */
-  mounted () {
-    const props = this.viewerConfig
-    this.viewer = OpenSeadragon(props)
-    const TIback = {
-      x: 0,
-      y: 0,
-      height: 1,
-      width: 1,
-      tileSize: 256,
-      minLevel: 8,
-      getTileUrl: function (level, x, y) {
-        // console.log(desktopTile)
-        return desktopTile
-      }
-    }
-    this.viewer.addTiledImage({
-      tileSource: TIback
-    })
-    this.viewer.addOverlay({
-      element: this.$el.querySelector('#' + this.vid),
-      location: new OpenSeadragon.Rect(0, 0, 1000, 1000)
-    },
-    new OpenSeadragon.Point(0, 0))
+  created () {
     this.loadMEI()
+  },
+  mounted () {
+    this.createViewer()
+    console.log(this.viewer)
   },
   beforeDestroy () {
     if (this.viewer) {
       this.viewer.destroy()
+    }
+    // TODO toolkit destroy??
+  },
+  watch: {
+    osdinit () {
+      this.createViewer()
+    },
+    vid () {
+      this.loadMEI()
+      this.createViewer()
     }
   },
   computed: {
@@ -125,11 +108,13 @@ export default {
       // console.log(this.pageId, tb.parsexywh(this.region))
       // console.log(this.page.uri)
       const props = {
+        ...config.osd,
         ...this.osdinit,
         id: this.divid,
-        showNavigator: false
+        showNavigator: false,
+        maxZoomLevel: 4
       }
-      // console.log(props)
+      console.log(props)
       return props
     },
     vrvOptions () {
@@ -143,6 +128,15 @@ export default {
       opts.svgBoundingBoxes = true
       opts.svgViewBox = true
       return opts
+    },
+    position () {
+      return new OpenSeadragon.Rect(0, 0, this.width, this.height)
+    },
+    clipping () {
+      // TODO useDisplayOptions for aspect-ratio of canvas and default clip
+      const relwidth = 16 * this.height / 9
+      const width = Math.min(this.width, relwidth)
+      return new OpenSeadragon.Rect(0, 0, width, this.height)
     },
     overlay () {
       return this.viewer ? this.viewer.getOverlayById(this.vid) : undefined
@@ -159,6 +153,9 @@ export default {
         console.log('load', this.options.url)
         this.mei = undefined
         this.svg = undefined
+        this.width = 1
+        this.height = 1
+        // TODO store in pouchdb or localStorage?
         axios.get(this.options.url).then(({ data }) => {
           this.mei = data
           if (this.mei) {
@@ -174,29 +171,6 @@ export default {
             const viewBox = renderedSVG.activeElement.viewBox.baseVal
             this.width = viewBox.width
             this.height = viewBox.height
-            const pos = new OpenSeadragon.Rect(0, 0, this.width, this.height)
-            const TIback = {
-              x: 0,
-              y: 0,
-              height: this.height,
-              width: this.width,
-              tileSize: 256,
-              minLevel: 8,
-              getTileUrl: function (level, x, y) {
-                // console.log(desktopTile)
-                return desktopTile
-              }
-            }
-            this.viewer.world.getItemAt(0).destroy()
-            this.viewer.addTiledImage({
-              tileSource: TIback
-            })
-            const overlay = this.viewer.getOverlayById(this.vid)
-            console.log(pos)
-            if (overlay) {
-              overlay.update(pos)
-              this.viewer.viewport.fitBounds(pos)
-            }
           }
         }).catch(error => {
           console.error(error)
@@ -205,58 +179,51 @@ export default {
         })
       }
     },
-    /**
-     * taken from module 1 VideApp
-     */
-    _getVerovioDimensions (renderedSvg) {
-      try {
-        const viewBoxHeight = parseInt(renderedSvg.querySelector('svg.definition-scale').getAttribute('viewBox').split(' ')[3], 10)
-        const firstStaffLineYPos = parseInt(renderedSvg.querySelector('g.measure g.staff path:first-of-type').getAttribute('d').split(' ')[1], 10)
-        const lastStaffLineYPos = parseInt(renderedSvg.querySelector('g.measure g.staff path:last-of-type').getAttribute('d').split(' ')[1], 10)
-
-        const staffHeight = lastStaffLineYPos - firstStaffLineYPos
-        const staffHeightRelation = staffHeight / viewBoxHeight
-
-        const widthAttr = renderedSvg.childNodes[0].getAttribute('width')
-        const width = parseInt(widthAttr, 10)
-
-        const heightAttr = renderedSvg.childNodes[0].getAttribute('height')
-        const height = parseInt(heightAttr, 10)
-
-        return {
-          relation: staffHeightRelation,
-          staffHeight: staffHeight,
-          viewBoxHeight: viewBoxHeight,
-          width: width,
-          height: height
-        }
-      } catch (err) {
-        console.log('')
-        console.log('[ERROR] Unable to determine dimensions of rendered SVG: ' + err)
-        console.log(renderedSvg)
-        return {
-          relation: -1
+    createViewer () {
+      if (this.viewer) {
+        this.viewer.destroy()
+      }
+      const props = this.viewerConfig
+      console.log(props)
+      this.viewer = OpenSeadragon(props)
+      // this.viewer.addHandler('zoom', () => console.log(this.viewer.viewport.getZoom(true)))
+      const TIback = {
+        x: 0,
+        y: 0,
+        height: this.width,
+        width: this.height,
+        tileSize: 256,
+        minLevel: 8,
+        getTileUrl: function (level, x, y) {
+          // console.log(desktopTile)
+          return desktopTile
         }
       }
+      this.viewer.addTiledImage({ tileSource: TIback })
+      this.viewer.addOverlay({
+        element: this.$el.querySelector('#' + this.vid),
+        location: this.position
+      }, new OpenSeadragon.Point(0, 0))
+      // this.viewer.viewport.fitBounds(this.clipping)
+      this.viewer.viewport.fitVertically()
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.ComplaintDialodVOSD {
+.ComplaintDialogVOSD {
   width: 100%;
   aspect-ratio: 16/9;
-  outline: 1px solid green;
 
-  svg {
-    width: 100%;
+  #vid {
+    outline: 1px solid green;
+    background-color: blue;
+    svg {
+      width: 100%;
+      outline: 1px solid green;
+      background-color: blue;
+    }
   }
-}
-
-.vrvContainer {
-  width: 100%;
-  overflow: auto;
-  resize: vertical;
 }
 </style>

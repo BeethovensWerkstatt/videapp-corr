@@ -12,6 +12,7 @@ import { mapGetters } from 'vuex'
 import OpenSeadragon from 'openseadragon'
 import tb from '@/toolbox'
 import { mutations, getters } from '@/store/names'
+import config from '@/config'
 
 /**
  * @module components/ComplaintDialog/TabColFacs
@@ -74,6 +75,7 @@ export default {
     },
     region () {
       console.log('TODO reload tiled image')
+      this.rezoom()
     }
   },
   computed: {
@@ -94,6 +96,7 @@ export default {
       // console.log(this.pageId, tb.parsexywh(this.region))
       // console.log(this.page.uri)
       const props = {
+        ...config.osd,
         ...this.osdinit,
         id: this.divid,
         showNavigator: false,

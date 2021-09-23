@@ -318,7 +318,7 @@ export default {
 
   #body {
     width: 100%;
-    height: 100%;
+    height: calc(100% - 80px);
     overflow: scroll;
     .title {
       font-weight: bold;
