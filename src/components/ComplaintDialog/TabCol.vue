@@ -10,13 +10,13 @@
       v-if="transOptions"
       :options="transOptions"
       :label="transLabel"
-      :vid="state + 'trans'"
+      :divid="state + 'trans'"
     />
     <tab-col-verovio
       v-if="textOptions"
       :options="textOptions"
       :label="textLabel"
-      :vid="state + 'text'"
+      :divid="state + 'text'"
     />
     <tab-col-anno v-if="anno" :anno="anno" />
   </div>

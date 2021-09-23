@@ -2,7 +2,7 @@
   <div>
     <h2>{{ label }}</h2>
     <div :id="divid" class="ComplaintDialogVOSD">
-      <div :id="vid" v-html="svg" />
+      <div :id="verovioSvgContainer" v-html="svg" />
     </div>
   </div>
 </template>
@@ -48,7 +48,7 @@ export default {
         return {}
       }
     },
-    vid: {
+    divid: {
       type: String,
       required: true
     },
@@ -70,8 +70,8 @@ export default {
     this.loadMEI()
   },
   mounted () {
-    this.createViewer()
-    console.log(this.viewer)
+    // this.createViewer()
+    // console.log(this.viewer)
   },
   beforeDestroy () {
     if (this.viewer) {
@@ -81,28 +81,17 @@ export default {
   },
   watch: {
     osdinit () {
-      this.createViewer()
+      // this.createViewer()
     },
     vid () {
-      this.loadMEI()
-      this.createViewer()
+      // this.loadMEI()
+      // this.createViewer()
     }
   },
   computed: {
     ...mapGetters(['vrvToolkit']),
-    divid () {
-      return this.vid + '_ovl'
-    },
-    vzoom: {
-      get () {
-        return parseInt(this.zoom)
-      },
-      set (zoom) {
-        this.zoom = parseInt(zoom)
-      }
-    },
-    voptions () {
-      return { ...this.options, scale: this.vzoom }
+    verovioSvgContainer () {
+      return this.divid + '_ovl'
     },
     viewerConfig () {
       // console.log(this.pageId, tb.parsexywh(this.region))
@@ -114,8 +103,11 @@ export default {
         showNavigator: false,
         maxZoomLevel: 4
       }
-      console.log(props)
+      // console.log(props)
       return props
+    },
+    meiUrl () {
+      return this.options?.url
     },
     vrvOptions () {
       const opts = {}
@@ -139,7 +131,7 @@ export default {
       return new OpenSeadragon.Rect(0, 0, width, this.height)
     },
     overlay () {
-      return this.viewer ? this.viewer.getOverlayById(this.vid) : undefined
+      return this.viewer ? this.viewer.getOverlayById(this.verovioSvgContainer) : undefined
     }
   },
   methods: {
@@ -171,9 +163,13 @@ export default {
             const viewBox = renderedSVG.activeElement.viewBox.baseVal
             this.width = viewBox.width
             this.height = viewBox.height
+            this.createViewer()
           }
         }).catch(error => {
           console.error(error)
+          if (this.viewer) {
+            this.viewer.destroy()
+          }
         }).finally(() => {
           finishProc()
         })
@@ -184,10 +180,10 @@ export default {
         this.viewer.destroy()
       }
       const props = this.viewerConfig
-      console.log(props)
+      // console.log(props)
       this.viewer = OpenSeadragon(props)
       // this.viewer.addHandler('zoom', () => console.log(this.viewer.viewport.getZoom(true)))
-      const TIback = {
+      const TIback1 = {
         x: 0,
         y: 0,
         height: this.width,
@@ -199,13 +195,37 @@ export default {
           return desktopTile
         }
       }
-      this.viewer.addTiledImage({ tileSource: TIback })
+      this.viewer.addTiledImage({ tileSource: TIback1 })
+      /*
+      const TIback2 = {
+        x: this.width,
+        y: this.height,
+        height: 1,
+        width: 1,
+        tileSize: 256,
+        minLevel: 8,
+        getTileUrl: function (level, x, y) {
+          // console.log(desktopTile)
+          return desktopTile
+        }
+      }
+      this.viewer.addTiledImage({ tileSource: TIback2 })
+      */
+
+      // const svgcontainer = document.createElement('div')
+      // svgcontainer.setAttribute('id', this.verovioSvgContainer)
+      // svgcontainer.innerHTML = this.svg
+      const svgcontainer = this.$el.querySelector('#' + this.verovioSvgContainer)
+      svgcontainer.classList.add('VSVGContainer')
+
+      // console.log(this.position, this.clipping)
       this.viewer.addOverlay({
-        element: this.$el.querySelector('#' + this.vid),
+        element: svgcontainer,
         location: this.position
       }, new OpenSeadragon.Point(0, 0))
-      // this.viewer.viewport.fitBounds(this.clipping)
-      this.viewer.viewport.fitVertically()
+      console.log(this.overlay, this.container)
+      this.viewer.viewport.fitBounds(this.clipping)
+      // this.viewer.viewport.fitVertically()
     }
   }
 }
@@ -216,7 +236,7 @@ export default {
   width: 100%;
   aspect-ratio: 16/9;
 
-  #vid {
+  .VSVGContainer {
     outline: 1px solid green;
     background-color: blue;
     svg {
