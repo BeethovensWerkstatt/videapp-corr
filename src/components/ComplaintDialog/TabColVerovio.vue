@@ -2,7 +2,7 @@
   <div>
     <h2>{{ label }}</h2>
     <div :id="divid" class="ComplaintDialogVOSD">
-      <div :id="verovioSvgContainer" v-html="svg" />
+      <div :id="verovioSvgContainerId" v-html="svg" />
     </div>
   </div>
 </template>
@@ -90,7 +90,7 @@ export default {
   },
   computed: {
     ...mapGetters(['vrvToolkit']),
-    verovioSvgContainer () {
+    verovioSvgContainerId () {
       return this.divid + '_ovl'
     },
     viewerConfig () {
@@ -183,6 +183,7 @@ export default {
       // console.log(props)
       this.viewer = OpenSeadragon(props)
       // this.viewer.addHandler('zoom', () => console.log(this.viewer.viewport.getZoom(true)))
+      // console.log(desktopTile)
       const TIback1 = {
         x: 0,
         y: 0,
@@ -215,15 +216,18 @@ export default {
       // const svgcontainer = document.createElement('div')
       // svgcontainer.setAttribute('id', this.verovioSvgContainer)
       // svgcontainer.innerHTML = this.svg
-      const svgcontainer = this.$el.querySelector('#' + this.verovioSvgContainer)
-      svgcontainer.classList.add('VSVGContainer')
+      const svgcontainer = this.$el.querySelector('#' + this.verovioSvgContainerId)
+      if (!svgcontainer.classList.contains('VSVGContainer')) {
+        svgcontainer.classList.add('VSVGContainer')
+      }
 
       // console.log(this.position, this.clipping)
       this.viewer.addOverlay({
         element: svgcontainer,
         location: this.position
       }, new OpenSeadragon.Point(0, 0))
-      console.log(this.overlay, this.container)
+      // console.log(this.overlay, svgcontainer)
+      // console.log(this.position, this.clipping)
       this.viewer.viewport.fitBounds(this.clipping)
       // this.viewer.viewport.fitVertically()
     }
@@ -238,11 +242,11 @@ export default {
 
   .VSVGContainer {
     outline: 1px solid green;
-    background-color: blue;
+    background-color: rgb(31, 31, 182);
     svg {
       width: 100%;
       outline: 1px solid green;
-      background-color: blue;
+      background-color: rgb(255, 0, 200);
     }
   }
 }
