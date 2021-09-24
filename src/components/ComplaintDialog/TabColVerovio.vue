@@ -14,7 +14,7 @@ import { mapGetters } from 'vuex'
 import OpenSeadragon from 'openseadragon'
 import axios from 'axios'
 import config from '@/config'
-import { desktopTile } from '@/toolbox'
+import { transpTile } from '@/toolbox'
 import { startProc, finishProc } from '@/store'
 
 /**
@@ -122,13 +122,15 @@ export default {
       return opts
     },
     position () {
-      return new OpenSeadragon.Rect(0, 0, this.width, this.height)
+      // const scaleFactor = 1 / this.width
+      // return new OpenSeadragon.Rect(0, 0, this.width * scaleFactor, this.height * scaleFactor)
+      return new OpenSeadragon.Rect(0, 0, 1, this.height / this.width)
     },
     clipping () {
       // TODO useDisplayOptions for aspect-ratio of canvas and default clip
-      const relwidth = 16 * this.height / 9
-      const width = Math.min(this.width, relwidth)
-      return new OpenSeadragon.Rect(0, 0, width, this.height)
+      const relwidth = 16 * this.position.height / 9
+      const width = Math.min(this.position.width, relwidth)
+      return new OpenSeadragon.Rect(0, 0, width, this.position.height)
     },
     overlay () {
       return this.viewer ? this.viewer.getOverlayById(this.verovioSvgContainer) : undefined
@@ -187,15 +189,16 @@ export default {
       const TIback1 = {
         x: 0,
         y: 0,
-        height: this.width,
-        width: this.height,
+        width: this.width,
+        height: this.height,
         tileSize: 256,
         minLevel: 8,
         getTileUrl: function (level, x, y) {
           // console.log(desktopTile)
-          return desktopTile
+          return transpTile
         }
       }
+      // console.log(TIback1)
       this.viewer.addTiledImage({ tileSource: TIback1 })
       /*
       const TIback2 = {
@@ -221,13 +224,11 @@ export default {
         svgcontainer.classList.add('VSVGContainer')
       }
 
-      // console.log(this.position, this.clipping)
+      console.log(this.position, this.clipping)
       this.viewer.addOverlay({
         element: svgcontainer,
         location: this.position
       }, new OpenSeadragon.Point(0, 0))
-      // console.log(this.overlay, svgcontainer)
-      // console.log(this.position, this.clipping)
       this.viewer.viewport.fitBounds(this.clipping)
       // this.viewer.viewport.fitVertically()
     }
@@ -241,12 +242,9 @@ export default {
   aspect-ratio: 16/9;
 
   .VSVGContainer {
-    outline: 1px solid green;
-    background-color: rgb(31, 31, 182);
+    // outline: 1px solid green;
     svg {
       width: 100%;
-      outline: 1px solid green;
-      background-color: rgb(255, 0, 200);
     }
   }
 }
