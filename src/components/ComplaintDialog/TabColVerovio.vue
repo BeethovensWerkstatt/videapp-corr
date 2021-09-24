@@ -122,8 +122,9 @@ export default {
       return opts
     },
     position () {
-      const scaleFactor = 1 / 256
-      return new OpenSeadragon.Rect(0, 0, this.width * scaleFactor, this.height * scaleFactor)
+      // const scaleFactor = 1 / this.width
+      // return new OpenSeadragon.Rect(0, 0, this.width * scaleFactor, this.height * scaleFactor)
+      return new OpenSeadragon.Rect(0, 0, 1, this.height / this.width)
     },
     clipping () {
       // TODO useDisplayOptions for aspect-ratio of canvas and default clip
@@ -220,7 +221,7 @@ export default {
       const svgcontainer = this.$el.querySelector('#' + this.verovioSvgContainer)
       svgcontainer.classList.add('VSVGContainer')
 
-      // console.log(this.position, this.clipping)
+      console.log(this.position, this.clipping)
       this.viewer.addOverlay({
         element: svgcontainer,
         location: this.position
