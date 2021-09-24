@@ -167,7 +167,7 @@ export default {
      * open the corresponding page in the source on the desktop
      */
     openPage () {
-      console.log(this.page.pagenumber)
+      // console.log(this.page.pagenumber)
       this.$store.commit(
         mutations.SET_PAGE,
         {

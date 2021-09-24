@@ -312,13 +312,14 @@ export default {
           if (this.svgShapeUrl && svgContainer) {
             // svgContainer.innerHTML = '<img width="100%" src="' + page.svg_shapes + '" />'
             axios.get(this.svgShapeUrl).then(({ data }) => {
-              console.log(this.page.svg_shapes)
+              // console.log(this.svgShapeUrl)
               const parser = new DOMParser()
               const serializer = new XMLSerializer()
               const svg = parser.parseFromString(data, 'image/svg+xml')
               const svgroot = svg.documentElement
               svgroot.setAttribute('width', '100%')
               svgroot.setAttribute('height', '100%')
+              // const shapes = svgroot.querySelectorAll('path')
               svgContainer.innerHTML = serializer.serializeToString(svg)
             })
           }
