@@ -1,6 +1,5 @@
 <template>
   <div class="complaint-container">
-    <complaint-dialog />
     <table class="complaint-list">
       <thead>
         <th colspan="2">{{ $t('terms.complaints') }}</th>
@@ -33,7 +32,6 @@
 <script>
 
 import { mapGetters } from 'vuex'
-import ComplaintDialog from '@/components/ComplaintDialog.vue'
 import { actions } from '@/store/names'
 import toolbox from '@/toolbox'
 
@@ -45,7 +43,6 @@ import toolbox from '@/toolbox'
  * @vue-computed {String} activeComplaintId
  */
 export default {
-  components: { ComplaintDialog },
   data () {
     return {
     }

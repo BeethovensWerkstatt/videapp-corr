@@ -1,7 +1,8 @@
 <template>
   <div class="desk">
     <desktop-component divid="canvas"></desktop-component>
-    <div id="sidebar">
+    <complaint-dialog />
+    <div id="sidebar" v-if="desktopDisplaySideBar">
       <div>
         <div id="navigatorBox">
           <div id="navigator"></div>
@@ -38,6 +39,7 @@ import DesktopComponent from '@/components/DesktopComponent'
 import SourceInfo from '@/components/SourceInfo'
 import ZoneInfo from '@/components/ZoneInfo.vue'
 import ComplaintsList from '@/components/ComplaintsList.vue'
+import ComplaintDialog from '@/components/ComplaintDialog.vue'
 import { mutations } from '@/store/names'
 
 /**
@@ -52,13 +54,14 @@ export default {
     DesktopComponent,
     SourceInfo,
     ZoneInfo,
-    ComplaintsList
+    ComplaintsList,
+    ComplaintDialog
   },
   mounted () {
     // console.log(this.sources)
   },
   computed: {
-    ...mapGetters(['viewer', 'scale']),
+    ...mapGetters(['viewer', 'scale', 'desktopDisplaySideBar']),
     displayMeasures: {
       get () {
         const displayMeasures = this.$store.getters.displayMeasures

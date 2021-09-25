@@ -23,7 +23,8 @@ const userDisplayOptions = {
       trns: true,
       text: true,
       anno: true
-    }
+    },
+    desktopDisplaySideBar: true
   },
   /**
    * @namespace store.userDisplayOptions.mutations
@@ -84,6 +85,12 @@ const userDisplayOptions = {
      */
     SET_COMPLAINT_FACSIMILE_ASPECT (state, aspect) {
       state.complaintFacsimileAspect = aspect
+    },
+    /**
+     * @param {Boolean} disp toggle display of sidebar
+     */
+    SET_DESKTOP_DISPLAY_SIDEBAR (state, disp) {
+      state.desktopDisplaySideBar = disp
     }
   },
   /**
@@ -102,7 +109,8 @@ const userDisplayOptions = {
     sourceVerticalGap: (state) => state.sourceVerticalGap,
     displayMeasures: (state) => state.displayMeasures,
     complaintFacsimileAspect: (state) => state.complaintFacsimileAspect,
-    complaintDisplaySelect: (state) => state.complaintDisplaySelect
+    complaintDisplaySelect: (state) => state.complaintDisplaySelect,
+    desktopDisplaySideBar: (state) => state.desktopDisplaySideBar
   }
 }
 
