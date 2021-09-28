@@ -1,20 +1,18 @@
 <template>
   <div class="dialogBack" :class="{ 'inactive': !this.active }">
+    <select-complaint-views />
     <div class="dialog" :style="styles">
       <div class="head" v-if="active">
-        <div class="title">{{ toRoman(activeComplaint.movement.n) }}. {{ activeComplaint.movement.label }}, {{ activeComplaint.label }}</div>
-        <div class="measures">
-          Takte: {{ measures }} (<a :href="activeComplaint['@id']" target="_blank">link</a>)
+        <div class="title">
+          <div class="titletext">
+            {{ toRoman(activeComplaint.movement.n) }}. {{ activeComplaint.movement.label }}, {{ activeComplaint.label }}
+          </div>
+          <div class="measures">
+            Takte: {{ measures }} (<a :href="activeComplaint['@id']" target="_blank">link</a>)
+          </div>
         </div>
         <div class="select">
-          <div @click="toggleAnte" :class="{ TSactive: select.ante }" class="TSbutton">ANTE</div>
-          <div @click="toggleRvsn" :class="{ TSactive: select.rvsn }" class="TSbutton">RVSN</div>
-          <div @click="togglePost" :class="{ TSactive: select.post }" class="TSbutton">POST</div>
-          &nbsp;
-          <div @click="toggleFacs" :class="{ TSactive: select.facs }" class="TSbutton">FACS</div>
-          <div @click="toggleTrns" :class="{ TSactive: select.trns }" class="TSbutton">DIPL</div>
-          <div @click="toggleText" :class="{ TSactive: select.text }" class="TSbutton">TEXT</div>
-          <div @click="toggleAnno" :class="{ TSactive: select.anno }" class="TSbutton">ANNO</div>
+          <btn @click.prevent="displayViewSelection">Optionen</btn>
         </div>
         <div class="close">
           <btn @click.prevent="closeDialog">{{ $t('terms.close') }}</btn>
@@ -43,6 +41,7 @@ import { actions } from '@/store/names'
 // import VerovioComponent from '@/components/VerovioComponent.vue'
 import toolbox from '@/toolbox'
 import ComplaintDialogTabRow from '@/components/ComplaintDialog/TabRow.vue'
+import SelectComplaintViews from './SelectComplaintViews.vue'
 
 /**
  * Complaint dialog component
@@ -60,7 +59,7 @@ import ComplaintDialogTabRow from '@/components/ComplaintDialog/TabRow.vue'
  * @vue-computed {Object} colStyles - styles for all columns: width = tabWidth / colCount
  */
 export default {
-  components: { ComplaintDialogTabRow },
+  components: { ComplaintDialogTabRow, SelectComplaintViews },
   name: 'ComplaintDialog',
   props: {
   },
@@ -232,6 +231,12 @@ export default {
       this.$store.dispatch(actions.activateComplaint, null)
     },
     /**
+     * display select dialog
+     */
+    displayViewSelection (e) {
+      this.select = { ...this.select, dialog: true }
+    },
+    /**
      * toggle visibility of ante docs
      */
     toggleAnte (e) {
@@ -331,20 +336,30 @@ export default {
   .head {
     height: 70px;
     border-bottom: 1px solid gray;
+    padding-left: 1em;
+    text-align: left;
+    .title {
+      display: inline-block;
+      width: 50%;
+      .titletext {
+        font-weight: bold;
+        font-size: 110%;
+        margin-top: 3pt;
+      }
+      .measures {
+        font-size: 90%;
+      }
+    }
+    .select {
+      display: inline-block;
+      width: 10%;
+    }
   }
 
   .body {
     width: 100%;
     height: calc(100% - 80px);
     overflow: scroll;
-    .title {
-      font-weight: bold;
-      font-size: 110%;
-      margin-top: 3pt;
-    }
-    .measures {
-      font-size: 90%;
-    }
 
     .tabview {
       display: table;
@@ -356,29 +371,6 @@ export default {
     position: absolute;
     top: 1em;
     right: 1em;
-  }
-  .select {
-    display: inline-block;
-    position: absolute;
-    top: 1em;
-    left: 1em;
-
-    .TSbutton {
-      display: inline-block;
-      width: 3em;
-      border: 1px solid gray;
-      background-color: rgb(146, 118, 118);
-      border-radius: 5pt;
-    }
-    .TSactive {
-      background-color: lightgreen;
-    }
-    .dash {
-      display: inline-block;
-      input {
-        width: 4em;
-      }
-    }
   }
 }
 

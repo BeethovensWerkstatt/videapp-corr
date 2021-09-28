@@ -1,7 +1,7 @@
 <template>
   <header>
-    <span :title="versionText" @click="openCommit">VideApp<sub>corr</sub></span> &bullet;
-    <router-link to="/">{{ $t('terms.home') }}</router-link> &bullet;
+    <span :title="versionText" @click="openCommit">VideApp<sub>corr</sub></span>
+    <router-link to="/">{{ $t('terms.home') }}</router-link>
     <router-link to="/works">{{ $t('terms.works') }}</router-link>
     <div class="progress"><Progress /></div>
   </header>
