@@ -43,8 +43,20 @@ export default {
 @import "@/scss/variables.scss";
 
 header {
-  border-bottom: .5px solid $border-color;
+  background-color: $background-flat;
+  border-bottom: .5px solid $light-border-color;
   padding: .2rem 1rem;
+
+  a, a:active, a:visited, a:hover {
+    color: $link-color;
+  }
+
+  a:before {
+    content: '|';
+    padding: 0 .5rem;
+    color: $text-color;
+    cursor: default;
+  }
 
   .progress {
     display: inline-block;

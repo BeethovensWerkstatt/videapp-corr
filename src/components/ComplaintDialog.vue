@@ -1,35 +1,37 @@
 <template>
-  <div class="dialog" :class="{ 'inactive': !this.active }" :style="styles">
-    <div id="head" v-if="active">
-      <div class="title">{{ toRoman(activeComplaint.movement.n) }}. {{ activeComplaint.movement.label }}, {{ activeComplaint.label }}</div>
-      <div class="measures">
-        Takte: {{ measures }} (<a :href="activeComplaint['@id']" target="_blank">link</a>)
+  <div class="dialogBack" :class="{ 'inactive': !this.active }">
+    <div class="dialog" :style="styles">
+      <div class="head" v-if="active">
+        <div class="title">{{ toRoman(activeComplaint.movement.n) }}. {{ activeComplaint.movement.label }}, {{ activeComplaint.label }}</div>
+        <div class="measures">
+          Takte: {{ measures }} (<a :href="activeComplaint['@id']" target="_blank">link</a>)
+        </div>
+        <div class="select">
+          <div @click="toggleAnte" :class="{ TSactive: select.ante }" class="TSbutton">ANTE</div>
+          <div @click="toggleRvsn" :class="{ TSactive: select.rvsn }" class="TSbutton">RVSN</div>
+          <div @click="togglePost" :class="{ TSactive: select.post }" class="TSbutton">POST</div>
+          &nbsp;
+          <div @click="toggleFacs" :class="{ TSactive: select.facs }" class="TSbutton">FACS</div>
+          <div @click="toggleTrns" :class="{ TSactive: select.trns }" class="TSbutton">DIPL</div>
+          <div @click="toggleText" :class="{ TSactive: select.text }" class="TSbutton">TEXT</div>
+          <div @click="toggleAnno" :class="{ TSactive: select.anno }" class="TSbutton">ANNO</div>
+        </div>
+        <div class="close">
+          <btn @click.prevent="closeDialog">{{ $t('terms.close') }}</btn>
+        </div>
       </div>
-      <div id="select">
-        <div @click="toggleAnte" :class="{ TSactive: select.ante }" class="TSbutton">ANTE</div>
-        <div @click="toggleRvsn" :class="{ TSactive: select.rvsn }" class="TSbutton">RVSN</div>
-        <div @click="togglePost" :class="{ TSactive: select.post }" class="TSbutton">POST</div>
-        &nbsp;
-        <div @click="toggleFacs" :class="{ TSactive: select.facs }" class="TSbutton">FACS</div>
-        <div @click="toggleTrns" :class="{ TSactive: select.trns }" class="TSbutton">DIPL</div>
-        <div @click="toggleText" :class="{ TSactive: select.text }" class="TSbutton">TEXT</div>
-        <div @click="toggleAnno" :class="{ TSactive: select.anno }" class="TSbutton">ANNO</div>
-      </div>
-      <div id="close">
-        <btn @click.prevent="closeDialog">{{ $t('terms.close') }}</btn>
-      </div>
-    </div>
-    <div id="body" v-if="active">
-      <div class="loading" v-if="activeComplaint.loading">Lade {{ activeComplaint.label }}</div>
-      <div class="tabview" v-else>
-        <complaint-dialog-tab-row
-          v-for="(row,i) in docMap"
-          :key="i"
-          :row="row"
-          :select="select"
-          :colStyles="colStyles"
-        >
-        </complaint-dialog-tab-row>
+      <div class="body" v-if="active">
+        <div class="loading" v-if="activeComplaint.loading">Lade {{ activeComplaint.label }}</div>
+        <div class="tabview" v-else>
+          <complaint-dialog-tab-row
+            v-for="(row,i) in docMap"
+            :key="i"
+            :row="row"
+            :select="select"
+            :colStyles="colStyles"
+          >
+          </complaint-dialog-tab-row>
+        </div>
       </div>
     </div>
   </div>
@@ -189,13 +191,15 @@ export default {
       if (textStatus) {
         textStatus.forEach(stat => {
           // console.log(stat.iiif[0]?.on.full)
+          console.log('\n\nhallo Johannes:')
+          console.log(stat)
           docs.push({
             img: {
               // TODO scaling? NO goto OSD
               url: stat.iiif[0]?.target.selector[0]['@id'],
               page: stat.iiif[0]?.on.full,
               region: stat.iiif[0]?.on.selector.value,
-              label: 'Sigel / Datum'
+              label: stat.labels?.source + ', ' + stat.labels?.pages // 'Sigel / Datum'
             }
           })
           // TODO where is the right MEI
@@ -203,7 +207,7 @@ export default {
             mei: {
               url: stat.mei,
               trans: 'dipl',
-              label: 'Annot. Transkript.'
+              label: '' // 'transcription of ' + stat.labels?.source // 'Annot. Transkript.'
             }
           })
           docs.push({
@@ -298,6 +302,16 @@ export default {
 
 <style lang="scss" scoped>
 
+.dialogBack {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 10;
+  background-color: rgba(0,0,0,.3);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+
 .inactive {
   display: none;
 }
@@ -309,16 +323,17 @@ export default {
   // TODO ??
   width: calc(100% - 17rem);
   height: calc(100% - 2rem);
-  border-radius: 5pt;
+  border-radius: 5px;
   background-color: white;
-  border: 1px solid black;
+  border: .5px solid #666666;
+  box-shadow: 0 0 .8rem #00000066;
 
-  #head {
+  .head {
     height: 70px;
     border-bottom: 1px solid gray;
   }
 
-  #body {
+  .body {
     width: 100%;
     height: calc(100% - 80px);
     overflow: scroll;
@@ -337,12 +352,12 @@ export default {
       margin: 5pt;
     }
   }
-  #close {
+  .close {
     position: absolute;
     top: 1em;
     right: 1em;
   }
-  #select {
+  .select {
     display: inline-block;
     position: absolute;
     top: 1em;

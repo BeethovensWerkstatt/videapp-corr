@@ -43,7 +43,7 @@
     "eslint-plugin-vue": "^6.2.2",
     "gulp": "^4.0.2",
     "gulp-git": "^2.10.1",
-    "jsdoc": "^3.6.6",
+    "jsdoc": "^3.6.7",
     "jsdoc-to-markdown": "^6.0.1",
     "jsdoc-vuejs": "^3.0.9",
     "lint-staged": "^9.5.0",

@@ -35,9 +35,9 @@ const labels = {
     post: 'terms.complaint.state.postDoc'
   },
   trans: {
-    ante: 'terms.complaint.state.anteTrans',
-    revision: 'terms.complaint.state.revisionTrans',
-    post: 'terms.complaint.state.postTrans'
+    ante: ' ', // 'terms.complaint.state.anteTrans',
+    revision: ' ', // 'terms.complaint.state.revisionTrans',
+    post: ' ' // 'terms.complaint.state.postTrans'
   },
   text: {
     ante: 'terms.complaint.state.anteText',
