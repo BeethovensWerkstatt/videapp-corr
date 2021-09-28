@@ -2,7 +2,7 @@
   <div class="desk">
     <desktop-component divid="canvas"></desktop-component>
     <complaint-dialog />
-    <div id="sidebar" v-if="desktopDisplaySideBar">
+    <div id="sidebar">
       <div>
         <div id="navigatorBox">
           <div id="navigator"></div>
@@ -61,7 +61,7 @@ export default {
     // console.log(this.sources)
   },
   computed: {
-    ...mapGetters(['viewer', 'scale', 'desktopDisplaySideBar']),
+    ...mapGetters(['viewer', 'scale']),
     displayMeasures: {
       get () {
         const displayMeasures = this.$store.getters.displayMeasures

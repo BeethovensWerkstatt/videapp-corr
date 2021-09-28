@@ -134,8 +134,6 @@ export default {
      */
     activateZone (e) {
       this.$store.dispatch(actions.activateZone, { source: this.sourceId, zone: this.zoneId })
-      // TODO fake activate complaint!
-      this.$store.dispatch(actions.activateComplaint, 'https://api.beethovens-werkstatt.de/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d/complaints/m1101ed99-ba09-4ea3-baa6-7b8f58ee9029.json')
     }
   }
 }

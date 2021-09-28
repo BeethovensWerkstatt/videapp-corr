@@ -2,8 +2,7 @@
   <header>
     <span :title="versionText" @click="openCommit">VideApp<sub>corr</sub></span> &bullet;
     <router-link to="/">{{ $t('terms.home') }}</router-link> &bullet;
-    <router-link to="/works">{{ $t('terms.works') }}</router-link> &bullet;
-    <input type="checkbox" v-model="desktopDisplaySideBar" />
+    <router-link to="/works">{{ $t('terms.works') }}</router-link>
     <div class="progress"><Progress /></div>
   </header>
 </template>
@@ -24,14 +23,6 @@ export default {
     ...mapGetters(['version']),
     versionText () {
       return this.version?.version
-    },
-    desktopDisplaySideBar: {
-      get () {
-        return this.$store.getters.desktopDisplaySideBar
-      },
-      set (disp) {
-        this.$store.commit('SET_DESKTOP_DISPLAY_SIDEBAR', disp)
-      }
     }
   },
   methods: {
