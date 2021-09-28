@@ -5,22 +5,25 @@
       <div class="head" v-if="active">
         <div class="title">
           <div class="titletext">
-            {{ toRoman(activeComplaint.movement.n) }}. {{ activeComplaint.movement.label }}, {{ activeComplaint.label }}
+            {{ toRoman(activeComplaint.movement.n) }}. {{ activeComplaint.movement.label }} {{ (activeComplaint.label !== '') ? ', ' + activeComplaint.label : ''}}, Takt: {{ measures }}
           </div>
           <div class="measures">
-            Takte: {{ measures }} (<a :href="activeComplaint['@id']" target="_blank">link</a>)
+            Monitum <a class="monitumLink" :href="activeComplaint['@id']" target="_blank">1</a>
           </div>
         </div>
-        <div class="select">
-          <btn @click.prevent="displayViewSelection">Optionen</btn>
-        </div>
         <div class="close">
-          <btn @click.prevent="closeDialog">{{ $t('terms.close') }}</btn>
+          <button class="btn btn-sm" @click.prevent="displayViewSelection"><i class="icon icon-menu"></i> Optionen</button>
+          <button class="btn btn-sm" @click.prevent="closeDialog"><i class="icon icon-cross"></i> {{ $t('terms.close') }}</button>
         </div>
       </div>
       <div class="body" v-if="active">
         <div class="loading" v-if="activeComplaint.loading">Lade {{ activeComplaint.label }}</div>
         <div class="tabview" v-else>
+          <div class="fakeRow">
+            <div class="fakeCol">ante revisionem</div>
+            <div class="fakeCol">Revisionsanweisung</div>
+            <div class="fakeCol">post revisionem</div>
+          </div>
           <complaint-dialog-tab-row
             v-for="(row,i) in docMap"
             :key="i"
@@ -91,7 +94,7 @@ export default {
     },
     styles () {
       return {
-        height: 'calc(' + this.innerHeight + 'px - 2rem)'
+        height: 'calc(' + this.innerHeight + 'px - 3.5rem)'
       }
     },
     measures () {
@@ -190,8 +193,6 @@ export default {
       if (textStatus) {
         textStatus.forEach(stat => {
           // console.log(stat.iiif[0]?.on.full)
-          console.log('\n\nhallo Johannes:')
-          console.log(stat)
           docs.push({
             img: {
               // TODO scaling? NO goto OSD
@@ -206,14 +207,14 @@ export default {
             mei: {
               url: stat.mei,
               trans: 'dipl',
-              label: '' // 'transcription of ' + stat.labels?.source // 'Annot. Transkript.'
+              label: 'Transkription' // 'transcription of ' + stat.labels?.source // 'Annot. Transkript.'
             }
           })
           docs.push({
             mei: {
               url: textTrans,
               trans: 'clear',
-              label: 'Cleartext'
+              label: 'Text'
             }
           })
           // TODO we need the complaint text here
@@ -332,12 +333,15 @@ export default {
   background-color: white;
   border: .5px solid #666666;
   box-shadow: 0 0 .8rem #00000066;
+  border-radius: .3rem;
 
   .head {
-    height: 70px;
+    height: 3rem;
     border-bottom: 1px solid gray;
     padding-left: 1em;
     text-align: left;
+    background: linear-gradient(180deg, #cccccc 0%, #f5f5f5 100%);
+    border-radius: .3rem .3rem 0 0;
     .title {
       display: inline-block;
       width: 50%;
@@ -348,11 +352,11 @@ export default {
       }
       .measures {
         font-size: 90%;
+
+        .monitumLink {
+          font-weight: 700;
+        }
       }
-    }
-    .select {
-      display: inline-block;
-      width: 10%;
     }
   }
 
@@ -365,6 +369,20 @@ export default {
       display: table;
       width: calc(100% - 10pt);
       margin: 5pt;
+
+      .fakeRow {
+        display: table-row;
+
+        .fakeCol {
+          display: table-cell;
+          font-weight: 100;
+          text-align: left;
+          padding: 0 0 0 .2rem;
+          &:after {
+            content: ':'
+          }
+        }
+      }
     }
   }
   .close {
