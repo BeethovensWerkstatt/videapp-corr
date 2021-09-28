@@ -1,8 +1,8 @@
 <template>
   <header>
-    <span :title="versionText" @click="openCommit">VideApp<sub>corr</sub></span> &bullet;
-    <router-link to="/">{{ $t('terms.home') }}</router-link> &bullet;
-    <router-link to="/works">{{ $t('terms.works') }}</router-link> &bullet;
+    <span :title="versionText" @click="openCommit">VideApp<sub>corr</sub></span>
+    <router-link v-if="$route.path !== '/'" to="/">{{ $t('terms.home') }}</router-link>
+    <router-link v-if="$route.path !== '/works'" to="/works">{{ $t('terms.works') }}</router-link>
     <input type="checkbox" v-model="desktopDisplaySideBar" />
     <div class="progress"><Progress /></div>
   </header>
@@ -52,8 +52,20 @@ export default {
 @import "@/scss/variables.scss";
 
 header {
-  border-bottom: .5px solid $border-color;
+  background-color: $background-flat;
+  border-bottom: .5px solid $light-border-color;
   padding: .2rem 1rem;
+
+  a, a:active, a:visited, a:hover {
+    color: $link-color;
+  }
+
+  a:before {
+    content: '|';
+    padding: 0 .5rem;
+    color: $text-color;
+    cursor: default;
+  }
 
   .progress {
     display: inline-block;

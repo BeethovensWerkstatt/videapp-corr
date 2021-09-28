@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="ComplaintDialogVOSDouter">
     <h2>{{ label }}</h2>
     <div :id="divid" class="ComplaintDialogVOSD">
       <div :id="verovioSvgContainerId" v-html="svg" />
@@ -236,16 +236,38 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.ComplaintDialogVOSD {
-  width: 100%;
-  aspect-ratio: 16/9;
+<style lang="scss">
 
-  .VSVGContainer {
-    // outline: 1px solid green;
-    svg {
-      width: 100%;
+.ComplaintDialogVOSDouter {
+  h2 {
+      text-align: left;
+      font-size: 1rem;
+      font-weight: 400;
+      margin: 0 0 .2rem;
+      padding: 0;
+  }
+
+  .ComplaintDialogVOSD {
+    width: 100%;
+    aspect-ratio: 16/9;
+
+    .VSVGContainer {
+      // outline: 1px solid green;
+      svg {
+        width: 100%;
+
+        .supplied * {
+          fill: #999;
+          stroke: #999;
+        }
+
+        .supplied .bounding-box * {
+          fill: transparent;
+        }
+
+      }
     }
   }
 }
+
 </style>

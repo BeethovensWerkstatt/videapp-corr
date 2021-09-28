@@ -181,15 +181,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+h2 {
+    text-align: left;
+    font-size: .9rem;
+    font-weight: 400;
+    margin: 0 0 .2rem;
+    padding: 0;
+}
+
 .ComplaintDialogOSD {
   width: 100%;
 }
 
 .complaint-region {
   background-color: transparent;
-  -webkit-box-shadow: 0px 0px 16px 18px rgba(50, 50, 50, 0.5);
-  -moz-box-shadow:    0px 0px 16px 18px rgba(50, 50, 50, 0.5);
-  box-shadow:         0px 0px 16px 18px rgba(50, 50, 50, 0.5);
+  -webkit-box-shadow: 0 0 1vw rgba(0, 0, 0, .5);
+  -moz-box-shadow:    0 0 1vw rgba(0, 0, 0, .5);
+  box-shadow:         0 0 1vw rgba(0, 0, 0, .5);
   border-radius: 3px;
 }
 </style>

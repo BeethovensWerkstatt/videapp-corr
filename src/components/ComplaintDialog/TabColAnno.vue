@@ -25,5 +25,13 @@ export default {
 .annotext {
   resize: vertical;
   overflow: auto;
+
+  h2 {
+      text-align: left;
+      font-size: 1rem;
+      font-weight: 400;
+      margin: 0 0 .2rem;
+      padding: 0;
+  }
 }
 </style>
