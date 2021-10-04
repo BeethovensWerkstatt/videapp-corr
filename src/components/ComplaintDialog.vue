@@ -20,9 +20,9 @@
         <div class="loading" v-if="activeComplaint.loading">Lade {{ activeComplaint.label }}</div>
         <div class="tabview" v-else>
           <div class="fakeRow">
-            <div class="fakeCol">ante revisionem</div>
-            <div class="fakeCol">Revisionsanweisung</div>
-            <div class="fakeCol">post revisionem</div>
+            <div class="fakeCol" v-if="select.ante">ante revisionem</div>
+            <div class="fakeCol" v-if="select.rvsn">Revisionsanweisung</div>
+            <div class="fakeCol" v-if="select.post">post revisionem</div>
           </div>
           <complaint-dialog-tab-row
             v-for="(row,i) in docMap"

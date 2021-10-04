@@ -1,17 +1,47 @@
 <template>
   <div class="dialogBack" :class="{ 'inactive': !this.select.dialog }">
     <div class="dialog">
-      <div @click="toggle('ante')" :class="{ TSactive: select.ante }" class="TSbutton">ANTE</div>
-      <div @click="toggle('rvsn')" :class="{ TSactive: select.rvsn }" class="TSbutton">RVSN</div>
-      <div @click="toggle('post')" :class="{ TSactive: select.post }" class="TSbutton">POST</div>
-      &nbsp;
-      <div @click="toggle('facs')" :class="{ TSactive: select.facs }" class="TSbutton">FACS</div>
-      <div @click="toggle('trns')" :class="{ TSactive: select.trns }" class="TSbutton">DIPL</div>
-      <div @click="toggle('text')" :class="{ TSactive: select.text }" class="TSbutton">TEXT</div>
-      <div @click="toggle('anno')" :class="{ TSactive: select.anno }" class="TSbutton">ANNO</div>
-      <div class="close">
-        <btn @click.prevent="closeDialog">{{ $t('terms.close') }}</btn>
+      <div class="head">
+        <div class="close">
+          <button class="btn btn-sm" @click.prevent="closeDialog"><i class="icon icon-cross"></i> {{ $t('terms.close') }}</button>
+        </div>
       </div>
+
+      <div class="selectTab">
+        <div class="titleRow">
+          <div />
+          <div
+            v-for="state in ['ante', 'rvsn', 'post']"
+            :key="state"
+            class="selector"
+            @click="toggle(state)"
+            :class="{ selected: select[state] }"
+          >
+            {{ state }}
+          </div>
+        </div>
+        <div
+          v-for="artefact in ['facs', 'trns', 'text', 'anno']"
+          :key="artefact"
+          class="selectorRow"
+        >
+          <div
+            class="selector"
+            @click="toggle(artefact)"
+            :class="{ selected: select[artefact] }"
+          >
+            {{ artefact }}
+          </div>
+          <div
+            v-for="state in ['ante', 'rvsn', 'post']"
+            :key="state"
+            :class="{ selected: select[state] && select[artefact] }"
+          >
+            <span v-if="select[state] && select[artefact]">&times;</span>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </template>
@@ -63,27 +93,62 @@ export default {
 }
 
 .dialog {
-  position: absolute;
-  width: 800px;
-  height: 300px;
+  position: relative;
+  margin: 15% auto;
+  width: 800px; // parametresize
+  height: 300px; // auto by content
   background-color: white;
   border-radius: 5px;
 
-  .close {
-    position: absolute;
-    top: 1em;
-    right: 1em;
+  .head {
+    height: 3rem;
+    border-bottom: 1px solid gray;
+    padding-left: 1em;
+    text-align: left;
+    background: linear-gradient(180deg, #cccccc 0%, #f5f5f5 100%);
+    border-radius: .3rem .3rem 0 0;
+
+    .close {
+      position: absolute;
+      top: 1em;
+      right: 1em;
+    }
   }
 
-  .TSbutton {
-    display: inline-block;
-    width: 3em;
-    border: 1px solid gray;
-    background-color: rgb(146, 118, 118);
-    border-radius: 5pt;
-  }
-  .TSactive {
-    background-color: lightgreen;
+  .selectTab {
+    display: table;
+    margin: auto;
+
+    .titleRow {
+      display: table-row;
+      font-weight: bold;
+
+      div {
+        display: table-cell;
+      }
+      div.selector {
+        border: 1px solid blue;
+        border-radius: 3px;
+      }
+      div.selected {
+        background-color: rgba(255, 0, 0, 0.26);
+      }
+    }
+    .selectorRow {
+      display: table-row;
+
+      div {
+        display: table-cell;
+      }
+      div.selector {
+        font-weight: bold;
+        border: 1px solid blue;
+        border-radius: 3px;
+      }
+      div.selected {
+        background-color: rgba(255, 0, 0, 0.26);
+      }
+    }
   }
 }
 
