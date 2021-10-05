@@ -150,7 +150,7 @@ export default {
         this.width = 1
         this.height = 1
         // TODO store in pouchdb or localStorage?
-        axios.get(this.options.url).then(({ data }) => {
+        const callback = ({ data }) => {
           this.mei = data
           if (this.mei) {
             // console.log(this.mei)
@@ -167,7 +167,8 @@ export default {
             this.height = viewBox.height
             this.createViewer()
           }
-        }).catch(error => {
+        }
+        axios.get(this.options.url).then(callback).catch(error => {
           console.error(error)
           if (this.viewer) {
             this.viewer.destroy()
