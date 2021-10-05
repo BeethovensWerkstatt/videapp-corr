@@ -178,6 +178,10 @@ export default {
         })
       }
     },
+    /* TODO refactor methods:
+     * 1. load from PouchDB *or* from URL (axios)
+     * 2. prepare OSD viewer
+     */
     createViewer () {
       if (this.viewer) {
         this.viewer.destroy()
