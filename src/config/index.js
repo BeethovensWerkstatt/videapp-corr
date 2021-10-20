@@ -10,7 +10,10 @@ const config = {
       // url: 'http://localhost:8080/exist/apps/api/module3/works.json'
     }
   },
-  osd: osdDefault
+  osd: osdDefault,
+  couchdb: {
+    defaultName: 'axios-data'
+  }
 }
 
 fetch('./version.json').then(async resp => {

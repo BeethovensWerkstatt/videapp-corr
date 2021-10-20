@@ -8,6 +8,7 @@ import Vuex from 'vuex'
 import Processing from './processing'
 import OSD from './osd'
 import userDisplayOptions from './userDisplayOptions'
+import dataAccess from './dataAccess'
 import Works from './works'
 import Sources from './sources'
 import Pages from './pages'
@@ -57,6 +58,7 @@ const store = new Vuex.Store({
     Processing,
     OSD,
     userDisplayOptions,
+    dataAccess,
     Works,
     Sources,
     Pages,

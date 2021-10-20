@@ -12,7 +12,7 @@
 import { mapGetters } from 'vuex'
 // import VerovioComponent from '@/components/VerovioComponent.vue'
 import OpenSeadragon from 'openseadragon'
-import axios from 'axios'
+// import axios from 'axios'
 import config from '@/config'
 import { transpTile } from '@/toolbox'
 import { startProc, finishProc } from '@/store'
@@ -168,7 +168,14 @@ export default {
             this.createViewer()
           }
         }
+        try {
+          const url = this.options.url
+          this.$store.dispatch('getData', { url, callback })
+        } finally {
+          finishProc()
+        }
         // get from pouchdb - on fail fetch with axios
+        /*
         axios.get(this.options.url).then(callback).catch(error => {
           console.error(error)
           if (this.viewer) {
@@ -177,6 +184,7 @@ export default {
         }).finally(() => {
           finishProc()
         })
+        */
       }
     },
     /* TODO refactor methods:
