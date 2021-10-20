@@ -168,6 +168,7 @@ export default {
             this.createViewer()
           }
         }
+        // get from pouchdb - on fail fetch with axios
         axios.get(this.options.url).then(callback).catch(error => {
           console.error(error)
           if (this.viewer) {
