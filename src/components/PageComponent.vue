@@ -31,7 +31,7 @@ import { mapGetters } from 'vuex'
 import OpenSeadragon from 'openseadragon'
 import ZoneComponent from '@/components/ZoneComponent.vue'
 import { actions } from '@/store/names'
-import axios from 'axios'
+// import axios from 'axios'
 
 /**
  * Component for one page (recto or verso). Collect all measure-zones
@@ -312,7 +312,7 @@ export default {
           console.log(svgContainer)
           if (this.svgShapeUrl && svgContainer) {
             // svgContainer.innerHTML = '<img width="100%" src="' + page.svg_shapes + '" />'
-            axios.get(this.svgShapeUrl).then(({ data }) => {
+            const callback = ({ data }) => {
               // console.log(this.svgShapeUrl)
               const parser = new DOMParser()
               const serializer = new XMLSerializer()
@@ -322,7 +322,10 @@ export default {
               svgroot.setAttribute('height', '100%')
               // const shapes = svgroot.querySelectorAll('path')
               svgContainer.innerHTML = serializer.serializeToString(svg)
-            })
+            }
+            // axios.get(this.svgShapeUrl).then(callback)
+            const url = this.svgShapeUrl
+            this.$store.dispatch('getData', { url, callback })
           }
         } else {
           this.tiledimage = null
