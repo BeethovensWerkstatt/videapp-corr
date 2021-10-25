@@ -136,7 +136,10 @@ const getters = {
     const dpagecount = source.pages.length
     for (var i = 0; i < dpagecount; i += 5) {
       markers.push({
-        name: '' + (i * 2 + 1),
+        name: {
+          recto: '' + (i * 2 + 1),
+          verso: '' + (i * 2 + 2)
+        },
         page: i
       })
     }

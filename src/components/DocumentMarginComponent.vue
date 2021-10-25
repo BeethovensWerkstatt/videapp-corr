@@ -10,7 +10,7 @@
         class="marker"
         :style="{ height: markerPerc + '%', top: (i * markerPerc) + '%' }"
         @click="flipPage(m)"
-      >{{ m.name }}</div>
+      >{{ m.name.verso }}</div>
     </div>
     <div class="right-margin" :style="{ width: marginPerc + '%' }">
       <div
@@ -19,7 +19,7 @@
         class="marker"
         :style="{ height: markerPerc + '%', top: ((i + leftMarkers.length) * markerPerc) + '%' }"
         @click="flipPage(m)"
-      >{{ m.name }}</div>
+      >{{ m.name.recto }}</div>
     </div>
   </div>
 </template>
@@ -81,12 +81,12 @@ export default {
     leftMarkers () {
       const markers = this.getPageMarkers(this.sourceId)
       const pn = this.source.pagenr ? this.source.pagenr : 0
-      return markers.filter(m => m.page <= pn)
+      return markers.filter(m => m.page < pn)
     },
     rightMarkers () {
       const markers = this.getPageMarkers(this.sourceId)
       const pn = this.source.pagenr ? this.source.pagenr : 0
-      return markers.filter(m => m.page > pn)
+      return markers.filter(m => m.page >= pn)
     }
   },
   methods: {
