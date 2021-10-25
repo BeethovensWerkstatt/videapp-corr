@@ -132,7 +132,7 @@ const getters = {
     const markers = []
 
     const source = getters.getSourceById(sourceId)
-    // dummy markers every 56th dbl page
+    // dummy markers every 5th dbl page
     const dpagecount = source.pages.length
     for (var i = 0; i < dpagecount; i += 5) {
       markers.push({
