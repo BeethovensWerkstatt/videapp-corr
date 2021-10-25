@@ -13,6 +13,7 @@ const userDisplayOptions = {
     sourceVerticalGap: 50, // mm
     sourceHeaderHeight: 20, // mm
     sourceMarginWidth: 25, // mm
+    sourceMarkerHeight: 15, // mm
     displayMeasures: false,
     complaintFacsimileAspect: '16 / 9',
     complaintDisplaySelect: {
@@ -101,6 +102,7 @@ const userDisplayOptions = {
     sourceMarginWidth: (state) => state.sourceMarginWidth,
     sourceHorizontalGap: (state) => state.sourceHorizontalGap,
     sourceVerticalGap: (state) => state.sourceVerticalGap,
+    sourceMarkerHeight: (state) => state.sourceMarkerHeight,
     displayMeasures: (state) => state.displayMeasures,
     complaintFacsimileAspect: (state) => state.complaintFacsimileAspect,
     complaintDisplaySelect: (state) => state.complaintDisplaySelect

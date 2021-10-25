@@ -126,6 +126,22 @@ const getters = {
       })
     }
     return null
+  },
+
+  getPageMarkers: (state, getters) => (sourceId) => {
+    const markers = []
+
+    const source = getters.getSourceById(sourceId)
+    // dummy markers every 56th dbl page
+    const dpagecount = source.pages.length
+    for (var i = 0; i < dpagecount; i += 5) {
+      markers.push({
+        name: '' + (i * 2 + 1),
+        page: i
+      })
+    }
+
+    return markers
   }
 }
 

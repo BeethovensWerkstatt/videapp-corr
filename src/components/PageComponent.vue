@@ -309,7 +309,7 @@ export default {
 
           // TODO add SVG shapes overlay
           const svgContainer = this.$el.querySelector('.svg-shapes')
-          console.log(svgContainer)
+          // console.log(svgContainer)
           if (this.svgShapeUrl && svgContainer) {
             // svgContainer.innerHTML = '<img width="100%" src="' + page.svg_shapes + '" />'
             const callback = ({ data }) => {

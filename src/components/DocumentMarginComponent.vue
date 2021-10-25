@@ -4,12 +4,22 @@
     :id="divid"
   >
     <div class="left-margin" :style="{ width: marginPerc + '%' }">
-      <div class="marker" :style="{ height: '24%', top: '0%' }">1</div>
-      <div class="marker" :style="{ height: '24%', top: '25%' }">2</div>
+      <div
+        v-for="(m, i) in leftMarkers"
+        :key="i"
+        class="marker"
+        :style="{ height: markerPerc + '%', top: (i * markerPerc) + '%' }"
+        @click="flipPage(m)"
+      >{{ m.name }}</div>
     </div>
     <div class="right-margin" :style="{ width: marginPerc + '%' }">
-      <div class="marker" :style="{ height: '24%', top: '50%' }">3</div>
-      <div class="marker" :style="{ height: '24%', top: '75%' }">4</div>
+      <div
+        v-for="(m, i) in rightMarkers"
+        :key="i"
+        class="marker"
+        :style="{ height: markerPerc + '%', top: ((i + leftMarkers.length) * markerPerc) + '%' }"
+        @click="flipPage(m)"
+      >{{ m.name }}</div>
     </div>
   </div>
 </template>
@@ -45,15 +55,38 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['viewer', 'sourceHeaderHeight', 'sourceMarginWidth']),
+    ...mapGetters([
+      'viewer',
+      'sourceHeaderHeight',
+      'sourceMarginWidth',
+      'sourceMarkerHeight',
+      'getSourceById',
+      'getPageMarkers'
+    ]),
     divid () {
       return this.sourceId + '_margin'
+    },
+    source () {
+      return this.getSourceById(this.sourceId)
     },
     overlay () {
       return this.viewer ? this.viewer.getOverlayById(this.divid) : null
     },
     marginPerc () {
       return (100 * this.sourceMarginWidth / this.position.width)
+    },
+    markerPerc () {
+      return (100 * this.sourceMarkerHeight / this.position.height)
+    },
+    leftMarkers () {
+      const markers = this.getPageMarkers(this.sourceId)
+      const pn = this.source.pagenr ? this.source.pagenr : 0
+      return markers.filter(m => m.page <= pn)
+    },
+    rightMarkers () {
+      const markers = this.getPageMarkers(this.sourceId)
+      const pn = this.source.pagenr ? this.source.pagenr : 0
+      return markers.filter(m => m.page > pn)
     }
   },
   methods: {
@@ -61,6 +94,9 @@ export default {
       if (this.overlay) {
         this.overlay.update(this.position)
       }
+    },
+    flipPage (marker) {
+      this.$store.commit('SET_PAGE', { id: this.sourceId, page: marker.page })
     }
   }
 }
