@@ -10,7 +10,18 @@
         class="marker"
         :style="{ height: markerPerc + '%', top: (i * markerPerc) + '%' }"
         @click="flipPage(m)"
-      >{{ m.name.verso }}</div>
+      >
+      <svg
+        width="100%"
+        :height="markerPerc + '%'"
+        viewBox="0 0 50 10"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <text x="0" y="10" style="font-size: 40px;" dominant-baseline="middle">
+          {{ m.name.verso }}
+        </text>
+      </svg>
+    </div>
     </div>
     <div class="right-margin" :style="{ width: marginPerc + '%' }">
       <div
