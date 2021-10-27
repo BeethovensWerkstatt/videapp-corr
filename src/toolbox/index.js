@@ -112,4 +112,21 @@ function parsexywh (xywh) {
   }
 }
 
-export default { uuidv4, atId, parsexywh, toRoman, desktopTile }
+/**
+ * create image data URL
+ */
+function createImageFromText ({ width, height, text, x, y, f }) {
+  const canvas = document.createElement('canvas')
+
+  canvas.setAttribute('width', width)
+  canvas.setAttribute('height', height)
+
+  const ctx = canvas.getContext('2d')
+  console.log(f)
+  ctx.font = f
+  ctx.fillText(text, x, y)
+
+  return canvas.toDataURL('jpg')
+}
+
+export default { uuidv4, atId, parsexywh, toRoman, createImageFromText, desktopTile }

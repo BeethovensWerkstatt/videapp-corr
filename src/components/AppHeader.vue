@@ -3,6 +3,7 @@
     <span :title="versionText" @click="openCommit">VideApp<sub>corr</sub></span>
     <router-link to="/">{{ $t('terms.home') }}</router-link>
     <router-link to="/works">{{ $t('terms.works') }}</router-link>
+    <img style="height: 15px; outline: 1px solid gray;" :src="createImageFromText({ text: 'Die VideApp corr', width: 1000, height: 150, x: 0, y: 120, f: '110px Avenir, Helvetica, Arial, sans-serif' })" >
     <div class="progress"><Progress /></div>
   </header>
 </template>
@@ -10,6 +11,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import Progress from '@/components/Progress.vue'
+import tb from '@/toolbox'
 
 /**
  * Application header component
@@ -26,6 +28,7 @@ export default {
     }
   },
   methods: {
+    createImageFromText: tb.createImageFromText,
     openCommit (e) {
       if (e.shiftKey && this.version?.commit) {
         const url = 'https://github.com/BeethovensWerkstatt/videapp-corr/commit/' + this.version.commit
