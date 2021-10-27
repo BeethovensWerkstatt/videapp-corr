@@ -80,6 +80,8 @@ const actions = {
               // console.log(iiif)
               if (iiif.sequences && iiif.sequences.length > 0) {
                 const canvases = iiif.sequences[0].canvases
+                const structures = iiif.structures
+                console.log(structures)
 
                 // TODO workaround!
                 const exuuid = (atid) => {
