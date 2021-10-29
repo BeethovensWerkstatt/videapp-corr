@@ -190,6 +190,9 @@ const actions = {
                   ph = Math.max(ph, source.maxDimensions.height)
                 }
 
+                // TODO unfold
+                source.structures = structures
+
                 commit(mut.LOAD_SOURCE, source)
               } else {
                 console.warn('no sequence for "' + m.label + '"', iiif)

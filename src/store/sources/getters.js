@@ -132,6 +132,20 @@ const getters = {
     const markers = []
 
     const source = getters.getSourceById(sourceId)
+
+    const canvas1 = source.structures[0].canvases[0]
+    const label1 = source.structures[0].label[0]
+    console.log(canvas1, label1)
+    const page = getters.getPage(canvas1)
+    console.log(page)
+    markers.push({
+      name: {
+        recto: label1,
+        verso: label1
+      },
+      page: page.pagenumber
+    })
+
     // dummy markers every 5th dbl page
     const dpagecount = source.pages.length
     for (var i = 0; i < dpagecount; i += 5) {
