@@ -3,7 +3,17 @@
     <span :title="versionText" @click="openCommit">VideApp<sub>corr</sub></span>
     <router-link to="/">{{ $t('terms.home') }}</router-link>
     <router-link to="/works">{{ $t('terms.works') }}</router-link>
-    <img style="height: 15px; outline: 1px solid gray;" :src="createImageFromText({ text: 'Die VideApp corr', width: 1000, height: 150, x: 0, y: 120, f: '110px Avenir, Helvetica, Arial, sans-serif' })" >
+    <img
+      style="height: 15px; outline: 1px solid gray;"
+      :src="createImageFromText({
+        text: 'Die VideApp corr',
+        width: 1000,
+        height: 150,
+        x: 0,
+        y: 120,
+        f: '110px Avenir, Helvetica, Arial, sans-serif'
+      })"
+    />
     <div class="progress"><Progress /></div>
   </header>
 </template>
