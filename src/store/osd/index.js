@@ -1,5 +1,25 @@
 import OpenSeadragon from 'openseadragon'
-import { registerMutations, registerActions } from '../names'
+
+export const OSDnames = {
+  state: {
+    viewer: 'viewer',
+    scale: 'scale',
+    deskDimensions: 'deskDimensions'
+  },
+  mutations: {
+    SET_DESK_DIMENSIONS: 'SET_DESK_DIMENSIONS',
+    UPDATE_SCALE: 'UPDATE_SCALE'
+  },
+  actions: {
+    createOpenSeaDragon: 'createOpenSeaDragon',
+    destroyOpenSeaDragon: 'destroyOpenSeaDragon'
+  },
+  getters: {
+    viewer: 'viewer',
+    scale: 'scale',
+    deskDimensions: 'deskDimensions'
+  }
+}
 
 /**
  * @namespace store.osd
@@ -12,9 +32,9 @@ const OSDmodule = {
    * @property {Object} deskDimensions width and height of desktop in millimeter
    */
   state: {
-    viewer: null,
-    scale: 1,
-    deskDimensions: { width: 1600, height: 1000 }
+    [OSDnames.state.viewer]: null,
+    [OSDnames.state.scale]: 1,
+    [OSDnames.state.deskDimensions]: { width: 1600, height: 1000 }
   },
   /**
    * @namespace store.osd.mutations
@@ -26,7 +46,7 @@ const OSDmodule = {
      * @param {Object} state
      * @param {Object} dim - { width, height }
      */
-    SET_DESK_DIMENSIONS (state, dim) {
+    [OSDnames.mutations.SET_DESK_DIMENSIONS] (state, dim) {
       const { width, height } = dim
       state.deskDimensions = { width, height }
     },
@@ -35,7 +55,7 @@ const OSDmodule = {
      * @memberof store.osd.mutations
      * @param {Object} state
      */
-    UPDATE_SCALE (state) {
+    [OSDnames.mutations.UPDATE_SCALE] (state) {
       // console.log(state.viewer)
       if (state.viewer) {
         // state.scale = state.viewer.viewport.viewportToImageZoom(state.viewer.viewport.getZoom(true))
@@ -65,7 +85,7 @@ const OSDmodule = {
      * create OpenSeadragon canvas
      * @memberof store.osd.actions
      */
-    createOpenSeaDragon ({ state }, { config, TIback, handler }) {
+    [OSDnames.actions.createOpenSeaDragon] ({ state }, { config, TIback, handler }) {
       // console.log(payload)
       // console.log(state)
 
@@ -87,7 +107,7 @@ const OSDmodule = {
      * destroy OpenSeadragon canvas
      * @memberof store.osd.actions
      */
-    destroyOpenSeaDragon ({ state }) {
+    [OSDnames.actions.destroyOpenSeaDragon] ({ state }) {
       if (state.viewer) {
         state.viewer.destroy()
         state.viewer = null
@@ -101,21 +121,16 @@ const OSDmodule = {
    * @property {Object} deskDimensions desktop dimensions (width, height) in mm
    */
   getters: {
-    viewer: (state) => {
+    [OSDnames.getters.viewer]: (state) => {
       return state.viewer
     },
-    scale: (state) => {
+    [OSDnames.getters.scale]: (state) => {
       return state.scale
     },
-    deskDimensions: (state) => {
+    [OSDnames.getters.deskDimensions]: (state) => {
       return state.deskDimensions
     }
   }
 }
-
-// console.log(registerActions)
-registerMutations(OSDmodule.mutations)
-registerActions(OSDmodule.actions)
-// console.log(actions)
 
 export default OSDmodule

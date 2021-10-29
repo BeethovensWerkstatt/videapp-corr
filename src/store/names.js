@@ -1,3 +1,4 @@
+import { OSDnames } from './osd'
 import { pagesNames } from './pages'
 
 /**
@@ -7,13 +8,16 @@ import { pagesNames } from './pages'
  */
 
 export const state = {
+  ...OSDnames.state,
   ...pagesNames.state
 }
 export const getters = {
+  ...OSDnames.getters,
   ...pagesNames.getters
 }
 
 export const actions = {
+  ...OSDnames.actions,
   ...pagesNames.actions
 }
 
@@ -31,6 +35,7 @@ export const registerActions = function (obj) {
 }
 
 export const mutations = {
+  ...OSDnames.mutations,
   ...pagesNames.mutations
 }
 
