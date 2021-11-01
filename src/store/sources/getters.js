@@ -132,21 +132,47 @@ const getters = {
     const markers = []
 
     const source = getters.getSourceById(sourceId)
-
-    const canvas1 = source.structures[0].canvases[0]
-    const label1 = source.structures[0].label[0]
-    console.log(canvas1, label1)
-    const page = getters.getPage(canvas1)
-    console.log(page)
-    markers.push({
-      name: {
-        recto: label1,
-        verso: label1
-      },
-      page: page.pagenumber
-    })
-
+    const structures = {}
+    for (const s in source.structures) {
+      const struct = source.structures[s]
+      structures[struct['@id']] = struct
+    }
+    const toc = source.structures.find(s => s.viewingHint === 'top')
+    if (toc?.ranges) {
+      for (const r in toc.ranges) {
+        const part = structures[toc.ranges[r]]
+        if (part?.ranges) {
+          const movs = part.ranges.map(mid => structures[mid])
+          // console.log(movs)
+          console.log(movs[0])
+          const pages = movs[0].canvases
+          if (pages) {
+            const page = getters.getPage(pages[0])
+            markers.push({
+              name: {
+                recto: part.label[0],
+                verso: part.label[0]
+              },
+              page: page.pagenumber
+            })
+          }
+        } else if (part?.canvases) {
+          const page = getters.getPage(part.canvases[0])
+          console.log(part.label, page.pagenumber)
+          markers.push({
+            name: {
+              recto: part.label,
+              verso: part.label
+            },
+            page: page.pagenumber
+          })
+        } else {
+          console.warn(part)
+        }
+      }
+    }
     // dummy markers every 5th dbl page
+    /*
     const dpagecount = source.pages.length
     for (var i = 0; i < dpagecount; i += 5) {
       markers.push({
@@ -157,7 +183,7 @@ const getters = {
         page: i
       })
     }
-
+     */
     return markers
   }
 }

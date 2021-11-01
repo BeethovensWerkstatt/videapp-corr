@@ -10,7 +10,8 @@
         class="marker"
         :style="{ height: markerPerc + '%', top: (i * markerPerc) + '%' }"
         @click="flipPage(m)"
-      >{{ m.name.verso }}</div>
+        :title="m.name.verso"
+      ><div>{{ m.name.verso }}</div></div>
     </div>
     <div class="right-margin" :style="{ width: marginPerc + '%' }">
       <div
@@ -19,7 +20,8 @@
         class="marker"
         :style="{ height: markerPerc + '%', top: ((i + leftMarkers.length) * markerPerc) + '%' }"
         @click="flipPage(m)"
-      >{{ m.name.recto }}</div>
+        :title="m.name.recto"
+      ><div>{{ m.name.recto }}</div></div>
     </div>
   </div>
 </template>
@@ -127,6 +129,7 @@ export default {
     position: absolute;
     left: 5%;
     width: 90%;
+    overflow: hidden;
     background-color: rgba(255, 255, 181, 0.164);
     border-radius: 3px;
     outline: 1px solid rgba(255, 166, 0, 0.349);
