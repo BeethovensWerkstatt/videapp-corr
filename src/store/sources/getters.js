@@ -143,8 +143,7 @@ const getters = {
         const part = structures[toc.ranges[r]]
         if (part?.ranges) {
           const movs = part.ranges.map(mid => structures[mid])
-          // console.log(movs)
-          console.log(movs[0])
+          // console.log(movs[0])
           const pages = movs[0].canvases
           if (pages) {
             const page = getters.getPage(pages[0])
@@ -158,7 +157,7 @@ const getters = {
           }
         } else if (part?.canvases) {
           const page = getters.getPage(part.canvases[0])
-          console.log(part.label, page.pagenumber)
+          // console.log(part.label, page.pagenumber)
           markers.push({
             name: {
               recto: part.label,
