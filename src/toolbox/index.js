@@ -122,7 +122,7 @@ function createImageFromText ({ width, height, text, x, y, f }) {
   canvas.setAttribute('height', height)
 
   const ctx = canvas.getContext('2d')
-  console.log(f)
+  // console.log(f)
   ctx.font = f
   ctx.fillText(text, x, y)
 

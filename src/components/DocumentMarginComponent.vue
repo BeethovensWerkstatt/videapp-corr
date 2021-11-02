@@ -12,7 +12,19 @@
         :style="{ height: markerPerc + '%', top: (i * markerPerc) + '%' }"
         @click="flipPage(m)"
         :title="m.name.verso"
-      ><div>{{ m.name.verso }}</div></div>
+      ><!-- <div>{{ m.name.verso }}</div>-->
+        <img
+          style="height: 80%;"
+          :src="createImageFromText({
+            text: m.name.recto,
+            width: 1000,
+            height: 150,
+            x: 0,
+            y: 120,
+            f: '110px Avenir, Helvetica, Arial, sans-serif'
+          })"
+        />
+      </div>
     </div>
     <div class="right-margin" :style="{ width: marginPerc + '%' }">
       <div
@@ -23,7 +35,19 @@
         :style="{ height: markerPerc + '%', top: ((i + leftMarkers.length) * markerPerc) + '%' }"
         @click="flipPage(m)"
         :title="m.name.recto"
-      ><div>{{ m.name.recto }}</div></div>
+      ><!-- <div>{{ m.name.recto }}</div>-->
+        <img
+          style="height: 80%;"
+          :src="createImageFromText({
+            text: m.name.recto,
+            width: 1000,
+            height: 150,
+            x: 0,
+            y: 120,
+            f: '110px Avenir, Helvetica, Arial, sans-serif'
+          })"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -31,6 +55,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import OpenSeadragon from 'openseadragon'
+import tb from '@/toolbox'
 
 export default {
   name: 'DocumentMarginComponent',
@@ -83,11 +108,13 @@ export default {
       return (100 * this.sourceMarkerHeight / this.position.height)
     },
     leftMarkers () {
+      // console.log('leftMarkers')
       const markers = this.getPageMarkers(this.sourceId)
       const pn = this.source.pagenr ? this.source.pagenr : 0
       return markers.filter(m => (m.page < pn || (m.page === pn && m.place === 'verso')))
     },
     rightMarkers () {
+      // console.log('rightMarkers')
       const markers = this.getPageMarkers(this.sourceId)
       const pn = this.source.pagenr ? this.source.pagenr : 0
       return markers.filter(m => {
@@ -97,13 +124,16 @@ export default {
     }
   },
   methods: {
+    createImageFromText: tb.createImageFromText,
     updatePosition () {
       if (this.overlay) {
         this.overlay.update(this.position)
       }
     },
     flipPage (marker) {
+      // console.log('go to page ' + marker.page)
       this.$store.commit('SET_PAGE', { id: this.sourceId, page: marker.page })
+      // console.log('gone to page ' + marker.page)
     }
   }
 }
