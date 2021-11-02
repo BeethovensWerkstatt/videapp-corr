@@ -83,13 +83,13 @@ export default {
     leftMarkers () {
       const markers = this.getPageMarkers(this.sourceId)
       const pn = this.source.pagenr ? this.source.pagenr : 0
-      return markers.filter(m => (m.page < pn || (m.page === pn && m.place !== 'recto')))
+      return markers.filter(m => (m.page < pn || (m.page === pn && m.place === 'verso')))
     },
     rightMarkers () {
       const markers = this.getPageMarkers(this.sourceId)
       const pn = this.source.pagenr ? this.source.pagenr : 0
       return markers.filter(m => {
-        if (m.page === pn) console.log(m.page, m.place)
+        // if (m.page === pn) console.log(m.page, m.place)
         return (m.page > pn || (m.page === pn && m.place === 'recto'))
       })
     }

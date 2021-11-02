@@ -133,10 +133,10 @@ const actions = {
                   return page
                 }
 
-                // iterate over pagepairs. First page is assumed verso.
+                // iterate over pagepairs. First page is assumed recto.
                 for (var ci = 0; ci <= canvases.length; ci += 2) {
-                  const recto = ci > 0 ? ctop(canvases[ci - 1], 'recto') : null
-                  const verso = ci < canvases.length ? ctop(canvases[ci], 'verso') : null
+                  const recto = ci < canvases.length ? ctop(canvases[ci], 'recto') : null
+                  const verso = ci > 0 ? ctop(canvases[ci - 1], 'verso') : null
                   // corresponding index in pagepair list
                   const pagenumber = source.pages.length
 
@@ -149,7 +149,7 @@ const actions = {
                       page: recto
                     }
                     recto.pagenumber = pagenumber
-                    recto.place = 'verso'
+                    recto.place = 'recto'
                   }
                   if (verso) {
                     source.pageref[verso.uuid] = {
@@ -159,7 +159,7 @@ const actions = {
                       page: verso
                     }
                     verso.pagenumber = pagenumber
-                    verso.place = 'recto'
+                    verso.place = 'verso'
                   }
                   // END TODO
 

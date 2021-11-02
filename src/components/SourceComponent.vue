@@ -11,17 +11,17 @@
       :sourceId="sourceId"
     />
     <page-component
-      :divid="divid + '_recto'"
-      :sourceId="sourceId"
-      :page="source.pages[pagenr].r"
-      :pos="rectoPos"
-      :active="isActive"
-    />
-    <page-component
-      :divid="divid + '_verso'"
+      :divid="divid + '_' + pagenr + '_verso'"
       :sourceId="sourceId"
       :page="source.pages[pagenr].v"
       :pos="versoPos"
+      :active="isActive"
+    />
+    <page-component
+      :divid="divid + '_' + pagenr + '_recto'"
+      :sourceId="sourceId"
+      :page="source.pages[pagenr].r"
+      :pos="rectoPos"
       :active="isActive"
     />
   </div>
@@ -130,15 +130,15 @@ export default {
     },
     headerPos () {
       const pp = this.source.pages[this.pagenr]
-      const x = (pp.r ? this.rectoPos.x : this.versoPos.x) - this.sourceMarginWidth
-      const y = (pp.r ? this.rectoPos.y : this.versoPos.y) - this.sourceHeaderHeight
+      const x = (pp.v ? this.versoPos.x : this.rectoPos.x) - this.sourceMarginWidth
+      const y = (pp.v ? this.versoPos.y : this.rectoPos.y) - this.sourceHeaderHeight
       const width = this.rectoPos.width + this.versoPos.width + (2 * this.sourceMarginWidth)
       return new OpenSeadragon.Rect(x, y, width, this.sourceHeaderHeight)
     },
     marginPos () {
       const pp = this.source.pages[this.pagenr]
-      const x = (pp.r ? this.rectoPos.x : this.versoPos.x) - this.sourceMarginWidth
-      const y = (pp.r ? this.rectoPos.y : this.versoPos.y)
+      const x = (pp.v ? this.versoPos.x : this.rectoPos.x) - this.sourceMarginWidth
+      const y = (pp.v ? this.versoPos.y : this.rectoPos.y)
       const width = this.rectoPos.width + this.versoPos.width + (2 * this.sourceMarginWidth)
       const height = Math.max(this.rectoPos.height, this.versoPos.height)
       return new OpenSeadragon.Rect(x, y, width, height)
@@ -147,7 +147,7 @@ export default {
       const pp = this.source.pages[this.pagenr]
       if (pp.r) {
         // center page, if no recto page
-        const x = this.position.x - (pp.v ? pp.r.dimensions.width : (pp.r.dimensions.width / 2))
+        const x = this.position.x - (pp.v ? 0 : (pp.r.dimensions.width / 2))
         const y = this.position.y - (pp.r.dimensions.height / 2)
         const width = pp.r.dimensions.width
         const height = pp.r.dimensions.height
@@ -159,7 +159,7 @@ export default {
       const pp = this.source.pages[this.pagenr]
       if (pp.v) {
         // center page, if no recto page
-        const x = this.position.x - (pp.r ? 0 : (pp.v.dimensions.width / 2))
+        const x = this.position.x - (pp.r ? pp.r.dimensions.width : (pp.v.dimensions.width / 2))
         const y = this.position.y - (pp.v.dimensions.height / 2)
         const width = pp.v.dimensions.width
         const height = pp.v.dimensions.height
