@@ -265,8 +265,11 @@ export default {
      * reposition tiled image and overlay
      */
     updatePosition () {
+      // console.log('update position', this.pos)
       if (this.overlay) {
         this.overlay.update(this.pos)
+      } else {
+        console.log('no overlay!', this.divid)
       }
       if (this.tiledimage) {
         this.tiledimage.setPosition(this.pos, true)
