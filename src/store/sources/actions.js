@@ -149,6 +149,7 @@ const actions = {
                       page: recto
                     }
                     recto.pagenumber = pagenumber
+                    recto.place = 'verso'
                   }
                   if (verso) {
                     source.pageref[verso.uuid] = {
@@ -158,6 +159,7 @@ const actions = {
                       page: verso
                     }
                     verso.pagenumber = pagenumber
+                    verso.place = 'recto'
                   }
                   // END TODO
 

@@ -152,7 +152,8 @@ const getters = {
                 recto: part.label[0],
                 verso: part.label[0]
               },
-              page: page.pagenumber
+              page: page.pagenumber,
+              place: page.place
             })
           }
         } else if (part?.canvases) {
@@ -163,7 +164,8 @@ const getters = {
               recto: part.label,
               verso: part.label
             },
-            page: page.pagenumber
+            page: page.pagenumber,
+            place: page.place
           })
         } else {
           console.warn(part)
