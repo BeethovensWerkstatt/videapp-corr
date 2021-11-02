@@ -1,13 +1,19 @@
 <template>
-  <div class="flip-button">
-    <svg
+  <div
+    class="flip-button"
+    :style="headerStyle"
+    @click="action"
+    :class="{ enabled, disabled }"
+  >
+    <!--<svg
       viewBox="0 0 10 10"
       xmlns="http://www.w3.org/2000/svg"
       @click="action"
       :class="{ enabled, disabled }"
     >
       <text x="0" y="50%" style="font-size: 8px;" dominant-baseline="middle">{{ isBackwards ? '◄' : '►' }}</text>
-    </svg>
+    </svg>-->
+    {{ isBackwards ? '◄' : '►' }}
   </div>
 </template>
 
@@ -27,6 +33,10 @@ export default {
     },
     enabled: {
       type: Boolean,
+      required: true
+    },
+    headerStyle: {
+      type: Object,
       required: true
     }
   },
@@ -53,10 +63,12 @@ export default {
 }
 
 .disabled {
-  fill: lightgrey;
+  // fill: lightgrey;
+  color: lightgray;
 }
 .enabled {
-  fill: black;
+  // fill: black;
+  color: black;
   cursor: pointer;
 }
 </style>

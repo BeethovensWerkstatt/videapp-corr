@@ -9,6 +9,7 @@
         :dir="-1"
         :action="prevPage"
         :enabled="hasPrev"
+        :headerStyle="headerStyle"
       />
     </div>
     <div
@@ -50,6 +51,7 @@
         :dir="1"
         :action="nextPage"
         :enabled="hasNext"
+        :headerStyle="headerStyle"
       />
     </div>
   </div>
