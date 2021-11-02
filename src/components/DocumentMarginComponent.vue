@@ -8,6 +8,7 @@
         v-for="(m, i) in leftMarkers"
         :key="i"
         class="marker"
+        :class="{ curmarkerL: source.pagenr == m.page }"
         :style="{ height: markerPerc + '%', top: (i * markerPerc) + '%' }"
         @click="flipPage(m)"
         :title="m.name.verso"
@@ -18,6 +19,7 @@
         v-for="(m, i) in rightMarkers"
         :key="i"
         class="marker"
+        :class="{ curmarkerR: source.pagenr == m.page }"
         :style="{ height: markerPerc + '%', top: ((i + leftMarkers.length) * markerPerc) + '%' }"
         @click="flipPage(m)"
         :title="m.name.recto"
@@ -141,6 +143,17 @@ export default {
       outline: 1px solid orange;
       background-color: rgba(255, 255, 181, 0.685);
     }
+  }
+  .curmarkerL {
+    font-weight: bold;
+    width: 100% !important;
+    background-color: rgba(255, 255, 181, 0.8);
+  }
+  .curmarkerR {
+    font-weight: bold;
+    width: 100% !important;
+    left: -5% !important;
+    background-color: rgba(255, 255, 181, 0.8);
   }
 }
 </style>
