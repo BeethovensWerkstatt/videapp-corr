@@ -12,8 +12,8 @@
         :style="{ height: markerPerc + '%', top: (i * markerPerc) + '%' }"
         @click="flipPage(m)"
         :title="m.name.verso"
-      ><!-- <div>{{ m.name.verso }}</div>-->
-        <img
+      ><div>{{ m.name.verso }}</div>
+        <!-- <img
           style="height: 80%;"
           :src="createImageFromText({
             text: m.name.recto,
@@ -23,7 +23,7 @@
             y: 120,
             f: '110px Avenir, Helvetica, Arial, sans-serif'
           })"
-        />
+        /> -->
       </div>
     </div>
     <div class="right-margin" :style="{ width: marginPerc + '%' }">
@@ -35,8 +35,8 @@
         :style="{ height: markerPerc + '%', top: ((i + leftMarkers.length) * markerPerc) + '%' }"
         @click="flipPage(m)"
         :title="m.name.recto"
-      ><!-- <div>{{ m.name.recto }}</div>-->
-        <img
+      ><div>{{ m.name.recto }}</div>
+        <!--<img
           style="height: 80%;"
           :src="createImageFromText({
             text: m.name.recto,
@@ -46,7 +46,7 @@
             y: 120,
             f: '110px Avenir, Helvetica, Arial, sans-serif'
           })"
-        />
+        />-->
       </div>
     </div>
   </div>
