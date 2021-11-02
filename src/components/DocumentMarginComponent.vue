@@ -110,6 +110,7 @@ export default {
     markerStyle () {
       const zoom = this.viewer.viewport.getZoom(true)
       const scale = this.viewer.viewport._containerInnerSize.x * zoom
+      // console.log('marker scale', scale)
       return {
         'font-size': scale * 2 + 'mm'
       }

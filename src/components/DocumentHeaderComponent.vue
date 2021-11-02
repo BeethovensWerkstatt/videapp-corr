@@ -18,28 +18,31 @@
     >
       <!-- <btn id="draghandle"><span :style="{ 'font-size': (scale * sourceHeaderHeight) + 'mm' }">{{ source.label }}</span></btn> -->
       <div class="pagenr recto">
-        <svg
+        <!-- <svg
           viewBox="0 0 10 10"
           xmlns="http://www.w3.org/2000/svg"
         >
           <text x="0" y="50%" style="font-size: 8px;" dominant-baseline="middle">{{ rectopage }}</text>
-        </svg>
+        </svg> -->
+        <div :style="headerStyle">{{ rectopage }}</div>
       </div>
       <div class="pagenr verso">
-        <svg
+        <!--<svg
           viewBox="0 0 10 10"
           xmlns="http://www.w3.org/2000/svg"
         >
           <text x="0" y="50%" style="font-size: 8px;" dominant-baseline="middle">{{ versopage }}</text>
-        </svg>
+        </svg>-->
+        <div :style="headerStyle">{{ versopage }}</div>
       </div>
       <div class="title" :title="source.label">
-        <svg
+        <!--<svg
           viewBox="0 0 100 10"
           xmlns="http://www.w3.org/2000/svg"
         >
           <text x="0" y="50%" style="font-size: 8px;" dominant-baseline="middle">{{ source.label }}</text>
-        </svg>
+        </svg>-->
+        <div :style="headerStyle">{{ source.label }}</div>
       </div>
     </div>
     <div class="top-right" :style="{ width: marginPerc + '%' }">
@@ -182,6 +185,14 @@ export default {
     },
     hasNext () {
       return this.checkPageNr(this.pagenr + 1)
+    },
+    headerStyle () {
+      const zoom = this.viewer.viewport.getZoom(true)
+      const scale = this.viewer.viewport._containerInnerSize.x * zoom
+      // console.log('header scale', scale)
+      return {
+        'font-size': scale * this.sourceHeaderHeight * 0.8 + 'px'
+      }
     }
   },
   methods: {
@@ -327,10 +338,10 @@ export default {
       }
     }
     .recto {
-      left: 0;
+      right: 0;
     }
     .verso {
-      right: 0;
+      left: 0;
     }
 
     .title {
