@@ -1,3 +1,4 @@
+import { Url } from './net'
 
 /**
  * create UUID (v4)
@@ -112,21 +113,32 @@ function parsexywh (xywh) {
   }
 }
 
+const imageCache = {}
+
 /**
  * create image data URL
  */
 function createImageFromText ({ width, height, text, x, y, f }) {
-  const canvas = document.createElement('canvas')
+  const id = new Url()
+  id.path = [width, height, x, y, f, text]
+  let img = imageCache[id.toString()]
 
-  canvas.setAttribute('width', width)
-  canvas.setAttribute('height', height)
+  if (!img) {
+    console.log('create ' + text)
 
-  const ctx = canvas.getContext('2d')
-  // console.log(f)
-  ctx.font = f
-  ctx.fillText(text, x, y)
+    const canvas = document.createElement('canvas')
 
-  return canvas.toDataURL('jpg')
+    canvas.setAttribute('width', width)
+    canvas.setAttribute('height', height)
+
+    const ctx = canvas.getContext('2d')
+    // console.log(f)
+    ctx.font = f
+    ctx.fillText(text, x, y)
+    img = canvas.toDataURL('jpg')
+    imageCache[id.toString()] = img
+  }
+  return img
 }
 
 export default { uuidv4, atId, parsexywh, toRoman, createImageFromText, desktopTile }

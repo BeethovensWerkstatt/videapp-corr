@@ -12,8 +12,8 @@
         :style="{ height: markerPerc + '%', top: (i * markerPerc) + '%' }"
         @click="flipPage(m)"
         :title="m.name.verso"
-      ><div>{{ m.name.verso }}</div>
-        <!-- <img
+      ><div :style="markerStyle">{{ m.name.verso }}</div>
+        <!--<img
           style="height: 80%;"
           :src="createImageFromText({
             text: m.name.recto,
@@ -21,9 +21,9 @@
             height: 150,
             x: 0,
             y: 120,
-            f: '110px Avenir, Helvetica, Arial, sans-serif'
+            f: (source.pagenr == m.page ? 'bold ' : '') + '110px Avenir, Helvetica, Arial, sans-serif'
           })"
-        /> -->
+        />-->
       </div>
     </div>
     <div class="right-margin" :style="{ width: marginPerc + '%' }">
@@ -35,7 +35,7 @@
         :style="{ height: markerPerc + '%', top: ((i + leftMarkers.length) * markerPerc) + '%' }"
         @click="flipPage(m)"
         :title="m.name.recto"
-      ><div>{{ m.name.recto }}</div>
+      ><div :style="markerStyle">{{ m.name.recto }}</div>
         <!--<img
           style="height: 80%;"
           :src="createImageFromText({
@@ -44,7 +44,7 @@
             height: 150,
             x: 0,
             y: 120,
-            f: '110px Avenir, Helvetica, Arial, sans-serif'
+            f: (source.pagenr == m.page ? 'bold ' : '') + '110px Avenir, Helvetica, Arial, sans-serif'
           })"
         />-->
       </div>
@@ -55,7 +55,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import OpenSeadragon from 'openseadragon'
-import tb from '@/toolbox'
+// import tb from '@/toolbox'
 
 export default {
   name: 'DocumentMarginComponent',
@@ -107,6 +107,13 @@ export default {
     markerPerc () {
       return (100 * this.sourceMarkerHeight / this.position.height)
     },
+    markerStyle () {
+      const zoom = this.viewer.viewport.getZoom(true)
+      const scale = this.viewer.viewport._containerInnerSize.x * zoom
+      return {
+        'font-size': scale * 2 + 'mm'
+      }
+    },
     leftMarkers () {
       // console.log('leftMarkers')
       const markers = this.getPageMarkers(this.sourceId)
@@ -124,7 +131,7 @@ export default {
     }
   },
   methods: {
-    createImageFromText: tb.createImageFromText,
+    // createImageFromText: tb.createImageFromText,
     updatePosition () {
       if (this.overlay) {
         this.overlay.update(this.position)
@@ -172,6 +179,9 @@ export default {
     &:hover {
       outline: 1px solid orange;
       background-color: rgba(255, 255, 181, 0.685);
+    }
+    div {
+      width: 500px;
     }
   }
   .curmarkerL {
