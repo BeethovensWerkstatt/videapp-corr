@@ -165,9 +165,9 @@ export default {
       // console.log(this.scale, this.scale > 1.2)
       return this.scale > 1.2
     },
-    overlay () {
-      return this.viewer ? this.viewer.getOverlayById(this.divid) : null
-    },
+    // overlay () {
+    //   return this.viewer ? this.viewer.getOverlayById(this.divid) : null
+    // },
     pageID () {
       return (this.page ? this.page.id : null)
     },
@@ -266,8 +266,9 @@ export default {
      */
     updatePosition () {
       // console.log('update position', this.pos)
-      if (this.overlay) {
-        this.overlay.update(this.pos)
+      const overlay = this.viewer ? this.viewer.getOverlayById(this.divid) : null
+      if (overlay) {
+        overlay.update(this.pos)
       } else {
         console.log('no overlay!', this.divid)
       }

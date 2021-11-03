@@ -27,7 +27,7 @@ import { actions } from '@/store/names'
  * @vue-prop {Number} y - vertical coordinate on page
  * @vue-prop {Number} width - width of measure zone
  * @vue-prop {Number} height - height of measure zone
- * @vue-computed {Number} scale - current scaling of viewer
+ * @vue-computed {Object} viewer - current scaling of viewer
  * @vue-computed {String} activeZoneId - active zone id for countaining source
  * @vue-computed {Object} style - styles for measure zone (percent size for page overlay)
  * @vue-computed {Boolean} isActive - zone is selected for corresponding source
@@ -67,15 +67,19 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['scale', 'displayMeasures']),
+    ...mapGetters(['viewer', 'displayMeasures']),
     style () {
+      const zoom = this.viewer.viewport.getZoom(true)
+      const scale = this.viewer.viewport._containerInnerSize.x * zoom
+      const fs = Math.max(9, 9 * scale)
+      // console.log(fs)
       return {
         position: 'absolute',
         left: (100 * this.x) + '%',
         top: (100 * this.y) + '%',
         width: (100 * this.width) + '%',
         height: (100 * this.height) + '%',
-        'font-size': 'max(14pt,' + (100 * this.scale + '%') + ')'
+        'font-size': fs + 'px'
       }
     },
     activeZoneId () {
