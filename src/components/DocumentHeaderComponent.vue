@@ -193,7 +193,7 @@ export default {
       const scale = this.viewer.viewport._containerInnerSize.x * zoom
       // console.log('header scale', scale)
       return {
-        'font-size': scale * this.sourceHeaderHeight * 0.8 + 'px'
+        'font-size': scale * this.sourceHeaderHeight * 0.7 + 'px'
       }
     }
   },

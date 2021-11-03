@@ -269,8 +269,8 @@ export default {
       const overlay = this.viewer ? this.viewer.getOverlayById(this.divid) : null
       if (overlay) {
         overlay.update(this.pos)
-      } else {
-        console.log('no overlay!', this.divid)
+      // } else {
+      //   console.debug('no overlay!', this.divid)
       }
       if (this.tiledimage) {
         this.tiledimage.setPosition(this.pos, true)
