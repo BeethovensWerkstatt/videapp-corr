@@ -231,7 +231,7 @@ const actions = {
    * @param {Object} context
    * @param {Object} payload - sourceId, pagenr, place, uri
    */
-  loadZones (context, page) {
+  loadZones ({ dispatch }, page) {
     if (!page) {
       return
     }
@@ -239,7 +239,7 @@ const actions = {
     const uri = page.measures_uri
     page.measures_uri = null
     if (uri && (!page.measures || page.measures.length === 0)) {
-      axios.get(uri).then(resp => {
+      const callback = resp => {
         const zonedata = resp.data
         const measures = zonedata.resources.map(r => {
           const m = rexywh.exec(r.on.selector.value)
@@ -283,7 +283,9 @@ const actions = {
         })
         // console.log(measures)
         page.measures = measures
-      })
+      }
+      dispatch(act.getData, { url: uri, callback, error: reason => console.warn(reason) })
+      // axios.get(uri).then(callback).catch(reason => console.warn(reason))
     }
   },
   /**

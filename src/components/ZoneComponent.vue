@@ -69,17 +69,13 @@ export default {
   computed: {
     ...mapGetters(['viewer', 'displayMeasures']),
     style () {
-      const zoom = this.viewer.viewport.getZoom(true)
-      const scale = this.viewer.viewport._containerInnerSize.x * zoom
-      const fs = Math.max(9, 9 * scale)
-      // console.log(fs)
+      // console.log('zone style')
       return {
         position: 'absolute',
         left: (100 * this.x) + '%',
         top: (100 * this.y) + '%',
         width: (100 * this.width) + '%',
-        height: (100 * this.height) + '%',
-        'font-size': fs + 'px'
+        height: (100 * this.height) + '%'
       }
     },
     activeZoneId () {

@@ -6,7 +6,7 @@
   >
     <div class="svg-shapes" v-if="svgShapeUrl">
     </div>
-    <div v-if="showDetail">
+    <div v-if="showDetail" :style="style">
       <zone-component
         v-for="zone in zones"
         :key="zone.zone"
@@ -161,6 +161,15 @@ export default {
         }
       }
     },
+    style () {
+      const zoom = this.viewer.viewport.getZoom(true)
+      const scale = this.viewer.viewport._containerInnerSize.x * zoom
+      const fs = Math.max(9, 9 * scale)
+      // console.log(fs)
+      return {
+        'font-size': fs + 'px'
+      }
+    },
     showDetail () {
       // console.log(this.scale, this.scale > 1.2)
       return this.scale > 1.2
@@ -190,6 +199,7 @@ export default {
       return this.isActive ? this.page.dimensions.height : 0
     },
     zones () {
+      // console.log('page zones ...')
       if (this.page) {
         return this.page.measures
       }

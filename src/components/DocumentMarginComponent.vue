@@ -3,7 +3,7 @@
     class="document-margin"
     :id="divid"
   >
-    <div class="left-margin" :style="{ width: marginPerc + '%' }">
+    <div class="left-margin" :style="style">
       <div
         v-for="(m, i) in leftMarkers"
         :key="i"
@@ -12,21 +12,11 @@
         :style="{ height: markerPerc + '%', top: (i * markerPerc) + '%' }"
         @click="flipPage(m)"
         :title="m.name.verso"
-      ><div :style="markerStyle">{{ m.name.verso }}</div>
-        <!--<img
-          style="height: 80%;"
-          :src="createImageFromText({
-            text: m.name.recto,
-            width: 1000,
-            height: 150,
-            x: 0,
-            y: 120,
-            f: (source.pagenr == m.page ? 'bold ' : '') + '110px Avenir, Helvetica, Arial, sans-serif'
-          })"
-        />-->
+      >
+        <div>{{ m.name.verso }}</div>
       </div>
     </div>
-    <div class="right-margin" :style="{ width: marginPerc + '%' }">
+    <div class="right-margin" :style="style">
       <div
         v-for="(m, i) in rightMarkers"
         :key="i"
@@ -35,18 +25,8 @@
         :style="{ height: markerPerc + '%', top: ((i + leftMarkers.length) * markerPerc) + '%' }"
         @click="flipPage(m)"
         :title="m.name.recto"
-      ><div :style="markerStyle">{{ m.name.recto }}</div>
-        <!--<img
-          style="height: 80%;"
-          :src="createImageFromText({
-            text: m.name.recto,
-            width: 1000,
-            height: 150,
-            x: 0,
-            y: 120,
-            f: (source.pagenr == m.page ? 'bold ' : '') + '110px Avenir, Helvetica, Arial, sans-serif'
-          })"
-        />-->
+      >
+        <div>{{ m.name.recto }}</div>
       </div>
     </div>
   </div>
@@ -105,13 +85,15 @@ export default {
       return (100 * this.sourceMarginWidth / this.position.width)
     },
     markerPerc () {
+      // console.log('marcerPerc')
       return (100 * this.sourceMarkerHeight / this.position.height)
     },
-    markerStyle () {
+    style () {
       const zoom = this.viewer.viewport.getZoom(true)
       const scale = this.viewer.viewport._containerInnerSize.x * zoom
       // console.log('marker scale', scale)
       return {
+        width: this.marginPerc + '%',
         'font-size': scale * 2 + 'mm'
       }
     },
