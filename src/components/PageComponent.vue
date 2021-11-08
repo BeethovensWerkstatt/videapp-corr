@@ -279,8 +279,11 @@ export default {
       const overlay = this.viewer ? this.viewer.getOverlayById(this.divid) : null
       if (overlay) {
         overlay.update(this.pos)
-      // } else {
+      } else {
       //   console.debug('no overlay!', this.divid)
+        if (this.page?.id) {
+          setTimeout(1000, this.updatePosition)
+        }
       }
       if (this.tiledimage) {
         this.tiledimage.setPosition(this.pos, true)
@@ -291,6 +294,7 @@ export default {
      */
     updateTI () {
       // console.log('update TI ' + (this.pgdata !== this.pageID))
+      this.updatePosition()
       if (!this.tiledimage || this.pgdata !== this.pageID) {
         // new page
         if (this.isActive) {
