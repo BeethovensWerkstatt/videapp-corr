@@ -74,18 +74,26 @@ export default {
   mounted () {
     window.addEventListener('resize', this.resize)
   },
-  /*
   watch: {
+    /*
     tabWidth () {
       console.log(this.tabWidth)
     },
     styles () {
       console.log(this.innerHeight)
+    },
+    */
+    active () {
+      // console.log(this.viewer?.navigator?.element)
+      if (this.active) {
+        this.viewer.navigator.element.style.display = 'none'
+      } else {
+        this.viewer.navigator.element.style.display = 'inline-block'
+      }
     }
   },
-  */
   computed: {
-    ...mapGetters(['activeComplaintId', 'activeComplaint', 'complaintDisplaySelect']),
+    ...mapGetters(['viewer', 'activeComplaintId', 'activeComplaint', 'complaintDisplaySelect']),
     active () {
       if (this.activeComplaintId) {
         return true
@@ -327,7 +335,7 @@ export default {
   left: 1rem;
   top: 1rem;
   // TODO ??
-  width: calc(100% - 17rem);
+  width: calc(100% - 2rem);
   height: calc(100% - 2rem);
   border-radius: 5px;
   background-color: white;
