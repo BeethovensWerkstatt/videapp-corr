@@ -36,9 +36,7 @@ export default {
     },
     osdinit: {
       type: Object,
-      default: () => {
-        return {}
-      }
+      default: () => ({})
     },
     pageId: {
       type: String,

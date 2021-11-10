@@ -49,9 +49,7 @@ export default {
     },
     osdinit: {
       type: Object,
-      default: () => {
-        return {}
-      }
+      default: () => ({})
     },
     width: {
       type: Number,

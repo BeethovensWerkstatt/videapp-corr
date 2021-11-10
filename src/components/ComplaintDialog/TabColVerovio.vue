@@ -44,9 +44,7 @@ export default {
     },
     osdinit: {
       type: Object,
-      default: () => {
-        return {}
-      }
+      default: () => ({})
     },
     divid: {
       type: String,
