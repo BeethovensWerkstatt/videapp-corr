@@ -324,6 +324,7 @@ export default {
     position: absolute;
     height: 100%;
     text-align: center;
+    white-space: nowrap;
     // TODO color consts in separate file
     background: linear-gradient(0deg, #dddddd, #ffffff);
 
