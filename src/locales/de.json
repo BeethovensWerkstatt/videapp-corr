@@ -4,18 +4,26 @@
     "complaints": "Monita",
     "complaint": {
       "title": "Monitum",
+      "description": "Kommentar",
       "state": {
+        "anteTitle": "ante revisionem",
         "anteDoc": "Ausgangsdokument",
         "anteText": "Ausgangstext",
+        "revisionTitle": "revisio",
         "revisionDoc": "Revisionsdokument",
         "revisionText": "Revisionstext",
+        "postTitle": "post revisionem",
         "postDoc": "Zieldokument",
         "postText": "Zieltext"
-      }
+      }    },
+    "transcript": {
+      "annot": "annotierte Transkription"
     },
     "close": "Schließen",
+    "load": "Lade",
     "home": "Startseite",
     "works": "Werkliste",
+    "document": "Dokument",
     "measure": "Takt",
     "staff": "System"
   }

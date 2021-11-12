@@ -17,12 +17,12 @@
         </div>
       </div>
       <div class="body" v-if="active">
-        <div class="loading" v-if="activeComplaint.loading">Lade {{ activeComplaint.label }}</div>
+        <div class="loading" v-if="activeComplaint.loading">{{ $t("terms.load") }} {{ activeComplaint.label }}</div>
         <div class="tabview" v-else>
           <div class="fakeRow">
-            <div class="fakeCol" v-if="select.ante">ante revisionem</div>
-            <div class="fakeCol" v-if="select.rvsn">Revisionsanweisung</div>
-            <div class="fakeCol" v-if="select.post">post revisionem</div>
+            <div class="fakeCol" v-if="select.ante"><h2>{{ $t("terms.complaint.state.anteTitle") }}</h2></div>
+            <div class="fakeCol" v-if="select.rvsn"><h2>{{ $t("terms.complaint.state.revisionTitle") }}</h2></div>
+            <div class="fakeCol" v-if="select.post"><h2>{{ $t("terms.complaint.state.postTitle") }}</h2></div>
           </div>
           <complaint-dialog-tab-row
             v-for="(row,i) in docMap"
@@ -386,9 +386,6 @@ export default {
           font-weight: 100;
           text-align: left;
           padding: 0 0 0 .2rem;
-          &:after {
-            content: ':'
-          }
         }
       }
     }

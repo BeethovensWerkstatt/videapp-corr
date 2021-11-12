@@ -35,9 +35,9 @@ const labels = {
     post: 'terms.complaint.state.postDoc'
   },
   trans: {
-    ante: ' ', // 'terms.complaint.state.anteTrans',
-    revision: ' ', // 'terms.complaint.state.revisionTrans',
-    post: ' ' // 'terms.complaint.state.postTrans'
+    ante: 'terms.transcript.annot', // 'terms.complaint.state.anteTrans',
+    revision: 'terms.transcript.annot', // 'terms.complaint.state.revisionTrans',
+    post: 'terms.transcript.annot' // 'terms.complaint.state.postTrans'
   },
   text: {
     ante: 'terms.complaint.state.anteText',
@@ -108,7 +108,8 @@ export default {
       return undefined
     },
     transLabel () {
-      let label = this.row[this.state]?.mei?.label
+      let label = null // this.row[this.state]?.mei?.label
+      // console.log(label)
       if (!label) {
         const labeltag = labels.trans[this.state] ? labels.trans[this.state] : this.state
         label = this.$t(labeltag)
@@ -122,9 +123,10 @@ export default {
       return undefined
     },
     textLabel () {
-      let label = this.row[this.state]?.mei?.label
+      let label = null // this.row[this.state]?.mei?.label
+      // console.log(label)
       if (!label) {
-        const labeltag = labels.trans[this.state] ? labels.trans[this.state] : this.state
+        const labeltag = labels.text[this.state] ? labels.text[this.state] : this.state
         label = this.$t(labeltag)
       }
       return label

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2 @click="openPage">{{ label }}</h2>
+    <h2 @click="openPage">{{ $t("terms.document") }}: {{ label }}</h2>
     <div :id="divid" class="ComplaintDialogOSD" :style="styles">
       <div :id="ovlid" class="complaint-region" />
     </div>

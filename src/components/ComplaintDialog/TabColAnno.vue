@@ -1,6 +1,6 @@
 <template>
   <div class="annotext">
-    <h2>Annotationen</h2>
+    <h2>{{ $t("terms.complaint.description") }}</h2>
     <div v-html="anno"/>
   </div>
 </template>
@@ -30,8 +30,9 @@ export default {
       text-align: left;
       font-size: 1rem;
       font-weight: 400;
-      margin: 0 0 .2rem;
+      margin: 0.5rem 0rem .2rem;
       padding: 0;
+      background-color: #f5f5f5;
   }
 }
 </style>

@@ -255,7 +255,7 @@ export default {
       text-align: left;
       font-size: .8rem;
       font-weight: 100;
-      margin: 0 0 .2rem;
+      margin: 0.5rem 0rem .2rem;
       padding: 0;
       background-color: #f5f5f5;
   }
