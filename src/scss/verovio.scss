@@ -1,0 +1,20 @@
+// This file is globally imported in App.vue and
+// affects every score rendered by Verovio
+
+svg {
+  .measure.invis {
+    .staff > path {
+      stroke: transparent;
+    }
+
+    .dir.metaMark.rightmar + .barLineAttr > path {
+      stroke: transparent;
+      fill: transparent;
+    }
+  }
+
+  .add g:not([class*="bounding-box"]) {
+    stroke: green;
+    fill: green;
+  }
+}

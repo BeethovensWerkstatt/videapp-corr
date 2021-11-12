@@ -21,6 +21,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import "./scss/verovio.scss";
 
 body {
     position: absolute;
