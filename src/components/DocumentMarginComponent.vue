@@ -7,9 +7,9 @@
       <div
         v-for="(m, i) in leftMarkers"
         :key="i"
-        class="marker"
+        class="marker markerLeft"
         :class="{ curmarkerL: source.pagenr == m.page }"
-        :style="{ height: markerPerc + '%', top: (i * markerPerc) + '%' }"
+        :style="{ height: (markerPerc * .9) + '%', top: (i * markerPerc) + '%' }"
         @click="flipPage(m)"
         :title="m.name.verso"
       >
@@ -20,9 +20,9 @@
       <div
         v-for="(m, i) in rightMarkers"
         :key="i"
-        class="marker"
+        class="marker markerRight"
         :class="{ curmarkerR: source.pagenr == m.page }"
-        :style="{ height: markerPerc + '%', top: ((i + leftMarkers.length) * markerPerc) + '%' }"
+        :style="{ height: (markerPerc * .9) + '%', top: ((i + leftMarkers.length) * markerPerc) + '%' }"
         @click="flipPage(m)"
         :title="m.name.recto"
       >
@@ -152,16 +152,27 @@ export default {
 
   .marker {
     position: absolute;
-    left: 5%;
     width: 90%;
     overflow: hidden;
-    background-color: rgba(255, 255, 181, 0.164);
-    border-radius: 3px;
-    outline: 1px solid rgba(255, 166, 0, 0.349);
+    background: rgb(250,226,50);
+    background: linear-gradient(0deg, rgba(250,226,50,1) 0%, rgba(255,252,102,1) 100%);
+    cursor: pointer;
+    font-size: 60%;
+    // outline: 1px solid rgba(255, 166, 0, 0.349);
+
+    &.markerLeft {
+      right: 0;
+      border-radius: 5px 0 0 5px;
+    }
+
+    &.markerRight {
+      left: 0;
+      border-radius: 0 5px 5px 0;
+    }
 
     &:hover {
-      outline: 1px solid orange;
-      background-color: rgba(255, 255, 181, 0.685);
+      // outline: 1px solid orange;
+      // background-color: rgba(255, 255, 181, 0.685);
     }
     div {
       width: 500px;
@@ -169,13 +180,15 @@ export default {
   }
   .curmarkerL {
     font-weight: bold;
-    width: 100% !important;
+    width: 110% !important;
+    right: -20%;
     background-color: rgba(255, 255, 181, 0.8);
   }
   .curmarkerR {
     font-weight: bold;
-    width: 100% !important;
-    left: -5% !important;
+    width: 110% !important;
+    left: -20% !important;
+    padding-left: 20%;
     background-color: rgba(255, 255, 181, 0.8);
   }
 }
