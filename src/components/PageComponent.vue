@@ -340,6 +340,7 @@ export default {
               svgroot.setAttribute('height', '100%')
               // const shapes = svgroot.querySelectorAll('path')
               svgContainer.innerHTML = serializer.serializeToString(svg)
+              svgContainer.addEventListener('click', this.clickShapes)
             }
             // axios.get(this.svgShapeUrl).then(callback)
             const url = this.svgShapeUrl
@@ -353,7 +354,20 @@ export default {
       if (!this.page) {
         this.tiledimage = null
       }
+    },
+    /**
+     * The function called when the user clicks on an SVG shape.
+     *
+     * TODO: We need to preserve a reference to all listeners and
+     * need to remove them when switching pages
+     */
+    clickShapes (e) {
+      if (e.target.localName === 'path') {
+        console.log('clicked on ' + e.target.id)
+        // TODO: either query for Monitum involved directly, or open Infobox and open Monitum from there…?
+      }
     }
+
   }
 }
 </script>
