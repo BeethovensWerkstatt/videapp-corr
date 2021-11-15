@@ -27,7 +27,7 @@ import ComplaintsList from './ComplaintsList.vue'
 
 export default {
   components: { ComplaintsList },
-  name: 'ComplaintListDialog',
+  name: 'ComplainsListDialog',
   props: {},
   data: () => ({}),
   mounted () {

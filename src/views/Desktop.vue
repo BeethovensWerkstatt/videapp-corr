@@ -1,7 +1,7 @@
 <template>
   <div class="desk">
     <desktop-component divid="canvas"></desktop-component>
-    <complaint-list-dialog />
+    <complaints-list-dialog />
     <complaint-dialog />
     <div id="sidebar">
       <div>
@@ -45,7 +45,7 @@ import DesktopComponent from '@/components/DesktopComponent'
 import SourceInfo from '@/components/SourceInfo'
 import ZoneInfo from '@/components/ZoneInfo.vue'
 // import ComplaintsList from '@/components/ComplaintsList.vue'
-import ComplaintListDialog from '../components/ComplaintListDialog.vue'
+import ComplaintsListDialog from '../components/ComplaintsListDialog.vue'
 import ComplaintDialog from '@/components/ComplaintDialog.vue'
 import { mutations } from '@/store/names'
 
@@ -63,7 +63,7 @@ export default {
     ZoneInfo,
     // ComplaintsList,
     ComplaintDialog,
-    ComplaintListDialog
+    ComplaintsListDialog
   },
   mounted () {
     // console.log(this.sources)
