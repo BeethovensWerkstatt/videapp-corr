@@ -31,7 +31,7 @@ import { mapGetters } from 'vuex'
 import OpenSeadragon from 'openseadragon'
 import ZoneComponent from '@/components/ZoneComponent.vue'
 import { actions } from '@/store/names'
-// import axios from 'axios'
+import axios from 'axios'
 
 /**
  * Component for one page (recto or verso). Collect all measure-zones
@@ -325,7 +325,6 @@ export default {
           // console.log(tisrc)
           this.viewer.addTiledImage(tisrc)
 
-          // TODO add SVG shapes overlay
           const svgContainer = this.$el.querySelector('.svg-shapes')
           // console.log(svgContainer)
           if (this.svgShapeUrl && svgContainer) {
@@ -341,9 +340,10 @@ export default {
               // const shapes = svgroot.querySelectorAll('path')
               svgContainer.innerHTML = serializer.serializeToString(svg)
             }
-            // axios.get(this.svgShapeUrl).then(callback)
             const url = this.svgShapeUrl
-            this.$store.dispatch('getData', { url, callback })
+            axios.get(url).then(callback)
+            // TODO why does this sometimes not work???
+            // this.$store.dispatch('getData', { url, callback })
           }
         } else {
           this.tiledimage = null

@@ -107,7 +107,7 @@ export default {
 <style lang="scss" scoped>
 .complaint-container {
   width: 100%;
-  max-height: 450px;
+  max-height: 100%;
   overflow: scroll;
 }
 .complaint-list {

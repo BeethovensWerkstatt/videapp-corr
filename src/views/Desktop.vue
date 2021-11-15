@@ -1,6 +1,7 @@
 <template>
   <div class="desk">
     <desktop-component divid="canvas"></desktop-component>
+    <complaint-list-dialog />
     <complaint-dialog />
     <div id="sidebar">
       <div>
@@ -26,7 +27,12 @@
         </div>
         zoom: {{ scale.toFixed(2) }}
       </div>
-      <complaints-list />
+      <!-- <complaints-list /> -->
+      <div>
+        <btn @click="openComplaints" size="sm">
+          Monita
+        </btn>
+      </div>
       <zone-info />
       <source-info />
     </div>
@@ -38,7 +44,8 @@ import { mapGetters } from 'vuex'
 import DesktopComponent from '@/components/DesktopComponent'
 import SourceInfo from '@/components/SourceInfo'
 import ZoneInfo from '@/components/ZoneInfo.vue'
-import ComplaintsList from '@/components/ComplaintsList.vue'
+// import ComplaintsList from '@/components/ComplaintsList.vue'
+import ComplaintListDialog from '../components/ComplaintListDialog.vue'
 import ComplaintDialog from '@/components/ComplaintDialog.vue'
 import { mutations } from '@/store/names'
 
@@ -54,8 +61,9 @@ export default {
     DesktopComponent,
     SourceInfo,
     ZoneInfo,
-    ComplaintsList,
-    ComplaintDialog
+    // ComplaintsList,
+    ComplaintDialog,
+    ComplaintListDialog
   },
   mounted () {
     // console.log(this.sources)
@@ -71,6 +79,11 @@ export default {
       set (val) {
         this.$store.commit(mutations.SET_DISPLAY_MEASURES, val)
       }
+    }
+  },
+  methods: {
+    openComplaints () {
+      this.$store.commit('COMPLAINTS_LIST', true)
     }
   }
 }

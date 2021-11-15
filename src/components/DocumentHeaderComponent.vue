@@ -349,8 +349,8 @@ export default {
 
     .title {
       position: absolute;
-      left: 35%;
-      width: 30%;
+      left: 10%;
+      width: 80%;
       overflow: hidden;
       svg {
         left: 0;

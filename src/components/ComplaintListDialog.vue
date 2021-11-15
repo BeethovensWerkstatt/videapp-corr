@@ -1,12 +1,32 @@
 <template>
   <div class="dialogBack" :class="{ 'inactive': !this.active }">
+    <div class="dialog" :style="styles">
+      <div class="head" v-if="active">
+        <div class="title">
+          <div class="titletext">
+            {{ title }}
+          </div>
+        </div>
+        <div class="close">
+          <button class="btn btn-sm" @click.prevent="closeDialog">
+            <i class="icon icon-cross"></i>
+            {{ $t('terms.close') }}
+          </button>
+        </div>
+      </div>
+      <div class="body" v-if="active">
+        <complaints-list />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import ComplaintsList from './ComplaintsList.vue'
 
 export default {
+  components: { ComplaintsList },
   name: 'ComplaintListDialog',
   props: {},
   data: () => ({}),
@@ -23,9 +43,25 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['viewer']),
-    active () {
-      return false
+    ...mapGetters(['viewer', 'showComplaintsList']),
+    active: {
+      get () {
+        return this.showComplaintsList
+      },
+      set (show) {
+        this.$store.commit('COMPLAINTS_LIST', show)
+      }
+    },
+    title () {
+      return 'ComplaintsList'
+    },
+    styles () {
+      return {}
+    }
+  },
+  methods: {
+    closeDialog () {
+      this.active = false
     }
   }
 }

@@ -14,6 +14,7 @@ const complaintsModule = {
    * @property {String} activeComplaintId - ID of complaint to display
    */
   state: {
+    showComplaintsList: false,
     complaints: [],
     activeComplaintId: null
   },
@@ -21,6 +22,9 @@ const complaintsModule = {
    * @namespace store.complaints.mutations
    */
   mutations: {
+    COMPLAINTS_LIST (state, show) {
+      state.showComplaintsList = show
+    },
     /**
      * load complaint
      * @memberof store.complaints.mutations
@@ -115,6 +119,7 @@ const complaintsModule = {
    * @property {Object} activeComplaint displayed complaint
    */
   getters: {
+    showComplaintsList: (state) => state.showComplaintsList,
     complaints: (state, getters) => {
       return state.complaints.map(c => {
         const mdiv = c.affects[0]?.mdiv
