@@ -1,6 +1,8 @@
 // This file is globally imported in App.vue and
 // affects every score rendered by Verovio
 
+@import "./variables.scss";
+
 svg {
   .measure.invis {
     .staff > path {
@@ -16,5 +18,15 @@ svg {
   .add g:not([class*="bounding-box"]) {
     stroke: green;
     fill: green;
+  }
+
+  .grpSym > path {
+    stroke: $verovio-supplied-color;
+    fill: $verovio-supplied-color;
+  }
+
+  .grpSym + .label {
+    stroke: $verovio-supplied-color;
+    fill: $verovio-supplied-color;
   }
 }
