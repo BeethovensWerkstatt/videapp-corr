@@ -1,7 +1,19 @@
 import PouchDB from 'pouchdb'
-import { registerActions, registerMutations } from '../names'
 import axios from 'axios'
 import config from '@/config'
+
+export const DAnames = {
+  state: {
+    db: 'db'
+  },
+  mutations: {
+    CDB_STORE_DATA: 'CDB_STORE_DATA'
+  },
+  actions: {
+    getData: 'getData'
+  },
+  getters: {}
+}
 
 /**
  * @namespace store.data_access
@@ -11,13 +23,13 @@ const DAmodule = {
    * @namespace store.data_access.state
    */
   state: {
-    db: new PouchDB(config.couchdb.defaultName)
+    [DAnames.state.db]: new PouchDB(config.couchdb.defaultName)
   },
   /**
    * @namespace store.data_access.mutations
    */
   mutations: {
-    CDB_STORE_DATA (state, { _id, data }) {
+    [DAnames.mutations.CDB_STORE_DATA] (state, { _id, data }) {
       state.db.put({ _id, data })
     }
   },
@@ -25,7 +37,7 @@ const DAmodule = {
    * @namespace store.data_access.actions
    */
   actions: {
-    getData ({ state, commit }, { url, callback, error }) {
+    [DAnames.actions.getData] ({ state, commit }, { url, callback, error }) {
       // first try pouchdb (indexedDB)
       state.db.get(url).then(d => {
         // TODO refetch data on TTL
@@ -39,7 +51,7 @@ const DAmodule = {
             data
           }
           // store data in db
-          commit('CDB_STORE_DATA', d)
+          commit(DAnames.mutations.CDB_STORE_DATA, d)
           // send data back
           callback(d)
         }).catch(err => {
@@ -57,10 +69,5 @@ const DAmodule = {
    */
   getters: {}
 }
-
-// console.log(registerActions)
-registerMutations(DAmodule.mutations)
-registerActions(DAmodule.actions)
-// console.log(actions)
 
 export default DAmodule

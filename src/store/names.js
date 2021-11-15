@@ -1,4 +1,5 @@
 import { runtimeNames } from './runtime'
+import { DAnames } from './dataAccess'
 import { OSDnames } from './osd'
 import { pagesNames } from './pages'
 
@@ -10,23 +11,27 @@ import { pagesNames } from './pages'
 
 export const state = {
   ...runtimeNames.state,
+  ...DAnames.state,
   ...OSDnames.state,
   ...pagesNames.state
 }
 export const getters = {
   ...runtimeNames.getters,
+  ...DAnames.getters,
   ...OSDnames.getters,
   ...pagesNames.getters
 }
 
 export const mutations = {
   ...runtimeNames.mutations,
+  ...DAnames.mutations,
   ...OSDnames.mutations,
   ...pagesNames.mutations
 }
 
 export const actions = {
   ...runtimeNames.actions,
+  ...DAnames.actions,
   ...OSDnames.actions,
   ...pagesNames.actions
 }
