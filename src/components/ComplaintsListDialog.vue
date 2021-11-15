@@ -96,6 +96,59 @@ export default {
   border: .5px solid #666666;
   box-shadow: 0 0 .8rem #00000066;
   border-radius: .3rem;
+
+  .head {
+    height: 3rem;
+    border-bottom: 1px solid gray;
+    padding-left: 1em;
+    text-align: left;
+    background: linear-gradient(180deg, #cccccc 0%, #f5f5f5 100%);
+    border-radius: .3rem .3rem 0 0;
+    .title {
+      display: inline-block;
+      width: 50%;
+      .titletext {
+        font-weight: bold;
+        font-size: 110%;
+        margin-top: 3pt;
+      }
+      .measures {
+        font-size: 90%;
+
+        .monitumLink {
+          font-weight: 700;
+        }
+      }
+    }
+  }
+
+  .body {
+    width: 100%;
+    height: calc(100% - 80px);
+    overflow: scroll;
+
+    .tabview {
+      display: table;
+      width: calc(100% - 10pt);
+      margin: 5pt;
+
+      .fakeRow {
+        display: table-row;
+
+        .fakeCol {
+          display: table-cell;
+          font-weight: 100;
+          text-align: left;
+          padding: 0 0 0 .2rem;
+        }
+      }
+    }
+  }
+  .close {
+    position: absolute;
+    top: 1em;
+    right: 1em;
+  }
 }
 
 </style>
