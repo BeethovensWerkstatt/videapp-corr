@@ -23,7 +23,7 @@
         >
           <td class="complaint-attribute"><sub>{{ ci + 1 }}</sub></td>
           <td class="complaint-attribute">{{ measures(complaint) }}</td>
-          <!-- <td class="complaint-attribute">{{ complaint }}</td> -->
+          <td class="complaint-attribute">{{ complaint.affects[0].measures.label }}</td>
         </tr>
       </tbody>
     </table>

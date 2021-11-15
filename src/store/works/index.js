@@ -1,4 +1,4 @@
-import axios from 'axios'
+// import axios from 'axios'
 import config from '@/config'
 import { startProc, finishProc } from '..'
 import { mutations, actions, registerMutations, registerActions } from '../names'
@@ -50,12 +50,15 @@ const worksModule = {
       try {
         const url = config.api.works.url
         // console.log(axios, url)
-        const { data } = await axios.get(url)
-        for (const work of data) {
-          // console.log(work)
-          commit(mutations.LOAD_WORK, work)
-          dispatch(actions.loadSources, work.id)
+        // const { data } = await axios.get(url)
+        const callback = ({ data }) => {
+          for (const work of data) {
+            // console.log(work)
+            commit(mutations.LOAD_WORK, work)
+            dispatch(actions.loadSources, work.id)
+          }
         }
+        dispatch(actions.getData, { url, callback })
       } finally {
         finishProc()
       }

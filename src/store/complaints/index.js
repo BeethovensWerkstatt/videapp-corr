@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { startProc, finishProc } from '..'
-import { mutations as mut, registerMutations, registerActions } from '../names'
+import { mutations as mut, /* actions as act, */ registerMutations, registerActions } from '../names'
 import tb from '@/toolbox'
 // import Complaint from '@/data/Complaint'
 
@@ -67,7 +67,7 @@ const complaintsModule = {
      * @memberof store.complaints.actions
      * @param {Object} payload object containing complaints property `{ complaints: Object[] }`
      */
-    loadComplaints ({ commit, getters }, { complaints }) {
+    loadComplaints ({ commit, dispatch, getters }, { complaints }) {
       complaints.forEach(c => {
         // console.log(c)
         const mdiv = c.affects[0]?.mdiv
@@ -76,6 +76,18 @@ const complaintsModule = {
         // TODO this looks like a workaround
         const complaint = movement ? { ...c, movement } : { ...c }
         // console.log(new Complaint(complaint))
+        /*
+        dispatch(act.getData, {
+          url: complaint['@id'],
+          callback ({ data }) {
+            const c = { ...data, ...complaint }
+            commit(mut.LOAD_COMPLAINT, c)
+          },
+          error (error) {
+            console.error(error)
+          }
+        })
+        */
         commit(mut.LOAD_COMPLAINT, complaint)
       })
     },
