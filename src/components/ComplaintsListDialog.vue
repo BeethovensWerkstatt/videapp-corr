@@ -36,9 +36,9 @@ export default {
   watch: {
     active () {
       if (this.active) {
-        this.viewer.navigator.element.style.display = 'none'
+        this.$store.commit('ADD_MODAL', this.$vnode.tag)
       } else {
-        this.viewer.navigator.element.style.display = 'inline-block'
+        this.$store.commit('REM_MODAL', this.$vnode.tag)
       }
     }
   },

@@ -23,6 +23,7 @@
         >
           <td class="complaint-attribute"><sub>{{ ci + 1 }}</sub></td>
           <td class="complaint-attribute">{{ measures(complaint) }}</td>
+          <!-- <td class="complaint-attribute">{{ complaint }}</td> -->
         </tr>
       </tbody>
     </table>
@@ -54,7 +55,9 @@ export default {
       return this.$route.params.id
     },
     complaints () {
-      return this.workComplaints(this.workId)
+      const complaints = this.workComplaints(this.workId)
+      console.log(complaints)
+      return complaints
     }
   },
   methods: {

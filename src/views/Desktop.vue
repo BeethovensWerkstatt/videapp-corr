@@ -47,7 +47,7 @@ import ZoneInfo from '@/components/ZoneInfo.vue'
 // import ComplaintsList from '@/components/ComplaintsList.vue'
 import ComplaintsListDialog from '../components/ComplaintsListDialog.vue'
 import ComplaintDialog from '@/components/ComplaintDialog.vue'
-import { mutations } from '@/store/names'
+import { mutations, getters } from '@/store/names'
 
 /**
  * Desktop View
@@ -68,8 +68,18 @@ export default {
   mounted () {
     // console.log(this.sources)
   },
+  watch: {
+    modalsOpen () {
+      // console.log(this.$vnode.tag)
+      if (this[getters.modalsOpen] > 0) {
+        this.viewer.navigator.element.style.display = 'none'
+      } else {
+        this.viewer.navigator.element.style.display = 'inline-block'
+      }
+    }
+  },
   computed: {
-    ...mapGetters(['viewer', 'scale']),
+    ...mapGetters(['viewer', 'scale', getters.modalsOpen]),
     displayMeasures: {
       get () {
         const displayMeasures = this.$store.getters.displayMeasures

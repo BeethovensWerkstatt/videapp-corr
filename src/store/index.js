@@ -6,6 +6,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import Processing from './processing'
+import runtime from './runtime'
 import OSD from './osd'
 import userDisplayOptions from './userDisplayOptions'
 import dataAccess from './dataAccess'
@@ -56,6 +57,7 @@ const store = new Vuex.Store({
   },
   modules: {
     Processing,
+    runtime,
     OSD,
     userDisplayOptions,
     dataAccess,
