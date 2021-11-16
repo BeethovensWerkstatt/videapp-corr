@@ -96,7 +96,7 @@ const complaintsModule = {
      * @memberof store.complaints.actions
      * @param {String} complaintId id of complaint to activate
      */
-    async activateComplaint ({ commit, state }, complaintId) {
+    async activateComplaint ({ dispatch, state }, complaintId) {
       console.log('activate ' + complaintId)
       if (!complaintId) {
         state.activeComplaintId = null
@@ -108,18 +108,24 @@ const complaintsModule = {
         return
       }
       state.activeComplaintId = complaintId
-      if (!complaint.revisionDocs) {
+      dispatch('loadComplaint', { complaint })
+    },
+    async loadComplaint ({ commit }, { complaint, callback }) {
+      if (!complaint.revisionDocs && complaint['@id']) {
         startProc()
         complaint.loading = true
         // console.log(complaint)
         try {
-          const { data } = await axios.get(complaintId)
+          const { data } = await axios.get(complaint['@id'])
           complaint = { ...data, ...complaint }
           complaint.loading = false
           // console.log(complaint)
           commit(mut.MODIFY_COMPLAINT, complaint)
         } finally {
           finishProc()
+        }
+        if (callback) {
+          callback(complaint)
         }
       }
     }

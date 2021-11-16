@@ -4,20 +4,20 @@
     <div class="tags" v-if="tags">
       <!-- objects, classes, context, operation -->
       <div class="objects" v-if="tags['objects'].length > 0">
-        <span class="title">Objekt: </span>
+        <span class="title">Änderungsgegenstand: </span>
         <span v-for="(o,i) in tags['objects']" :key="o + '_' + i"><span v-if="i > 0">, </span>{{ $t('taxonomy.' + o) }}</span>
       </div>
+      <div class="operation" v-if="tags['operation'].length > 0">
+        <span class="title">Textoperation: </span>
+        <span v-for="(o,i) in tags['operation']" :key="o + '_' + i"><span v-if="i > 0">, </span>{{ $t('taxonomy.' + o) }}</span>
+      </div>
       <div class="classes" v-if="tags['classes'].length > 0">
-        <span class="title">Klasse: </span>
+        <span class="title">Klassifizierung: </span>
         <span v-for="(o,i) in tags['classes']" :key="o + '_' + i"><span v-if="i > 0">, </span>{{ $t('taxonomy.' + o) }}</span>
       </div>
       <div class="context" v-if="tags['context'].length > 0">
-        <span class="title">Kontext: </span>
+        <span class="title">Kontextzitat: </span>
         <span v-for="(o,i) in tags['context']" :key="o + '_' + i"><span v-if="i > 0">, </span>{{ $t('taxonomy.' + o) }}</span>
-      </div>
-      <div class="operation" v-if="tags['operation'].length > 0">
-        <span class="title">Operation: </span>
-        <span v-for="(o,i) in tags['operation']" :key="o + '_' + i"><span v-if="i > 0">, </span>{{ $t('taxonomy.' + o) }}</span>
       </div>
     </div>
     <div class="comment" v-html="anno"/>
@@ -70,6 +70,7 @@ export default {
   }
   .tags {
     text-align: left;
+    background-color: #f5f5f5;
     .title {
       font-weight: bold;
     }

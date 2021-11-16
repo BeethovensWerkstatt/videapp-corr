@@ -1,9 +1,6 @@
 <template>
   <div class="complaint-container">
     <table class="complaint-list">
-      <thead>
-        <th colspan="2">{{ $t('terms.complaints') }}</th>
-      </thead>
       <tbody :key="complaint['@id']"
         v-for="(complaint, ci) in complaints"
       >
@@ -12,18 +9,62 @@
           class="mvt"
         >
           <th>{{ toRoman(complaint.movement.n) + '.' }}&nbsp;</th>
-          <th class="mvt" :title="complaint.movement.work">{{ complaint.movement.label }}</th>
+          <th :title="complaint.movement.work">{{ complaint.movement.label }}</th>
+          <th>Änderungsgegenstand</th>
+          <th>Textoperation</th>
+          <th>Klassifizierung</th>
+          <th>Kontextzitat</th>
+          <th>&nbsp;</th>
         </tr>
         <tr
           :class="{
             'complaint-active': isActive(complaint),
             'complaint-error': (measures(complaint) === 'N/A')
           }"
-          @click.prevent="toggleActivate(complaint)"
         >
-          <td class="complaint-attribute"><sub>{{ ci + 1 }}</sub></td>
-          <td class="complaint-attribute">{{ measures(complaint) }}</td>
-          <td class="complaint-attribute">{{ complaint.affects[0].measures.label }}</td>
+          <td
+            class="complaint-attribute"
+            @click.prevent="toggleActivate(complaint)"
+          >
+            <sub>{{ ci + 1 }}</sub>
+          </td>
+          <td
+            class="complaint-attribute"
+            @click.prevent="toggleActivate(complaint)"
+          >
+            {{ measures(complaint) }}
+          </td>
+          <td
+            class="complaint-attribute"
+            @click.prevent="toggleActivate(complaint)"
+          >
+            <span v-if="complaint.tags['objects'].length === 0">&mdash;</span>
+            <span v-for="(o,i) in complaint.tags['objects']" :key="o + '_' + i"><span v-if="i > 0">, </span>{{ $t('taxonomy.' + o) }}</span>
+          </td>
+          <td
+            class="complaint-attribute"
+            @click.prevent="toggleActivate(complaint)"
+          >
+            <span v-if="complaint.tags['operation'].length === 0">&mdash;</span>
+            <span v-for="(o,i) in complaint.tags['operation']" :key="o + '_' + i"><span v-if="i > 0">, </span>{{ $t('taxonomy.' + o) }}</span>
+          </td>
+          <td
+            class="complaint-attribute"
+            @click.prevent="toggleActivate(complaint)"
+          >
+            <span v-if="complaint.tags['classes'].length === 0">&mdash;</span>
+            <span v-for="(o,i) in complaint.tags['classes']" :key="o + '_' + i"><span v-if="i > 0">, </span>{{ $t('taxonomy.' + o) }}</span>
+          </td>
+          <td
+            class="complaint-attribute"
+            @click.prevent="toggleActivate(complaint)"
+          >
+            <span v-if="complaint.tags['context'].length === 0">&mdash;</span>
+            <span v-for="(o,i) in complaint.tags['context']" :key="o + '_' + i"><span v-if="i > 0">, </span>{{ $t('taxonomy.' + o) }}</span>
+          </td>
+          <td class="complaint-attribute">
+            <btn @click.prevent="openPages(complaint)">Seiten öffnen</btn>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -33,7 +74,7 @@
 <script>
 
 import { mapGetters } from 'vuex'
-import { actions } from '@/store/names'
+import { actions, mutations } from '@/store/names'
 import toolbox from '@/toolbox'
 
 /**
@@ -56,7 +97,7 @@ export default {
     },
     complaints () {
       const complaints = this.workComplaints(this.workId)
-      console.log(complaints)
+      // console.log(complaints)
       return complaints
     }
   },
@@ -102,6 +143,30 @@ export default {
       } else if (this.measures(complaint) !== 'N/A') { // TODO availability should be marked by another property
         this.$store.dispatch(actions.activateComplaint, complaintId)
       }
+    },
+    openPages (complaint, close = true) {
+      this.$store.dispatch('loadComplaint', {
+        complaint,
+        callback: (complaint) => {
+          console.log(complaint)
+          for (const state of ['anteDocs', 'revisionDocs', 'postDocs']) {
+            for (const c of complaint[state]) {
+              const pageId = c.iiif[0]?.on.full
+              const page = this.$store.getters.getPage(pageId)
+              console.log(state, page)
+              this.$store.commit(
+                mutations.SET_PAGE,
+                {
+                  id: page.source,
+                  page: page.pagenumber
+                })
+            }
+          }
+        }
+      })
+      if (close) {
+        this.$store.commit('COMPLAINTS_LIST', false)
+      }
     }
   }
 }
@@ -118,9 +183,8 @@ export default {
 }
 
 tr.mvt {
-  th.mvt {
+  th {
     background-color: #eee;
-    width: 100%;
     text-align: left;
     border-radius: 3pt;
     padding: 2pt 3pt 0pt 4pt;
