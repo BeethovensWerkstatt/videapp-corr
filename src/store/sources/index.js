@@ -1,8 +1,18 @@
-import mutations from './mutations'
-import actions from './actions'
-import getters from './getters'
+import mutations, { mutationsNames } from './mutations'
+import actions, { actionNames } from './actions'
+import getters, { getterNames } from './getters'
 
-import { registerMutations, registerActions } from '../names'
+export const sourcesNames = {
+  state: {
+    movements: 'movements',
+    sources: 'sources',
+    activeSourceId: 'activeSourceId',
+    page: 'pages'
+  },
+  mutations: mutationsNames,
+  actions: actionNames,
+  getters: getterNames
+}
 
 /**
  * @namespace store.sources
@@ -15,17 +25,14 @@ const sourcesModule = {
    * @property {String} activeSourceId id of selected source
    */
   state: {
-    movements: {},
-    sources: [],
-    activeSourceId: null,
-    pages: {}
+    [sourcesNames.state.movements]: {},
+    [sourcesNames.state.sources]: [],
+    [sourcesNames.state.activeSourceId]: null,
+    [sourcesNames.state.pages]: {}
   },
   mutations,
   actions,
   getters
 }
-
-registerMutations(sourcesModule.mutations)
-registerActions(sourcesModule.actions)
 
 export default sourcesModule

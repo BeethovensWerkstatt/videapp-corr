@@ -1,3 +1,13 @@
+
+export const mutationsNames = {
+  LOAD_SOURCE: 'LOAD_SOURCE',
+  LOAD_MOVEMENT: 'LOAD_MOVEMENT',
+  MODIFY_SOURCE: 'MODIFY_SOURCE',
+  MOVE_SOURCE: 'MOVE_SOURCE',
+  SET_PAGE: 'SET_PAGE',
+  ACTIVATE_SOURCE: 'ACTIVATE_SOURCE'
+}
+
 /**
  * @namespace store.sources.mutations
  */

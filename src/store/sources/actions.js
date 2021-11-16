@@ -4,6 +4,13 @@ import { mutations as mut, actions as act } from '../names'
 import { finishProc, startProc } from '..'
 import { Url } from '@/toolbox/net'
 
+export const actionNames = {
+  loadSources: 'loadSources',
+  loadMovements: 'loadMovements',
+  loadZones: 'loadZones',
+  activateZone: 'activateZone'
+}
+
 // otherContent label for measure positions URL
 const TAG_MEASURE_POSITIONS = 'measure positions'
 // otherContent label for measure positions URL
@@ -23,7 +30,7 @@ const actions = {
    * @param {function} commit
    * @param {object} state
    */
-  async loadSources ({ commit, dispatch, state, getters }, workId) {
+  async [actionNames.loadSources] ({ commit, dispatch, state, getters }, workId) {
     if (workId) {
       // console.log(state.works, workId)
       const work = getters.works.find(w => {
@@ -212,7 +219,7 @@ const actions = {
    * @memberof store.sources.actions
    * @param {Object} payload object containing property `movements`
    */
-  async loadMovements ({ commit }, { movements }) {
+  async [actionNames.loadMovements] ({ commit }, { movements }) {
     if (movements) {
       for (const m of movements) {
         // console.log(m)
@@ -231,7 +238,7 @@ const actions = {
    * @param {Object} context
    * @param {Object} payload - sourceId, pagenr, place, uri
    */
-  loadZones ({ dispatch }, page) {
+  [actionNames.loadZones] ({ dispatch }, page) {
     if (!page) {
       return
     }
@@ -294,7 +301,7 @@ const actions = {
    * @param {Object} callback commit, getters
    * @param {Object} payload source: String, zone: String
    */
-  activateZone ({ commit, getters }, { source, zone }) {
+  [actionNames.activateZone] ({ commit, getters }, { source, zone }) {
     if (source) {
       const src = getters.getSourceById(source)
       if (src) {

@@ -1,4 +1,16 @@
-import { registerMutations, registerActions } from '../names'
+
+export const processingNames = {
+  state: {
+    working: 'working'
+  },
+  mutations: {
+    SET_WORKING: 'SET_WORKING'
+  },
+  actions: {},
+  getters: {
+    working: 'working'
+  }
+}
 
 /**
  * @namespace store.processing
@@ -9,7 +21,7 @@ const processingModule = {
    * @property {Number} working number of working background processes
    */
   state: {
-    working: 0
+    [processingNames.state.working]: 0
   },
   /**
    * @namespace store.processing.mutations
@@ -20,7 +32,7 @@ const processingModule = {
      * @memberof store.processing.mutations
      * @param {Boolean} act if true increase working number, else decrease
      */
-    SET_WORKING (state, act) {
+    [processingNames.mutations.SET_WORKING] (state, act) {
       // console.log('set working: ' + act)
       state.working += act ? 1 : -1
     }
@@ -32,14 +44,11 @@ const processingModule = {
    * @property {Boolean} working true if number of working processes > 0
    */
   getters: {
-    working (state) {
+    [processingNames.getters.working] (state) {
       // console.log('working ' + state.working)
       return state.working > 0
     }
   }
 }
-
-registerMutations(processingModule.mutations)
-registerActions(processingModule.actions)
 
 export default processingModule
