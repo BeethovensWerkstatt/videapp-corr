@@ -40,7 +40,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { actions } from '@/store/names'
+import { mutations } from '@/store/names'
 // import VerovioComponent from '@/components/VerovioComponent.vue'
 import toolbox from '@/toolbox'
 import ComplaintDialogTabRow from '@/components/ComplaintDialog/TabRow.vue'
@@ -92,9 +92,9 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['viewer', 'activeComplaintId', 'activeComplaint', 'complaintDisplaySelect']),
+    ...mapGetters(['viewer', 'displayComplaint', 'activeComplaintId', 'activeComplaint', 'complaintDisplaySelect']),
     active () {
-      if (this.activeComplaintId) {
+      if (this.displayComplaint && this.activeComplaintId) {
         return true
       }
       return false
@@ -238,7 +238,7 @@ export default {
      * close this dialog
      */
     closeDialog (e) {
-      this.$store.dispatch(actions.activateComplaint, null)
+      this.$store.commit(mutations.DISPLAY_COMPLAINT, false)
     },
     /**
      * display select dialog

@@ -16,7 +16,8 @@ const complaintsModule = {
   state: {
     showComplaintsList: false,
     complaints: [],
-    activeComplaintId: null
+    activeComplaintId: null,
+    displayComplaint: false
   },
   /**
    * @namespace store.complaints.mutations
@@ -56,6 +57,12 @@ const complaintsModule = {
         complaints.push(complaint)
       }
       state.complaints = complaints
+    },
+    ACTIVATE_COMPLAINT (state, complaintId) {
+      state.activeComplaintId = complaintId
+    },
+    DISPLAY_COMPLAINT (state, display) {
+      state.displayComplaint = display
     }
   },
   /**
@@ -96,7 +103,7 @@ const complaintsModule = {
      * @memberof store.complaints.actions
      * @param {String} complaintId id of complaint to activate
      */
-    async activateComplaint ({ dispatch, state }, complaintId) {
+    async activateComplaint ({ dispatch, commit, state }, complaintId) {
       console.log('activate ' + complaintId)
       if (!complaintId) {
         state.activeComplaintId = null
@@ -107,8 +114,8 @@ const complaintsModule = {
         console.error('complaint not found!', complaintId)
         return
       }
-      state.activeComplaintId = complaintId
-      dispatch('loadComplaint', { complaint })
+      const callback = (complaint) => commit('ACTIVATE_COMPLAINT', complaint['@id'])
+      dispatch('loadComplaint', { complaint, callback })
     },
     async loadComplaint ({ commit }, { complaint, callback }) {
       if (!complaint.revisionDocs && complaint['@id']) {
@@ -151,9 +158,8 @@ const complaintsModule = {
       // TODO atId in loadComplaints?
       return getters.complaints.filter(c => tb.atId(c.movement?.work) === workId)
     },
-    activeComplaintId (state) {
-      return state.activeComplaintId
-    },
+    displayComplaint: (state) => state.displayComplaint,
+    activeComplaintId: (state) => state.activeComplaintId,
     activeComplaint (state, getters) {
       const complaintId = getters.activeComplaintId
       // console.log(complaintId)

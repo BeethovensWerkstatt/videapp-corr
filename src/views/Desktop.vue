@@ -29,9 +29,16 @@
       </div>
       <!-- <complaints-list /> -->
       <div>
-        <btn @click="openComplaints" size="sm">
-          Monita
-        </btn>
+        <div>
+          <btn @click="openComplaints" size="sm">
+            Monita
+          </btn>
+        </div>
+        <div v-if="$store.getters.activeComplaintId">
+          <btn @click="$store.commit('DISPLAY_COMPLAINT', true)">
+            {{ $store.getters.activeComplaint.affects[0].measures.label }}
+          </btn>
+        </div>
       </div>
       <zone-info />
       <source-info />

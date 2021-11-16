@@ -63,7 +63,7 @@
             <span v-for="(o,i) in complaint.tags['context']" :key="o + '_' + i"><span v-if="i > 0">, </span>{{ $t('taxonomy.' + o) }}</span>
           </td>
           <td class="complaint-attribute">
-            <btn @click.prevent="toggleActivate(complaint)">Monitum öffnen</btn>
+            <btn @click.prevent="openComplaint(complaint)">Monitum öffnen</btn>
             <btn @click.prevent="openPages(complaint)">Seiten öffnen</btn>
           </td>
         </tr>
@@ -144,6 +144,11 @@ export default {
       } else if (this.measures(complaint) !== 'N/A') { // TODO availability should be marked by another property
         this.$store.dispatch(actions.activateComplaint, complaintId)
       }
+    },
+    openComplaint (complaint) {
+      const complaintId = complaint ? complaint['@id'] : null
+      this.$store.dispatch(actions.activateComplaint, complaintId)
+      this.$store.commit(mutations.DISPLAY_COMPLAINT, !!complaintId)
     },
     openPages (complaint, close = true) {
       this.$store.dispatch('loadComplaint', {
