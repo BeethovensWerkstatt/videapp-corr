@@ -63,6 +63,7 @@
             <span v-for="(o,i) in complaint.tags['context']" :key="o + '_' + i"><span v-if="i > 0">, </span>{{ $t('taxonomy.' + o) }}</span>
           </td>
           <td class="complaint-attribute">
+            <btn @click.prevent="toggleActivate(complaint)">Monitum öffnen</btn>
             <btn @click.prevent="openPages(complaint)">Seiten öffnen</btn>
           </td>
         </tr>
