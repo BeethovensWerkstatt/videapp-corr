@@ -75,7 +75,7 @@ const complaintsModule = {
         const movement = mdiv ? getters.movements[mdiv] : undefined
         // TODO this looks like a workaround
         const complaint = movement ? { ...c, movement } : { ...c }
-        // console.log(new Complaint(complaint))
+        // console.log(complaint)
         /*
         dispatch(act.getData, {
           url: complaint['@id'],

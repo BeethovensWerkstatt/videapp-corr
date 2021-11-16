@@ -26,5 +26,24 @@
     "document": "Dokument",
     "measure": "Takt",
     "staff": "System"
+  },
+  "taxonomy": {
+    "bw_classification_korrektur": "Korrektur",
+    "bw_classification_variante": "Variante",
+    "bw_classification_textpraezisierung": "Textpräzisierung",
+    "bw_classification_schriftbildliche_verbesserung": "Schriftbildliche Verbesserung",
+    "bw_classification_paratextliche_eingriffe": "Paratextliche Eingriffe",
+    "bw_textoperation_einfuegung": "Einfügung",
+    "bw_textoperation_tilgung": "Tilgung",
+    "bw_textoperation_ersetzung": "Ersetzung",
+    "bw_textoperation_umstellung": "Umstellung",
+    "bw_object_dynamic": "Dynamik",
+    "bw_object_pitch": "Tonbuchstabe",
+    "bw_object_bogensetzung": "Bogensetzung",
+    "bw_object_rhythm": "Rhythmus",
+    "bw_kontext_korrekt": "korrekt",
+    "bw_kontext_unvollstaendig": "unvollständig",
+    "bw_kontext_korrumpiert": "korrumpiert",
+    "bw_konkordanz": "konkordanz"    
   }
 }

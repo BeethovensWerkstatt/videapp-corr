@@ -56,7 +56,7 @@ export default {
     const props = this.viewerConfig
     this.viewer = OpenSeadragon(props)
     this.viewer.addHandler('open', () => {
-      this.viewer.viewport.fitBounds(this.fitBounds, true)
+      this.viewer.viewport.fitBounds(this.fitBounds, false)
     })
     this.viewer.addHandler('zoom', this.rezoom())
     this.viewer.addHandler('pan', this.rezoom())

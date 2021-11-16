@@ -128,7 +128,9 @@ export default {
       // console.log(len, ante, revision, post)
       const map = []
       for (let i = 0; i < len; i++) {
-        const row = {}
+        const row = {
+          tags: this.activeComplaint?.tags
+        }
         row.ante = i < ante.length ? ante[i] : {}
         row.revision = i < revision.length ? revision[i] : {}
         row.post = i < post.length ? post[i] : {}
@@ -226,7 +228,7 @@ export default {
           })
           // TODO we need the complaint text here
           docs.push({
-            anno: '<p>Erklärungen und Anmerkungen</p>'
+            anno: stat.comment
           })
         })
       }

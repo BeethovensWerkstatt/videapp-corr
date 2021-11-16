@@ -18,7 +18,11 @@
       :label="textLabel"
       :divid="state + 'text'"
     />
-    <tab-col-anno v-if="anno" :anno="anno" />
+    <tab-col-anno
+      v-if="anno"
+      :anno="anno"
+      :tags="tags"
+    />
   </div>
 </template>
 
@@ -131,9 +135,23 @@ export default {
       }
       return label
     },
+    tags () {
+      if (this.state === 'revision') {
+        // console.log(this.row?.tags)
+        return this.row?.tags
+      }
+      return undefined
+    },
     anno () {
-      if (this.select.anno) {
-        return this.row[this.state]?.anno
+      // console.log(this.row[this.state])
+      if (this.select.anno && this.row[this.state]?.anno) {
+        const temporalDivElement = document.createElement('div')
+        temporalDivElement.innerHTML = this.row[this.state].anno ? this.row[this.state]?.anno : '&mdash;'
+        let anno = temporalDivElement.textContent || temporalDivElement.innerText || '&mdash;'
+        if (typeof anno !== 'string' || anno.trim().length === 0) {
+          anno = '&mdash;'
+        }
+        return anno
       }
       return undefined
     }

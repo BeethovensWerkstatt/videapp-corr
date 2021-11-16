@@ -241,7 +241,7 @@ export default {
         element: svgcontainer,
         location: this.position
       }, new OpenSeadragon.Point(0, 0))
-      this.viewer.viewport.fitBounds(this.clipping)
+      this.viewer.viewport.fitBounds(this.clipping, false)
       // this.viewer.viewport.fitVertically()
     }
   }
