@@ -1,22 +1,22 @@
 <template>
-  <div class="annotext">
+  <div class="annotext" :class="{ ['anno-' + state]: true, anno: true, [state]: true }">
     <h2>{{ $t("terms.complaint.description") }}</h2>
     <div class="tags" v-if="tags">
       <!-- objects, classes, context, operation -->
       <div class="objects" v-if="tags['objects'].length > 0">
-        <span class="title">Änderungsgegenstand: </span>
+        <span class="title">{{ $t('terms.complaint.revision-object') }}: </span>
         <span v-for="(o,i) in tags['objects']" :key="o + '_' + i"><span v-if="i > 0">, </span>{{ $t('taxonomy.' + o) }}</span>
       </div>
       <div class="operation" v-if="tags['operation'].length > 0">
-        <span class="title">Textoperation: </span>
+        <span class="title">{{ $t('terms.complaint.text-operation') }}: </span>
         <span v-for="(o,i) in tags['operation']" :key="o + '_' + i"><span v-if="i > 0">, </span>{{ $t('taxonomy.' + o) }}</span>
       </div>
       <div class="classes" v-if="tags['classes'].length > 0">
-        <span class="title">Klassifizierung: </span>
+        <span class="title">{{ $t('terms.complaint.classification') }}: </span>
         <span v-for="(o,i) in tags['classes']" :key="o + '_' + i"><span v-if="i > 0">, </span>{{ $t('taxonomy.' + o) }}</span>
       </div>
       <div class="context" v-if="tags['context'].length > 0">
-        <span class="title">Kontextzitat: </span>
+        <span class="title">{{ $t('terms.complaint.context') }}: </span>
         <span v-for="(o,i) in tags['context']" :key="o + '_' + i"><span v-if="i > 0">, </span>{{ $t('taxonomy.' + o) }}</span>
       </div>
     </div>
@@ -37,6 +37,10 @@ export default {
       default: () => undefined
     },
     anno: {
+      type: String,
+      required: true
+    },
+    state: {
       type: String,
       required: true
     }

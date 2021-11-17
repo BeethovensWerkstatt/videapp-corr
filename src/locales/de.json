@@ -15,7 +15,12 @@
         "postTitle": "post revisionem",
         "postDoc": "Zieldokument",
         "postText": "Zieltext"
-      }    },
+      },
+      "revision-object": "Revisionsobject",
+      "text-operation": "Textoperation",
+      "classification": "Klassifikation",
+      "context": "Kontextzitat"
+},
     "transcript": {
       "annot": "annotierte Transkription"
     },

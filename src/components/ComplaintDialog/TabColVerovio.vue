@@ -1,7 +1,7 @@
 <template>
   <div class="ComplaintDialogVOSDouter">
     <h2>{{ label }}</h2>
-    <div :id="divid" class="ComplaintDialogVOSD">
+    <div :id="divid" class="ComplaintDialogVOSD" :class="{ [state]: true, [layer]: true, [state + '-' + layer]: true }">
       <div :id="verovioSvgContainerId" v-html="svg" />
     </div>
   </div>
@@ -52,6 +52,14 @@ export default {
     },
     options: {
       type: Object,
+      required: true
+    },
+    state: {
+      type: String,
+      required: true
+    },
+    layer: {
+      type: String,
       required: true
     }
   },

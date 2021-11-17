@@ -10,10 +10,10 @@
         >
           <th>{{ toRoman(complaint.movement.n) + '.' }}&nbsp;</th>
           <th :title="complaint.movement.work">{{ complaint.movement.label }}</th>
-          <th>Änderungsgegenstand</th>
-          <th>Textoperation</th>
-          <th>Klassifizierung</th>
-          <th>Kontextzitat</th>
+          <th>{{ $t('terms.complaint.revision-object') }}</th>
+          <th>{{ $t('terms.complaint.text-operation') }}</th>
+          <th>{{ $t('terms.complaint.classification') }}</th>
+          <th>{{ $t('terms.complaint.context') }}</th>
           <th>&nbsp;</th>
         </tr>
         <tr

@@ -5,23 +5,29 @@
       :label="facsLabel"
       :pageId="facsPage"
       :region="facsRegion"
+      :state="state"
     />
     <tab-col-verovio
       v-if="transOptions"
       :options="transOptions"
       :label="transLabel"
       :divid="state + 'trans'"
+      :state="state"
+      layer="trans"
     />
     <tab-col-verovio
       v-if="textOptions"
       :options="textOptions"
       :label="textLabel"
       :divid="state + 'text'"
+      :state="state"
+      layer="text"
     />
     <tab-col-anno
       v-if="anno"
       :anno="anno"
       :tags="tags"
+      :state="state"
     />
   </div>
 </template>
