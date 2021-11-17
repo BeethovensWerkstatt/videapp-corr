@@ -21,7 +21,7 @@
         <div class="range-info">{{ measureRange }}</div>
       </div>
     </div>
-    <div class="svg-shapes" v-if="svgShapeUrl">
+    <div :class="activeComplaintId" class="svg-shapes" v-if="svgShapeUrl">
     </div>
   </div>
 </template>
@@ -32,6 +32,7 @@ import OpenSeadragon from 'openseadragon'
 import ZoneComponent from '@/components/ZoneComponent.vue'
 import { actions } from '@/store/names'
 import axios from 'axios'
+import tb from '@/toolbox'
 
 /**
  * Component for one page (recto or verso). Collect all measure-zones
@@ -268,6 +269,12 @@ export default {
     },
     svgShapeUrl () {
       return this.page?.svg_shapes
+    },
+    activeComplaintId () {
+      const newVal = this.$store.getters.activeComplaintId
+      // console.log('CALLING OUT FOR ' + newVal)
+      this.highlightMonitumShapes(newVal)
+      return this.$store.getters.activeComplaintId
     }
   },
   methods: {
@@ -367,7 +374,7 @@ export default {
         const g = path.parentElement
 
         const attName = g.attributes[0].name
-        const partOfMonitum = !attName.startsWith('data-unused')
+        const partOfMonitum = attName.startsWith('data-mon-')
 
         if (partOfMonitum) {
           const monitumId = attName.substring(9)
@@ -375,18 +382,39 @@ export default {
 
           console.log('clicked on shape ' + path.id + ', which belongs to MEI ' + meiId + ' and is part of monitum ' + monitumId)
 
-          g.querySelectorAll('path').forEach((p) => {
+          this.highlightMonitumShapes(monitumId)
+          /* document.querySelectorAll('svg g[' + attName + '] path').forEach((p) => {
+            p.style.fill = 'green'
+          }) */
+          /* g.querySelectorAll('path').forEach((p) => {
             p.style.fill = 'blue'
-          })
+          }) */
+          const oldId = this.$store.getters.activeComplaintId
+          if (oldId === null) {
+            this.$store.dispatch(actions.activateComplaint, monitumId)
+          } else if (oldId !== monitumId && !oldId.endsWith('/' + monitumId + '.json')) {
+            this.$store.dispatch(actions.activateComplaint, monitumId)
+          }
           this.$store.dispatch(actions.setCurrentItem, path.id)
         } else {
           console.log('clicked on ' + path.id + ', which is not part of a monitum ')
         }
+      }
+    },
+    highlightMonitumShapes (id) {
+      const prefix = 'data-mon-'
 
-        // TODO: either query for Monitum involved directly, or open Infobox and open Monitum from there…?
+      document.querySelectorAll('svg g.activeComplaint').forEach((g) => {
+        g.classList.remove('activeComplaint')
+      })
+
+      if (typeof id === 'string') {
+        const attName = id.endsWith('.json') ? prefix + tb.atId(id) : prefix + id
+        document.querySelectorAll('svg g[' + attName + ']').forEach((g) => {
+          g.classList.add('activeComplaint')
+        })
       }
     }
-
   }
 }
 </script>

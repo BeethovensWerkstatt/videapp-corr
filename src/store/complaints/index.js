@@ -134,18 +134,29 @@ const complaintsModule = {
      * @param {String} complaintId id of complaint to activate
      */
     async [complaintsNames.actions.activateComplaint] ({ dispatch, commit, state }, complaintId) {
-      console.log('activate ' + complaintId)
+      // console.log('activate ' + complaintId)
       if (!complaintId) {
-        commit(complaintsNames.ACTIVATE_COMPLAINT)
+        commit(complaintsNames.mutations.ACTIVATE_COMPLAINT)
         return
       }
-      var complaint = state.complaints.find(c => c['@id'] === complaintId)
+      const complaint = state.complaints.find(c => {
+        const IdIsURL = complaintId.endsWith('.json')
+
+        if (IdIsURL) {
+          return c['@id'] === complaintId
+        } else {
+          return c['@id'].endsWith('/' + complaintId + '.json')
+        }
+      })
       if (!complaint) {
         console.error('complaint not found!', complaintId)
         return
       }
-      const callback = (complaint) => commit(mut.ACTIVATE_COMPLAINT, complaint['@id'])
-      dispatch(act.loadComplaint, { complaint, callback })
+      if (!complaint.loading) {
+        const callback = (complaint) => commit(mut.ACTIVATE_COMPLAINT, complaint['@id'])
+        dispatch(act.loadComplaint, { complaint, callback })
+      }
+      commit(complaintsNames.mutations.ACTIVATE_COMPLAINT, complaint['@id'])
     },
     async [complaintsNames.actions.loadComplaint] ({ commit }, { complaint, callback }) {
       if (!complaint.revisionDocs && complaint['@id']) {
@@ -167,19 +178,30 @@ const complaintsModule = {
       }
     },
     async [complaintsNames.actions.openComplaintComparison] ({ dispatch, commit, state }, complaintId) {
-      const hasDetailsLoaded = !complaintId.endsWith('.json')
+      if (complaintId === null) {
+        return null
+      }
 
-      if (state.activeComplaintId === null && !hasDetailsLoaded) {
-        const complaint = state.complaints.find(c => c['@id'] === complaintId)
+      const complaint = state.complaints.find(c => {
+        const IdIsURL = complaintId.endsWith('.json')
 
-        const f = () => {
-          commit(complaintsNames.mutations.ACTIVATE_COMPLAINT, complaintId)
-          commit(complaintsNames.mutations.DISPLAY_COMPLAINT, true)
+        if (IdIsURL) {
+          return c['@id'] === complaintId
+        } else {
+          return c['@id'].endsWith('/' + complaintId + '.json')
         }
-        dispatch(complaintsNames.actions.loadComplaint, { complaint, callback: f })
-      } else {
+      })
+
+      if (complaint === null) {
+        console.log('Unable to find complaind from ID ' + complaintId)
+        return null
+      }
+
+      const f = () => {
+        commit(complaintsNames.mutations.ACTIVATE_COMPLAINT, complaintId)
         commit(complaintsNames.mutations.DISPLAY_COMPLAINT, true)
       }
+      dispatch(complaintsNames.actions.loadComplaint, { complaint, callback: f })
     }
   },
   /**

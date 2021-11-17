@@ -29,4 +29,8 @@ svg {
     stroke: $verovio-supplied-color;
     fill: $verovio-supplied-color;
   }
+
+  g.activeComplaint path {
+    fill: blue;
+  }
 }
