@@ -85,9 +85,9 @@ export default {
     */
     active () {
       if (this.active) {
-        this.$store.commit('ADD_MODAL', this.$vnode.tag)
+        this.$store.commit(mutations.ADD_MODAL, this.$vnode.tag)
       } else {
-        this.$store.commit('REM_MODAL', this.$vnode.tag)
+        this.$store.commit(mutations.REM_MODAL, this.$vnode.tag)
       }
     }
   },
@@ -116,7 +116,7 @@ export default {
         return this.complaintDisplaySelect
       },
       set (sel) {
-        this.$store.commit('SET_COMPLAINT_DISPLAY_SELECT', sel)
+        this.$store.commit(mutations.SET_COMPLAINT_DISPLAY_SELECT, sel)
       }
     },
     docMap () {
