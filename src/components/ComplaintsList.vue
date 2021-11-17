@@ -147,7 +147,7 @@ export default {
     },
     openComplaint (complaint) {
       const complaintId = complaint ? complaint['@id'] : null
-      this.$store.dispatch(actions.loadComplaint, complaint)
+      this.$store.dispatch(actions.loadComplaint, { complaint })
       this.$store.commit(mutations.DISPLAY_COMPLAINT, !!complaintId)
     },
     openPages (complaint, close = true) {

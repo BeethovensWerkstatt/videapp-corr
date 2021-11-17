@@ -32,6 +32,7 @@ export const complaintsNames = {
     activeComplaint: 'activeComplaint'
   }
 }
+
 /**
  * @namespace store.complaints
  */
@@ -102,7 +103,7 @@ const complaintsModule = {
      * @memberof store.complaints.actions
      * @param {Object} payload object containing complaints property `{ complaints: Object[] }`
      */
-    [complaintsNames.actions.loadComplaints] ({ commit, dispatch, getters }, { complaints }) {
+    [complaintsNames.actions.loadComplaints] ({ commit, /* dispatch, */ getters }, { complaints }) {
       complaints.forEach(c => {
         // console.log(c)
         const mdiv = c.affects[0]?.mdiv
@@ -134,7 +135,7 @@ const complaintsModule = {
     async [complaintsNames.actions.activateComplaint] ({ dispatch, commit, state }, complaintId) {
       console.log('activate ' + complaintId)
       if (!complaintId) {
-        state.activeComplaintId = null
+        commit(complaintsNames.ACTIVATE_COMPLAINT)
         return
       }
       var complaint = state.complaints.find(c => c['@id'] === complaintId)
