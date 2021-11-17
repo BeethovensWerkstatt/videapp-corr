@@ -28,6 +28,7 @@
     "staff": "System"
   },
   "taxonomy": {
+    "bw_classification_korrektur": "Korrektur",
     "bw_classification_variante": "Variante",
     "bw_classification_textpraezisierung": "Textpräzisierung",
     "bw_classification_schriftbildliche_verbesserung": "Schriftbildliche Verbesserung",
