@@ -35,7 +35,7 @@
           </btn>
         </div>
         <div v-if="$store.getters.activeComplaintId">
-          <btn @click="$store.commit('DISPLAY_COMPLAINT', true)">
+          <btn @click="displayComplaint()">
             {{ $store.getters.activeComplaint.affects[0].measures.label }}
           </btn>
         </div>
@@ -100,7 +100,10 @@ export default {
   },
   methods: {
     openComplaints () {
-      this.$store.commit('COMPLAINTS_LIST', true)
+      this.$store.commit(mutations.COMPLAINTS_LIST, true)
+    },
+    displayComplaint () {
+      this.$store.commit(mutations.DISPLAY_COMPLAINT, true)
     }
   }
 }

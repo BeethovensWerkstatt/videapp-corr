@@ -151,7 +151,7 @@ export default {
       this.$store.commit(mutations.DISPLAY_COMPLAINT, !!complaintId)
     },
     openPages (complaint, close = true) {
-      this.$store.dispatch('loadComplaint', {
+      this.$store.dispatch(actions.loadComplaint, {
         complaint,
         callback: (complaint) => {
           console.log(complaint)
@@ -171,7 +171,7 @@ export default {
         }
       })
       if (close) {
-        this.$store.commit('COMPLAINTS_LIST', false)
+        this.$store.commit(mutations.COMPLAINTS_LIST, false)
       }
     }
   }
