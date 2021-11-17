@@ -15,6 +15,7 @@ import Sources from './sources'
 import Pages from './pages'
 import Complaints from './complaints'
 import Verovio from './vrv'
+import Infobox from './infobox'
 
 import { mutations } from './names'
 
@@ -65,7 +66,8 @@ const store = new Vuex.Store({
     Sources,
     Pages,
     Complaints,
-    Verovio
+    Verovio,
+    Infobox
   }
 })
 
