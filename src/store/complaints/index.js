@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { startProc, finishProc } from '..'
-import { mutations as mut, /* actions as act, */ registerMutations, registerActions } from '../names'
+import { mutations as mut, actions as act, registerMutations, registerActions } from '../names'
 import tb from '@/toolbox'
 // import Complaint from '@/data/Complaint'
 
@@ -114,8 +114,8 @@ const complaintsModule = {
         console.error('complaint not found!', complaintId)
         return
       }
-      const callback = (complaint) => commit('ACTIVATE_COMPLAINT', complaint['@id'])
-      dispatch('loadComplaint', { complaint, callback })
+      const callback = (complaint) => commit(mut.ACTIVATE_COMPLAINT, complaint['@id'])
+      dispatch(act.loadComplaint, { complaint, callback })
     },
     async loadComplaint ({ commit }, { complaint, callback }) {
       if (!complaint.revisionDocs && complaint['@id']) {

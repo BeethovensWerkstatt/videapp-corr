@@ -45,14 +45,25 @@ const DAmodule = {
       }).catch((err) => {
         console.debug(err)
         // if db fetch fails try axios
+        console.log('load ' + url + '...')
         axios.get(url).then(({ data }) => {
+          const type = typeof data
+          /*
+          switch (type) {
+            case 'string': break
+            case 'object': data = JSON.stringify; break
+            default: data = data.toString()
+          }
+          */
           const d = {
             _id: url,
+            type,
             data
           }
           // store data in db
-          commit(DAnames.mutations.CDB_STORE_DATA, d)
+          // commit(DAnames.mutations.CDB_STORE_DATA, d)
           // send data back
+          console.log('loaded ' + url + ' of type ' + type)
           callback(d)
         }).catch(err => {
           if (error) {
