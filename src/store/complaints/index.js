@@ -21,7 +21,8 @@ export const complaintsNames = {
   actions: {
     loadComplaints: 'loadComplaints',
     loadComplaint: 'loadComplaint',
-    activateComplaint: 'activateComplaint'
+    activateComplaint: 'activateComplaint',
+    openComplaintComparison: 'openComplaintComparison'
   },
   getters: {
     showComplaintsList: 'showComplaintsList',
@@ -157,12 +158,27 @@ const complaintsModule = {
           complaint.loading = false
           // console.log(complaint)
           commit(mut.MODIFY_COMPLAINT, complaint)
+          if (typeof callback === 'function') {
+            callback(complaint)
+          }
         } finally {
           finishProc()
         }
-        if (callback) {
-          callback(complaint)
+      }
+    },
+    async [complaintsNames.actions.openComplaintComparison] ({ dispatch, commit, state }, complaintId) {
+      const hasDetailsLoaded = !complaintId.endsWith('.json')
+
+      if (state.activeComplaintId === null && !hasDetailsLoaded) {
+        const complaint = state.complaints.find(c => c['@id'] === complaintId)
+
+        const f = () => {
+          commit(complaintsNames.mutations.ACTIVATE_COMPLAINT, complaintId)
+          commit(complaintsNames.mutations.DISPLAY_COMPLAINT, true)
         }
+        dispatch(complaintsNames.actions.loadComplaint, { complaint, callback: f })
+      } else {
+        commit(complaintsNames.mutations.DISPLAY_COMPLAINT, true)
       }
     }
   },

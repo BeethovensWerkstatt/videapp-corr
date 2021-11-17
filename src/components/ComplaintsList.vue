@@ -147,19 +147,20 @@ export default {
     },
     openComplaint (complaint) {
       const complaintId = complaint ? complaint['@id'] : null
-      this.$store.dispatch(actions.loadComplaint, { complaint })
-      this.$store.commit(mutations.DISPLAY_COMPLAINT, !!complaintId)
+      // this.$store.dispatch(actions.loadComplaint, { complaint })
+      this.$store.dispatch(actions.openComplaintComparison, complaintId)
+      // this.$store.commit(mutations.DISPLAY_COMPLAINT, !!complaintId)
     },
     openPages (complaint, close = true) {
       this.$store.dispatch(actions.loadComplaint, {
         complaint,
         callback: (complaint) => {
-          console.log(complaint)
+          // console.log(complaint)
           for (const state of ['anteDocs', 'revisionDocs', 'postDocs']) {
             for (const c of complaint[state]) {
               const pageId = c.iiif[0]?.on.full
               const page = this.$store.getters.getPage(pageId)
-              console.log(state, page)
+              // console.log(state, page)
               this.$store.commit(
                 mutations.SET_PAGE,
                 {
