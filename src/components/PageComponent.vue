@@ -406,11 +406,22 @@ export default {
 
       document.querySelectorAll('svg g.activeComplaint').forEach((g) => {
         g.classList.remove('activeComplaint')
+        g.removeChild(g.firstChild)
       })
 
       if (typeof id === 'string') {
         const attName = id.endsWith('.json') ? prefix + tb.atId(id) : prefix + id
         document.querySelectorAll('svg g[' + attName + ']').forEach((g) => {
+          const bbox = g.getBBox()
+          const svgns = 'http://www.w3.org/2000/svg'
+          const rect = document.createElementNS(svgns, 'rect')
+          rect.setAttributeNS(null, 'x', bbox.x)
+          rect.setAttributeNS(null, 'y', bbox.y)
+          rect.setAttributeNS(null, 'height', bbox.height)
+          rect.setAttributeNS(null, 'width', bbox.width)
+          rect.classList.add('bg')
+          g.insertBefore(rect, g.firstChild)
+
           g.classList.add('activeComplaint')
         })
       }
