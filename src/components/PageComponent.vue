@@ -4,8 +4,6 @@
     :id="divid"
     :class="{ hideovl: !tiledimage }"
   >
-    <div class="svg-shapes" v-if="svgShapeUrl">
-    </div>
     <div v-if="showDetail" :style="style">
       <zone-component
         v-for="zone in zones"
@@ -22,6 +20,8 @@
       <div class="range-container">
         <div class="range-info">{{ measureRange }}</div>
       </div>
+    </div>
+    <div class="svg-shapes" v-if="svgShapeUrl">
     </div>
   </div>
 </template>
@@ -363,7 +363,26 @@ export default {
      */
     clickShapes (e) {
       if (e.target.localName === 'path') {
-        console.log('clicked on ' + e.target.id)
+        const path = e.target
+        const g = path.parentElement
+
+        const attName = g.attributes[0].name
+        const partOfMonitum = !attName.startsWith('data-unused')
+
+        if (partOfMonitum) {
+          const monitumId = attName.substring(9)
+          const meiId = path.getAttribute('data-mei')
+
+          console.log('clicked on shape ' + path.id + ', which belongs to MEI ' + meiId + ' and is part of monitum ' + monitumId)
+
+          g.querySelectorAll('path').forEach((p) => {
+            p.style.fill = 'blue'
+          })
+          this.$store.dispatch(actions.setCurrentItem, path.id)
+        } else {
+          console.log('clicked on ' + path.id + ', which is not part of a monitum ')
+        }
+
         // TODO: either query for Monitum involved directly, or open Infobox and open Monitum from there…?
       }
     }

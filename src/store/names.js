@@ -2,6 +2,7 @@ import { runtimeNames } from './runtime'
 import { DAnames } from './dataAccess'
 import { OSDnames } from './osd'
 import { pagesNames } from './pages'
+import { Infoboxnames } from './infobox'
 
 /**
  * register action and mutation names
@@ -13,27 +14,31 @@ export const state = {
   ...runtimeNames.state,
   ...DAnames.state,
   ...OSDnames.state,
-  ...pagesNames.state
+  ...pagesNames.state,
+  ...Infoboxnames.state
 }
 export const getters = {
   ...runtimeNames.getters,
   ...DAnames.getters,
   ...OSDnames.getters,
-  ...pagesNames.getters
+  ...pagesNames.getters,
+  ...Infoboxnames.getters
 }
 
 export const mutations = {
   ...runtimeNames.mutations,
   ...DAnames.mutations,
   ...OSDnames.mutations,
-  ...pagesNames.mutations
+  ...pagesNames.mutations,
+  ...Infoboxnames.mutations
 }
 
 export const actions = {
   ...runtimeNames.actions,
   ...DAnames.actions,
   ...OSDnames.actions,
-  ...pagesNames.actions
+  ...pagesNames.actions,
+  ...Infoboxnames.actions
 }
 
 /**
