@@ -28,18 +28,7 @@
         zoom: {{ scale.toFixed(2) }}
       </div>
       <!-- <complaints-list /> -->
-      <div>
-        <div>
-          <btn @click="openComplaints" size="sm">
-            Monita
-          </btn>
-        </div>
-        <div v-if="activeComplaintId">
-          <btn @click="displayComplaint()">
-            {{ activeComplaint.affects[0].measures.label }}
-          </btn>
-        </div>
-      </div>
+      <complaint-info />
       <zone-info />
       <source-info />
     </div>
@@ -51,9 +40,9 @@ import { mapGetters } from 'vuex'
 import DesktopComponent from '@/components/DesktopComponent'
 import SourceInfo from '@/components/SourceInfo'
 import ZoneInfo from '@/components/ZoneInfo.vue'
-// import ComplaintsList from '@/components/ComplaintsList.vue'
 import ComplaintsListDialog from '../components/ComplaintsListDialog.vue'
 import ComplaintDialog from '@/components/ComplaintDialog.vue'
+import ComplaintInfo from '../components/ComplaintInfo.vue'
 import { mutations, getters } from '@/store/names'
 
 /**
@@ -68,9 +57,9 @@ export default {
     DesktopComponent,
     SourceInfo,
     ZoneInfo,
-    // ComplaintsList,
     ComplaintDialog,
-    ComplaintsListDialog
+    ComplaintsListDialog,
+    ComplaintInfo
   },
   mounted () {
     // console.log(this.sources)
@@ -89,7 +78,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['viewer', 'scale', getters.modalsOpen, 'activeComplaintId', 'activeComplaint']),
+    ...mapGetters(['viewer', 'scale', getters.modalsOpen]),
     displayMeasures: {
       get () {
         const displayMeasures = this.$store.getters.displayMeasures
@@ -99,14 +88,6 @@ export default {
       set (val) {
         this.$store.commit(mutations.SET_DISPLAY_MEASURES, val)
       }
-    }
-  },
-  methods: {
-    openComplaints () {
-      this.$store.commit(mutations.COMPLAINTS_LIST, true)
-    },
-    displayComplaint () {
-      this.$store.commit(mutations.DISPLAY_COMPLAINT, true)
     }
   }
 }
