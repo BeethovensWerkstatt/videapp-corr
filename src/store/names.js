@@ -3,6 +3,7 @@ import { DAnames } from './dataAccess'
 import { OSDnames } from './osd'
 import { pagesNames } from './pages'
 import { Infoboxnames } from './infobox'
+import { complaintsNames } from './complaints'
 
 /**
  * register action and mutation names
@@ -15,14 +16,16 @@ export const state = {
   ...DAnames.state,
   ...OSDnames.state,
   ...pagesNames.state,
-  ...Infoboxnames.state
+  ...Infoboxnames.state,
+  ...complaintsNames.state
 }
 export const getters = {
   ...runtimeNames.getters,
   ...DAnames.getters,
   ...OSDnames.getters,
   ...pagesNames.getters,
-  ...Infoboxnames.getters
+  ...Infoboxnames.getters,
+  ...complaintsNames.getters
 }
 
 export const mutations = {
@@ -30,7 +33,8 @@ export const mutations = {
   ...DAnames.mutations,
   ...OSDnames.mutations,
   ...pagesNames.mutations,
-  ...Infoboxnames.mutations
+  ...Infoboxnames.mutations,
+  ...complaintsNames.mutations
 }
 
 export const actions = {
@@ -38,7 +42,8 @@ export const actions = {
   ...DAnames.actions,
   ...OSDnames.actions,
   ...pagesNames.actions,
-  ...Infoboxnames.actions
+  ...Infoboxnames.actions,
+  ...complaintsNames.actions
 }
 
 /**

@@ -34,9 +34,9 @@
             Monita
           </btn>
         </div>
-        <div v-if="$store.getters.activeComplaintId">
+        <div v-if="activeComplaintId">
           <btn @click="displayComplaint()">
-            {{ $store.getters.activeComplaint.affects[0].measures.label }}
+            {{ activeComplaint.affects[0].measures.label }}
           </btn>
         </div>
       </div>
@@ -83,10 +83,13 @@ export default {
       } else {
         this.viewer.navigator.element.style.display = 'inline-block'
       }
+    },
+    activeComplaintId () {
+      console.log('active complaint changed: ' + this.activeComplaintId)
     }
   },
   computed: {
-    ...mapGetters(['viewer', 'scale', getters.modalsOpen]),
+    ...mapGetters(['viewer', 'scale', getters.modalsOpen, 'activeComplaintId', 'activeComplaint']),
     displayMeasures: {
       get () {
         const displayMeasures = this.$store.getters.displayMeasures

@@ -57,7 +57,6 @@ export default {
 
 <style lang="scss" scoped>
 .annotext {
-  resize: vertical;
   overflow: auto;
 
   h2 {
