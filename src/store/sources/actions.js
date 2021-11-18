@@ -191,6 +191,21 @@ const actions = {
                   px += source.maxDimensions.width + hgap
                   ph = Math.max(ph, source.maxDimensions.height)
                 }
+                console.log(source.position)
+
+                // hack !!!
+                const sid = (new Url(source.id)).path.elements.pop()
+                switch (sid) {
+                  case 'US-NYj_31_B393cp_no.5_errata.json':
+                    source.position = { x: 838, y: 220 }
+                    break
+                  case 'D-BNba_C73-9.json':
+                    source.position = { x: 316, y: 220 }
+                    break
+                  case 'A-Wn_SH.Beethoven.323.json':
+                    source.position = { x: 1370, y: 220 }
+                    break
+                }
 
                 // TODO unfold
                 source.structures = structures
