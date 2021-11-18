@@ -1,6 +1,6 @@
 <template>
   <div class="desk">
-    <desktop-component divid="canvas"></desktop-component>
+    <desktop-component divid="canvas" :width="1650" :height="1000"></desktop-component>
     <complaints-list-dialog />
     <complaint-dialog />
     <div id="sidebar">
