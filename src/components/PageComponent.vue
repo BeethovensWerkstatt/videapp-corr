@@ -321,6 +321,32 @@ export default {
             success: (e) => {
               // when the tiled image is loaded (on success), a previous image is removed
               this.tiledimage = e.item
+              const svgContainer = this.$el.querySelector('.svg-shapes')
+
+              if (this.svgShapeUrl && svgContainer) {
+                // console.log('got in')
+                // svgContainer.innerHTML = '<img width="100%" src="' + page.svg_shapes + '" />'
+
+                const callback = ({ data }) => {
+                  // console.log(this.svgShapeUrl)
+                  const parser = new DOMParser()
+                  const serializer = new XMLSerializer()
+                  const svg = parser.parseFromString(data, 'image/svg+xml')
+                  const svgroot = svg.documentElement
+                  svgroot.setAttribute('width', '100%')
+                  svgroot.setAttribute('height', '100%')
+                  // const shapes = svgroot.querySelectorAll('path')
+                  svgContainer.innerHTML = serializer.serializeToString(svg)
+                  svgContainer.addEventListener('click', this.clickShapes)
+                }
+                const url = this.svgShapeUrl
+                if (!this.page.svgRequested) {
+                  axios.get(url).then(callback)
+                } else {
+                  console.log('skipping second loading of SVG shapes')
+                }
+                this.page.svgRequested = true
+              }
             },
             x,
             y,
@@ -332,27 +358,8 @@ export default {
           // console.log(tisrc)
           this.viewer.addTiledImage(tisrc)
 
-          const svgContainer = this.$el.querySelector('.svg-shapes')
           // console.log(svgContainer)
-          if (this.svgShapeUrl && svgContainer) {
-            // svgContainer.innerHTML = '<img width="100%" src="' + page.svg_shapes + '" />'
-            const callback = ({ data }) => {
-              // console.log(this.svgShapeUrl)
-              const parser = new DOMParser()
-              const serializer = new XMLSerializer()
-              const svg = parser.parseFromString(data, 'image/svg+xml')
-              const svgroot = svg.documentElement
-              svgroot.setAttribute('width', '100%')
-              svgroot.setAttribute('height', '100%')
-              // const shapes = svgroot.querySelectorAll('path')
-              svgContainer.innerHTML = serializer.serializeToString(svg)
-              svgContainer.addEventListener('click', this.clickShapes)
-            }
-            const url = this.svgShapeUrl
-            axios.get(url).then(callback)
-            // TODO why does this sometimes not work???
-            // this.$store.dispatch('getData', { url, callback })
-          }
+          // console.log('--CALLING ELVIS ' + this.sourceId.split('/').slice(-1)[0] + ' – ' + typeof this.svgShapeUrl + ' – ' + typeof svgContainer)
         } else {
           this.tiledimage = null
         }
