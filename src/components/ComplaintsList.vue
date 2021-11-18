@@ -64,7 +64,7 @@
           </td>
           <td class="complaint-attribute">
             <btn @click.prevent="openComplaint(complaint)">Monitum öffnen</btn>
-            <btn @click.prevent="openPages(complaint)">Seiten öffnen</btn>
+            <!-- <btn @click.prevent="openPages(complaint)">Seiten öffnen</btn> -->
           </td>
         </tr>
       </tbody>
