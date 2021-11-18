@@ -1,7 +1,7 @@
 <template>
   <div class="complaint-details">
     <div v-if="hasCurrentItem">
-      <strong>{{currentItem[0].desc}}</strong>
+      <strong>{{currentItemDesc}}</strong>
     </div>
     <div class="divider"></div>
     Monitum in T.{{ activeComplaint.affects[0].measures.label }}
@@ -17,7 +17,19 @@ import n from '@/store/names'
 export default {
   name: 'ComplaintDetails',
   computed: {
-    ...mapGetters([n.getters.activeComplaintId, n.getters.activeComplaint, n.getters.currentItem, n.getters.hasCurrentItem])
+    ...mapGetters([n.getters.activeComplaintId, n.getters.activeComplaint, n.getters.hasCurrentItem]),
+    currentItem () {
+      const currentItems = this.$store.getters[n.getters.currentItem]
+      return currentItems[0]
+    },
+    currentItemDesc () {
+      const currentItems = this.$store.getters[n.getters.currentItem]
+      if (currentItems.length > 0 && currentItems[0].desc) {
+        return currentItems[0].desc
+      } else {
+        return '–'
+      }
+    }
   },
   methods: {
     displayComplaint () {
