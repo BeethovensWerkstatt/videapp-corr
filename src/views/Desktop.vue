@@ -16,21 +16,10 @@
           </btn-group>
         </div>
       </div>
-      <div v-if="viewer">
-        <div>
-          <label for="toggleDisplayMeasures">Takte anzeigen </label>
-          <input
-            id="toggleDisplayMeasures"
-            type="checkbox"
-            v-model="displayMeasures"
-          />
-        </div>
-        zoom: {{ scale.toFixed(2) }}
-      </div>
-      <!-- <complaints-list /> -->
-      <complaint-info />
       <zone-info />
-      <source-info />
+      <complaint-info />
+      <complaint-details v-if="activeComplaint" />
+      <!-- <source-info /> -->
     </div>
   </div>
 </template>
@@ -38,12 +27,13 @@
 <script>
 import { mapGetters } from 'vuex'
 import DesktopComponent from '@/components/DesktopComponent'
-import SourceInfo from '@/components/SourceInfo'
+// import SourceInfo from '@/components/SourceInfo'
 import ZoneInfo from '@/components/ZoneInfo.vue'
 import ComplaintsListDialog from '../components/ComplaintsListDialog.vue'
 import ComplaintDialog from '@/components/ComplaintDialog.vue'
 import ComplaintInfo from '../components/ComplaintInfo.vue'
 import { mutations, getters } from '@/store/names'
+import ComplaintDetails from '../components/ComplaintDetails.vue'
 
 /**
  * Desktop View
@@ -55,11 +45,12 @@ export default {
   name: 'Desktop',
   components: {
     DesktopComponent,
-    SourceInfo,
+    // SourceInfo,
     ZoneInfo,
     ComplaintDialog,
     ComplaintsListDialog,
-    ComplaintInfo
+    ComplaintInfo,
+    ComplaintDetails
   },
   mounted () {
     // console.log(this.sources)
@@ -78,7 +69,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['viewer', 'scale', getters.modalsOpen]),
+    ...mapGetters(['viewer', 'scale', getters.modalsOpen, getters.activeComplaint]),
     displayMeasures: {
       get () {
         const displayMeasures = this.$store.getters.displayMeasures

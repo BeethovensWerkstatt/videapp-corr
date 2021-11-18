@@ -5,17 +5,14 @@
         {{ $t('terms.openComplaintsList') }}
       </btn>
     </div>
-    <complaint-details v-if="activeComplaint" />
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 import n from '@/store/names'
-import ComplaintDetails from './ComplaintDetails.vue'
 
 export default {
-  components: { ComplaintDetails },
   name: 'ComplaintInfo',
   computed: {
     ...mapGetters([n.getters.activeComplaintId, n.getters.activeComplaint])

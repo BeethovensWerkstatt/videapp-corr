@@ -1,12 +1,12 @@
 <template>
   <div class="complaint-details">
+    <div v-if="hasCurrentItem">
+      <strong>{{currentItem[0].desc}}</strong>
+    </div>
     <div class="divider"></div>
     Monitum in T.{{ activeComplaint.affects[0].measures.label }}
     <btn size="sm" @click="closeDetails">{{ $t('terms.close')}}</btn>
     <btn class="distanced" @click="displayComplaint">Vergleichsansicht öffnen</btn>
-    <div v-if="hasCurrentItem">
-      <strong>{{currentItem[0].desc}}</strong>
-    </div>
   </div>
 </template>
 
