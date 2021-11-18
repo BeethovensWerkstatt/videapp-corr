@@ -303,6 +303,11 @@ export default {
       // console.log('update TI ' + (this.pgdata !== this.pageID))
       this.updatePosition()
       if (!this.tiledimage || this.pgdata !== this.pageID) {
+        /* console.log('\n\nopening new page ' + this.pgdata)
+        console.log('this.tiledimage:')
+        console.log(this.tiledimage)
+        console.log('this.isActive: ' + this.isActive)
+        console.log('.\n\n') */
         // new page
         if (this.isActive) {
           // refresh tiled image
@@ -322,6 +327,13 @@ export default {
               // when the tiled image is loaded (on success), a previous image is removed
               this.tiledimage = e.item
               const svgContainer = this.$el.querySelector('.svg-shapes')
+              try {
+                svgContainer.removeEventListener('click', this.clickShapes)
+                svgContainer.innerHTML = ''
+                console.log('got rid of old stuff')
+              } catch (err) {
+                console.log('cannot remove svg')
+              }
 
               if (this.svgShapeUrl && svgContainer) {
                 // console.log('got in')
@@ -340,11 +352,10 @@ export default {
                   svgContainer.addEventListener('click', this.clickShapes)
                 }
                 const url = this.svgShapeUrl
-                if (!this.page.svgRequested) {
-                  axios.get(url).then(callback)
-                } else {
-                  console.log('skipping second loading of SVG shapes')
-                }
+                // if (!this.page.svgRequested) {
+                axios.get(url).then(callback)
+                // } else {    console.log('skipping second loading of SVG shapes')
+                // }
                 this.page.svgRequested = true
               }
             },
