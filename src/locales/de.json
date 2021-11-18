@@ -21,7 +21,7 @@
       "text-operation": "Textoperation",
       "classification": "Klassifikation",
       "context": "Kontextzitat"
-},
+    },
     "transcript": {
       "annot": "annotierte Transkription"
     },

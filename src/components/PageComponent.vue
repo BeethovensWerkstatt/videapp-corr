@@ -165,7 +165,7 @@ export default {
     style () {
       const zoom = this.viewer.viewport.getZoom(true)
       const scale = this.viewer.viewport._containerInnerSize.x * zoom
-      const fs = Math.max(9, 9 * scale)
+      const fs = Math.max(7, 7 * scale)
       // console.log(fs)
       return {
         'font-size': fs + 'px'
