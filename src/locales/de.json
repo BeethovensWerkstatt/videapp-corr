@@ -49,9 +49,16 @@
     "bw_object_bogensetzung": "Bogensetzung",
     "bw_object_rhythm": "Rhythmus",
     "bw_object_ornament": "Verzierung",
+    "bw_object_octave": "Oktavierung",
+    "bw_object_pedal": "Pedal",
+    "bw_object_articulation": "Artikulation",
+    "bw_object_clef": "Notenschlüssel",
+    "bw_object_arpeggio": "Arpeggiozeichen",
+    "bw_object_rest": "Pause",
+    "bw_object_fingering": "Fingersatz",
     "bw_kontext_korrekt": "korrekt",
     "bw_kontext_unvollstaendig": "unvollständig",
     "bw_kontext_korrumpiert": "korrumpiert",
     "bw_konkordanz": "konkordanz"
-  }
+      }
 }
