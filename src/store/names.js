@@ -2,6 +2,7 @@ import { runtimeNames } from './runtime'
 import { processingNames } from './processing'
 import { DAnames } from './dataAccess'
 import { OSDnames } from './osd'
+import { sourcesNames } from './sources'
 import { pagesNames } from './pages'
 import { infoboxnames } from './infobox'
 import { complaintsNames } from './complaints'
@@ -17,6 +18,7 @@ export const state = {
   ...processingNames.state,
   ...DAnames.state,
   ...OSDnames.state,
+  ...sourcesNames.state,
   ...pagesNames.state,
   ...infoboxnames.state,
   ...complaintsNames.state
@@ -26,6 +28,7 @@ export const getters = {
   ...processingNames.getters,
   ...DAnames.getters,
   ...OSDnames.getters,
+  ...sourcesNames.getters,
   ...pagesNames.getters,
   ...infoboxnames.getters,
   ...complaintsNames.getters
@@ -36,6 +39,7 @@ export const mutations = {
   ...processingNames.mutations,
   ...DAnames.mutations,
   ...OSDnames.mutations,
+  ...sourcesNames.mutations,
   ...pagesNames.mutations,
   ...infoboxnames.mutations,
   ...complaintsNames.mutations
@@ -46,6 +50,7 @@ export const actions = {
   ...processingNames.actions,
   ...DAnames.actions,
   ...OSDnames.actions,
+  ...sourcesNames.actions,
   ...pagesNames.actions,
   ...infoboxnames.actions,
   ...complaintsNames.actions
