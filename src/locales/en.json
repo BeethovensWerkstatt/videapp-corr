@@ -2,6 +2,7 @@
   "message": "Hello Module 3",
   "terms": {
     "complaints": "Complaints",
+    "openComplaintsList": "Open List of Complaints",
     "complaint": {
       "title": "Complaint",
       "state": {

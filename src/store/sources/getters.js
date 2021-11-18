@@ -1,3 +1,5 @@
+import { Url } from '@/toolbox/net'
+
 export const getterNames = {
   movements: 'movements',
   getMovementById: 'getMovementById',
@@ -52,7 +54,9 @@ const getters = {
   [getterNames.workSources]: (state) => (workId) => {
     // TODO sources should be stored per work
     const sources = state.sources.filter(src => src.workId === workId)
-    // console.log(workId, sources)
+    if (workId === 'xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d') {
+      console.log(workId, sources.map(s => (new Url(s.id)).path.elements.pop()))
+    }
     return sources
   },
   [getterNames.activeSourceId]: (state) => {

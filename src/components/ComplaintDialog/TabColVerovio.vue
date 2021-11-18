@@ -1,7 +1,7 @@
 <template>
   <div class="ComplaintDialogVOSDouter">
     <h2>{{ label }}</h2>
-    <div :id="divid" class="ComplaintDialogVOSD">
+    <div :id="divid" class="ComplaintDialogVOSD" :class="{ [state]: true, [layer]: true, [state + '-' + layer]: true }">
       <div :id="verovioSvgContainerId" v-html="svg" />
     </div>
   </div>
@@ -52,6 +52,14 @@ export default {
     },
     options: {
       type: Object,
+      required: true
+    },
+    state: {
+      type: String,
+      required: true
+    },
+    layer: {
+      type: String,
       required: true
     }
   },
@@ -241,7 +249,7 @@ export default {
         element: svgcontainer,
         location: this.position
       }, new OpenSeadragon.Point(0, 0))
-      this.viewer.viewport.fitBounds(this.clipping)
+      this.viewer.viewport.fitBounds(this.clipping, false)
       // this.viewer.viewport.fitVertically()
     }
   }

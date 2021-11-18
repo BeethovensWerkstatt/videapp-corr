@@ -1,6 +1,6 @@
 <template>
   <div class="desk">
-    <desktop-component divid="canvas"></desktop-component>
+    <desktop-component divid="canvas" :width="1650" :height="1000"></desktop-component>
     <complaints-list-dialog />
     <complaint-dialog />
     <div id="sidebar">
@@ -16,25 +16,10 @@
           </btn-group>
         </div>
       </div>
-      <div v-if="viewer">
-        <div>
-          <label for="toggleDisplayMeasures">Takte anzeigen </label>
-          <input
-            id="toggleDisplayMeasures"
-            type="checkbox"
-            v-model="displayMeasures"
-          />
-        </div>
-        zoom: {{ scale.toFixed(2) }}
-      </div>
-      <!-- <complaints-list /> -->
-      <div>
-        <btn @click="openComplaints" size="sm">
-          Monita
-        </btn>
-      </div>
       <zone-info />
-      <source-info />
+      <complaint-info />
+      <complaint-details v-if="activeComplaint" />
+      <!-- <source-info /> -->
     </div>
   </div>
 </template>
@@ -42,12 +27,13 @@
 <script>
 import { mapGetters } from 'vuex'
 import DesktopComponent from '@/components/DesktopComponent'
-import SourceInfo from '@/components/SourceInfo'
+// import SourceInfo from '@/components/SourceInfo'
 import ZoneInfo from '@/components/ZoneInfo.vue'
-// import ComplaintsList from '@/components/ComplaintsList.vue'
 import ComplaintsListDialog from '../components/ComplaintsListDialog.vue'
 import ComplaintDialog from '@/components/ComplaintDialog.vue'
+import ComplaintInfo from '../components/ComplaintInfo.vue'
 import { mutations, getters } from '@/store/names'
+import ComplaintDetails from '../components/ComplaintDetails.vue'
 
 /**
  * Desktop View
@@ -59,11 +45,12 @@ export default {
   name: 'Desktop',
   components: {
     DesktopComponent,
-    SourceInfo,
+    // SourceInfo,
     ZoneInfo,
-    // ComplaintsList,
     ComplaintDialog,
-    ComplaintsListDialog
+    ComplaintsListDialog,
+    ComplaintInfo,
+    ComplaintDetails
   },
   mounted () {
     // console.log(this.sources)
@@ -76,10 +63,13 @@ export default {
       } else {
         this.viewer.navigator.element.style.display = 'inline-block'
       }
+    },
+    activeComplaintId () {
+      console.log('active complaint changed: ' + this.activeComplaintId)
     }
   },
   computed: {
-    ...mapGetters(['viewer', 'scale', getters.modalsOpen]),
+    ...mapGetters(['viewer', 'scale', getters.modalsOpen, getters.activeComplaint]),
     displayMeasures: {
       get () {
         const displayMeasures = this.$store.getters.displayMeasures
@@ -89,11 +79,6 @@ export default {
       set (val) {
         this.$store.commit(mutations.SET_DISPLAY_MEASURES, val)
       }
-    }
-  },
-  methods: {
-    openComplaints () {
-      this.$store.commit('COMPLAINTS_LIST', true)
     }
   }
 }
@@ -164,11 +149,11 @@ export default {
 
   & > div {
     width: calc(100% - 1px - .4rem);
-    margin: .2rem;
+    margin: .5rem .2rem;
     border: .5px solid $border-color;
     border-radius: .3rem;
     background-color: #ffffff;
-    box-shadow: 0 .1rem .5rem #00000033 inset;
+    // box-shadow: 0 .1rem .5rem #00000033 inset;
     padding: 8px;
   }
 

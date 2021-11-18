@@ -2,6 +2,7 @@
   "message": "Hallo Modul 3",
   "terms": {
     "complaints": "Monita",
+    "openComplaintsList": "Monita-Übersicht anzeigen",
     "complaint": {
       "title": "Monitum",
       "description": "Kommentar",
@@ -15,10 +16,16 @@
         "postTitle": "post revisionem",
         "postDoc": "Zieldokument",
         "postText": "Zieltext"
-      }    },
+      },
+      "revision-object": "Revisionsobject",
+      "text-operation": "Textoperation",
+      "classification": "Klassifikation",
+      "context": "Kontextzitat"
+    },
     "transcript": {
       "annot": "annotierte Transkription"
     },
+    "open": "Öffnen",
     "close": "Schließen",
     "load": "Lade",
     "home": "Startseite",
@@ -26,5 +33,32 @@
     "document": "Dokument",
     "measure": "Takt",
     "staff": "System"
-  }
+  },
+  "taxonomy": {
+    "bw_classification_korrektur": "Korrektur",
+    "bw_classification_variante": "Variante",
+    "bw_classification_textpraezisierung": "Textpräzisierung",
+    "bw_classification_schriftbildliche_verbesserung": "Schriftbildliche Verbesserung",
+    "bw_classification_paratextliche_eingriffe": "Paratextliche Eingriffe",
+    "bw_textoperation_einfuegung": "Einfügung",
+    "bw_textoperation_tilgung": "Tilgung",
+    "bw_textoperation_ersetzung": "Ersetzung",
+    "bw_textoperation_umstellung": "Umstellung",
+    "bw_object_dynamic": "Dynamik",
+    "bw_object_pitch": "Tonbuchstabe",
+    "bw_object_bogensetzung": "Bogensetzung",
+    "bw_object_rhythm": "Rhythmus",
+    "bw_object_ornament": "Verzierung",
+    "bw_object_octave": "Oktavierung",
+    "bw_object_pedal": "Pedal",
+    "bw_object_articulation": "Artikulation",
+    "bw_object_clef": "Notenschlüssel",
+    "bw_object_arpeggio": "Arpeggiozeichen",
+    "bw_object_rest": "Pause",
+    "bw_object_fingering": "Fingersatz",
+    "bw_kontext_korrekt": "korrekt",
+    "bw_kontext_unvollstaendig": "unvollständig",
+    "bw_kontext_korrumpiert": "korrumpiert",
+    "bw_konkordanz": "konkordanz"
+      }
 }

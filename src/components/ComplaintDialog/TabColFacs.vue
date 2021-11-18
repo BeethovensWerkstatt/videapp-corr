@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2 @click="openPage">{{ $t("terms.document") }}: {{ label }}</h2>
-    <div :id="divid" class="ComplaintDialogOSD" :style="styles">
+    <div :id="divid" class="ComplaintDialogOSD" :class="{ ['facs-' + state]: true, facs: true, [state]: true }" :style="styles">
       <div :id="ovlid" class="complaint-region" />
     </div>
   </div>
@@ -45,6 +45,10 @@ export default {
     region: {
       type: String,
       required: true
+    },
+    state: {
+      type: String,
+      required: true
     }
   },
   /* TODO
@@ -56,7 +60,7 @@ export default {
     const props = this.viewerConfig
     this.viewer = OpenSeadragon(props)
     this.viewer.addHandler('open', () => {
-      this.viewer.viewport.fitBounds(this.fitBounds, true)
+      this.viewer.viewport.fitBounds(this.fitBounds, false)
     })
     this.viewer.addHandler('zoom', this.rezoom())
     this.viewer.addHandler('pan', this.rezoom())

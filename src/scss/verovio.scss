@@ -29,4 +29,17 @@ svg {
     stroke: $verovio-supplied-color;
     fill: $verovio-supplied-color;
   }
+
+  g[data-unused] path {
+    fill: green;
+    opacity:0%;
+  }
+
+  g rect.bg {
+    opacity: 20%;
+  }
+
+  g.activeComplaint path {
+    fill: blue;
+  }
 }

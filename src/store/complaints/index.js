@@ -1,8 +1,38 @@
 import axios from 'axios'
 import { startProc, finishProc } from '..'
-import { mutations as mut, /* actions as act, */ registerMutations, registerActions } from '../names'
+import { mutations as mut, actions as act } from '../names'
 import tb from '@/toolbox'
 // import Complaint from '@/data/Complaint'
+
+export const complaintsNames = {
+  state: {
+    showComplaintsList: 'showComplaintsList',
+    complaints: 'complaints',
+    activeComplaintId: 'activeComplaintId',
+    displayComplaint: 'displayComplaint'
+  },
+  mutations: {
+    COMPLAINTS_LIST: 'COMPLAINTS_LIST',
+    LOAD_COMPLAINT: 'LOAD_COMPLAINT',
+    MODIFY_COMPLAINT: 'MODIFY_COMPLAINT',
+    ACTIVATE_COMPLAINT: 'ACTIVATE_COMPLAINT',
+    DISPLAY_COMPLAINT: 'DISPLAY_COMPLAINT'
+  },
+  actions: {
+    loadComplaints: 'loadComplaints',
+    loadComplaint: 'loadComplaint',
+    activateComplaint: 'activateComplaint',
+    openComplaintComparison: 'openComplaintComparison'
+  },
+  getters: {
+    showComplaintsList: 'showComplaintsList',
+    complaints: 'complaints',
+    workComplaints: 'workComplaints',
+    displayComplaint: 'displayComplaint',
+    activeComplaintId: 'activeComplaintId',
+    activeComplaint: 'activeComplaint'
+  }
+}
 
 /**
  * @namespace store.complaints
@@ -14,15 +44,16 @@ const complaintsModule = {
    * @property {String} activeComplaintId - ID of complaint to display
    */
   state: {
-    showComplaintsList: false,
-    complaints: [],
-    activeComplaintId: null
+    [complaintsNames.state.showComplaintsList]: false,
+    [complaintsNames.state.complaints]: [],
+    [complaintsNames.state.activeComplaintId]: null,
+    [complaintsNames.state.displayComplaint]: false
   },
   /**
    * @namespace store.complaints.mutations
    */
   mutations: {
-    COMPLAINTS_LIST (state, show) {
+    [complaintsNames.mutations.COMPLAINTS_LIST] (state, show) {
       state.showComplaintsList = show
     },
     /**
@@ -31,7 +62,7 @@ const complaintsModule = {
      * @param {Object} state
      * @param {Object} complaint
      */
-    LOAD_COMPLAINT (state, complaint) {
+    [complaintsNames.mutations.LOAD_COMPLAINT] (state, complaint) {
       const complaints = [...state.complaints]
       complaints.push(complaint)
       state.complaints = complaints
@@ -43,7 +74,7 @@ const complaintsModule = {
      * @param {Object} state
      * @param {Object} complaint
      */
-    MODIFY_COMPLAINT (state, complaint) {
+    [complaintsNames.mutations.MODIFY_COMPLAINT] (state, complaint) {
       let success = false
       const complaints = state.complaints.map(c => {
         if (c['@id'] === complaint['@id']) {
@@ -56,6 +87,12 @@ const complaintsModule = {
         complaints.push(complaint)
       }
       state.complaints = complaints
+    },
+    [complaintsNames.mutations.ACTIVATE_COMPLAINT] (state, complaintId) {
+      state.activeComplaintId = complaintId
+    },
+    [complaintsNames.mutations.DISPLAY_COMPLAINT] (state, display) {
+      state.displayComplaint = display
     }
   },
   /**
@@ -67,7 +104,7 @@ const complaintsModule = {
      * @memberof store.complaints.actions
      * @param {Object} payload object containing complaints property `{ complaints: Object[] }`
      */
-    loadComplaints ({ commit, dispatch, getters }, { complaints }) {
+    [complaintsNames.actions.loadComplaints] ({ commit, /* dispatch, */ getters }, { complaints }) {
       complaints.forEach(c => {
         // console.log(c)
         const mdiv = c.affects[0]?.mdiv
@@ -75,7 +112,7 @@ const complaintsModule = {
         const movement = mdiv ? getters.movements[mdiv] : undefined
         // TODO this looks like a workaround
         const complaint = movement ? { ...c, movement } : { ...c }
-        // console.log(new Complaint(complaint))
+        // console.log(complaint)
         /*
         dispatch(act.getData, {
           url: complaint['@id'],
@@ -96,32 +133,75 @@ const complaintsModule = {
      * @memberof store.complaints.actions
      * @param {String} complaintId id of complaint to activate
      */
-    async activateComplaint ({ commit, state }, complaintId) {
-      console.log('activate ' + complaintId)
+    async [complaintsNames.actions.activateComplaint] ({ dispatch, commit, state }, complaintId) {
+      // console.log('activate ' + complaintId)
       if (!complaintId) {
-        state.activeComplaintId = null
+        commit(complaintsNames.mutations.ACTIVATE_COMPLAINT)
         return
       }
-      var complaint = state.complaints.find(c => c['@id'] === complaintId)
+      const complaint = state.complaints.find(c => {
+        const IdIsURL = complaintId.endsWith('.json')
+
+        if (IdIsURL) {
+          return c['@id'] === complaintId
+        } else {
+          return c['@id'].endsWith('/' + complaintId + '.json')
+        }
+      })
       if (!complaint) {
         console.error('complaint not found!', complaintId)
         return
       }
-      state.activeComplaintId = complaintId
-      if (!complaint.revisionDocs) {
+      if (!complaint.loading) {
+        const callback = (complaint) => commit(mut.ACTIVATE_COMPLAINT, complaint['@id'])
+        dispatch(act.loadComplaint, { complaint, callback })
+      }
+      commit(complaintsNames.mutations.ACTIVATE_COMPLAINT, complaint['@id'])
+    },
+    async [complaintsNames.actions.loadComplaint] ({ commit }, { complaint, callback }) {
+      if (!complaint.revisionDocs && complaint['@id']) {
         startProc()
         complaint.loading = true
         // console.log(complaint)
         try {
-          const { data } = await axios.get(complaintId)
+          const { data } = await axios.get(complaint['@id'])
           complaint = { ...data, ...complaint }
           complaint.loading = false
           // console.log(complaint)
           commit(mut.MODIFY_COMPLAINT, complaint)
+          if (typeof callback === 'function') {
+            callback(complaint)
+          }
         } finally {
           finishProc()
         }
       }
+    },
+    async [complaintsNames.actions.openComplaintComparison] ({ dispatch, commit, state }, complaintId) {
+      if (complaintId === null) {
+        return null
+      }
+
+      const complaint = state.complaints.find(c => {
+        const IdIsURL = complaintId.endsWith('.json')
+
+        if (IdIsURL) {
+          return c['@id'] === complaintId
+        } else {
+          return c['@id'].endsWith('/' + complaintId + '.json')
+        }
+      })
+
+      if (complaint === null) {
+        console.log('Unable to find complaind from ID ' + complaintId)
+        return null
+      }
+
+      const f = () => {
+        commit(complaintsNames.mutations.ACTIVATE_COMPLAINT, complaintId)
+        commit(complaintsNames.mutations.DISPLAY_COMPLAINT, true)
+      }
+      dispatch(complaintsNames.actions.loadComplaint, { complaint, callback: f })
     }
   },
   /**
@@ -131,8 +211,8 @@ const complaintsModule = {
    * @property {Object} activeComplaint displayed complaint
    */
   getters: {
-    showComplaintsList: (state) => state.showComplaintsList,
-    complaints: (state, getters) => {
+    [complaintsNames.getters.showComplaintsList]: (state) => state.showComplaintsList,
+    [complaintsNames.getters.complaints]: (state, getters) => {
       return state.complaints.map(c => {
         const mdiv = c.affects[0]?.mdiv
         return {
@@ -141,14 +221,13 @@ const complaintsModule = {
         }
       })
     },
-    workComplaints: (state, getters) => (workId) => {
+    [complaintsNames.getters.workComplaints]: (state, getters) => (workId) => {
       // TODO atId in loadComplaints?
       return getters.complaints.filter(c => tb.atId(c.movement?.work) === workId)
     },
-    activeComplaintId (state) {
-      return state.activeComplaintId
-    },
-    activeComplaint (state, getters) {
+    [complaintsNames.getters.displayComplaint]: (state) => state.displayComplaint,
+    [complaintsNames.getters.activeComplaintId]: (state) => state.activeComplaintId,
+    [complaintsNames.getters.activeComplaint] (state, getters) {
       const complaintId = getters.activeComplaintId
       // console.log(complaintId)
       if (complaintId) {
@@ -164,8 +243,5 @@ const complaintsModule = {
     }
   }
 }
-
-registerMutations(complaintsModule.mutations)
-registerActions(complaintsModule.actions)
 
 export default complaintsModule

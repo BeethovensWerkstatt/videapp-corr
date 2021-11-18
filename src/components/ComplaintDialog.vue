@@ -40,7 +40,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { actions } from '@/store/names'
+import { mutations } from '@/store/names'
 // import VerovioComponent from '@/components/VerovioComponent.vue'
 import toolbox from '@/toolbox'
 import ComplaintDialogTabRow from '@/components/ComplaintDialog/TabRow.vue'
@@ -85,16 +85,16 @@ export default {
     */
     active () {
       if (this.active) {
-        this.$store.commit('ADD_MODAL', this.$vnode.tag)
+        this.$store.commit(mutations.ADD_MODAL, this.$vnode.tag)
       } else {
-        this.$store.commit('REM_MODAL', this.$vnode.tag)
+        this.$store.commit(mutations.REM_MODAL, this.$vnode.tag)
       }
     }
   },
   computed: {
-    ...mapGetters(['viewer', 'activeComplaintId', 'activeComplaint', 'complaintDisplaySelect']),
+    ...mapGetters(['viewer', 'displayComplaint', 'activeComplaintId', 'activeComplaint', 'complaintDisplaySelect']),
     active () {
-      if (this.activeComplaintId) {
+      if (this.displayComplaint && this.activeComplaintId) {
         return true
       }
       return false
@@ -116,7 +116,7 @@ export default {
         return this.complaintDisplaySelect
       },
       set (sel) {
-        this.$store.commit('SET_COMPLAINT_DISPLAY_SELECT', sel)
+        this.$store.commit(mutations.SET_COMPLAINT_DISPLAY_SELECT, sel)
       }
     },
     docMap () {
@@ -128,7 +128,9 @@ export default {
       // console.log(len, ante, revision, post)
       const map = []
       for (let i = 0; i < len; i++) {
-        const row = {}
+        const row = {
+          tags: this.activeComplaint?.tags
+        }
         row.ante = i < ante.length ? ante[i] : {}
         row.revision = i < revision.length ? revision[i] : {}
         row.post = i < post.length ? post[i] : {}
@@ -226,7 +228,7 @@ export default {
           })
           // TODO we need the complaint text here
           docs.push({
-            anno: '<p>Erklärungen und Anmerkungen</p>'
+            anno: stat.comment
           })
         })
       }
@@ -236,7 +238,7 @@ export default {
      * close this dialog
      */
     closeDialog (e) {
-      this.$store.dispatch(actions.activateComplaint, null)
+      this.$store.commit(mutations.DISPLAY_COMPLAINT, false)
     },
     /**
      * display select dialog

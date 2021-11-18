@@ -53,7 +53,7 @@ export default {
       }
     },
     title () {
-      return 'ComplaintsList'
+      return this.$t('terms.complaints')
     },
     styles () {
       return {}

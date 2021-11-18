@@ -4,8 +4,6 @@
     :id="divid"
     :class="{ hideovl: !tiledimage }"
   >
-    <div class="svg-shapes" v-if="svgShapeUrl">
-    </div>
     <div v-if="showDetail" :style="style">
       <zone-component
         v-for="zone in zones"
@@ -23,6 +21,8 @@
         <div class="range-info">{{ measureRange }}</div>
       </div>
     </div>
+    <div :class="activeComplaintId" class="svg-shapes" v-if="svgShapeUrl">
+    </div>
   </div>
 </template>
 
@@ -31,7 +31,8 @@ import { mapGetters } from 'vuex'
 import OpenSeadragon from 'openseadragon'
 import ZoneComponent from '@/components/ZoneComponent.vue'
 import { actions } from '@/store/names'
-import axios from 'axios'
+// import axios from 'axios'
+import tb from '@/toolbox'
 
 /**
  * Component for one page (recto or verso). Collect all measure-zones
@@ -164,7 +165,7 @@ export default {
     style () {
       const zoom = this.viewer.viewport.getZoom(true)
       const scale = this.viewer.viewport._containerInnerSize.x * zoom
-      const fs = Math.max(9, 9 * scale)
+      const fs = Math.max(7, 7 * scale)
       // console.log(fs)
       return {
         'font-size': fs + 'px'
@@ -267,7 +268,15 @@ export default {
       return rect
     },
     svgShapeUrl () {
-      return this.page?.svg_shapes
+      const svgurl = this.page?.svg_shapes
+      console.log(svgurl)
+      return svgurl
+    },
+    activeComplaintId () {
+      const newVal = this.$store.getters.activeComplaintId
+      // console.log('CALLING OUT FOR ' + newVal)
+      this.highlightMonitumShapes(newVal)
+      return this.$store.getters.activeComplaintId
     }
   },
   methods: {
@@ -314,6 +323,7 @@ export default {
             success: (e) => {
               // when the tiled image is loaded (on success), a previous image is removed
               this.tiledimage = e.item
+              console.log(this.svgShapeUrl)
             },
             x,
             y,
@@ -326,7 +336,7 @@ export default {
           this.viewer.addTiledImage(tisrc)
 
           const svgContainer = this.$el.querySelector('.svg-shapes')
-          // console.log(svgContainer)
+          console.log(this.svgShapeUrl, svgContainer)
           if (this.svgShapeUrl && svgContainer) {
             // svgContainer.innerHTML = '<img width="100%" src="' + page.svg_shapes + '" />'
             const callback = ({ data }) => {
@@ -342,9 +352,9 @@ export default {
               svgContainer.addEventListener('click', this.clickShapes)
             }
             const url = this.svgShapeUrl
-            axios.get(url).then(callback)
+            // axios.get(url).then(callback)
             // TODO why does this sometimes not work???
-            // this.$store.dispatch('getData', { url, callback })
+            this.$store.dispatch('getData', { url, callback })
           }
         } else {
           this.tiledimage = null
@@ -363,11 +373,66 @@ export default {
      */
     clickShapes (e) {
       if (e.target.localName === 'path') {
-        console.log('clicked on ' + e.target.id)
-        // TODO: either query for Monitum involved directly, or open Infobox and open Monitum from there…?
+        const path = e.target
+        const g = path.parentElement
+
+        const attName = g.attributes[0].name
+        const partOfMonitum = attName.startsWith('data-mon-')
+        const meiId = path.getAttribute('data-mei')
+
+        if (partOfMonitum) {
+          const monitumId = attName.substring(9)
+
+          // console.log('clicked on shape ' + path.id + ', which belongs to MEI ' + meiId + ' and is part of monitum ' + monitumId)
+
+          this.highlightMonitumShapes(monitumId)
+          /* document.querySelectorAll('svg g[' + attName + '] path').forEach((p) => {
+            p.style.fill = 'green'
+          }) */
+          /* g.querySelectorAll('path').forEach((p) => {
+            p.style.fill = 'blue'
+          }) */
+          const oldId = this.$store.getters.activeComplaintId
+          if (oldId === null) {
+            this.$store.dispatch(actions.activateComplaint, monitumId)
+          } else if (oldId !== monitumId && !oldId.endsWith('/' + monitumId + '.json')) {
+            this.$store.dispatch(actions.activateComplaint, monitumId)
+          }
+        } else {
+          console.log('clicked on ' + path.id + ', which is not part of a monitum ')
+        }
+
+        if (meiId !== '') {
+          const firstItem = meiId.split(' ')[0]
+          this.$store.dispatch(actions.setCurrentItem, firstItem)
+        }
+      }
+    },
+    highlightMonitumShapes (id) {
+      const prefix = 'data-mon-'
+
+      document.querySelectorAll('svg g.activeComplaint').forEach((g) => {
+        g.classList.remove('activeComplaint')
+        g.removeChild(g.firstChild)
+      })
+
+      if (typeof id === 'string') {
+        const attName = id.endsWith('.json') ? prefix + tb.atId(id) : prefix + id
+        document.querySelectorAll('svg g[' + attName + ']').forEach((g) => {
+          const bbox = g.getBBox()
+          const svgns = 'http://www.w3.org/2000/svg'
+          const rect = document.createElementNS(svgns, 'rect')
+          rect.setAttributeNS(null, 'x', bbox.x)
+          rect.setAttributeNS(null, 'y', bbox.y)
+          rect.setAttributeNS(null, 'height', bbox.height)
+          rect.setAttributeNS(null, 'width', bbox.width)
+          rect.classList.add('bg')
+          g.insertBefore(rect, g.firstChild)
+
+          g.classList.add('activeComplaint')
+        })
       }
     }
-
   }
 }
 </script>
