@@ -2,7 +2,7 @@
   <div>
     <div>
       <btn @click="openComplaints" size="sm">
-        {{ $t('terms.complaints') }}
+        {{ $t('terms.openComplaintsList') }}
       </btn>
     </div>
     <complaint-details v-if="activeComplaint" />

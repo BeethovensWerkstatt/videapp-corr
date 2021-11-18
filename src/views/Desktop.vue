@@ -158,11 +158,11 @@ export default {
 
   & > div {
     width: calc(100% - 1px - .4rem);
-    margin: .2rem;
+    margin: .5rem .2rem;
     border: .5px solid $border-color;
     border-radius: .3rem;
     background-color: #ffffff;
-    box-shadow: 0 .1rem .5rem #00000033 inset;
+    // box-shadow: 0 .1rem .5rem #00000033 inset;
     padding: 8px;
   }
 

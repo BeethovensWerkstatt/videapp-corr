@@ -2,6 +2,7 @@
   "message": "Hallo Modul 3",
   "terms": {
     "complaints": "Monita",
+    "openComplaintsList": "Monita-Übersicht anzeigen",
     "complaint": {
       "title": "Monitum",
       "description": "Kommentar",

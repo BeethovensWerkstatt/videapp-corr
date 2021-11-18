@@ -375,12 +375,12 @@ export default {
 
         const attName = g.attributes[0].name
         const partOfMonitum = attName.startsWith('data-mon-')
+        const meiId = path.getAttribute('data-mei')
 
         if (partOfMonitum) {
           const monitumId = attName.substring(9)
-          const meiId = path.getAttribute('data-mei')
 
-          console.log('clicked on shape ' + path.id + ', which belongs to MEI ' + meiId + ' and is part of monitum ' + monitumId)
+          // console.log('clicked on shape ' + path.id + ', which belongs to MEI ' + meiId + ' and is part of monitum ' + monitumId)
 
           this.highlightMonitumShapes(monitumId)
           /* document.querySelectorAll('svg g[' + attName + '] path').forEach((p) => {
@@ -395,9 +395,13 @@ export default {
           } else if (oldId !== monitumId && !oldId.endsWith('/' + monitumId + '.json')) {
             this.$store.dispatch(actions.activateComplaint, monitumId)
           }
-          this.$store.dispatch(actions.setCurrentItem, path.id)
         } else {
           console.log('clicked on ' + path.id + ', which is not part of a monitum ')
+        }
+
+        if (meiId !== '') {
+          const firstItem = meiId.split(' ')[0]
+          this.$store.dispatch(actions.setCurrentItem, firstItem)
         }
       }
     },

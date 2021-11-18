@@ -1,10 +1,12 @@
 <template>
   <div class="complaint-details">
-    <hr />
-    <h3>{{ activeComplaint.affects[0].measures.label }}<div class="close" @click="closeDetails">x</div></h3>
-    <btn @click="displayComplaint">
-      {{ $t('terms.open') }}
-    </btn>
+    <div class="divider"></div>
+    Monitum in T.{{ activeComplaint.affects[0].measures.label }}
+    <btn size="sm" @click="closeDetails">{{ $t('terms.close')}}</btn>
+    <btn class="distanced" @click="displayComplaint">Vergleichsansicht öffnen</btn>
+    <div v-if="hasCurrentItem">
+      <strong>{{currentItem[0].desc}}</strong>
+    </div>
   </div>
 </template>
 
@@ -15,7 +17,7 @@ import n from '@/store/names'
 export default {
   name: 'ComplaintDetails',
   computed: {
-    ...mapGetters([n.getters.activeComplaintId, n.getters.activeComplaint])
+    ...mapGetters([n.getters.activeComplaintId, n.getters.activeComplaint, n.getters.currentItem, n.getters.hasCurrentItem])
   },
   methods: {
     displayComplaint () {
@@ -30,6 +32,17 @@ export default {
 
 <style lang="scss" scoped>
 .complaint-details {
+
+  .divider {
+    height: 1.5px;
+    background-color: #999999;
+    margin: .5rem 1rem;
+  }
+
+  .distanced {
+    margin: 1rem;
+  }
+
   position: relative;
   h3 {
     div.close {

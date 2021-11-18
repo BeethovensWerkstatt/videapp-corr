@@ -1,30 +1,35 @@
+import axios from 'axios'
+import { startProc, finishProc } from '..'
 
-export const Infoboxnames = {
+export const infoboxnames = {
   state: {
     currentItem: 'currentItem'
   },
   mutations: {
-    SET_CURRENT_ITEM: 'SET_CURRENT_ITEM'
+    SET_CURRENT_ITEM: 'SET_CURRENT_ITEM',
+    CANCEL_CURRENT_ITEM: 'CANCEL_CURRENT_ITEM'
   },
   actions: {
-    setCurrentItem: 'setCurrentItem'
+    setCurrentItem: 'setCurrentItem',
+    cancelCurrentItem: 'cancelCurrentItem'
   },
   getters: {
     visible: 'visible',
-    currentItem: 'currentItem'
+    currentItem: 'currentItem',
+    hasCurrentItem: 'hasCurrentItem'
   }
 }
 
 /**
  * @namespace store.infobox
  */
-const Infoboxmodule = {
+const infoboxmodule = {
   /**
    * @namespace store.infobox.state
    * @property {String} currentItem ID of the currently highlighted element
    */
   state: {
-    [Infoboxnames.state.currentItem]: ''
+    [infoboxnames.state.currentItem]: ''
   },
   /**
    * @namespace store.infobox.mutations
@@ -35,8 +40,11 @@ const Infoboxmodule = {
      * @memberof store.infobox.mutations
      * @param {String} item
      */
-    [Infoboxnames.mutations.SET_CURRENT_ITEM] (state, item) {
+    [infoboxnames.mutations.SET_CURRENT_ITEM] (state, item) {
       state.currentItem = item
+    },
+    [infoboxnames.mutations.CANCEL_CURRENT_ITEM] (state) {
+      state.currentItem = null
     }
   },
   /**
@@ -47,11 +55,23 @@ const Infoboxmodule = {
      * set current item for infobox
      * @memberof store.infobox.actions
      */
-    [Infoboxnames.actions.setCurrentItem] ({ commit }, payload) {
-      console.log(payload)
-      commit(Infoboxnames.mutations.SET_CURRENT_ITEM, payload)
-      console.log('me here, after payload')
-      // console.log(state)
+    async [infoboxnames.actions.setCurrentItem] ({ commit }, payload) {
+      if (payload === null) {
+        return
+      }
+      startProc()
+      try {
+        // const uri = 'http://localhost:8080/exist/apps/api/desc/' + payload + '.json'
+        const uri = 'https://api.beethovens-werkstatt.de/desc/' + payload + '.json'
+        const res = await axios.get(uri)
+        const json = await res.data
+        commit(infoboxnames.mutations.SET_CURRENT_ITEM, json)
+      } finally {
+        finishProc()
+      }
+    },
+    [infoboxnames.actions.cancelCurrentItem] ({ commit }) {
+      commit(infoboxnames.mutations.CANCEL_CURRENT_ITEM)
     }
   },
   /**
@@ -60,13 +80,16 @@ const Infoboxmodule = {
    * @property {String} currentItem currently displayed Item in infobox
    */
   getters: {
-    [Infoboxnames.getters.visible]: (state) => {
+    [infoboxnames.getters.visible]: (state) => {
       return state.currentItem !== ''
     },
-    [Infoboxnames.getters.currentItem]: (state) => {
+    [infoboxnames.getters.currentItem]: (state) => {
       return state.currentItem
+    },
+    [infoboxnames.getters.hasCurrentItem]: (state) => {
+      return state.currentItem !== null
     }
   }
 }
 
-export default Infoboxmodule
+export default infoboxmodule
