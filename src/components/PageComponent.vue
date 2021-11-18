@@ -31,7 +31,7 @@ import { mapGetters } from 'vuex'
 import OpenSeadragon from 'openseadragon'
 import ZoneComponent from '@/components/ZoneComponent.vue'
 import { actions } from '@/store/names'
-import axios from 'axios'
+// import axios from 'axios'
 import tb from '@/toolbox'
 
 /**
@@ -268,7 +268,9 @@ export default {
       return rect
     },
     svgShapeUrl () {
-      return this.page?.svg_shapes
+      const svgurl = this.page?.svg_shapes
+      console.log(svgurl)
+      return svgurl
     },
     activeComplaintId () {
       const newVal = this.$store.getters.activeComplaintId
@@ -321,6 +323,7 @@ export default {
             success: (e) => {
               // when the tiled image is loaded (on success), a previous image is removed
               this.tiledimage = e.item
+              console.log(this.svgShapeUrl)
             },
             x,
             y,
@@ -333,7 +336,7 @@ export default {
           this.viewer.addTiledImage(tisrc)
 
           const svgContainer = this.$el.querySelector('.svg-shapes')
-          // console.log(svgContainer)
+          console.log(this.svgShapeUrl, svgContainer)
           if (this.svgShapeUrl && svgContainer) {
             // svgContainer.innerHTML = '<img width="100%" src="' + page.svg_shapes + '" />'
             const callback = ({ data }) => {
@@ -349,9 +352,9 @@ export default {
               svgContainer.addEventListener('click', this.clickShapes)
             }
             const url = this.svgShapeUrl
-            axios.get(url).then(callback)
+            // axios.get(url).then(callback)
             // TODO why does this sometimes not work???
-            // this.$store.dispatch('getData', { url, callback })
+            this.$store.dispatch('getData', { url, callback })
           }
         } else {
           this.tiledimage = null
