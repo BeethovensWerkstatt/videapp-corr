@@ -3,7 +3,19 @@
 
 @import "./variables.scss";
 
+.revision.trans svg {
+   .add g:not([class*="bounding-box"]) {
+      stroke: green;
+      fill: green;
+   }
+}
+
 svg {
+
+   text {
+      cursor: default;
+   }
+
   .measure.invis {
     .staff > path {
       stroke: transparent;
@@ -13,11 +25,6 @@ svg {
       stroke: transparent;
       fill: transparent;
     }
-  }
-
-  .add g:not([class*="bounding-box"]) {
-    stroke: green;
-    fill: green;
   }
 
   .grpSym > path {
@@ -36,7 +43,7 @@ svg {
   }
 
   g rect.bg {
-    opacity: 20%;
+    fill: rgba(0,0,255,.2);
   }
 
   g.activeComplaint path {
