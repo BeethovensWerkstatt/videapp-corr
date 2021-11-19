@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div>
-      <btn @click="openComplaints" size="sm">
+    <div id="monitaBtn" @click="openComplaints">
+      <i class="icon icon-menu"></i>
         {{ $t('terms.openComplaintsList') }}
-      </btn>
+
     </div>
   </div>
 </template>
@@ -26,5 +26,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+   #monitaBtn {
+      text-align: left;
+      cursor: pointer;
+      i {
+         position: relative;
+         top: -2px;
+         margin-right: .2rem;
+      }
+   }
 </style>
