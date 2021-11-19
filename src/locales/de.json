@@ -20,7 +20,8 @@
       "revision-object": "Revisionsobject",
       "text-operation": "Textoperation",
       "classification": "Klassifikation",
-      "context": "Kontextzitat"
+      "context": "Kontextzitat",
+      "implementation": "Änderungsimperativ"
     },
     "transcript": {
       "annot": "annotierte Transkription"

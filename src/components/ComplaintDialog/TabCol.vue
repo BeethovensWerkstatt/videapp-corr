@@ -142,11 +142,8 @@ export default {
       return label
     },
     tags () {
-      if (this.state === 'revision') {
-        // console.log(this.row?.tags)
-        return this.row?.tags
-      }
-      return undefined
+      // console.log(this.row?.tags)
+      return this.row?.tags
     },
     anno () {
       // console.log(this.row[this.state])

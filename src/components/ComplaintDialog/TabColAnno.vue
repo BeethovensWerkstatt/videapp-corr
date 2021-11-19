@@ -1,7 +1,7 @@
 <template>
   <div class="annotext" :class="{ ['anno-' + state]: true, anno: true, [state]: true }">
     <h2>{{ $t("terms.complaint.description") }}</h2>
-    <div class="tags" v-if="tags">
+    <div class="tags" v-if="tags && state === 'revision'">
       <!-- objects, classes, context, operation -->
       <div class="objects" v-if="tags['objects'].length > 0">
         <span class="title">{{ $t('terms.complaint.revision-object') }}: </span>
@@ -18,6 +18,12 @@
       <div class="context" v-if="tags['context'].length > 0">
         <span class="title">{{ $t('terms.complaint.context') }}: </span>
         <span v-for="(o,i) in tags['context']" :key="o + '_' + i"><span v-if="i > 0">, </span>{{ $t('taxonomy.' + o) }}</span>
+      </div>
+    </div>
+    <div class="tags" v-if="tags && state === 'post'">
+      <div class="implementation" v-if="tags['implementation'].length > 0">
+        <span class="title">{{ $t('terms.complaint.implementation') }}: </span>
+        <span v-for="(o,i) in tags['implementation']" :key="o + '_' + i"><span v-if="i > 0">, </span>{{ $t('taxonomy.' + o) }}</span>
       </div>
     </div>
     <div class="comment" v-html="anno"/>
