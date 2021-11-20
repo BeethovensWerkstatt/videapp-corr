@@ -36,6 +36,25 @@
     "staff": "System"
   },
   "taxonomy": {
+    "document_type": "",
+    "bw_observation_type": "",
+    "bw_implementation_completeness": "",
+    "bw_file_type": "",
+    "bw_monitum_comment": "Kommentar",
+    "bw_monitum_classification": "Klassifizierung",
+    "bw_monitum_textoperation": "Textoperation",
+    "bw_monitum_object": "Revisionsobjekt",
+    "bw_monitum_kontext": "Kontextzitat",
+    "bw_monitum_konkordanz": "Konkordanz",
+    "music.print": "Druck (Musik)",
+    "music.manuscript": "Manuskript (Musik)",
+    "letter.manuscript": "Manuskript (Brief)",
+    "bw_monitum": "Monitum",
+    "bw_monitum_context": "",
+    "bw_monitum_effect": "",
+    "bw_fully_implemented": "vollständig umgesetzt",
+    "bw_partially_implemented": "teilweise umgesetzt",
+    "bw_not_implemented": "nicht umgesetzt",
     "bw_classification_korrektur": "Korrektur",
     "bw_classification_variante": "Variante",
     "bw_classification_textpraezisierung": "Textpräzisierung",
@@ -60,6 +79,15 @@
     "bw_kontext_korrekt": "korrekt",
     "bw_kontext_unvollstaendig": "unvollständig",
     "bw_kontext_korrumpiert": "korrumpiert",
-    "bw_konkordanz": "konkordanz"
-      }
+    "bw_konkordanz": "konkordanz",
+    "Korrektur": "Korrektur",
+    "Variante": "Variante",
+    "Textpräzisierung": "Textpräzisierung",
+    "Schriftbildliche_Verbesserung": "Schriftbildliche Verbesserung",
+    "paratextliche_Eingriffe": "paratextliche Eingriffe",
+    "bw_module3_corpusFile": "",
+    "bw_module3_textFile": "",
+    "bw_module3_linkingFile": "",
+    "bw_module3_documentFile": ""
+  }
 }

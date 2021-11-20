@@ -166,6 +166,8 @@ const complaintsModule = {
         try {
           const { data } = await axios.get(complaint['@id'])
           complaint = { ...data, ...complaint }
+          console.log(data.tags, complaint.tags)
+          complaint.tags = data.tags
           complaint.loading = false
           // console.log(complaint)
           commit(mut.MODIFY_COMPLAINT, complaint)
