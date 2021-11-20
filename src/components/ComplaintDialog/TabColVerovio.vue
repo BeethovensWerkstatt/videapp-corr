@@ -1,6 +1,6 @@
 <template>
   <div class="ComplaintDialogVOSDouter">
-    <h2>{{ label }}</h2>
+    <h2 :class="'heading_' + layer">{{ label }} <a v-if="glossaryLink !== ''" class="glossaryLink" target="_blank" rel="noopener noreferrer" :href="glossaryLink"><i class="icon icon-link"></i></a></h2>
     <div :id="divid" class="ComplaintDialogVOSD" :class="{ [state]: true, [layer]: true, [state + '-' + layer]: true }">
       <div :id="verovioSvgContainerId" v-html="svg" />
     </div>
@@ -140,6 +140,17 @@ export default {
     },
     overlay () {
       return this.viewer ? this.viewer.getOverlayById(this.verovioSvgContainer) : undefined
+    },
+    glossaryLink () {
+      if (this.$props.label === 'annotierte Transkription') {
+        return ''
+      } else if (this.$props.label === 'Zieltext') {
+        return 'https://beethovens-werkstatt.de/glossary/zieltext/'
+      } else if (this.$props.label === 'Ausgangstext') {
+        return 'https://beethovens-werkstatt.de/glossary/ausgangstext/'
+      } else {
+        return ''
+      }
     }
   },
   methods: {
@@ -262,10 +273,25 @@ export default {
   h2 {
       text-align: left;
       font-size: .8rem;
-      font-weight: 100;
+      font-weight: 500;
       margin: 0.5rem 0rem .2rem;
-      padding: 0;
+      padding: .3rem;
       background-color: #f5f5f5;
+      border: 1px solid #333333;
+      cursor: default;
+
+      &.heading_trans {
+         background-color: #A7C4E5; // #6CA5B4;
+      }
+
+      &.heading_text {
+         background-color: #AFEC77; // #A7C4E5;
+      }
+
+      .glossaryLink {
+         color: #666666;
+         cursor: question;
+      }
   }
 
   .ComplaintDialogVOSD {

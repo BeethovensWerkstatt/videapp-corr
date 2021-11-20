@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2 @click="openPage">{{ $t("terms.document") }}: {{ label }}</h2>
+    <h2 @click="openPage">{{ $t("terms.document") }}: <span class="sourceSiglum">{{ label }}</span></h2>
     <div :id="divid" class="ComplaintDialogOSD" :class="{ ['facs-' + state]: true, facs: true, [state]: true }" :style="styles">
       <div :id="ovlid" class="complaint-region" />
     </div>
@@ -185,11 +185,18 @@ export default {
 <style lang="scss" scoped>
 
 h2 {
-    text-align: left;
-    font-size: .9rem;
-    font-weight: 400;
-    margin: 0 0 .2rem;
-    padding: 0;
+   text-align: left;
+   font-size: .8rem;
+   font-weight: 500;
+   margin: 0.5rem 0rem .2rem;
+   padding: .3rem;
+   background-color: #6CA5B4;
+   border: 1px solid #333333;
+   cursor: default;
+
+   .sourceSiglum {
+     font-weight: 700;
+   }
 }
 
 .ComplaintDialogOSD {
