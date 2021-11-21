@@ -8,7 +8,7 @@
             {{ toRoman(activeComplaint.movement.n) }}. {{ activeComplaint.movement.label }} {{ (activeComplaint.label !== '') ? ', ' + activeComplaint.label : ''}}, Takt: {{ measures }}
           </div>
           <div class="measures">
-            Monitum <a class="monitumLink" :href="activeComplaint['@id']" target="_blank">1</a>
+            Monitum <a class="monitumLink" :href="activeComplaint['@id']" target="_blank" rel="noopener noreferrer" :title="monitumId">{{ monitumId.split('-')[0] }}</a>
           </div>
         </div>
         <div class="close">
@@ -169,6 +169,11 @@ export default {
       }
       // console.log(styles)
       return styles
+    },
+    monitumId () {
+      let id = this.activeComplaintId.split('/').splice(-1)[0]
+      id = id.substring(0, id.length - 5)
+      return id
     }
   },
   methods: {
@@ -363,7 +368,8 @@ export default {
         font-size: 90%;
 
         .monitumLink {
-          font-weight: 700;
+          // font-weight: 700;
+          color: rgb(44, 62, 80);
         }
       }
     }
