@@ -16,7 +16,7 @@ import Complaints from './complaints'
 import Verovio from './vrv'
 import Infobox from './infobox'
 
-import { mutations } from './names'
+import { state, mutations, getters } from './names'
 
 Vue.use(Vuex)
 
@@ -27,14 +27,14 @@ const store = new Vuex.Store({
    * @property {String} version - version string containing date and git hash
    */
   state: {
-    version: 'N/A'
+    [state.version]: 'N/A'
   },
   /**
    * @namespace store.mutations
    * @memberof store
    */
   mutations: {
-    SET_VERSION (state, version) {
+    [mutations.SET_VERSION] (state, version) {
       console.log('Version:\n' + version?.version)
       state.version = version
     }
@@ -51,9 +51,7 @@ const store = new Vuex.Store({
    * @property {String} version - git commt info
    */
   getters: {
-    version (state) {
-      return state.version
-    }
+    [getters.version]: (state) => state.version
   },
   modules: {
     runtime,

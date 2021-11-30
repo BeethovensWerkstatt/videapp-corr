@@ -16,6 +16,7 @@ import { complaintsNames } from './complaints'
  */
 
 export const state = {
+  verson: 'version',
   ...runtimeNames.state,
   ...optionNames.state,
   ...DAnames.state,
@@ -28,6 +29,7 @@ export const state = {
   ...complaintsNames.state
 }
 export const getters = {
+  verson: 'version',
   ...runtimeNames.getters,
   ...optionNames.getters,
   ...DAnames.getters,
@@ -41,6 +43,7 @@ export const getters = {
 }
 
 export const mutations = {
+  SET_VERSION: 'SET_VERSION',
   ...runtimeNames.mutations,
   ...optionNames.mutations,
   ...DAnames.mutations,
