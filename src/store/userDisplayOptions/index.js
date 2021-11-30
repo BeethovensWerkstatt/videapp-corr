@@ -3,7 +3,7 @@ export const optionNames = {
     sourceHorizontalGap: 'sourceHorizontalGap',
     sourceVerticalGap: 'sourceVerticalGap',
     sourceHeaderHeight: 'sourceHeaderHeight',
-    sourceMarginWidth: 'sourceMarkerWidth',
+    sourceMarginWidth: 'sourceMarginWidth',
     sourceMarkerHeight: 'sourceMarkerHeight',
     displayMeasures: 'displayMeasures',
     complaintFacsimileAspect: 'complaintFacsimileAspect',

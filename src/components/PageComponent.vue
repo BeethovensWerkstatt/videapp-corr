@@ -30,7 +30,7 @@
 import { mapGetters } from 'vuex'
 import OpenSeadragon from 'openseadragon'
 import ZoneComponent from '@/components/ZoneComponent.vue'
-import { actions } from '@/store/names'
+import { getters, actions } from '@/store/names'
 import axios from 'axios'
 import tb from '@/toolbox'
 
@@ -137,7 +137,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['viewer', 'scale', 'displayMeasures']),
+    ...mapGetters([getters.viewer, getters.scale, getters.displayMeasures]),
     tiledimage: {
       get () {
         return this.tidata

@@ -60,6 +60,7 @@ export default {
   },
   watch: {
     position () {
+      // console.log(this.position)
       this.updatePosition()
     }
   },

@@ -48,17 +48,18 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { getters, mutations } from '@/store/names'
 
 export default {
   name: 'SelectComplaintViews',
   computed: {
-    ...mapGetters(['complaintDisplaySelect']),
+    ...mapGetters([getters.complaintDisplaySelect]),
     select: {
       get () {
         return this.complaintDisplaySelect
       },
       set (sel) {
-        this.$store.commit('SET_COMPLAINT_DISPLAY_SELECT', sel)
+        this.$store.commit(mutations.SET_COMPLAINT_DISPLAY_SELECT, sel)
       }
     },
     columnTitle () {

@@ -116,9 +116,11 @@ export default {
       }, this.position, OpenSeadragon.TOP_CENTER)
       this.viewer.addHandler('zoom', this.doResize)
     }
+    // console.log(this.position, this.dragHandle)
   },
   watch: {
     position () {
+      // console.log(this.position)
       this.updatePosition()
     }
   },
