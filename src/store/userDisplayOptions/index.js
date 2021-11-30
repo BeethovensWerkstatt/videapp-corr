@@ -1,4 +1,35 @@
-import { registerMutations, registerActions } from '../names'
+export const optionNames = {
+  state: {
+    sourceHorizontalGap: 'sourceHorizontalGap',
+    sourceVerticalGap: 'sourceVerticalGap',
+    sourceHeaderHeight: 'sourceHeaderHeight',
+    sourceMarginWidth: 'sourceMarkerWidth',
+    sourceMarkerHeight: 'sourceMarkerHeight',
+    displayMeasures: 'displayMeasures',
+    complaintFacsimileAspect: 'complaintFacsimileAspect',
+    complaintDisplaySelect: 'complaintDisplaySelect'
+  },
+  mutations: {
+    SET_SOURCE_HEADER_HEIGHT: 'SET_SOURCE_HEADER_HEIGHT',
+    SET_SOURCE_MARGIN_WIDTH: 'SET_SOURCE_MARGIN_WIDTH',
+    SET_SOURCE_HORIZONTAL_GAP: 'SET_SOURCE_HORIZONTAL_GAP',
+    SET_SOURCE_VERTICAL_GAP: 'SET_SOURCE_VERTICAL_GAP',
+    SET_DISPLAY_MEASURES: 'SET_DISPLAY_MEASURES',
+    SET_COMPLAINT_DISPLAY_SELECT: 'SET_COMPLAINT_DISPLAY_SELECT',
+    SET_COMPLAINT_FACSIMILE_ASPECT: 'SET_COMPLAINT_FACSIMILE_ASPECT'
+  },
+  actions: {},
+  getters: {
+    sourceHeaderHeight: 'sourceHeaderHeight',
+    sourceMarginWidth: 'sourceMarginWidth',
+    sourceHorizontalGap: 'sourceHorizontalGap',
+    sourceVerticalGap: 'sourceVerticalGap',
+    sourceMarkerHeight: 'sourceMarkerHeight',
+    displayMeasures: 'displayMeasures',
+    complaintFacsimileAspect: 'complaintFacsimileAspect',
+    complaintDisplaySelect: 'complaintDisplaySelect'
+  }
+}
 
 /**
  * @namespace store.userDisplayOptions
@@ -9,14 +40,14 @@ const userDisplayOptions = {
    * @property {Boolean} displayMeasures if true show measure frames
    */
   state: {
-    sourceHorizontalGap: 10, // mm
-    sourceVerticalGap: 50, // mm
-    sourceHeaderHeight: 20, // mm
-    sourceMarginWidth: 25, // mm
-    sourceMarkerHeight: 15, // mm
-    displayMeasures: false,
-    complaintFacsimileAspect: '16 / 9',
-    complaintDisplaySelect: {
+    [optionNames.state.sourceHorizontalGap]: 10, // mm
+    [optionNames.state.sourceVerticalGap]: 50, // mm
+    [optionNames.state.sourceHeaderHeight]: 20, // mm
+    [optionNames.state.sourceMarginWidth]: 25, // mm
+    [optionNames.state.sourceMarkerHeight]: 15, // mm
+    [optionNames.state.displayMeasures]: false,
+    [optionNames.state.complaintFacsimileAspect]: '16 / 9',
+    [optionNames.state.complaintDisplaySelect]: {
       dialog: false,
       ante: true,
       rvsn: true,
@@ -35,28 +66,28 @@ const userDisplayOptions = {
      * set height of source headerbar in millimeter
      * @param {Number} height height of headerbar
      */
-    SET_SOURCE_HEADER_HEIGHT (state, height) {
+    [optionNames.mutations.SET_SOURCE_HEADER_HEIGHT]: (state, height) => {
       state.sourceHeaderHeight = height
     },
     /**
      * set width of source margin regions
      * @param {Number} width width of margin bars
      */
-    SET_SOURCE_MARGIN_WIDTH (state, width) {
+    [optionNames.mutations.SET_SOURCE_MARGIN_WIDTH]: (state, width) => {
       state.sourceMarginWidth = width
     },
     /**
      * set width of gap between source for automatic alignment
      * @param {Number} gap width of gap
      */
-    SET_SOURCE_HORIZONTAL_GAP (state, gap) {
+    [optionNames.mutations.SET_SOURCE_HORIZONTAL_GAP]: (state, gap) => {
       state.sourceHorizontalGap = gap
     },
     /**
      * set height of gap between source for automatic alignment
      * @param {Number} gap height of gap
      */
-    SET_SOURCE_VERTICAL_GAP (state, gap) {
+    [optionNames.mutations.SET_SOURCE_VERTICAL_GAP]: (state, gap) => {
       state.sourceVerticalGap = gap
     },
     /**
@@ -64,14 +95,14 @@ const userDisplayOptions = {
      * @memberof store.osd.mutations
      * @param {Boolean} display set displayMeasures flag
      */
-    SET_DISPLAY_MEASURES (state, display) {
+    [optionNames.mutations.SET_DISPLAY_MEASURES]: (state, display) => {
       state.displayMeasures = display
     },
     /**
      * set default selected views in complaint dialog
      * @param {Object} payload properties ante, rvsn, post, facs, trns, text, anno
      */
-    SET_COMPLAINT_DISPLAY_SELECT (state, payload) {
+    [optionNames.mutations.SET_COMPLAINT_DISPLAY_SELECT]: (state, payload) => {
       const select = { ...state.complaintDisplaySelect }
       const keys = Object.keys(select)
       for (const k of keys) {
@@ -84,7 +115,7 @@ const userDisplayOptions = {
     /**
      * @param {String} aspect ratio like '16 / 9'
      */
-    SET_COMPLAINT_FACSIMILE_ASPECT (state, aspect) {
+    [optionNames.mutations.SET_COMPLAINT_FACSIMILE_ASPECT]: (state, aspect) => {
       state.complaintFacsimileAspect = aspect
     }
   },
@@ -98,18 +129,15 @@ const userDisplayOptions = {
    * @property {Boolean} displayMeasures if true show measure frames
    */
   getters: {
-    sourceHeaderHeight: (state) => state.sourceHeaderHeight,
-    sourceMarginWidth: (state) => state.sourceMarginWidth,
-    sourceHorizontalGap: (state) => state.sourceHorizontalGap,
-    sourceVerticalGap: (state) => state.sourceVerticalGap,
-    sourceMarkerHeight: (state) => state.sourceMarkerHeight,
-    displayMeasures: (state) => state.displayMeasures,
-    complaintFacsimileAspect: (state) => state.complaintFacsimileAspect,
-    complaintDisplaySelect: (state) => state.complaintDisplaySelect
+    [optionNames.getters.sourceHeaderHeight]: (state) => state.sourceHeaderHeight,
+    [optionNames.getters.sourceMarginWidth]: (state) => state.sourceMarginWidth,
+    [optionNames.getters.sourceHorizontalGap]: (state) => state.sourceHorizontalGap,
+    [optionNames.getters.sourceVerticalGap]: (state) => state.sourceVerticalGap,
+    [optionNames.getters.sourceMarkerHeight]: (state) => state.sourceMarkerHeight,
+    [optionNames.getters.displayMeasures]: (state) => state.displayMeasures,
+    [optionNames.getters.complaintFacsimileAspect]: (state) => state.complaintFacsimileAspect,
+    [optionNames.getters.complaintDisplaySelect]: (state) => state.complaintDisplaySelect
   }
 }
-
-registerMutations(userDisplayOptions.mutations)
-registerActions(userDisplayOptions.actions)
 
 export default userDisplayOptions

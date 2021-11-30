@@ -1,6 +1,17 @@
 import verovio from 'verovio'
 
-import { registerMutations, registerActions } from '../names'
+export const verovioNames = {
+  state: {
+    vrvInitFinished: 'vrvInitFinished'
+  },
+  mutations: {},
+  actions: {
+    initVerovio: 'initVerovio'
+  },
+  getters: {
+    vrvToolkit: 'vrvToolkit'
+  }
+}
 
 /**
  * @namespace store.verovio
@@ -49,8 +60,5 @@ const verovioModule = {
     }
   }
 }
-
-registerMutations(verovioModule.mutations)
-registerActions(verovioModule.actions)
 
 export default verovioModule

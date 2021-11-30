@@ -1,6 +1,10 @@
 import { runtimeNames } from './runtime'
+import { optionNames } from './userDisplayOptions'
 import { DAnames } from './dataAccess'
 import { OSDnames } from './osd'
+import { verovioNames } from './vrv'
+import { worksNames } from './works/names'
+import { sourcesNames } from './sources'
 import { pagesNames } from './pages'
 import { infoboxnames } from './infobox'
 import { complaintsNames } from './complaints'
@@ -13,16 +17,24 @@ import { complaintsNames } from './complaints'
 
 export const state = {
   ...runtimeNames.state,
+  ...optionNames.state,
   ...DAnames.state,
   ...OSDnames.state,
+  ...verovioNames.state,
+  ...worksNames.state,
+  ...sourcesNames.state,
   ...pagesNames.state,
   ...infoboxnames.state,
   ...complaintsNames.state
 }
 export const getters = {
   ...runtimeNames.getters,
+  ...optionNames.getters,
   ...DAnames.getters,
   ...OSDnames.getters,
+  ...verovioNames.getters,
+  ...worksNames.getters,
+  ...sourcesNames.getters,
   ...pagesNames.getters,
   ...infoboxnames.getters,
   ...complaintsNames.getters
@@ -30,8 +42,12 @@ export const getters = {
 
 export const mutations = {
   ...runtimeNames.mutations,
+  ...optionNames.mutations,
   ...DAnames.mutations,
   ...OSDnames.mutations,
+  ...verovioNames.mutations,
+  ...worksNames.mutations,
+  ...sourcesNames.mutations,
   ...pagesNames.mutations,
   ...infoboxnames.mutations,
   ...complaintsNames.mutations
@@ -39,37 +55,15 @@ export const mutations = {
 
 export const actions = {
   ...runtimeNames.actions,
+  ...optionNames.actions,
   ...DAnames.actions,
   ...OSDnames.actions,
+  ...verovioNames.actions,
+  ...worksNames.actions,
+  ...sourcesNames.actions,
   ...pagesNames.actions,
   ...infoboxnames.actions,
   ...complaintsNames.actions
 }
 
-/**
- * register action name
- * @memberof store.names
- * @param {Object} actions
- */
-export const registerMutations = function (obj) {
-  for (const n in obj) {
-    if (obj[n] instanceof Function) {
-      mutations[n] = n
-    }
-  }
-}
-
-/**
- * register action name
- * @memberof store.names
- * @param {Object} actions
- */
-export const registerActions = function (obj) {
-  for (const n in obj) {
-    if (obj[n] instanceof Function) {
-      actions[n] = n
-    }
-  }
-}
-
-export default { actions, mutations, getters, state, registerMutations, registerActions }
+export default { actions, mutations, getters, state }

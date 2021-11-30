@@ -1,7 +1,8 @@
 // import axios from 'axios'
 import config from '@/config'
 import { startProc, finishProc } from '..'
-import { mutations, actions, registerMutations, registerActions } from '../names'
+import { worksNames } from './names'
+import { mutations, actions } from '../names'
 import tb from '@/toolbox'
 
 /**
@@ -13,7 +14,7 @@ const worksModule = {
    * @property {Object[]} works available works
    */
   state: {
-    works: []
+    [worksNames.state.works]: []
   },
   /**
    * @namespace store.works.mutations
@@ -24,7 +25,7 @@ const worksModule = {
      * @memberof store.works.mutations
      * @param {object} work
      */
-    LOAD_WORK (state, work) {
+    [worksNames.mutations.LOAD_WORK] (state, work) {
       const works = [...state.works]
       if (!work.id) {
         work.id = tb.atId(work['@id'])
@@ -45,7 +46,7 @@ const worksModule = {
      * load works
      * @memberof store.works.actions
      */
-    async loadWorks ({ commit, dispatch }) {
+    async [worksNames.actions.loadWorks] ({ commit, dispatch }) {
       startProc()
       try {
         const url = config.api.works.url
@@ -69,13 +70,10 @@ const worksModule = {
    * @property {Object[]} works array of available works
    */
   getters: {
-    works: (state) => {
+    [worksNames.getters.works]: (state) => {
       return state.works
     }
   }
 }
-
-registerMutations(worksModule.mutations)
-registerActions(worksModule.actions)
 
 export default worksModule
