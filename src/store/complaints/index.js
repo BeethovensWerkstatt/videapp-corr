@@ -1,38 +1,9 @@
 import axios from 'axios'
 import { startProc, finishProc } from '..'
+import { complaintsNames } from './names'
 import { mutations as mut, actions as act } from '../names'
 import tb from '@/toolbox'
 // import Complaint from '@/data/Complaint'
-
-export const complaintsNames = {
-  state: {
-    showComplaintsList: 'showComplaintsList',
-    complaints: 'complaints',
-    activeComplaintId: 'activeComplaintId',
-    displayComplaint: 'displayComplaint'
-  },
-  mutations: {
-    COMPLAINTS_LIST: 'COMPLAINTS_LIST',
-    LOAD_COMPLAINT: 'LOAD_COMPLAINT',
-    MODIFY_COMPLAINT: 'MODIFY_COMPLAINT',
-    ACTIVATE_COMPLAINT: 'ACTIVATE_COMPLAINT',
-    DISPLAY_COMPLAINT: 'DISPLAY_COMPLAINT'
-  },
-  actions: {
-    loadComplaints: 'loadComplaints',
-    loadComplaint: 'loadComplaint',
-    activateComplaint: 'activateComplaint',
-    openComplaintComparison: 'openComplaintComparison'
-  },
-  getters: {
-    showComplaintsList: 'showComplaintsList',
-    complaints: 'complaints',
-    workComplaints: 'workComplaints',
-    displayComplaint: 'displayComplaint',
-    activeComplaintId: 'activeComplaintId',
-    activeComplaint: 'activeComplaint'
-  }
-}
 
 /**
  * @namespace store.complaints

@@ -7,7 +7,7 @@ import { worksNames } from './works/names'
 import { sourcesNames } from './sources'
 import { pagesNames } from './pages'
 import { infoboxnames } from './infobox'
-import { complaintsNames } from './complaints'
+import { complaintsNames } from './complaints/names'
 
 /**
  * register action and mutation names
