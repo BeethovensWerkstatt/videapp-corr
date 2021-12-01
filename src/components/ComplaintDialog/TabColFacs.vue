@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2 @click="openPage">{{ $t("terms.document") }}: <span class="sourceSiglum">{{ label }}</span> <input type="checkbox" v-model="pinned" /></h2>
+    <h2 @click="openPage">{{ $t("terms.document") }}: <span class="sourceSiglum">{{ label }}</span> <input type="checkbox" v-model="pinned" @change="rezoom(500)" /></h2>
     <div :id="divid" class="ComplaintDialogOSD" :class="{ ['facs-' + state]: true, facs: true, [state]: true }" :style="styles">
       <div :id="ovlid" class="complaint-region" />
     </div>
