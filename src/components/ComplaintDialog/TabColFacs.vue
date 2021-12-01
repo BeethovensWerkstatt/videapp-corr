@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2 @click="openPage">{{ $t("terms.document") }}: <span class="sourceSiglum">{{ label }}</span></h2>
+    <h2 @click="openPage">{{ $t("terms.document") }}: <span class="sourceSiglum">{{ label }}</span> <input type="checkbox" v-model="pinned" /></h2>
     <div :id="divid" class="ComplaintDialogOSD" :class="{ ['facs-' + state]: true, facs: true, [state]: true }" :style="styles">
       <div :id="ovlid" class="complaint-region" />
     </div>
@@ -26,7 +26,8 @@ export default {
   data () {
     return {
       viewer: undefined,
-      rezoomTime: Date.now()
+      rezoomTime: Date.now(),
+      pinned: false
     }
   },
   props: {
@@ -159,7 +160,7 @@ export default {
       return () => {
         this.rezoomTime = Date.now()
         setTimeout(() => {
-          if (Date.now() - this.rezoomTime >= timeout) {
+          if (Date.now() - this.rezoomTime >= timeout && !this.pinned) {
             this.viewer.viewport.fitBounds(this.fitBounds, timeout === 0)
           }
         }, timeout)
