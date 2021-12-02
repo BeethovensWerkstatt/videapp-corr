@@ -8,6 +8,18 @@
       stroke: green;
       fill: green;
    }
+
+   .del g:not([class*="bounding-box"]) {
+      stroke: red;
+      fill: red;
+   }
+}
+
+.trans svg {
+   .sic g:not([class*="bounding-box"]) {
+      stroke: #d825da;
+      fill: #d825da;
+   }
 }
 
 svg {
