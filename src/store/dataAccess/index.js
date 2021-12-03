@@ -1,19 +1,7 @@
 import PouchDB from 'pouchdb'
 import axios from 'axios'
 import config from '@/config'
-
-export const DAnames = {
-  state: {
-    db: 'db'
-  },
-  mutations: {
-    CDB_STORE_DATA: 'CDB_STORE_DATA'
-  },
-  actions: {
-    getData: 'getData'
-  },
-  getters: {}
-}
+import DAnames from './names'
 
 /**
  * @namespace store.data_access

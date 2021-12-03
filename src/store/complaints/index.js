@@ -18,7 +18,8 @@ const complaintsModule = {
     [complaintsNames.state.showComplaintsList]: false,
     [complaintsNames.state.complaints]: [],
     [complaintsNames.state.activeComplaintId]: null,
-    [complaintsNames.state.displayComplaint]: false
+    [complaintsNames.state.displayComplaint]: false,
+    [complaintsNames.state.complaintFilter]: null
   },
   /**
    * @namespace store.complaints.mutations

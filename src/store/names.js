@@ -1,6 +1,6 @@
 import { runtimeNames } from './runtime'
 import { optionNames } from './userDisplayOptions'
-import { DAnames } from './dataAccess'
+import { DAnames } from './dataAccess/names'
 import { OSDnames } from './osd'
 import { verovioNames } from './vrv'
 import { worksNames } from './works/names'
