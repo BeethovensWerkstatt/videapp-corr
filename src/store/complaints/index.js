@@ -187,7 +187,8 @@ const complaintsModule = {
   getters: {
     [complaintsNames.getters.showComplaintsList]: (state) => state.showComplaintsList,
     [complaintsNames.getters.complaints]: (state, getters) => {
-      return state.complaints.map(c => {
+      const complaints = state.complaintFilter ? state.complaints.filter(state.complaintFilter) : state.complaints
+      return complaints.map(c => {
         const mdiv = c.affects[0]?.mdiv
         return {
           ...c,
