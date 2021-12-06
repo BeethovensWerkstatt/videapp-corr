@@ -33,6 +33,11 @@ svg {
       stroke: transparent;
     }
 
+    .barLine, .barLine path {
+      stroke: transparent;
+      fill: transparent;
+    }
+
     .dir.metaMark.rightmar + .barLineAttr > path {
       stroke: transparent;
       fill: transparent;
