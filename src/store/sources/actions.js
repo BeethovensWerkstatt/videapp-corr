@@ -203,15 +203,24 @@ const actions = {
                 // hack !!!
                 const sid = (new Url(source.id)).path.elements.pop()
                 switch (sid) {
+                  // Op. 73
                   case 'US-NYj_31_B393cp_no.5_errata.json':
                     source.position = { x: 838, y: 220 }
                     break
                   case 'D-BNba_C73-9.json':
                     source.position = { x: 316, y: 220 }
                     break
+                  case 'D-BNba_HCB_BBr_9.json':
+                    source.position = { x: 838, y: 620 }
+                    break
                   case 'A-Wn_SH.Beethoven.323.json':
                     source.position = { x: 1370, y: 220 }
                     break
+                  // Op. 120
+                  // case 'D-BNba_Slg.H.C.Bodmer_HCB_C_Md_42.json':
+                  // case 'D-BNba_HCB_Mh_60.json':
+                  // case 'D-BNba_NE_294.json':
+                  // case 'D-BNba_Slg.H.C.Bodmer_HCB_Mh_55.json':
                 }
 
                 // TODO unfold

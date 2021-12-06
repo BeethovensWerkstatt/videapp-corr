@@ -143,12 +143,12 @@ const complaintsModule = {
           complaint.loading = false
           // console.log(complaint)
           commit(mut.MODIFY_COMPLAINT, complaint)
-          if (typeof callback === 'function') {
-            callback(complaint)
-          }
         } finally {
           finishProc()
         }
+      }
+      if (typeof callback === 'function') {
+        callback(complaint)
       }
     },
     async [complaintsNames.actions.openComplaintComparison] ({ dispatch, commit, state }, complaintId) {
@@ -167,7 +167,7 @@ const complaintsModule = {
       })
 
       if (complaint === null) {
-        console.log('Unable to find complaind from ID ' + complaintId)
+        console.log('Unable to find complaint from ID ' + complaintId)
         return null
       }
 

@@ -207,6 +207,9 @@ export default {
       if (textStatus) {
         textStatus.forEach(stat => {
           // console.log(stat.iiif[0]?.on.full)
+          if (stat.tei) {
+            console.log('TEI', stat.tei)
+          }
           docs.push({
             img: {
               // TODO scaling? NO goto OSD
@@ -216,12 +219,14 @@ export default {
               label: stat.labels?.source + ', ' + stat.labels?.pages // 'Sigel / Datum'
             }
           })
-          // TODO where is the right MEI
           docs.push({
             mei: {
               url: stat.mei,
               trans: 'dipl',
               label: 'Transkription' // 'transcription of ' + stat.labels?.source // 'Annot. Transkript.'
+            },
+            tei: {
+              url: stat.tei
             }
           })
           docs.push({
@@ -231,7 +236,6 @@ export default {
               label: 'Text'
             }
           })
-          // TODO we need the complaint text here
           docs.push({
             anno: stat.comment
           })
