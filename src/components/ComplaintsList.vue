@@ -103,8 +103,18 @@ export default {
     },
     complaints () {
       const complaints = this.workComplaints(this.workId)
+      const measures = this.measures
+      const sortComplaints = function (c1, c2) {
+        // TODO work
+        if (c1.movement?.n !== c2.movement?.n) {
+          return c1.movement?.n < c2.movement?.n ? -1 : 1
+        }
+        const m1 = parseInt(measures(c1)?.match(/\d+/))
+        const m2 = parseInt(measures(c2)?.match(/\d+/))
+        return m1 <= m2 ? -1 : 1
+      }
       // console.log(complaints)
-      return complaints
+      return complaints.sort(sortComplaints)
     }
   },
   methods: {

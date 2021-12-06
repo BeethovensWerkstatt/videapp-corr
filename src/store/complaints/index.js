@@ -25,6 +25,11 @@ const complaintsModule = {
    * @namespace store.complaints.mutations
    */
   mutations: {
+    /**
+     * display complaints list dialog
+     * @param {Object} state
+     * @param {Boolean} show
+     */
     [complaintsNames.mutations.COMPLAINTS_LIST] (state, show) {
       state.showComplaintsList = show
     },
@@ -38,7 +43,6 @@ const complaintsModule = {
       const complaints = [...state.complaints]
       complaints.push(complaint)
       state.complaints = complaints
-      // console.log(complaint)
     },
     /**
      * replace complaint
@@ -60,9 +64,19 @@ const complaintsModule = {
       }
       state.complaints = complaints
     },
+    /**
+     * activate complaint
+     * @param {Object} state
+     * @param {String} complaintId
+     */
     [complaintsNames.mutations.ACTIVATE_COMPLAINT] (state, complaintId) {
       state.activeComplaintId = complaintId
     },
+    /**
+     * display complaint
+     * @param {Object} state
+     * @param {Boolean} display
+     */
     [complaintsNames.mutations.DISPLAY_COMPLAINT] (state, display) {
       state.displayComplaint = display
     }
