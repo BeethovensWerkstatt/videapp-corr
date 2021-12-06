@@ -1,11 +1,4 @@
-export const sourceMutationNames = {
-  LOAD_SOURCE: 'LOAD_SOURCE',
-  LOAD_MOVEMENT: 'LOAD_MOVEMENT',
-  MODIFY_SOURCE: 'MODIFY_SOURCE',
-  MOVE_SOURCE: 'MOVE_SOURCE',
-  SET_PAGE: 'SET_PAGE',
-  ACTIVATE_SOURCE: 'ACTIVATE_SOURCE'
-}
+import { sourceMutationNames } from './names'
 
 /**
  * @namespace store.sources.mutations

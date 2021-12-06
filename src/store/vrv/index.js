@@ -1,17 +1,5 @@
 import verovio from 'verovio'
-
-export const verovioNames = {
-  state: {
-    vrvInitFinished: 'vrvInitFinished'
-  },
-  mutations: {},
-  actions: {
-    initVerovio: 'initVerovio'
-  },
-  getters: {
-    vrvToolkit: 'vrvToolkit'
-  }
-}
+import { verovioNames } from './names'
 
 /**
  * @namespace store.verovio
@@ -22,7 +10,7 @@ const verovioModule = {
    * @property {Boolean} vrvInitFinished true if verovio is eventually initialized
    */
   state: {
-    vrvInitFinished: false
+    [verovioNames.state.vrvInitFinished]: false
   },
   mutations: {
   },
@@ -35,7 +23,7 @@ const verovioModule = {
      * @memberof store.verovio.actions
      * @param {Object} context
      */
-    async initVerovio ({ state }) {
+    async [verovioNames.actions.initVerovio] ({ state }) {
       verovio.module.onRuntimeInitialized = () => {
         state.vrvInitFinished = true
       }
@@ -50,7 +38,7 @@ const verovioModule = {
      * @memberof store.verovio.getters
      * @param {Object} state
      */
-    vrvToolkit: (state) => () => {
+    [verovioNames.getters.vrvToolkit]: (state) => () => {
       if (state.vrvInitFinished) {
         // eslint-disable-next-line new-cap
         const vrvToolkit = new verovio.toolkit()

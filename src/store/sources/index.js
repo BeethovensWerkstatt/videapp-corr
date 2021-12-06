@@ -1,18 +1,7 @@
-import mutations, { sourceMutationNames } from './mutations'
-import actions, { sourceActionNames } from './actions'
-import getters, { sourceGetterNames } from './getters'
-
-export const sourcesNames = {
-  state: {
-    movements: 'movements',
-    sources: 'sources',
-    activeSourceId: 'activeSourceId',
-    pages: 'pages'
-  },
-  mutations: sourceMutationNames,
-  actions: sourceActionNames,
-  getters: sourceGetterNames
-}
+import { sourcesNames } from './names'
+import mutations from './mutations'
+import actions from './actions'
+import getters from './getters'
 
 /**
  * @namespace store.sources

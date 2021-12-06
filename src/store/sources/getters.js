@@ -1,18 +1,5 @@
 import { Url } from '@/toolbox/net'
-
-export const sourceGetterNames = {
-  movements: 'movements',
-  getMovementById: 'getMovementById',
-  sources: 'sources',
-  workSources: 'workSources',
-  activeSourceId: 'activeSourceId',
-  activeSource: 'activeSource',
-  getSourceById: 'getSourceById',
-  activeZoneId: 'activeZoneId',
-  activeZone: 'activeZone',
-  getZoneById: 'getZoneById',
-  getPageMarkers: 'getPageMarkers'
-}
+import { sourceGetterNames } from './names'
 
 /**
  * @namespace store.sources.getters
