@@ -122,8 +122,13 @@ const complaintsModule = {
     async [complaintsNames.actions.activateComplaint] ({ dispatch, commit, state }, complaintId) {
       // console.log('activate ' + complaintId)
       if (!complaintId) {
-        commit(complaintsNames.mutations.ACTIVATE_COMPLAINT)
+        commit(mut.ACTIVATE_COMPLAINT)
+        commit(mut.CANCEL_CURRENT_ITEM)
         return
+      }
+      console.log(complaintId, state.activeComplaintId)
+      if (complaintId !== state.activeComplaintId) {
+        commit(mut.CANCEL_CURRENT_ITEM)
       }
       const complaint = state.complaints.find(c => {
         const IdIsURL = complaintId.endsWith('.json')
@@ -152,7 +157,7 @@ const complaintsModule = {
         try {
           const { data } = await axios.get(complaint['@id'])
           complaint = { ...data, ...complaint }
-          console.log(data.tags, complaint.tags)
+          // console.log(data.tags, complaint.tags)
           complaint.tags = data.tags
           complaint.loading = false
           // console.log(complaint)
@@ -186,6 +191,9 @@ const complaintsModule = {
       }
 
       const f = () => {
+        if (complaintId !== state.activeComplaintId) {
+          commit(mut.CANCEL_CURRENT_ITEM)
+        }
         commit(complaintsNames.mutations.ACTIVATE_COMPLAINT, complaintId)
         commit(complaintsNames.mutations.DISPLAY_COMPLAINT, true)
       }

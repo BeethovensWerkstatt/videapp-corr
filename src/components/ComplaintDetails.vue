@@ -1,6 +1,6 @@
 <template>
   <div class="complaint-details">
-     <i id="closeInfobox" class="icon icon-cross" @click="closeDetails"></i>
+    <i id="closeInfobox" class="icon icon-cross" @click="closeDetails"></i>
     <div class="infobox-content" v-if="hasCurrentItem">
       <strong>
          <span v-if="currentItem.bravura !== ''" class="bravura">{{currentItem.bravura}}</span>
@@ -17,10 +17,6 @@
          <i class="icon icon-copy"></i> Komparative Ansicht öffnen.
       </div>
     </div>
-
-    <!--Monitum in T.{{ activeComplaint.affects[0].measures.label }}
-    <btn size="sm" >{{ $t('terms.close')}}</btn>
-    <btn class="distanced">Vergleichsansicht öffnen</btn>-->
   </div>
 </template>
 
