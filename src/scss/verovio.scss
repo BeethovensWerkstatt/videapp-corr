@@ -7,11 +7,21 @@
    .add g:not([class*="bounding-box"]) {
       stroke: green;
       fill: green;
+
+      path {
+        stroke: green;
+        fill: green;
+      }
    }
 
    .del g:not([class*="bounding-box"]) {
       stroke: red;
       fill: red;
+
+      path {
+        stroke: red;
+        fill: red;
+      }
    }
 }
 
@@ -19,6 +29,11 @@
    .sic g:not([class*="bounding-box"]) {
       stroke: #d825da;
       fill: #d825da;
+
+      path {
+        stroke: #d825da;
+        fill: #d825da;
+      }
    }
 }
 
