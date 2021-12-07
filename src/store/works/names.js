@@ -9,6 +9,9 @@ export const worksNames = {
     loadWorks: 'loadWorks'
   },
   getters: {
-    works: 'works'
+    works: 'works',
+    getWork: 'getWork'
   }
 }
+
+export default worksNames

@@ -69,7 +69,7 @@ const infoboxmodule = {
       return state.currentItem
     },
     [infoboxnames.getters.hasCurrentItem]: (state) => {
-      return state.currentItem !== null
+      return !!state.currentItem
     }
   }
 }

@@ -72,7 +72,8 @@ const worksModule = {
   getters: {
     [worksNames.getters.works]: (state) => {
       return state.works
-    }
+    },
+    [worksNames.getters.getWork]: (state) => (id) => state.works.find((w) => w['@id'] === id || w.id === id)
   }
 }
 
