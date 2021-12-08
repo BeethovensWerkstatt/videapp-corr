@@ -201,13 +201,13 @@ const actions = {
                     source.position = { x: 838, y: 220 }
                     break
                   case 'D-BNba_C73-9.json':
-                    source.position = { x: 316, y: 220 }
+                    source.position = { x: 316, y: 390 }
                     break
                   case 'D-BNba_HCB_BBr_9.json':
                     source.position = { x: 838, y: 620 }
                     break
                   case 'A-Wn_SH.Beethoven.323.json':
-                    source.position = { x: 1370, y: 220 }
+                    source.position = { x: 1370, y: 390 }
                     break
                   // Op. 120
                   case 'D-BNba_Slg.H.C.Bodmer_HCB_C_Md_42.json':
