@@ -210,10 +210,18 @@ const actions = {
                     source.position = { x: 1370, y: 220 }
                     break
                   // Op. 120
-                  // case 'D-BNba_Slg.H.C.Bodmer_HCB_C_Md_42.json':
-                  // case 'D-BNba_HCB_Mh_60.json':
-                  // case 'D-BNba_NE_294.json':
-                  // case 'D-BNba_Slg.H.C.Bodmer_HCB_Mh_55.json':
+                  case 'D-BNba_Slg.H.C.Bodmer_HCB_C_Md_42.json':
+                    source.position = { x: 410, y: 185 }
+                    break
+                  case 'D-BNba_HCB_Mh_60.json':
+                    source.position = { x: 1235, y: 333 }
+                    break
+                  case 'D-BNba_NE_294.json':
+                    source.position = { x: 410, y: 590 }
+                    break
+                  case 'D-BNba_Slg.H.C.Bodmer_HCB_Mh_55.json':
+                    source.position = { x: 1235, y: 825 }
+                    break
                 }
 
                 // TODO unfold

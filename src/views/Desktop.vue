@@ -19,7 +19,7 @@
       <zone-info />
       <complaint-info />
       <complaint-details v-if="hasCurrentItem" />
-      <!-- <source-info /> -->
+      <source-info />
     </div>
   </div>
 </template>
@@ -27,7 +27,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import DesktopComponent from '@/components/DesktopComponent'
-// import SourceInfo from '@/components/SourceInfo'
+import SourceInfo from '@/components/SourceInfo'
 import ZoneInfo from '@/components/ZoneInfo.vue'
 import ComplaintsListDialog from '../components/ComplaintsListDialog.vue'
 import ComplaintDialog from '@/components/ComplaintDialog.vue'
@@ -45,7 +45,7 @@ export default {
   name: 'Desktop',
   components: {
     DesktopComponent,
-    // SourceInfo,
+    SourceInfo,
     ZoneInfo,
     ComplaintDialog,
     ComplaintsListDialog,
