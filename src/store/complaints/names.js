@@ -4,7 +4,8 @@ export const complaintsNames = {
     complaints: 'complaints',
     activeComplaintId: 'activeComplaintId',
     displayComplaint: 'displayComplaint',
-    complaintFilter: 'complaintFilter'
+    complaintFilter: 'complaintFilter',
+    complaintSorter: 'complaintSorter'
   },
   mutations: {
     COMPLAINTS_LIST: 'COMPLAINTS_LIST',

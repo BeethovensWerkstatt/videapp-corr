@@ -19,7 +19,8 @@ const complaintsModule = {
     [complaintsNames.state.complaints]: [],
     [complaintsNames.state.activeComplaintId]: null,
     [complaintsNames.state.displayComplaint]: false,
-    [complaintsNames.state.complaintFilter]: null
+    [complaintsNames.state.complaintFilter]: null,
+    [complaintsNames.state.complaintSorter]: null
   },
   /**
    * @namespace store.complaints.mutations
@@ -143,12 +144,14 @@ const complaintsModule = {
         console.error('complaint not found!', complaintId)
         return
       }
+      // TODO: ACTIVATE_COMPLAINT is probably committed twice!
       if (!complaint.loading) {
         const callback = (complaint) => commit(mut.ACTIVATE_COMPLAINT, complaint['@id'])
         dispatch(act.loadComplaint, { complaint, callback })
       }
       commit(complaintsNames.mutations.ACTIVATE_COMPLAINT, complaint['@id'])
     },
+    // activate Next/Prev complaint
     async [complaintsNames.actions.loadComplaint] ({ commit }, { complaint, callback }) {
       if (!complaint.revisionDocs && complaint['@id']) {
         startProc()
@@ -209,8 +212,7 @@ const complaintsModule = {
   getters: {
     [complaintsNames.getters.showComplaintsList]: (state) => state.showComplaintsList,
     [complaintsNames.getters.complaints]: (state, getters) => {
-      const complaints = state.complaintFilter ? state.complaints.filter(state.complaintFilter) : state.complaints
-      const sortComplaints = function (c1, c2) {
+      const stdSorter = function (c1, c2) {
         // TODO work
         const work1 = c1.movement ? getters.getWork(c1.movement?.work) : undefined
         const work2 = c2.movement ? getters.getWork(c2.movement?.work) : undefined
@@ -227,6 +229,8 @@ const complaintsModule = {
         return m1 <= m2 ? -1 : 1
       }
 
+      const complaints = state.complaintFilter ? state.complaints.filter(state.complaintFilter) : state.complaints
+      const sortComplaints = state.complaintSorter ? state.complaintSorter : stdSorter
       const complaintlist = complaints.map(c => {
         const mdiv = c.affects[0]?.mdiv
         return {
