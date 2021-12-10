@@ -18,6 +18,7 @@ export const complaintsNames = {
     loadComplaints: 'loadComplaints',
     loadComplaint: 'loadComplaint',
     activateComplaint: 'activateComplaint',
+    activateSibling: 'activateSibling',
     openComplaintComparison: 'openComplaintComparison'
   },
   getters: {
@@ -26,7 +27,9 @@ export const complaintsNames = {
     workComplaints: 'workComplaints',
     displayComplaint: 'displayComplaint',
     activeComplaintId: 'activeComplaintId',
-    activeComplaint: 'activeComplaint'
+    activeComplaint: 'activeComplaint',
+    previousComplaintId: 'previousComplaintId',
+    nextComplaintId: 'nextComplaintId'
   }
 }
 

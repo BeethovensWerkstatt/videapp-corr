@@ -144,14 +144,20 @@ const complaintsModule = {
         console.error('complaint not found!', complaintId)
         return
       }
-      // TODO: ACTIVATE_COMPLAINT is probably committed twice!
       if (!complaint.loading) {
         const callback = (complaint) => commit(mut.ACTIVATE_COMPLAINT, complaint['@id'])
         dispatch(act.loadComplaint, { complaint, callback })
+      } else {
+        commit(complaintsNames.mutations.ACTIVATE_COMPLAINT, complaint['@id'])
       }
-      commit(complaintsNames.mutations.ACTIVATE_COMPLAINT, complaint['@id'])
     },
-    // activate Next/Prev complaint
+    [complaintsNames.actions.activateSibling] ({ commit, dispatch, getters }, previous) {
+      // Next Complaint ID to activate
+      const ncid = getters[previous ? complaintsNames.getters.previousComplaintId : complaintsNames.getters.nextComplaintId]
+      if (ncid) {
+        dispatch(complaintsNames.actions.openComplaintComparison, ncid)
+      }
+    },
     async [complaintsNames.actions.loadComplaint] ({ commit }, { complaint, callback }) {
       if (!complaint.revisionDocs && complaint['@id']) {
         startProc()
@@ -260,6 +266,27 @@ const complaintsModule = {
         return complaint
       }
       return null
+    },
+    [complaintsNames.getters.previousComplaintId] (state, getters) {
+      const acid = state[complaintsNames.state.activeComplaintId]
+      if (acid) {
+        const complaintIds = getters[complaintsNames.getters.complaints].map((c) => c['@id'])
+        const ncid = tb.findPrevious(complaintIds, (cid) => cid === acid)
+        console.log(acid, ncid, complaintIds)
+        return ncid
+      }
+      return undefined
+    },
+    [complaintsNames.getters.nextComplaintId] (state, getters) {
+      const acid = state[complaintsNames.state.activeComplaintId]
+      const complaintIds = getters[complaintsNames.getters.complaints].map((c) => c['@id'])
+      console.log(acid, complaintIds)
+      if (acid) {
+        const ncid = tb.findPrevious(complaintIds, (cid) => cid === acid)
+        console.log(acid, ncid, complaintIds)
+        return ncid
+      }
+      return complaintIds.length > 0 ? complaintIds[0] : undefined
     }
   }
 }

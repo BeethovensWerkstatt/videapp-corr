@@ -6,6 +6,8 @@
         <div class="title">
           <div class="titletext">
             {{ toRoman(activeComplaint.movement.n) }}. {{ activeComplaint.movement.label }} {{ (activeComplaint.label !== '') ? ', ' + activeComplaint.label : ''}}, Takt: {{ measures }}
+            <btn :inactive="!previousComplaintId" @click="loadPrevious">voriges</btn>
+            <btn :inactive="!nextComplaintId" @click="loadNext">nächstes</btn>
           </div>
           <div class="measures">
             Monitum <a class="monitumLink" :href="activeComplaint['@id']" target="_blank" rel="noopener noreferrer" :title="monitumId">{{ monitumId.split('-')[0] }}</a>
@@ -40,7 +42,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { mutations } from '@/store/names'
+import { mutations, actions } from '@/store/names'
 // import VerovioComponent from '@/components/VerovioComponent.vue'
 import toolbox from '@/toolbox'
 import ComplaintDialogTabRow from '@/components/ComplaintDialog/TabRow.vue'
@@ -92,7 +94,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['viewer', 'displayComplaint', 'activeComplaintId', 'activeComplaint', 'complaintDisplaySelect']),
+    ...mapGetters(['viewer', 'displayComplaint', 'activeComplaintId', 'activeComplaint', 'complaintDisplaySelect', 'previousComplaintId', 'nextComplaintId']),
     active () {
       if (this.displayComplaint && this.activeComplaintId) {
         return true
@@ -319,6 +321,12 @@ export default {
     resize () {
       // console.log('resize dialog')
       this.innerHeight = window.innerHeight
+    },
+    loadPrevious () {
+      this.$store.dispatch(actions.activateSibling, true)
+    },
+    loadNext () {
+      this.$store.dispatch(actions.activateSibling, false)
     }
   }
 }
