@@ -6,8 +6,8 @@
         <div class="title">
           <div class="titletext">
             {{ toRoman(activeComplaint.movement.n) }}. {{ activeComplaint.movement.label }} {{ (activeComplaint.label !== '') ? ', ' + activeComplaint.label : ''}}, Takt: {{ measures }}
-            <!-- <btn :inactive="!previousComplaintId" @click="loadPrevious">voriges</btn> -->
-            <!-- <btn :inactive="!nextComplaintId" @click="loadNext">nächstes</btn> -->
+            <btn :inactive="!previousComplaintId" @click="loadPrevious">voriges</btn>
+            <btn :inactive="!nextComplaintId" @click="loadNext">nächstes</btn>
           </div>
           <div class="measures">
             Monitum <a class="monitumLink" :href="activeComplaint['@id']" target="_blank" rel="noopener noreferrer" :title="monitumId">{{ monitumId.split('-')[0] }}</a>
