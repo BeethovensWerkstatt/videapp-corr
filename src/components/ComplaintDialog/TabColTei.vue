@@ -53,8 +53,12 @@ export default {
             const MEI = serializer.serializeToString(span.children[0])
             // console.log(MEI)
             toolkit.loadData(MEI)
-            const svg = toolkit.renderToSVG(1)
-            span.innerHTML = svg
+            const svgtxt = toolkit.renderToSVG(1)
+            const svg = parser.parseFromString(svgtxt, 'image/svg+xml')
+            const heightatt = document.createAttribute('height')
+            heightatt.value = '5em'
+            svg.documentElement.setAttributeNode(heightatt)
+            span.innerHTML = serializer.serializeToString(svg.documentElement)
           })
           this.teitext = serializer.serializeToString(renderedHTML)
         }).catch((error) => console.log(error))
