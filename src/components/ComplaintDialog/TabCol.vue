@@ -7,7 +7,13 @@
       :region="facsRegion"
       :state="state"
     />
-    <tab-col-tei :tei="tei" />
+    <tab-col-tei
+      v-if="tei"
+      :tei="tei"
+      :label="transLabel"
+      :state="state"
+      layer="trans"
+    />
     <tab-col-verovio
       v-if="transOptions"
       :options="transOptions"

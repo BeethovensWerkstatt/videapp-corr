@@ -1,5 +1,6 @@
 <template>
   <div class="TEI">
+    <h2 :class="'heading_' + layer">{{ label }} <span class="indicator">(TEI)</span> <a v-if="glossaryLink !== ''" class="glossaryLink" target="_blank" rel="noopener noreferrer" :href="glossaryLink"><i class="icon icon-link"></i></a></h2>
     <!-- <a :href="tei" v-if="tei">TEI</a> -->
     <div class="teitext" v-html="teitext" v-if="teitext" />
   </div>
@@ -13,7 +14,22 @@ import axios from 'axios'
 export default {
   name: 'ComplaintDialogTabColTei',
   props: {
-    tei: undefined
+    tei: {
+      type: String,
+      required: true
+    },
+    label: {
+      type: String,
+      required: true
+    },
+    state: {
+      type: String,
+      required: true
+    },
+    layer: {
+      type: String,
+      required: true
+    }
   },
   data: () => ({
     data: '',
@@ -40,7 +56,11 @@ export default {
           toolkit.setOptions({
             scale: 2,
             pageWidth: 10000,
-            outputIndent: 1,
+            outputIndent: 0,
+            pageMarginTop: 0,
+            pageMarginBottom: 0,
+            pageMarginLeft: 0,
+            pageMarginRight: 0,
             adjustPageWidth: true,
             adjustPageHeight: true,
             svgBoundingBoxes: true,
@@ -57,20 +77,23 @@ export default {
             const svg = parser.parseFromString(svgtxt, 'image/svg+xml')
             const heightatt = document.createAttribute('height')
             heightatt.value = '5em'
-            svg.documentElement.setAttributeNode(heightatt)
+            // svg.documentElement.setAttributeNode(heightatt)
             span.innerHTML = serializer.serializeToString(svg.documentElement)
           })
           this.teitext = serializer.serializeToString(renderedHTML)
-        }).catch((error) => console.log(error))
+        }).catch((error) => {
+          console.log(error)
+          this.teitext = '<div class="error">' + error + '</div>'
+        })
       } else {
-        this.teitext = ''
+        this.teitext = '&mdash;xxx'
       }
     }
   }
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .teitext {
   resize: vertical;
   width: 100%;
@@ -78,5 +101,43 @@ export default {
   overflow: auto;
   text-align: left;
   padding: 5px;
+}
+
+h2 {
+  text-align: left;
+  font-size: .8rem;
+  font-weight: 500;
+  margin: 0.5rem 0rem .2rem;
+  padding: .3rem;
+  background-color: #f5f5f5;
+  border: 1px solid #333333;
+  cursor: default;
+
+  &.heading_trans {
+    background-color: #A7C4E5; // #6CA5B4;
+    .indicator {
+      color: gray;
+    }
+  }
+
+  &.heading_text {
+    background-color: #AFEC77; // #A7C4E5;
+  }
+
+  .glossaryLink {
+    color: #666666;
+    cursor: question;
+  }
+}
+
+.error {
+  color: red;
+}
+
+.notatedMusic {
+  svg {
+    height: 5em;
+    vertical-align: -80%;
+  }
 }
 </style>
