@@ -235,10 +235,9 @@ const complaintsModule = {
       const complaints = state.complaintFilter ? state.complaints.filter(state.complaintFilter) : state.complaints
       const complaintlist = complaints.map(c => {
         const mdiv = c.affects[0]?.mdiv
-        return {
-          ...c,
-          movement: getters.getMovementById(mdiv)
-        }
+        const movement = getters.getMovementById(mdiv)
+        // console.log(mdiv, movement)
+        return { ...c, movement }
       }).sort(getters[complaintsNames.getters.complaintSorter])
       // console.log(complaintlist)
       return complaintlist
@@ -290,11 +289,9 @@ const complaintsModule = {
         // TODO work
         const work1 = c1.movement ? getters.getWork(c1.movement?.work) : undefined
         const work2 = c2.movement ? getters.getWork(c2.movement?.work) : undefined
-        // console.log(work1?.title[0].title, getters.getWork(work2)?.title[0].title)
-        if (work1?.title[0].title !== work2?.title) {
-          return work2?.title[0].title.localeCompare(work1?.title[0].title) >= 0 ? -1 : 0
+        if (work1?.title[0].title !== work2?.title[0].title) {
+          return work2?.title[0].title.localeCompare(work1?.title[0].title) >= 0 ? -1 : 1
         }
-
         if (c1.movement?.n !== c2.movement?.n) {
           return c1.movement?.n < c2.movement?.n ? -1 : 1
         }

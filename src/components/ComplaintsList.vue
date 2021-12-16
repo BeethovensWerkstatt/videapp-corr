@@ -8,14 +8,15 @@
           v-if="complaint.movement && checkMvt(complaint.movement.n)"
           class="mvt"
         >
+          <!-- TODO work title column (optional) -->
           <th>{{ toRoman(complaint.movement.n) + '.' }}&nbsp;</th>
-          <th :title="complaint.movement.work">{{ complaint.movement.label }}</th>
-          <th>{{ $t('terms.complaint.revision-object') }}</th>
-          <th>{{ $t('terms.complaint.text-operation') }}</th>
-          <th>{{ $t('terms.complaint.classification') }}</th>
-          <th>{{ $t('terms.complaint.context') }}</th>
-          <th>{{ $t('terms.complaint.implementation') }}</th>
-          <th>{{ $t('terms.document') }}</th>
+          <th @click="sort(sortTag.movementMeasure)" :class="{ sortColumn: sortedBy === sortTag.movementMeasure }" :title="workTitle(complaint.movement.work)">{{ complaint.movement.label }}</th>
+          <th @click="sort(sortTag.revisionObject)" :class="{ sortColumn: sortedBy === sortTag.revisionObject }">{{ $t('terms.complaint.revision-object') }}</th>
+          <th @click="sort(sortTag.textOperation)">{{ $t('terms.complaint.text-operation') }}</th>
+          <th @click="sort(sortTag.classification)">{{ $t('terms.complaint.classification') }}</th>
+          <th @click="sort(sortTag.context)">{{ $t('terms.complaint.context') }}</th>
+          <th @click="sort(sortTag.implementation)">{{ $t('terms.complaint.implementation') }}</th>
+          <th @click="sort(sortTag.document)">{{ $t('terms.document') }}</th>
           <th>&nbsp;</th>
         </tr>
         <tr
@@ -24,6 +25,7 @@
             'complaint-error': (measures(complaint) === 'N/A')
           }"
         >
+          <!-- TODO work title column (optional) -->
           <td
             class="complaint-attribute"
             @click.prevent="toggleActivate(complaint)"
@@ -34,7 +36,7 @@
             class="complaint-attribute"
             @click.prevent="toggleActivate(complaint)"
           >
-            {{ measures(complaint) }}
+            {{ toRoman(complaint.movement.n) }}, {{ measures(complaint) }}
           </td>
           <td
             class="complaint-attribute"
@@ -84,8 +86,18 @@
 <script>
 
 import { mapGetters } from 'vuex'
-import { actions, mutations } from '@/store/names'
+import { actions, mutations, getters } from '@/store/names'
 import toolbox from '@/toolbox'
+
+const sortTag = {
+  movementMeasure: 'movementMeasure',
+  revisionObject: 'revisionObject',
+  textOperation: 'textOperation',
+  classification: 'classification',
+  context: 'context',
+  implementation: 'implementation',
+  document: 'document'
+}
 
 /**
  * component to display list of complaints
@@ -97,40 +109,35 @@ import toolbox from '@/toolbox'
 export default {
   data () {
     return {
+      sortTag,
+      sortedBy: sortTag.movementMeasure
     }
   },
   name: 'ComplaintsList',
   computed: {
-    ...mapGetters(['workComplaints', 'activeComplaintId']),
+    ...mapGetters([getters.workComplaints, getters.activeComplaintId, getters.complaintSorter]),
     workId () {
       return this.$route.params.id
     },
     complaints () {
+      // filter workComplaints optionally
       const complaints = this.workComplaints(this.workId)
-      const measures = this.measures
-      const sortComplaints = function (c1, c2) {
-        // TODO work
-        if (c1.movement?.n !== c2.movement?.n) {
-          return c1.movement?.n < c2.movement?.n ? -1 : 1
-        }
-        const m1 = parseInt(measures(c1)?.match(/\d+/))
-        const m2 = parseInt(measures(c2)?.match(/\d+/))
-        return m1 <= m2 ? -1 : 1
-      }
       // console.log(complaints)
-      return complaints.sort(sortComplaints)
+      return complaints
     }
   },
   methods: {
-    toRoman (num) {
-      return toolbox.toRoman(num)
+    toRoman: toolbox.toRoman,
+    workTitle (workId) {
+      const work = this.$store.getters.getWork(workId)
+      return work?.title[0].title
     },
     /**
      * check if new movement starts while looping through complaints
-     * @param {String}
+     * @param {String} mvt
      */
     checkMvt (mvt) {
-      const t = mvt !== this.mvt
+      const t = mvt !== this.mvt && (this.sortedBy === sortTag.movementMeasure || !this.mvt)
       this.mvt = mvt
       return t
     },
@@ -155,7 +162,7 @@ export default {
     },
     complaintSigle (complaint) {
       const revDocs = complaint.revisionDocs
-      console.log(complaint)
+      // console.log(complaint)
       return revDocs ? revDocs[0].labels.source : '?'
     },
     /**
@@ -197,6 +204,38 @@ export default {
       })
       if (close) {
         this.$store.commit(mutations.COMPLAINTS_LIST, false)
+      }
+    },
+    sort (tag) {
+      console.log('sort', tag)
+      this.mvt = null
+      this.sortedBy = tag
+
+      const revisionObjectSort = (c1, c2) => {
+        const ro1 = c1.tags.objects.join('-')
+        const ro2 = c2.tags.objects.join('-')
+        // TODO i18n?
+        // console.log(ro1, ro2)
+        return ro1.localeCompare(ro2)
+      }
+
+      switch (tag) {
+        case sortTag.revisionObject:
+          this.$store.commit(mutations.SET_SORTER, revisionObjectSort)
+          break
+        case sortTag.textOperation:
+          break
+        case sortTag.classification:
+          break
+        case sortTag.context:
+          break
+        case sortTag.implementation:
+          break
+        case sortTag.document:
+          break
+        case sortTag.movementMeasure: // use stdSort by work, movement and measure
+        default:
+          this.$store.commit(mutations.SET_SORTER, null)
       }
     }
   }
@@ -241,5 +280,9 @@ tr.mvt {
 .complaint-error {
   color: gray;
   text-decoration: line-through;
+}
+
+.sortColumn {
+  color: blue
 }
 </style>
