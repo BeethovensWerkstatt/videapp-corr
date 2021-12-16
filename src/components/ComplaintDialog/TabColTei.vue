@@ -1,6 +1,6 @@
 <template>
   <div class="TEI">
-    <h2 :class="'heading_' + layer">{{ label }} <span class="indicator">(TEI)</span> <a v-if="glossaryLink !== ''" class="glossaryLink" target="_blank" rel="noopener noreferrer" :href="glossaryLink"><i class="icon icon-link"></i></a></h2>
+    <h2 :class="'heading_' + layer">{{ label }} <!--<span class="indicator">(TEI)</span> --><a v-if="glossaryLink !== ''" class="glossaryLink" target="_blank" rel="noopener noreferrer" :href="glossaryLink"><i class="icon icon-link"></i></a></h2>
     <!-- <a :href="tei" v-if="tei">TEI</a> -->
     <div class="teitext" v-html="teitext" v-if="teitext" />
   </div>
