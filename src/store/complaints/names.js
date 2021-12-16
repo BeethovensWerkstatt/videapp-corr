@@ -12,7 +12,9 @@ export const complaintsNames = {
     LOAD_COMPLAINT: 'LOAD_COMPLAINT',
     MODIFY_COMPLAINT: 'MODIFY_COMPLAINT',
     ACTIVATE_COMPLAINT: 'ACTIVATE_COMPLAINT',
-    DISPLAY_COMPLAINT: 'DISPLAY_COMPLAINT'
+    DISPLAY_COMPLAINT: 'DISPLAY_COMPLAINT',
+    SET_FILTER: 'SET_FILTER',
+    SET_SORTER: 'SET_SORTER'
   },
   actions: {
     loadComplaints: 'loadComplaints',
@@ -29,7 +31,9 @@ export const complaintsNames = {
     activeComplaintId: 'activeComplaintId',
     activeComplaint: 'activeComplaint',
     previousComplaintId: 'previousComplaintId',
-    nextComplaintId: 'nextComplaintId'
+    nextComplaintId: 'nextComplaintId',
+    complaintFilter: 'complaintFilter',
+    complaintSorter: 'complaintSorter'
   }
 }
 

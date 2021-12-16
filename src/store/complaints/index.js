@@ -80,6 +80,20 @@ const complaintsModule = {
      */
     [complaintsNames.mutations.DISPLAY_COMPLAINT] (state, display) {
       state.displayComplaint = display
+    },
+    /**
+     * set filter function
+     * @param {Function} filter
+     */
+    [complaintsNames.mutations.SET_FILTER] (state, filter) {
+      state[complaintsNames.state.complaintFilter] = filter
+    },
+    /**
+     * set sort function
+     * @param {Function} sorter
+     */
+    [complaintsNames.mutations.SET_SORTER] (state, sorter) {
+      state[complaintsNames.state.complaintSorter] = sorter
     }
   },
   /**
@@ -218,32 +232,14 @@ const complaintsModule = {
   getters: {
     [complaintsNames.getters.showComplaintsList]: (state) => state.showComplaintsList,
     [complaintsNames.getters.complaints]: (state, getters) => {
-      const stdSorter = function (c1, c2) {
-        // TODO work
-        const work1 = c1.movement ? getters.getWork(c1.movement?.work) : undefined
-        const work2 = c2.movement ? getters.getWork(c2.movement?.work) : undefined
-        // console.log(work1?.title[0].title, getters.getWork(work2)?.title[0].title)
-        if (work1?.title[0].title !== work2?.title) {
-          return work2?.title[0].title.localeCompare(work1?.title[0].title) >= 0 ? -1 : 0
-        }
-
-        if (c1.movement?.n !== c2.movement?.n) {
-          return c1.movement?.n < c2.movement?.n ? -1 : 1
-        }
-        const m1 = parseInt(c1.affects[0].measures.label?.match(/\d+/))
-        const m2 = parseInt(c2.affects[0].measures.label?.match(/\d+/))
-        return m1 <= m2 ? -1 : 1
-      }
-
       const complaints = state.complaintFilter ? state.complaints.filter(state.complaintFilter) : state.complaints
-      const sortComplaints = state.complaintSorter ? state.complaintSorter : stdSorter
       const complaintlist = complaints.map(c => {
         const mdiv = c.affects[0]?.mdiv
         return {
           ...c,
           movement: getters.getMovementById(mdiv)
         }
-      }).sort(sortComplaints)
+      }).sort(getters[complaintsNames.getters.complaintSorter])
       // console.log(complaintlist)
       return complaintlist
     },
@@ -287,6 +283,26 @@ const complaintsModule = {
         return ncid
       }
       return complaintIds.length > 0 ? complaintIds[0] : undefined
+    },
+    [complaintsNames.getters.complaintFilter]: (state) => state[complaintsNames.state.complaintFilter],
+    [complaintsNames.getters.complaintSorter] (state, getters) {
+      const stdSort = function (c1, c2) {
+        // TODO work
+        const work1 = c1.movement ? getters.getWork(c1.movement?.work) : undefined
+        const work2 = c2.movement ? getters.getWork(c2.movement?.work) : undefined
+        // console.log(work1?.title[0].title, getters.getWork(work2)?.title[0].title)
+        if (work1?.title[0].title !== work2?.title) {
+          return work2?.title[0].title.localeCompare(work1?.title[0].title) >= 0 ? -1 : 0
+        }
+
+        if (c1.movement?.n !== c2.movement?.n) {
+          return c1.movement?.n < c2.movement?.n ? -1 : 1
+        }
+        const m1 = parseInt(c1.affects[0].measures.label?.match(/\d+/))
+        const m2 = parseInt(c2.affects[0].measures.label?.match(/\d+/))
+        return m1 <= m2 ? -1 : 1
+      }
+      return state[complaintsNames.state.complaintSorter] ? state[complaintsNames.state.complaintSorter] : stdSort
     }
   }
 }

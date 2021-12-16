@@ -15,6 +15,7 @@
           <th>{{ $t('terms.complaint.classification') }}</th>
           <th>{{ $t('terms.complaint.context') }}</th>
           <th>{{ $t('terms.complaint.implementation') }}</th>
+          <th>{{ $t('terms.document') }}</th>
           <th>&nbsp;</th>
         </tr>
         <tr
@@ -66,6 +67,9 @@
           <td>
             <span v-if="complaint.tags['implementation'].length === 0">&mdash;</span>
             <span v-for="(o,i) in complaint.tags['implementation']" :key="o + '_' + i"><span v-if="i > 0">, </span>{{ $t('taxonomy.' + o) }}</span>
+          </td>
+          <td>
+            {{ complaintSigle(complaint) }}
           </td>
           <td class="complaint-attribute">
             <btn @click.prevent="openComplaint(complaint)">Monitum öffnen</btn>
@@ -148,6 +152,11 @@ export default {
       }
       console.warn(complaint)
       return 'N/A'
+    },
+    complaintSigle (complaint) {
+      const revDocs = complaint.revisionDocs
+      console.log(complaint)
+      return revDocs ? revDocs[0].labels.source : '?'
     },
     /**
      * toggle complaint selection
