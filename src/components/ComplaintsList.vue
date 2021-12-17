@@ -277,6 +277,7 @@ tr.mvt {
     text-align: left;
     border-radius: 3pt;
     padding: 2pt 3pt 0pt 4pt;
+    cursor: pointer;
   }
 }
 
