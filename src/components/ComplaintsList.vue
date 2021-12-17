@@ -170,9 +170,9 @@ export default {
       return 'N/A'
     },
     complaintSigle (complaint) {
-      const revDocs = complaint.revisionDocs
+      const revDoc = complaint.revisionDoc
       // console.log(complaint)
-      return revDocs ? revDocs[0].labels.source : '?'
+      return revDoc || '?'
     },
     /**
      * toggle complaint selection
@@ -232,8 +232,8 @@ export default {
         return o1.localeCompare(o2)
       }
       const docSorter = (c1, c2) => {
-        const d1 = c1.revicionDocs?.labels[0].source
-        const d2 = c2.revicionDocs?.labels[0].source
+        const d1 = c1.revisionDoc
+        const d2 = c2.revisionDoc
         if (typeof d1 === 'undefined') {
           return -1
         }
