@@ -183,8 +183,8 @@ export default {
     }
 
     &:hover {
-      // outline: 1px solid orange;
-      // background-color: rgba(255, 255, 181, 0.685);
+      background: rgb(248, 234, 130);
+      background: linear-gradient(0deg, rgba(248, 234, 130, 1) 0%, rgb(238, 236, 103) 100%);
     }
     div {
       width: 500px;
@@ -193,7 +193,7 @@ export default {
   .curmarkerL {
     font-weight: bold;
     width: 110% !important;
-    right: -20%;
+    right: -20% !important;
     background-color: rgba(255, 255, 181, 0.8);
   }
   .curmarkerR {
