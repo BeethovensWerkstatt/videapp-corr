@@ -291,7 +291,8 @@ const complaintsModule = {
     [complaintsNames.getters.complaintFilter]: (state) => state[complaintsNames.state.complaintFilter],
     [complaintsNames.getters.sortedBy]: (state) => state[complaintsNames.state.sortedBy],
     [complaintsNames.getters.complaintSorter] (state, getters) {
-      const stdSort = function (c1, c2) {
+      const complaintSorter = state[complaintsNames.state.complaintSorter]
+      const stdSort = (c1, c2) => {
         // TODO work
         const work1 = c1.movement ? getters.getWork(c1.movement?.work) : undefined
         const work2 = c2.movement ? getters.getWork(c2.movement?.work) : undefined
@@ -305,7 +306,11 @@ const complaintsModule = {
         const m2 = parseInt(c2.affects[0].measures.label?.match(/\d+/))
         return m1 <= m2 ? -1 : 1
       }
-      return state[complaintsNames.state.complaintSorter] ? state[complaintsNames.state.complaintSorter] : stdSort
+      const customSort = complaintSorter ? (c1, c2) => {
+        const s = complaintSorter(c1, c2)
+        return s || stdSort(c1, c2)
+      } : stdSort
+      return customSort
     }
   }
 }

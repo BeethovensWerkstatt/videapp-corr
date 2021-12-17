@@ -234,10 +234,11 @@ export default {
       const docSorter = (c1, c2) => {
         const d1 = c1.revisionDoc
         const d2 = c2.revisionDoc
+        console.log(d1, d2)
         if (typeof d1 === 'undefined') {
           return -1
         }
-        d1.localeCompare(d2)
+        return d1.localeCompare(d2)
       }
 
       switch (tag) {
