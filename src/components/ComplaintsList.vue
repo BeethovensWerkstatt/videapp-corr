@@ -36,7 +36,7 @@
             class="complaint-attribute"
             @click.prevent="toggleActivate(complaint)"
           >
-            <sub>{{ ci + 1 }}</sub>
+            <sub v-if="sortedBy === sortTag.movementMeasure">{{ ci + 1 }}</sub>
           </td>
           <td
             class="complaint-attribute"
@@ -72,11 +72,11 @@
             <span v-if="complaint.tags['context'].length === 0">&mdash;</span>
             <span v-for="(o,i) in complaint.tags['context']" :key="o + '_' + i"><span v-if="i > 0">, </span>{{ $t('taxonomy.' + o) }}</span>
           </td>
-          <td>
+          <td class="complaint-attribute">
             <span v-if="complaint.tags['implementation'].length === 0">&mdash;</span>
             <span v-for="(o,i) in complaint.tags['implementation']" :key="o + '_' + i"><span v-if="i > 0">, </span>{{ $t('taxonomy.' + o) }}</span>
           </td>
-          <td>
+          <td class="complaint-attribute">
             {{ complaintSigle(complaint) }}
           </td>
           <td class="complaint-attribute">
@@ -302,6 +302,9 @@ tr.mvt {
 }
 
 .sortColumn {
-  color: blue
+  color: blue;
+  &::before {
+    content: '▾ '
+  }
 }
 </style>
