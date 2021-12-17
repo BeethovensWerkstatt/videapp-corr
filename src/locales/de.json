@@ -33,7 +33,9 @@
     "works": "Werkliste",
     "document": "Dokument",
     "measure": "Takt",
-    "staff": "System"
+    "staff": "System",
+    "work": "Werk",
+    "movement": "Satz"
   },
   "taxonomy": {
     "document_type": "",

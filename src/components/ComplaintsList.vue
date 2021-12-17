@@ -9,8 +9,14 @@
           class="mvt"
         >
           <!-- TODO work title column (optional) -->
-          <th>{{ toRoman(complaint.movement.n) + '.' }}&nbsp;</th>
-          <th @click="sort(sortTag.movementMeasure)" :class="{ sortColumn: sortedBy === sortTag.movementMeasure }" :title="workTitle(complaint.movement.work)">{{ complaint.movement.label }}</th>
+          <th><span v-if="sortedBy === sortTag.movementMeasure">{{ toRoman(complaint.movement.n) + '.' }}</span>&nbsp;</th>
+          <th
+            @click="sort(sortTag.movementMeasure)"
+            :class="{ sortColumn: sortedBy === sortTag.movementMeasure }"
+            :title="workTitle(complaint.movement.work)">
+            <span v-if="sortedBy === sortTag.movementMeasure">{{ complaint.movement.label }}</span>
+            <span v-else>{{ $t('terms.movement') }}, {{ $t('terms.measure') }}</span>
+          </th>
           <th @click="sort(sortTag.revisionObject)" :class="{ sortColumn: sortedBy === sortTag.revisionObject }">{{ $t('terms.complaint.revision-object') }}</th>
           <th @click="sort(sortTag.textOperation)" :class="{ sortColumn: sortedBy === sortTag.textOperation }">{{ $t('terms.complaint.text-operation') }}</th>
           <th @click="sort(sortTag.classification)" :class="{ sortColumn: sortedBy === sortTag.classification }">{{ $t('terms.complaint.classification') }}</th>
@@ -89,11 +95,12 @@ import { mapGetters } from 'vuex'
 import { actions, mutations, getters } from '@/store/names'
 import toolbox from '@/toolbox'
 
+// TODO export in store/complaints
 const sortTag = {
   movementMeasure: 'movementMeasure',
-  revisionObject: 'revisionObject',
-  textOperation: 'textOperation',
-  classification: 'classification',
+  revisionObject: 'objects',
+  textOperation: 'operation',
+  classification: 'classes',
   context: 'context',
   implementation: 'implementation',
   document: 'document'
@@ -208,8 +215,9 @@ export default {
         this.$store.commit(mutations.COMPLAINTS_LIST, false)
       }
     },
+    // TODO => store/complaints
     sort (tag) {
-      console.log('sort', tag)
+      // console.log('sort', tag)
       this.mvt = null
 
       const tagSorter = (tag) => (c1, c2) => {
@@ -223,25 +231,25 @@ export default {
         }
         return o1.localeCompare(o2)
       }
+      const docSorter = (c1, c2) => {
+        const d1 = c1.revicionDocs?.labels[0].source
+        const d2 = c2.revicionDocs?.labels[0].source
+        if (typeof d1 === 'undefined') {
+          return -1
+        }
+        d1.localeCompare(d2)
+      }
 
       switch (tag) {
         case sortTag.revisionObject:
-          this.$store.commit(mutations.SET_SORTER, { sortedBy: tag, sorter: tagSorter('objects') })
-          break
         case sortTag.textOperation:
-          this.$store.commit(mutations.SET_SORTER, { sortedBy: tag, sorter: tagSorter('operation') })
-          break
         case sortTag.classification:
-          this.$store.commit(mutations.SET_SORTER, { sortedBy: tag, sorter: tagSorter('classes') })
-          break
         case sortTag.context:
-          this.$store.commit(mutations.SET_SORTER, { sortedBy: tag, sorter: tagSorter('context') })
-          break
         case sortTag.implementation:
-          this.$store.commit(mutations.SET_SORTER, { sortedBy: tag, sorter: tagSorter('implementation') })
+          this.$store.commit(mutations.SET_SORTER, { sortedBy: tag, sorter: tagSorter(tag) })
           break
         case sortTag.document:
-          console.warn('not implemented yet ...')
+          this.$store.commit(mutations.SET_SORTER, { sortedBy: tag, sorter: docSorter })
           break
         case sortTag.movementMeasure: // use stdSort by work, movement and measure
         default:
