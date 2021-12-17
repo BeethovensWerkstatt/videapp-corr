@@ -19,7 +19,9 @@ const complaintsModule = {
     [complaintsNames.state.complaints]: [],
     [complaintsNames.state.activeComplaintId]: null,
     [complaintsNames.state.displayComplaint]: false,
+    [complaintsNames.state.filteredBy]: null,
     [complaintsNames.state.complaintFilter]: null,
+    [complaintsNames.state.sortedBy]: null,
     [complaintsNames.state.complaintSorter]: null
   },
   /**
@@ -83,16 +85,18 @@ const complaintsModule = {
     },
     /**
      * set filter function
-     * @param {Function} filter
+     * @param {Function} parms { filteredBy, filter }
      */
-    [complaintsNames.mutations.SET_FILTER] (state, filter) {
+    [complaintsNames.mutations.SET_FILTER] (state, { filteredBy, filter }) {
+      state[complaintsNames.state.filteredBy] = filteredBy
       state[complaintsNames.state.complaintFilter] = filter
     },
     /**
      * set sort function
-     * @param {Function} sorter
+     * @param {Object} parms { sortedBy, sorter }
      */
-    [complaintsNames.mutations.SET_SORTER] (state, sorter) {
+    [complaintsNames.mutations.SET_SORTER] (state, { sortedBy, sorter }) {
+      state[complaintsNames.state.sortedBy] = sortedBy
       state[complaintsNames.state.complaintSorter] = sorter
     }
   },
@@ -283,7 +287,9 @@ const complaintsModule = {
       }
       return complaintIds.length > 0 ? complaintIds[0] : undefined
     },
+    [complaintsNames.getters.filteredBy]: (state) => state[complaintsNames.state.filteredBy],
     [complaintsNames.getters.complaintFilter]: (state) => state[complaintsNames.state.complaintFilter],
+    [complaintsNames.getters.sortedBy]: (state) => state[complaintsNames.state.sortedBy],
     [complaintsNames.getters.complaintSorter] (state, getters) {
       const stdSort = function (c1, c2) {
         // TODO work

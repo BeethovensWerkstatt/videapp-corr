@@ -12,11 +12,11 @@
           <th>{{ toRoman(complaint.movement.n) + '.' }}&nbsp;</th>
           <th @click="sort(sortTag.movementMeasure)" :class="{ sortColumn: sortedBy === sortTag.movementMeasure }" :title="workTitle(complaint.movement.work)">{{ complaint.movement.label }}</th>
           <th @click="sort(sortTag.revisionObject)" :class="{ sortColumn: sortedBy === sortTag.revisionObject }">{{ $t('terms.complaint.revision-object') }}</th>
-          <th @click="sort(sortTag.textOperation)">{{ $t('terms.complaint.text-operation') }}</th>
-          <th @click="sort(sortTag.classification)">{{ $t('terms.complaint.classification') }}</th>
-          <th @click="sort(sortTag.context)">{{ $t('terms.complaint.context') }}</th>
-          <th @click="sort(sortTag.implementation)">{{ $t('terms.complaint.implementation') }}</th>
-          <th @click="sort(sortTag.document)">{{ $t('terms.document') }}</th>
+          <th @click="sort(sortTag.textOperation)" :class="{ sortColumn: sortedBy === sortTag.textOperation }">{{ $t('terms.complaint.text-operation') }}</th>
+          <th @click="sort(sortTag.classification)" :class="{ sortColumn: sortedBy === sortTag.classification }">{{ $t('terms.complaint.classification') }}</th>
+          <th @click="sort(sortTag.context)" :class="{ sortColumn: sortedBy === sortTag.context }">{{ $t('terms.complaint.context') }}</th>
+          <th @click="sort(sortTag.implementation)" :class="{ sortColumn: sortedBy === sortTag.implementation }">{{ $t('terms.complaint.implementation') }}</th>
+          <th @click="sort(sortTag.document)" :class="{ sortColumn: sortedBy === sortTag.document }">{{ $t('terms.document') }}</th>
           <th>&nbsp;</th>
         </tr>
         <tr
@@ -109,13 +109,15 @@ const sortTag = {
 export default {
   data () {
     return {
-      sortTag,
-      sortedBy: sortTag.movementMeasure
+      sortTag
     }
   },
   name: 'ComplaintsList',
+  mounted () {
+    this.sort(this.sortedBy)
+  },
   computed: {
-    ...mapGetters([getters.workComplaints, getters.activeComplaintId, getters.complaintSorter]),
+    ...mapGetters([getters.workComplaints, getters.activeComplaintId, getters.complaintSorter, getters.getWork, getters.sortedBy]),
     workId () {
       return this.$route.params.id
     },
@@ -129,7 +131,7 @@ export default {
   methods: {
     toRoman: toolbox.toRoman,
     workTitle (workId) {
-      const work = this.$store.getters.getWork(workId)
+      const work = this.getWork(workId)
       return work?.title[0].title
     },
     /**
@@ -209,33 +211,41 @@ export default {
     sort (tag) {
       console.log('sort', tag)
       this.mvt = null
-      this.sortedBy = tag
 
-      const revisionObjectSort = (c1, c2) => {
-        const ro1 = c1.tags.objects.join('-')
-        const ro2 = c2.tags.objects.join('-')
+      const tagSorter = (tag) => (c1, c2) => {
+        const o1 = c1.tags[tag]?.join('-')
+        const o2 = c2.tags[tag]?.join('-')
         // TODO i18n?
         // console.log(ro1, ro2)
-        return ro1.localeCompare(ro2)
+        if (typeof o1 === 'undefined') {
+          console.warn('undefined tag!', c1.tags, c2.tags)
+          return -1
+        }
+        return o1.localeCompare(o2)
       }
 
       switch (tag) {
         case sortTag.revisionObject:
-          this.$store.commit(mutations.SET_SORTER, revisionObjectSort)
+          this.$store.commit(mutations.SET_SORTER, { sortedBy: tag, sorter: tagSorter('objects') })
           break
         case sortTag.textOperation:
+          this.$store.commit(mutations.SET_SORTER, { sortedBy: tag, sorter: tagSorter('operation') })
           break
         case sortTag.classification:
+          this.$store.commit(mutations.SET_SORTER, { sortedBy: tag, sorter: tagSorter('classes') })
           break
         case sortTag.context:
+          this.$store.commit(mutations.SET_SORTER, { sortedBy: tag, sorter: tagSorter('context') })
           break
         case sortTag.implementation:
+          this.$store.commit(mutations.SET_SORTER, { sortedBy: tag, sorter: tagSorter('implementation') })
           break
         case sortTag.document:
+          console.warn('not implemented yet ...')
           break
         case sortTag.movementMeasure: // use stdSort by work, movement and measure
         default:
-          this.$store.commit(mutations.SET_SORTER, null)
+          this.$store.commit(mutations.SET_SORTER, { sortedBy: sortTag.movementMeasure, sorter: null })
       }
     }
   }
@@ -273,8 +283,8 @@ tr.mvt {
 }
 
 .complaint-active {
-  background-color: yellow;
-  outline: 1px solid red;
+  background-color: rgb(241, 241, 190);
+  outline: 1px solid rgb(230, 116, 116);
 }
 
 .complaint-error {

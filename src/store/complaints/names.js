@@ -4,7 +4,9 @@ export const complaintsNames = {
     complaints: 'complaints',
     activeComplaintId: 'activeComplaintId',
     displayComplaint: 'displayComplaint',
+    filteredBy: 'filteredBy',
     complaintFilter: 'complaintFilter',
+    sortedBy: 'sortedBy',
     complaintSorter: 'complaintSorter'
   },
   mutations: {
@@ -32,7 +34,9 @@ export const complaintsNames = {
     activeComplaint: 'activeComplaint',
     previousComplaintId: 'previousComplaintId',
     nextComplaintId: 'nextComplaintId',
+    filteredBy: 'filteredBy',
     complaintFilter: 'complaintFilter',
+    sortedBy: 'sortedBy',
     complaintSorter: 'complaintSorter'
   }
 }
