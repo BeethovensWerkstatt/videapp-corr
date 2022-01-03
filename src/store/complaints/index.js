@@ -22,6 +22,7 @@ const complaintsModule = {
     [complaintsNames.state.filteredBy]: null,
     [complaintsNames.state.complaintFilter]: null,
     [complaintsNames.state.sortedBy]: null,
+    [complaintsNames.state.sortReverse]: false,
     [complaintsNames.state.complaintSorter]: null
   },
   /**
@@ -96,7 +97,11 @@ const complaintsModule = {
      * @param {Object} parms { sortedBy, sorter }
      */
     [complaintsNames.mutations.SET_SORTER] (state, { sortedBy, sorter }) {
-      state[complaintsNames.state.sortedBy] = sortedBy
+      if (state[complaintsNames.state.sortedBy] === sortedBy) {
+        state[complaintsNames.state.sortReverse] = !state[complaintsNames.state.sortReverse]
+      } else {
+        state[complaintsNames.state.sortedBy] = sortedBy
+      }
       state[complaintsNames.state.complaintSorter] = sorter
     }
   },
@@ -244,7 +249,7 @@ const complaintsModule = {
         return { ...c, movement }
       }).sort(getters[complaintsNames.getters.complaintSorter])
       // console.log(complaintlist)
-      return complaintlist
+      return state.sortReverse ? complaintlist.reverse() : complaintlist
     },
     [complaintsNames.getters.workComplaints]: (state, getters) => (workId) => {
       // TODO atId in loadComplaints?
@@ -290,6 +295,7 @@ const complaintsModule = {
     [complaintsNames.getters.filteredBy]: (state) => state[complaintsNames.state.filteredBy],
     [complaintsNames.getters.complaintFilter]: (state) => state[complaintsNames.state.complaintFilter],
     [complaintsNames.getters.sortedBy]: (state) => state[complaintsNames.state.sortedBy],
+    [complaintsNames.getters.sortReverse]: (state) => state[complaintsNames.state.sortReverse] ? -1 : 1,
     [complaintsNames.getters.complaintSorter] (state, getters) {
       const complaintSorter = state[complaintsNames.state.complaintSorter]
       const stdSort = (c1, c2) => {
