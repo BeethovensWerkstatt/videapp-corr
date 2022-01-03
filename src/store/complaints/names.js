@@ -7,7 +7,7 @@ export const complaintsNames = {
     filteredBy: 'filteredBy',
     complaintFilter: 'complaintFilter',
     sortedBy: 'sortedBy',
-    sortedReverse: 'sortReverse',
+    sortReverse: 'sortReverse',
     complaintSorter: 'complaintSorter'
   },
   mutations: {

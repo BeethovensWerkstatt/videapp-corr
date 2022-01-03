@@ -99,8 +99,10 @@ const complaintsModule = {
     [complaintsNames.mutations.SET_SORTER] (state, { sortedBy, sorter }) {
       if (state[complaintsNames.state.sortedBy] === sortedBy) {
         state[complaintsNames.state.sortReverse] = !state[complaintsNames.state.sortReverse]
+        // console.log('sort', sortedBy, state[complaintsNames.state.sortReverse])
       } else {
         state[complaintsNames.state.sortedBy] = sortedBy
+        state[complaintsNames.state.sortReverse] = false
       }
       state[complaintsNames.state.complaintSorter] = sorter
     }
@@ -248,8 +250,7 @@ const complaintsModule = {
         // console.log(mdiv, movement)
         return { ...c, movement }
       }).sort(getters[complaintsNames.getters.complaintSorter])
-      // console.log(complaintlist)
-      return state.sortReverse ? complaintlist.reverse() : complaintlist
+      return state[complaintsNames.state.sortReverse] ? complaintlist.reverse() : complaintlist
     },
     [complaintsNames.getters.workComplaints]: (state, getters) => (workId) => {
       // TODO atId in loadComplaints?

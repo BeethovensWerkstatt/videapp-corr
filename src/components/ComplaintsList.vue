@@ -9,20 +9,39 @@
           class="mvt"
         >
           <!-- TODO work title column (optional) -->
-          <th><span v-if="sortedBy === sortTag.movementMeasure">{{ toRoman(complaint.movement.n) + '.' }}</span>&nbsp;</th>
+          <th @click="sort(sortTag.movementMeasure)"><span v-if="sortedBy === sortTag.movementMeasure">{{ toRoman(complaint.movement.n) + '.' }}</span>&nbsp;</th>
           <th
             @click="sort(sortTag.movementMeasure)"
             :class="{ sortColumn: sortedBy === sortTag.movementMeasure }"
             :title="workTitle(complaint.movement.work)">
             <span v-if="sortedBy === sortTag.movementMeasure">{{ complaint.movement.label }}</span>
             <span v-else>{{ $t('terms.movement') }}, {{ $t('terms.measure') }}</span>
+            <span :class="sortIconC(sortTag.movementMeasure)" />
           </th>
-          <th @click="sort(sortTag.revisionObject)" :class="{ sortColumn: sortedBy === sortTag.revisionObject }">{{ $t('terms.complaint.revision-object') }}</th>
-          <th @click="sort(sortTag.textOperation)" :class="{ sortColumn: sortedBy === sortTag.textOperation }">{{ $t('terms.complaint.text-operation') }}</th>
-          <th @click="sort(sortTag.classification)" :class="{ sortColumn: sortedBy === sortTag.classification }">{{ $t('terms.complaint.classification') }}</th>
-          <th @click="sort(sortTag.context)" :class="{ sortColumn: sortedBy === sortTag.context }">{{ $t('terms.complaint.context') }}</th>
-          <th @click="sort(sortTag.implementation)" :class="{ sortColumn: sortedBy === sortTag.implementation }">{{ $t('terms.complaint.implementation') }}</th>
-          <th @click="sort(sortTag.document)" :class="{ sortColumn: sortedBy === sortTag.document }">{{ $t('terms.document') }}</th>
+          <th @click="sort(sortTag.revisionObject)" :class="{ sortColumn: sortedBy === sortTag.revisionObject }">
+            {{ $t('terms.complaint.revision-object') }}
+            <span :class="sortIconC(sortTag.revisionObject)" />
+          </th>
+          <th @click="sort(sortTag.textOperation)" :class="{ sortColumn: sortedBy === sortTag.textOperation }">
+            {{ $t('terms.complaint.text-operation') }}
+            <span :class="sortIconC(sortTag.textOperation)" />
+          </th>
+          <th @click="sort(sortTag.classification)" :class="{ sortColumn: sortedBy === sortTag.classification }">
+            {{ $t('terms.complaint.classification') }}
+            <span :class="sortIconC(sortTag.classification)" />
+          </th>
+          <th @click="sort(sortTag.context)" :class="{ sortColumn: sortedBy === sortTag.context }">
+            {{ $t('terms.complaint.context') }}
+            <span :class="sortIconC(sortTag.context)" />
+          </th>
+          <th @click="sort(sortTag.implementation)" :class="{ sortColumn: sortedBy === sortTag.implementation }">
+            {{ $t('terms.complaint.implementation') }}
+            <span :class="sortIconC(sortTag.implementation)" />
+          </th>
+          <th @click="sort(sortTag.document)" :class="{ sortColumn: sortedBy === sortTag.document }">
+            {{ $t('terms.document') }}
+            <span :class="sortIconC(sortTag.document)" />
+          </th>
           <th>&nbsp;</th>
         </tr>
         <tr
@@ -124,7 +143,7 @@ export default {
     this.sort(this.sortedBy)
   },
   computed: {
-    ...mapGetters([getters.workComplaints, getters.activeComplaintId, getters.complaintSorter, getters.getWork, getters.sortedBy]),
+    ...mapGetters([getters.workComplaints, getters.activeComplaintId, getters.complaintSorter, getters.getWork, getters.sortReverse, getters.sortedBy]),
     workId () {
       return this.$route.params.id
     },
@@ -215,7 +234,6 @@ export default {
         this.$store.commit(mutations.COMPLAINTS_LIST, false)
       }
     },
-    // TODO => store/complaints
     sort (tag) {
       // console.log('sort', tag)
       this.mvt = null
@@ -256,6 +274,16 @@ export default {
         default:
           this.$store.commit(mutations.SET_SORTER, { sortedBy: sortTag.movementMeasure, sorter: null })
       }
+    },
+    sortIconC (tag) {
+      const sorted = (this.sortedBy === tag)
+      const classes = {
+        sorted,
+        icon: true,
+        'icon-arrow-up': sorted && this[getters.sortReverse] < 0,
+        'icon-arrow-down': !sorted || this[getters.sortReverse] > 0
+      }
+      return classes
     }
   }
 }
@@ -304,8 +332,12 @@ tr.mvt {
 
 .sortColumn {
   color: blue;
-  &::before {
-    content: '▾ '
-  }
+}
+th .icon {
+  margin-left: 5px;
+  color: lightgray;
+}
+th .icon.sorted {
+  color: blue !important;
 }
 </style>
