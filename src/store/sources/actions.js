@@ -97,9 +97,11 @@ const actions = {
                   }
                   // console.log(canvas, place)
                   // default page height is 300mm if physicalScale is not defined
-                  const physScale = (canvas.service && canvas.service.physicalScale)
-                    ? canvas.service.physicalScale
+
+                  const physScale = (canvas.images[0] && canvas.images[0].resource && canvas.images[0].resource.service && canvas.images[0].resource.service.service && canvas.images[0].resource.service.service.physicalScale)
+                    ? canvas.images[0].resource.service.service.physicalScale
                     : (300 / canvas.height)
+
                   const page = {
                     work: workId,
                     source: source.id,
