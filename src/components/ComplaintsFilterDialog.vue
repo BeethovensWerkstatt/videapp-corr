@@ -39,7 +39,6 @@ export default {
   methods: {
     openDialog (e) {
       e.preventDefault()
-      console.log(e, this.tag)
       this.display = true
     },
     closeDialog (e) {
