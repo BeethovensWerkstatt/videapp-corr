@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { startProc, finishProc } from '..'
-import { infoboxnames } from './names'
+import n from '@/store/names'
 
 /**
  * @namespace store.infobox
@@ -11,7 +11,7 @@ const infoboxmodule = {
    * @property {String} currentItem ID of the currently highlighted element
    */
   state: {
-    [infoboxnames.state.currentItem]: ''
+    [n.state.currentItem]: ''
   },
   /**
    * @namespace store.infobox.mutations
@@ -22,10 +22,10 @@ const infoboxmodule = {
      * @memberof store.infobox.mutations
      * @param {String} item
      */
-    [infoboxnames.mutations.SET_CURRENT_ITEM] (state, item) {
+    [n.mutations.SET_CURRENT_ITEM] (state, item) {
       state.currentItem = item
     },
-    [infoboxnames.mutations.CANCEL_CURRENT_ITEM] (state) {
+    [n.mutations.CANCEL_CURRENT_ITEM] (state) {
       state.currentItem = null
     }
   },
@@ -37,7 +37,7 @@ const infoboxmodule = {
      * set current item for infobox
      * @memberof store.infobox.actions
      */
-    async [infoboxnames.actions.setCurrentItem] ({ commit }, payload) {
+    async [n.actions.setCurrentItem] ({ commit }, payload) {
       if (payload === null) {
         return
       }
@@ -47,13 +47,13 @@ const infoboxmodule = {
         const uri = 'https://api.beethovens-werkstatt.de/desc/' + payload + '.json'
         const res = await axios.get(uri)
         const json = await res.data
-        commit(infoboxnames.mutations.SET_CURRENT_ITEM, json)
+        commit(n.mutations.SET_CURRENT_ITEM, json)
       } finally {
         finishProc()
       }
     },
-    [infoboxnames.actions.cancelCurrentItem] ({ commit }) {
-      commit(infoboxnames.mutations.CANCEL_CURRENT_ITEM)
+    [n.actions.cancelCurrentItem] ({ commit }) {
+      commit(n.mutations.CANCEL_CURRENT_ITEM)
     }
   },
   /**
@@ -62,13 +62,13 @@ const infoboxmodule = {
    * @property {String} currentItem currently displayed Item in infobox
    */
   getters: {
-    [infoboxnames.getters.visible]: (state) => {
+    [n.getters.visible]: (state) => {
       return state.currentItem !== ''
     },
-    [infoboxnames.getters.currentItem]: (state) => {
+    [n.getters.currentItem]: (state) => {
       return state.currentItem
     },
-    [infoboxnames.getters.hasCurrentItem]: (state) => {
+    [n.getters.hasCurrentItem]: (state) => {
       return !!state.currentItem
     }
   }

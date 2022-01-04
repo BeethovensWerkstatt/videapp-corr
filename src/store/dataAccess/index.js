@@ -1,7 +1,7 @@
 import PouchDB from 'pouchdb'
 import axios from 'axios'
 import config from '@/config'
-import DAnames from './names'
+import n from '@/store/names'
 
 /**
  * @namespace store.data_access
@@ -11,13 +11,13 @@ const DAmodule = {
    * @namespace store.data_access.state
    */
   state: {
-    [DAnames.state.db]: new PouchDB(config.couchdb.defaultName)
+    [n.state.db]: new PouchDB(config.couchdb.defaultName)
   },
   /**
    * @namespace store.data_access.mutations
    */
   mutations: {
-    [DAnames.mutations.CDB_STORE_DATA] (state, { _id, data }) {
+    [n.mutations.CDB_STORE_DATA] (state, { _id, data }) {
       state.db.put({ _id, data })
     }
   },
@@ -25,7 +25,7 @@ const DAmodule = {
    * @namespace store.data_access.actions
    */
   actions: {
-    [DAnames.actions.getData] ({ state, commit }, { url, callback, error }) {
+    [n.actions.getData] ({ state, commit }, { url, callback, error }) {
       // first try pouchdb (indexedDB)
       // state.db.get(url).then(d => {
       //   TODO refetch data on TTL
@@ -50,7 +50,7 @@ const DAmodule = {
           data
         }
         // store data in db
-        // commit(DAnames.mutations.CDB_STORE_DATA, d)
+        // commit(n.mutations.CDB_STORE_DATA, d)
         // send data back
         console.log('loaded ' + url + ' of type ' + type)
         callback(d)
