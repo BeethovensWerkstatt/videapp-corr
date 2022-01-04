@@ -1,3 +1,22 @@
+export const sortTag = {
+  movementMeasure: 'movementMeasure',
+  revisionObject: 'objects',
+  textOperation: 'operation',
+  classification: 'classes',
+  context: 'context',
+  implementation: 'implementation',
+  document: 'document'
+}
+export const tagLabel = {
+  [sortTag.movementMeasure]: 'terms.movement',
+  [sortTag.revisionObject]: 'terms.complaint.revision-object',
+  [sortTag.textOperation]: 'terms.complaint.text-operation',
+  [sortTag.classification]: 'terms.complaint.classification',
+  [sortTag.context]: 'terms.complaint.context',
+  [sortTag.implementation]: 'terms.complaint.implementation',
+  [sortTag.document]: 'terms.document'
+}
+
 export const complaintsNames = {
   state: {
     showComplaintsList: 'showComplaintsList',

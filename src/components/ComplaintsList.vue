@@ -9,7 +9,10 @@
           class="mvt"
         >
           <!-- TODO work title column (optional) -->
-          <th @click="sort(sortTag.movementMeasure)"><span v-if="sortedBy === sortTag.movementMeasure">{{ toRoman(complaint.movement.n) + '.' }}</span>&nbsp;</th>
+          <th @click="sort(sortTag.movementMeasure)">
+            <span v-if="sortedBy === sortTag.movementMeasure">{{ toRoman(complaint.movement.n) + '.' }}</span>
+            &nbsp;
+          </th>
           <th
             @click="sort(sortTag.movementMeasure)"
             :class="{ sortColumn: sortedBy === sortTag.movementMeasure }"
@@ -20,7 +23,7 @@
           </th>
           <th :class="{ sortColumn: sortedBy === sortTag.revisionObject }">
             <span @click="sort(sortTag.revisionObject)">
-              {{ $t('terms.complaint.revision-object') }}
+              {{ $t(tagLabel[sortTag.revisionObject]) }}
               <span :class="sortIconC(sortTag.revisionObject)" />
             </span>
             <complaints-filter-dialog :tag="sortTag.revisionObject" />
@@ -117,17 +120,7 @@ import { mapGetters } from 'vuex'
 import { actions, mutations, getters } from '@/store/names'
 import toolbox from '@/toolbox'
 import ComplaintsFilterDialog from './ComplaintsFilterDialog.vue'
-
-// TODO export in store/complaints
-const sortTag = {
-  movementMeasure: 'movementMeasure',
-  revisionObject: 'objects',
-  textOperation: 'operation',
-  classification: 'classes',
-  context: 'context',
-  implementation: 'implementation',
-  document: 'document'
-}
+import { sortTag, tagLabel } from '@/store/complaints/names'
 
 /**
  * component to display list of complaints
@@ -140,7 +133,8 @@ export default {
   components: { ComplaintsFilterDialog },
   data () {
     return {
-      sortTag
+      sortTag,
+      tagLabel
     }
   },
   name: 'ComplaintsList',
