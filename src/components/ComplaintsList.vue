@@ -18,9 +18,12 @@
             <span v-else>{{ $t('terms.movement') }}, {{ $t('terms.measure') }}</span>
             <span :class="sortIconC(sortTag.movementMeasure)" />
           </th>
-          <th @click="sort(sortTag.revisionObject)" :class="{ sortColumn: sortedBy === sortTag.revisionObject }">
-            {{ $t('terms.complaint.revision-object') }}
-            <span :class="sortIconC(sortTag.revisionObject)" />
+          <th :class="{ sortColumn: sortedBy === sortTag.revisionObject }">
+            <span @click="sort(sortTag.revisionObject)">
+              {{ $t('terms.complaint.revision-object') }}
+              <span :class="sortIconC(sortTag.revisionObject)" />
+            </span>
+            <complaints-filter-dialog :tag="sortTag.revisionObject" />
           </th>
           <th @click="sort(sortTag.textOperation)" :class="{ sortColumn: sortedBy === sortTag.textOperation }">
             {{ $t('terms.complaint.text-operation') }}
@@ -113,6 +116,7 @@
 import { mapGetters } from 'vuex'
 import { actions, mutations, getters } from '@/store/names'
 import toolbox from '@/toolbox'
+import ComplaintsFilterDialog from './ComplaintsFilterDialog.vue'
 
 // TODO export in store/complaints
 const sortTag = {
@@ -133,6 +137,7 @@ const sortTag = {
  * @vue-computed {String} activeComplaintId
  */
 export default {
+  components: { ComplaintsFilterDialog },
   data () {
     return {
       sortTag

@@ -4,6 +4,8 @@ import n from '@/store/names'
 import tb from '@/toolbox'
 // import Complaint from '@/data/Complaint'
 
+// TODO filter & sort complaint list in extra state property
+
 /**
  * @namespace store.complaints
  */
@@ -18,8 +20,7 @@ const complaintsModule = {
     [n.state.complaints]: [],
     [n.state.activeComplaintId]: null,
     [n.state.displayComplaint]: false,
-    [n.state.filteredBy]: null,
-    [n.state.complaintFilter]: null,
+    [n.state.complaintFilter]: [],
     [n.state.sortedBy]: null,
     [n.state.sortReverse]: false,
     [n.state.complaintSorter]: null
@@ -85,11 +86,17 @@ const complaintsModule = {
     },
     /**
      * set filter function
-     * @param {Function} parms { filteredBy, filter }
+     * @param {Function} parms { tag, filter }
      */
-    [n.mutations.SET_FILTER] (state, { filteredBy, filter }) {
-      state[n.state.filteredBy] = filteredBy
-      state[n.state.complaintFilter] = filter
+    [n.mutations.SET_FILTER] (state, { tag, filter }) {
+      state[n.state.complaintFilter] = { ...state[n.state.complaintFilter], [tag]: filter }
+    },
+    /**
+     * remove filter function
+     * @param {Function} parms tag
+     */
+    [n.mutations.REM_FILTER] (state, tag) {
+      delete state[n.state.complaintFilter][tag]
     },
     /**
      * set sort function
@@ -242,7 +249,17 @@ const complaintsModule = {
   getters: {
     [n.getters.showComplaintsList]: (state) => state.showComplaintsList,
     [n.getters.complaints]: (state, getters) => {
-      const complaints = state.complaintFilter ? state.complaints.filter(state.complaintFilter) : state.complaints
+      // TODO keep filtered and sorted list in state !!
+      const complaintFilter = state[n.state.complaintFilter]
+      const filters = complaintFilter ? Object.values(complaintFilter) : []
+      const complaints = filters.length > 0 ? state.complaints.filter((c) => {
+        for (const f in filters) {
+          if (!f(c)) {
+            return false
+          }
+        }
+        return true
+      }) : state.complaints
       const complaintlist = complaints.map(c => {
         const mdiv = c.affects[0]?.mdiv
         const movement = getters.getMovementById(mdiv)
@@ -292,7 +309,6 @@ const complaintsModule = {
       }
       return complaintIds.length > 0 ? complaintIds[0] : undefined
     },
-    [n.getters.filteredBy]: (state) => state[n.state.filteredBy],
     [n.getters.complaintFilter]: (state) => state[n.state.complaintFilter],
     [n.getters.sortedBy]: (state) => state[n.state.sortedBy],
     [n.getters.sortReverse]: (state) => state[n.state.sortReverse] ? -1 : 1,

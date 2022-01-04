@@ -4,7 +4,6 @@ export const complaintsNames = {
     complaints: 'complaints',
     activeComplaintId: 'activeComplaintId',
     displayComplaint: 'displayComplaint',
-    filteredBy: 'filteredBy',
     complaintFilter: 'complaintFilter',
     sortedBy: 'sortedBy',
     sortReverse: 'sortReverse',
@@ -17,6 +16,7 @@ export const complaintsNames = {
     ACTIVATE_COMPLAINT: 'ACTIVATE_COMPLAINT',
     DISPLAY_COMPLAINT: 'DISPLAY_COMPLAINT',
     SET_FILTER: 'SET_FILTER',
+    REM_FILTER: 'REM_FILTER',
     SET_SORTER: 'SET_SORTER'
   },
   actions: {
@@ -35,7 +35,6 @@ export const complaintsNames = {
     activeComplaint: 'activeComplaint',
     previousComplaintId: 'previousComplaintId',
     nextComplaintId: 'nextComplaintId',
-    filteredBy: 'filteredBy',
     complaintFilter: 'complaintFilter',
     sortedBy: 'sortedBy',
     complaintSorter: 'complaintSorter'
