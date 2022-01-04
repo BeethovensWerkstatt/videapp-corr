@@ -21,32 +21,16 @@
             <span v-else>{{ $t('terms.movement') }}, {{ $t('terms.measure') }}</span>
             <span :class="sortIconC(sortTag.movementMeasure)" />
           </th>
-          <th :class="{ sortColumn: sortedBy === sortTag.revisionObject }">
-            <span @click="sort(sortTag.revisionObject)">
-              {{ $t(tagLabel[sortTag.revisionObject]) }}
-              <span :class="sortIconC(sortTag.revisionObject)" />
+          <th
+            v-for="(tag, i) in [sortTag.revisionObject, sortTag.textOperation, sortTag.classification, sortTag.context, sortTag.implementation, sortTag.document]"
+            :key="i + '-label-' + tag"
+            :class="{ sortColumn: sortedBy === tag }"
+          >
+            <span @click="sort(tag)">
+              {{ $t(tagLabel[tag]) }}
+              <div :class="sortIconC(tag)" />
             </span>
-            <complaints-filter-dialog :tag="sortTag.revisionObject" />
-          </th>
-          <th @click="sort(sortTag.textOperation)" :class="{ sortColumn: sortedBy === sortTag.textOperation }">
-            {{ $t('terms.complaint.text-operation') }}
-            <span :class="sortIconC(sortTag.textOperation)" />
-          </th>
-          <th @click="sort(sortTag.classification)" :class="{ sortColumn: sortedBy === sortTag.classification }">
-            {{ $t('terms.complaint.classification') }}
-            <span :class="sortIconC(sortTag.classification)" />
-          </th>
-          <th @click="sort(sortTag.context)" :class="{ sortColumn: sortedBy === sortTag.context }">
-            {{ $t('terms.complaint.context') }}
-            <span :class="sortIconC(sortTag.context)" />
-          </th>
-          <th @click="sort(sortTag.implementation)" :class="{ sortColumn: sortedBy === sortTag.implementation }">
-            {{ $t('terms.complaint.implementation') }}
-            <span :class="sortIconC(sortTag.implementation)" />
-          </th>
-          <th @click="sort(sortTag.document)" :class="{ sortColumn: sortedBy === sortTag.document }">
-            {{ $t('terms.document') }}
-            <span :class="sortIconC(sortTag.document)" />
+            <complaints-filter-dialog :tag="tag" />
           </th>
           <th>&nbsp;</th>
         </tr>
@@ -70,36 +54,13 @@
             {{ toRoman(complaint.movement.n) }}, {{ measures(complaint) }}
           </td>
           <td
+            v-for="(tag, i) in [sortTag.revisionObject, sortTag.textOperation, sortTag.classification, sortTag.context, sortTag.implementation]"
+            :key="i + '-value-' + tag"
             class="complaint-attribute"
             @click.prevent="toggleActivate(complaint)"
           >
-            <span v-if="complaint.tags['objects'].length === 0">&mdash;</span>
-            <span v-for="(o,i) in complaint.tags['objects']" :key="o + '_' + i"><span v-if="i > 0">, </span>{{ $t('taxonomy.' + o) }}</span>
-          </td>
-          <td
-            class="complaint-attribute"
-            @click.prevent="toggleActivate(complaint)"
-          >
-            <span v-if="complaint.tags['operation'].length === 0">&mdash;</span>
-            <span v-for="(o,i) in complaint.tags['operation']" :key="o + '_' + i"><span v-if="i > 0">, </span>{{ $t('taxonomy.' + o) }}</span>
-          </td>
-          <td
-            class="complaint-attribute"
-            @click.prevent="toggleActivate(complaint)"
-          >
-            <span v-if="complaint.tags['classes'].length === 0">&mdash;</span>
-            <span v-for="(o,i) in complaint.tags['classes']" :key="o + '_' + i"><span v-if="i > 0">, </span>{{ $t('taxonomy.' + o) }}</span>
-          </td>
-          <td
-            class="complaint-attribute"
-            @click.prevent="toggleActivate(complaint)"
-          >
-            <span v-if="complaint.tags['context'].length === 0">&mdash;</span>
-            <span v-for="(o,i) in complaint.tags['context']" :key="o + '_' + i"><span v-if="i > 0">, </span>{{ $t('taxonomy.' + o) }}</span>
-          </td>
-          <td class="complaint-attribute">
-            <span v-if="complaint.tags['implementation'].length === 0">&mdash;</span>
-            <span v-for="(o,i) in complaint.tags['implementation']" :key="o + '_' + i"><span v-if="i > 0">, </span>{{ $t('taxonomy.' + o) }}</span>
+            <span v-if="complaint.tags[tag].length === 0">&mdash;</span>
+            <span v-for="(o,i) in complaint.tags[tag]" :key="o + '_' + i"><span v-if="i > 0">, </span>{{ $t('taxonomy.' + o) }}</span>
           </td>
           <td class="complaint-attribute">
             {{ complaintSigle(complaint) }}
