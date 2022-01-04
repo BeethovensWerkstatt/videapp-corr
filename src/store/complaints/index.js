@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { startProc, finishProc } from '..'
-import { complaintsNames } from './names'
-import { mutations as mut, actions as act } from '../names'
+import n from '@/store/names'
 import tb from '@/toolbox'
 // import Complaint from '@/data/Complaint'
 
@@ -15,15 +14,15 @@ const complaintsModule = {
    * @property {String} activeComplaintId - ID of complaint to display
    */
   state: {
-    [complaintsNames.state.showComplaintsList]: false,
-    [complaintsNames.state.complaints]: [],
-    [complaintsNames.state.activeComplaintId]: null,
-    [complaintsNames.state.displayComplaint]: false,
-    [complaintsNames.state.filteredBy]: null,
-    [complaintsNames.state.complaintFilter]: null,
-    [complaintsNames.state.sortedBy]: null,
-    [complaintsNames.state.sortReverse]: false,
-    [complaintsNames.state.complaintSorter]: null
+    [n.state.showComplaintsList]: false,
+    [n.state.complaints]: [],
+    [n.state.activeComplaintId]: null,
+    [n.state.displayComplaint]: false,
+    [n.state.filteredBy]: null,
+    [n.state.complaintFilter]: null,
+    [n.state.sortedBy]: null,
+    [n.state.sortReverse]: false,
+    [n.state.complaintSorter]: null
   },
   /**
    * @namespace store.complaints.mutations
@@ -34,7 +33,7 @@ const complaintsModule = {
      * @param {Object} state
      * @param {Boolean} show
      */
-    [complaintsNames.mutations.COMPLAINTS_LIST] (state, show) {
+    [n.mutations.COMPLAINTS_LIST] (state, show) {
       state.showComplaintsList = show
     },
     /**
@@ -43,7 +42,7 @@ const complaintsModule = {
      * @param {Object} state
      * @param {Object} complaint
      */
-    [complaintsNames.mutations.LOAD_COMPLAINT] (state, complaint) {
+    [n.mutations.LOAD_COMPLAINT] (state, complaint) {
       const complaints = [...state.complaints]
       complaints.push(complaint)
       state.complaints = complaints
@@ -54,7 +53,7 @@ const complaintsModule = {
      * @param {Object} state
      * @param {Object} complaint
      */
-    [complaintsNames.mutations.MODIFY_COMPLAINT] (state, complaint) {
+    [n.mutations.MODIFY_COMPLAINT] (state, complaint) {
       let success = false
       const complaints = state.complaints.map(c => {
         if (c['@id'] === complaint['@id']) {
@@ -73,7 +72,7 @@ const complaintsModule = {
      * @param {Object} state
      * @param {String} complaintId
      */
-    [complaintsNames.mutations.ACTIVATE_COMPLAINT] (state, complaintId) {
+    [n.mutations.ACTIVATE_COMPLAINT] (state, complaintId) {
       state.activeComplaintId = complaintId
     },
     /**
@@ -81,30 +80,30 @@ const complaintsModule = {
      * @param {Object} state
      * @param {Boolean} display
      */
-    [complaintsNames.mutations.DISPLAY_COMPLAINT] (state, display) {
+    [n.mutations.DISPLAY_COMPLAINT] (state, display) {
       state.displayComplaint = display
     },
     /**
      * set filter function
      * @param {Function} parms { filteredBy, filter }
      */
-    [complaintsNames.mutations.SET_FILTER] (state, { filteredBy, filter }) {
-      state[complaintsNames.state.filteredBy] = filteredBy
-      state[complaintsNames.state.complaintFilter] = filter
+    [n.mutations.SET_FILTER] (state, { filteredBy, filter }) {
+      state[n.state.filteredBy] = filteredBy
+      state[n.state.complaintFilter] = filter
     },
     /**
      * set sort function
      * @param {Object} parms { sortedBy, sorter }
      */
-    [complaintsNames.mutations.SET_SORTER] (state, { sortedBy, sorter }) {
-      if (state[complaintsNames.state.sortedBy] === sortedBy) {
-        state[complaintsNames.state.sortReverse] = !state[complaintsNames.state.sortReverse]
-        // console.log('sort', sortedBy, state[complaintsNames.state.sortReverse])
+    [n.mutations.SET_SORTER] (state, { sortedBy, sorter }) {
+      if (state[n.state.sortedBy] === sortedBy) {
+        state[n.state.sortReverse] = !state[n.state.sortReverse]
+        // console.log('sort', sortedBy, state[n.state.sortReverse])
       } else {
-        state[complaintsNames.state.sortedBy] = sortedBy
-        state[complaintsNames.state.sortReverse] = false
+        state[n.state.sortedBy] = sortedBy
+        state[n.state.sortReverse] = false
       }
-      state[complaintsNames.state.complaintSorter] = sorter
+      state[n.state.complaintSorter] = sorter
     }
   },
   /**
@@ -116,7 +115,7 @@ const complaintsModule = {
      * @memberof store.complaints.actions
      * @param {Object} payload object containing complaints property `{ complaints: Object[] }`
      */
-    [complaintsNames.actions.loadComplaints] ({ commit, /* dispatch, */ getters }, { complaints }) {
+    [n.actions.loadComplaints] ({ commit, /* dispatch, */ getters }, { complaints }) {
       complaints.forEach(c => {
         // console.log(c)
         const mdiv = c.affects[0]?.mdiv
@@ -137,7 +136,7 @@ const complaintsModule = {
           }
         })
         */
-        commit(mut.LOAD_COMPLAINT, complaint)
+        commit(n.mutations.LOAD_COMPLAINT, complaint)
       })
     },
     /**
@@ -145,16 +144,16 @@ const complaintsModule = {
      * @memberof store.complaints.actions
      * @param {String} complaintId id of complaint to activate
      */
-    async [complaintsNames.actions.activateComplaint] ({ dispatch, commit, state }, complaintId) {
+    async [n.actions.activateComplaint] ({ dispatch, commit, state }, complaintId) {
       // console.log('activate ' + complaintId)
       if (!complaintId) {
-        commit(mut.ACTIVATE_COMPLAINT)
-        commit(mut.CANCEL_CURRENT_ITEM)
+        commit(n.mutations.ACTIVATE_COMPLAINT)
+        commit(n.mutations.CANCEL_CURRENT_ITEM)
         return
       }
       console.log(complaintId, state.activeComplaintId)
       if (complaintId !== state.activeComplaintId) {
-        commit(mut.CANCEL_CURRENT_ITEM)
+        commit(n.mutations.CANCEL_CURRENT_ITEM)
       }
       const complaint = state.complaints.find(c => {
         const IdIsURL = complaintId.endsWith('.json')
@@ -170,20 +169,20 @@ const complaintsModule = {
         return
       }
       if (!complaint.loading) {
-        const callback = (complaint) => commit(mut.ACTIVATE_COMPLAINT, complaint['@id'])
-        dispatch(act.loadComplaint, { complaint, callback })
+        const callback = (complaint) => commit(n.mutations.ACTIVATE_COMPLAINT, complaint['@id'])
+        dispatch(n.actions.loadComplaint, { complaint, callback })
       } else {
-        commit(complaintsNames.mutations.ACTIVATE_COMPLAINT, complaint['@id'])
+        commit(n.mutations.ACTIVATE_COMPLAINT, complaint['@id'])
       }
     },
-    [complaintsNames.actions.activateSibling] ({ commit, dispatch, getters }, previous) {
+    [n.actions.activateSibling] ({ commit, dispatch, getters }, previous) {
       // Next Complaint ID to activate
-      const ncid = getters[previous ? complaintsNames.getters.previousComplaintId : complaintsNames.getters.nextComplaintId]
+      const ncid = getters[previous ? n.getters.previousComplaintId : n.getters.nextComplaintId]
       if (ncid) {
-        dispatch(complaintsNames.actions.openComplaintComparison, ncid)
+        dispatch(n.actions.openComplaintComparison, ncid)
       }
     },
-    async [complaintsNames.actions.loadComplaint] ({ commit }, { complaint, callback }) {
+    async [n.actions.loadComplaint] ({ commit }, { complaint, callback }) {
       if (!complaint.revisionDocs && complaint['@id']) {
         startProc()
         complaint.loading = true
@@ -195,7 +194,7 @@ const complaintsModule = {
           complaint.tags = data.tags
           complaint.loading = false
           // console.log(complaint)
-          commit(mut.MODIFY_COMPLAINT, complaint)
+          commit(n.mutations.MODIFY_COMPLAINT, complaint)
         } finally {
           finishProc()
         }
@@ -204,7 +203,7 @@ const complaintsModule = {
         callback(complaint)
       }
     },
-    async [complaintsNames.actions.openComplaintComparison] ({ dispatch, commit, state }, complaintId) {
+    async [n.actions.openComplaintComparison] ({ dispatch, commit, state }, complaintId) {
       if (complaintId === null) {
         return null
       }
@@ -226,12 +225,12 @@ const complaintsModule = {
 
       const f = () => {
         if (complaintId !== state.activeComplaintId) {
-          commit(mut.CANCEL_CURRENT_ITEM)
+          commit(n.mutations.CANCEL_CURRENT_ITEM)
         }
-        commit(complaintsNames.mutations.ACTIVATE_COMPLAINT, complaintId)
-        commit(complaintsNames.mutations.DISPLAY_COMPLAINT, true)
+        commit(n.mutations.ACTIVATE_COMPLAINT, complaintId)
+        commit(n.mutations.DISPLAY_COMPLAINT, true)
       }
-      dispatch(complaintsNames.actions.loadComplaint, { complaint, callback: f })
+      dispatch(n.actions.loadComplaint, { complaint, callback: f })
     }
   },
   /**
@@ -241,24 +240,24 @@ const complaintsModule = {
    * @property {Object} activeComplaint displayed complaint
    */
   getters: {
-    [complaintsNames.getters.showComplaintsList]: (state) => state.showComplaintsList,
-    [complaintsNames.getters.complaints]: (state, getters) => {
+    [n.getters.showComplaintsList]: (state) => state.showComplaintsList,
+    [n.getters.complaints]: (state, getters) => {
       const complaints = state.complaintFilter ? state.complaints.filter(state.complaintFilter) : state.complaints
       const complaintlist = complaints.map(c => {
         const mdiv = c.affects[0]?.mdiv
         const movement = getters.getMovementById(mdiv)
         // console.log(mdiv, movement)
         return { ...c, movement }
-      }).sort(getters[complaintsNames.getters.complaintSorter])
-      return state[complaintsNames.state.sortReverse] ? complaintlist.reverse() : complaintlist
+      }).sort(getters[n.getters.complaintSorter])
+      return state[n.state.sortReverse] ? complaintlist.reverse() : complaintlist
     },
-    [complaintsNames.getters.workComplaints]: (state, getters) => (workId) => {
+    [n.getters.workComplaints]: (state, getters) => (workId) => {
       // TODO atId in loadComplaints?
       return getters.complaints.filter(c => tb.atId(c.movement?.work) === workId)
     },
-    [complaintsNames.getters.displayComplaint]: (state) => state.displayComplaint,
-    [complaintsNames.getters.activeComplaintId]: (state) => state.activeComplaintId,
-    [complaintsNames.getters.activeComplaint] (state, getters) {
+    [n.getters.displayComplaint]: (state) => state.displayComplaint,
+    [n.getters.activeComplaintId]: (state) => state.activeComplaintId,
+    [n.getters.activeComplaint] (state, getters) {
       const complaintId = getters.activeComplaintId
       // console.log(complaintId)
       if (complaintId) {
@@ -272,19 +271,19 @@ const complaintsModule = {
       }
       return null
     },
-    [complaintsNames.getters.previousComplaintId] (state, getters) {
-      const acid = state[complaintsNames.state.activeComplaintId]
+    [n.getters.previousComplaintId] (state, getters) {
+      const acid = state[n.state.activeComplaintId]
       if (acid) {
-        const complaintIds = getters[complaintsNames.getters.complaints].map((c) => c['@id'])
+        const complaintIds = getters[n.getters.complaints].map((c) => c['@id'])
         const ncid = tb.findPrevious(complaintIds, (cid) => cid === acid)
         console.log(acid, ncid, complaintIds)
         return ncid
       }
       return undefined
     },
-    [complaintsNames.getters.nextComplaintId] (state, getters) {
-      const acid = state[complaintsNames.state.activeComplaintId]
-      const complaintIds = getters[complaintsNames.getters.complaints].map((c) => c['@id'])
+    [n.getters.nextComplaintId] (state, getters) {
+      const acid = state[n.state.activeComplaintId]
+      const complaintIds = getters[n.getters.complaints].map((c) => c['@id'])
       console.log(acid, complaintIds)
       if (acid) {
         const ncid = tb.findPrevious(complaintIds, (cid) => cid === acid)
@@ -293,12 +292,12 @@ const complaintsModule = {
       }
       return complaintIds.length > 0 ? complaintIds[0] : undefined
     },
-    [complaintsNames.getters.filteredBy]: (state) => state[complaintsNames.state.filteredBy],
-    [complaintsNames.getters.complaintFilter]: (state) => state[complaintsNames.state.complaintFilter],
-    [complaintsNames.getters.sortedBy]: (state) => state[complaintsNames.state.sortedBy],
-    [complaintsNames.getters.sortReverse]: (state) => state[complaintsNames.state.sortReverse] ? -1 : 1,
-    [complaintsNames.getters.complaintSorter] (state, getters) {
-      const complaintSorter = state[complaintsNames.state.complaintSorter]
+    [n.getters.filteredBy]: (state) => state[n.state.filteredBy],
+    [n.getters.complaintFilter]: (state) => state[n.state.complaintFilter],
+    [n.getters.sortedBy]: (state) => state[n.state.sortedBy],
+    [n.getters.sortReverse]: (state) => state[n.state.sortReverse] ? -1 : 1,
+    [n.getters.complaintSorter] (state, getters) {
+      const complaintSorter = state[n.state.complaintSorter]
       const stdSort = (c1, c2) => {
         // TODO work
         const work1 = c1.movement ? getters.getWork(c1.movement?.work) : undefined
