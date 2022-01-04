@@ -10,16 +10,18 @@
         >
           <!-- TODO work title column (optional) -->
           <th @click="sort(sortTag.movementMeasure)">
-            <span v-if="sortedBy === sortTag.movementMeasure">{{ toRoman(complaint.movement.n) + '.' }}</span>
+            <span v-if="sortedBy === sortTag.movementMeasure">&nbsp;</span>
             &nbsp;
           </th>
           <th
-            @click="sort(sortTag.movementMeasure)"
             :class="{ sortColumn: sortedBy === sortTag.movementMeasure }"
             :title="workTitle(complaint.movement.work)">
-            <span v-if="sortedBy === sortTag.movementMeasure">{{ complaint.movement.label }}</span>
-            <span v-else>{{ $t('terms.movement') }}, {{ $t('terms.measure') }}</span>
-            <span :class="sortIconC(sortTag.movementMeasure)" />
+            <span @click="sort(sortTag.movementMeasure)">
+              <span v-if="sortedBy === sortTag.movementMeasure">{{ toRoman(complaint.movement.n) + '.' }} {{ complaint.movement.label }}</span>
+              <span v-else>{{ $t('terms.movement') }}, {{ $t('terms.measure') }}</span>
+              <span :class="sortIconC(sortTag.movementMeasure)" />
+            </span>
+            <complaints-filter-dialog :tag="sortTag.movementMeasure" />
           </th>
           <th
             v-for="(tag, i) in [sortTag.revisionObject, sortTag.textOperation, sortTag.classification, sortTag.context, sortTag.implementation, sortTag.document]"
@@ -51,7 +53,7 @@
             class="complaint-attribute"
             @click.prevent="toggleActivate(complaint)"
           >
-            {{ toRoman(complaint.movement.n) }}, {{ measures(complaint) }}
+            <span v-if="sortedBy !== sortTag.movementMeasure">{{ toRoman(complaint.movement.n) }}, </span>{{ measures(complaint) }}
           </td>
           <td
             v-for="(tag, i) in [sortTag.revisionObject, sortTag.textOperation, sortTag.classification, sortTag.context, sortTag.implementation]"
