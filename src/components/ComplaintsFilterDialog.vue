@@ -8,6 +8,11 @@
     <div :id="divid" v-if="display" class="cfg-dlg">
       <btn @click="closeDialog">{{ $t('terms.close') }}</btn>
       Filter {{ tag }}
+      <select :id="sid" multiple>
+        <option v-for="(t,i) in tags" :key="i + '-opt'" :value="t">
+          {{ $t('taxonomy.' + t) }}
+        </option>
+      </select>
     </div>
   </div>
 </template>
@@ -15,6 +20,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import n from '@/store/names'
+import { complaintFilterTags } from '@/store/complaints'
 
 export default {
   name: 'ComplaintsFilterDialog',
@@ -32,8 +38,15 @@ export default {
     divid () {
       return 'cfd-' + this.tag
     },
+    sid () {
+      return 'sel-' + this.tag
+    },
     hasFilter () {
       return this.tag in Object.keys(this[n.getters.complaintFilter])
+    },
+    tags () {
+      // console.log(this.tag, complaintFilterTags)
+      return complaintFilterTags[this.tag]
     }
   },
   methods: {
@@ -58,9 +71,9 @@ export default {
     position: absolute;
     top: 10px;
     left: 10px;
-    width: 100px;
-    height: 100px;
-    background: orange;
+    width: 600px;
+    height: 400px;
+    background: white;
   }
 }
 </style>
