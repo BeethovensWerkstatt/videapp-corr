@@ -26,7 +26,8 @@ export const complaintsNames = {
     complaintFilter: 'complaintFilter',
     sortedBy: 'sortedBy',
     sortReverse: 'sortReverse',
-    complaintSorter: 'complaintSorter'
+    complaintSorter: 'complaintSorter',
+    filterSelect: 'filterSelect'
   },
   mutations: {
     COMPLAINTS_LIST: 'COMPLAINTS_LIST',
@@ -34,6 +35,7 @@ export const complaintsNames = {
     MODIFY_COMPLAINT: 'MODIFY_COMPLAINT',
     ACTIVATE_COMPLAINT: 'ACTIVATE_COMPLAINT',
     DISPLAY_COMPLAINT: 'DISPLAY_COMPLAINT',
+    SET_FILTER_SELECT: 'SET_FILTER_SELECT',
     SET_FILTER: 'SET_FILTER',
     REM_FILTER: 'REM_FILTER',
     SET_SORTER: 'SET_SORTER'
@@ -54,6 +56,7 @@ export const complaintsNames = {
     activeComplaint: 'activeComplaint',
     previousComplaintId: 'previousComplaintId',
     nextComplaintId: 'nextComplaintId',
+    filterSelect: 'filterSelect',
     complaintFilter: 'complaintFilter',
     sortedBy: 'sortedBy',
     complaintSorter: 'complaintSorter'

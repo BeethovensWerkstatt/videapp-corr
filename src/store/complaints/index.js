@@ -63,7 +63,8 @@ const complaintsModule = {
     [n.state.complaintFilter]: [],
     [n.state.sortedBy]: null,
     [n.state.sortReverse]: false,
-    [n.state.complaintSorter]: null
+    [n.state.complaintSorter]: null,
+    [n.state.filterSelect]: {}
   },
   /**
    * @namespace store.complaints.mutations
@@ -123,6 +124,24 @@ const complaintsModule = {
      */
     [n.mutations.DISPLAY_COMPLAINT] (state, display) {
       state.displayComplaint = display
+    },
+    /**
+     * set filter select
+     */
+    [n.mutations.SET_FILTER_SELECT] (state, { tag, key, val }) {
+      const filterSelect = state.filterSelect
+      const tagSel = filterSelect[tag]
+      console.log(tag, key, val)
+      if (val) {
+        filterSelect[tag] = {
+          ...tagSel,
+          [key]: true
+        }
+      } else if (tagSel) {
+        delete tagSel[key]
+      }
+      state.filterSelect = filterSelect
+      console.log(state.filterSelect)
     },
     /**
      * set filter function
@@ -348,6 +367,11 @@ const complaintsModule = {
         return ncid
       }
       return complaintIds.length > 0 ? complaintIds[0] : undefined
+    },
+    [n.getters.filterSelect]: (state) => (tag, key) => {
+      const tagSel = state.filterSelect[tag]
+      console.log(tagSel, key)
+      return tagSel ? !!tagSel[key] : false
     },
     [n.getters.complaintFilter]: (state) => state[n.state.complaintFilter],
     [n.getters.sortedBy]: (state) => state[n.state.sortedBy],

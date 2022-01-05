@@ -14,7 +14,8 @@
         <input
           :id="sid + '-' + t"
           type="checkbox"
-          :model="select[t]" />
+          :selected="isSelected(t)"
+          @change="select(t)" />
         <label :for="sid + '-' + t">
           {{ $t('taxonomy.' + t) }}
         </label>
@@ -37,11 +38,10 @@ export default {
     }
   },
   data: () => ({
-    display: false,
-    select: {}
+    display: false
   }),
   computed: {
-    ...mapGetters([n.getters.complaintFilter]),
+    ...mapGetters([n.getters.complaintFilter, n.getters.filterSelect]),
     divid () {
       return 'cfd-' + this.tag
     },
@@ -67,6 +67,16 @@ export default {
     },
     changeFilter (e) {
       console.log(e, this.$el.querySelector('#' + this.sid).value)
+    },
+    select (t) {
+      this.$store.commit(n.mutations.SET_FILTER_SELECT, {
+        tag: this.tag, key: t, val: true
+      })
+    },
+    isSelected (t) {
+      const sel = this[n.getters.filterSelect](this.tag, t)
+      console.log(t, sel)
+      return sel
     }
   }
 }
