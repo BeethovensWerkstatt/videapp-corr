@@ -8,7 +8,7 @@
     <div :id="divid" v-if="display" class="cfg-dlg">
       <btn @click="closeDialog">{{ $t('terms.close') }}</btn>
       Filter {{ tag }}
-      <select :id="sid" multiple>
+      <select :id="sid" multiple @change="changeFilter">
         <option v-for="(t,i) in tags" :key="i + '-opt'" :value="t">
           {{ $t('taxonomy.' + t) }}
         </option>
@@ -57,6 +57,9 @@ export default {
     closeDialog (e) {
       e.preventDefault()
       this.display = false
+    },
+    changeFilter (e) {
+      console.log(e, this.$el.querySelector('#' + this.sid))
     }
   }
 }
