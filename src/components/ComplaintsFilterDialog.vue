@@ -7,12 +7,18 @@
     </span>
     <div :id="divid" v-if="display" class="cfg-dlg">
       <btn @click="closeDialog">{{ $t('terms.close') }}</btn>
-      Filter {{ tag }}
-      <select :id="sid" multiple @change="changeFilter">
-        <option v-for="(t,i) in tags" :key="i + '-opt'" :value="t">
+      <div
+        v-for="(t,i) in tags"
+        :key="i + '-opt'"
+      >
+        <input
+          :id="sid + '-' + t"
+          type="checkbox"
+          :model="select[t]" />
+        <label :for="sid + '-' + t">
           {{ $t('taxonomy.' + t) }}
-        </option>
-      </select>
+        </label>
+      </div>
     </div>
   </div>
 </template>
@@ -31,7 +37,8 @@ export default {
     }
   },
   data: () => ({
-    display: false
+    display: false,
+    select: {}
   }),
   computed: {
     ...mapGetters([n.getters.complaintFilter]),
@@ -59,7 +66,7 @@ export default {
       this.display = false
     },
     changeFilter (e) {
-      console.log(e, this.$el.querySelector('#' + this.sid))
+      console.log(e, this.$el.querySelector('#' + this.sid).value)
     }
   }
 }
