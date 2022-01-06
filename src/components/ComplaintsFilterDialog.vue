@@ -19,7 +19,9 @@
           :id="sid + '-' + t"
           type="checkbox"
           :checked="isSelected(t)"
-          @change="select(t)" />
+          @change="select"
+          :value="t"
+        />
         <label :for="sid + '-' + t">
           {{ $t('taxonomy.' + t) }}
         </label>
@@ -53,7 +55,7 @@ export default {
       return 'sel-' + this.tag
     },
     hasFilter () {
-      return this.tag in Object.keys(this[n.getters.complaintFilter])
+      return Object.keys(this[n.getters.complaintFilter]).indexOf(this.tag) >= 0
     },
     tags () {
       // console.log(this.tag, complaintFilterTags)
@@ -71,9 +73,13 @@ export default {
       this.$store.commit(n.mutations.SET_FILTER, { tag: this.tag, filter })
       this.display = false
     },
-    select (t) {
+    select (e) {
+      console.log(e.target)
+      const t = e.target.value
+      const v = e.target.checked
+      console.log(e, t, v)
       this.$store.commit(n.mutations.SET_FILTER_SELECT, {
-        tag: this.tag, key: t, val: true
+        tag: this.tag, key: t, val: v
       })
     },
     isSelected (t) {
