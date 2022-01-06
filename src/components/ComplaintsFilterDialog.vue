@@ -18,7 +18,7 @@
         <input
           :id="sid + '-' + t"
           type="checkbox"
-          :selected="isSelected(t)"
+          :checked="isSelected(t)"
           @change="select(t)" />
         <label :for="sid + '-' + t">
           {{ $t('taxonomy.' + t) }}
@@ -93,9 +93,9 @@ export default {
   .cfg-dlg {
     display: block !important;
     position: absolute;
-    top: 10px;
-    left: 10px;
-    width: 600px;
+    top: 25px;
+    left: 0px;
+    width: 400px;
     height: 400px;
     background: white;
   }
