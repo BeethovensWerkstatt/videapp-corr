@@ -315,7 +315,7 @@ const complaintsModule = {
       // TODO keep filtered and sorted list in state !!
       const complaintFilter = state[n.state.complaintFilter]
       const filters = complaintFilter ? Object.values(complaintFilter).filter((f) => typeof f === 'function') : []
-      console.log(complaintFilter, filters)
+      // console.log(complaintFilter, filters)
       const complaints = filters.length > 0 ? state.complaints.filter((c) => {
         for (const f of filters) {
           // console.log(f)

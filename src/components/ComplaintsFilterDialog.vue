@@ -5,12 +5,14 @@
         @click="openDialog"
         class="btn-sm"
         :class="{ 'btn-primary': hasFilter || display }"
+        title="Filter"
       >
         Y
       </btn>
     </div>
     <div :id="divid" v-if="display" class="cfg-dlg">
-      <btn @click="closeDialog">{{ $t('terms.close') }}</btn>
+      <btn @click="closeDialog">{{ $t('terms.close') }}</btn>&nbsp;
+      <strong>{{ $t(tagLabel[tag]) }}</strong>
       <div
         v-for="(t,i) in tags"
         :key="i + '-opt'"
@@ -34,6 +36,7 @@
 import { mapGetters } from 'vuex'
 import n from '@/store/names'
 import { complaintFilterTags } from '@/store/complaints'
+import { sortTag, tagLabel } from '@/store/complaints/names'
 
 export default {
   name: 'ComplaintsFilterDialog',
@@ -44,7 +47,9 @@ export default {
     }
   },
   data: () => ({
-    display: false
+    display: false,
+    sortTag,
+    tagLabel
   }),
   computed: {
     ...mapGetters([n.getters.complaintFilter, n.getters.filterSelect]),
@@ -55,7 +60,9 @@ export default {
       return 'sel-' + this.tag
     },
     hasFilter () {
-      return Object.keys(this[n.getters.complaintFilter]).indexOf(this.tag) >= 0
+      const filters = this[n.getters.complaintFilter]
+      const fi = Object.keys(filters).indexOf(this.tag)
+      return fi >= 0 && Object.values(filters)[fi]
     },
     tags () {
       // console.log(this.tag, complaintFilterTags)
@@ -95,17 +102,20 @@ export default {
         return sel
       })
       console.log('TODO set filter ...', filterSet)
-      const filter = (c) => {
-        const tags = c.tags[tag]
-        for (const t of filterSet) {
-          // TODO OR or AND??
-          if (tags.indexOf(t) >= 0) {
-            return true
+      if (filterSet.length > 0) {
+        const filter = (c) => {
+          const tags = c.tags[tag]
+          for (const t of filterSet) {
+            // TODO OR or AND??
+            if (tags.indexOf(t) >= 0) {
+              return true
+            }
           }
+          return false
         }
-        return false
+        return filter
       }
-      return filter
+      return undefined
     }
   }
 }
@@ -117,9 +127,7 @@ export default {
 
   .cfg-dlg {
     display: block !important;
-    position: absolute;
-    top: 25px;
-    left: 0px;
+    position: relative;
     width: 400px;
     height: 400px;
     background: white;

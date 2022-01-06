@@ -26,7 +26,7 @@
         v-for="(complaint, ci) in complaints"
       >
         <tr
-          v-if="complaint.movement && (ci === 0 || checkMvt(complaint.movement.n))"
+          v-if="complaint.movement && (checkMvt(complaint.movement.n) || ci === 0)"
           class="mvt"
         >
           <!-- TODO work title column (optional) -->
