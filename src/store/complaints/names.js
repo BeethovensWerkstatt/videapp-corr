@@ -50,6 +50,7 @@ export const complaintsNames = {
   getters: {
     showComplaintsList: 'showComplaintsList',
     complaints: 'complaints',
+    allComplaints: 'allComplaints',
     workComplaints: 'workComplaints',
     displayComplaint: 'displayComplaint',
     activeComplaintId: 'activeComplaintId',

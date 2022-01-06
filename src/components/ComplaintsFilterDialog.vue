@@ -25,7 +25,12 @@
           :value="t"
         />
         <label :for="sid + '-' + t">
-          {{ $t('taxonomy.' + t) }}
+          <template v-if="tag === 'movementMeasure'">
+            {{ t }}
+          </template>
+          <template v-else>
+            {{ $t('taxonomy.' + t) }}
+          </template>
         </label>
       </div>
     </div>
@@ -52,7 +57,7 @@ export default {
     tagLabel
   }),
   computed: {
-    ...mapGetters([n.getters.complaintFilter, n.getters.filterSelect]),
+    ...mapGetters([n.getters.complaintFilter, n.getters.filterSelect, n.getters.allComplaints, n.getters.workComplaints]),
     divid () {
       return 'cfd-' + this.tag
     },
@@ -66,13 +71,43 @@ export default {
     },
     tags () {
       // console.log(this.tag, complaintFilterTags)
+      switch (this.tag) {
+        case sortTag.movementMeasure:
+          return this.movements
+        case sortTag.document:
+          return this.documents
+      }
       return complaintFilterTags[this.tag]
+    },
+    workId () {
+      return this.$route.params.id
+    },
+    works () {
+      // if (this.workId) {
+      //  return [this.workId]
+      // }
+      const complaints = this.allComplaints
+      const works = [...new Set(complaints.map(c => c.movement.work))]
+      console.log(works)
+      return works
+    },
+    movements () {
+      const complaints = this.workId ? this.workComplaints(this.workId, false) : this[n.getters.allComplaints]
+      const movements = [...new Set(complaints.map(c => c.affects[0].mdiv))]
+      console.log(complaints, movements)
+      return movements
+    },
+    documents () {
+      const complaints = this.workId ? this.workComplaints(this.workId, false) : this[n.getters.allComplaints]
+      const documents = [...new Set(complaints.map(c => c.revisionDoc))]
+      console.log(this.workId, complaints, documents)
+      return documents
     }
   },
   methods: {
     openDialog (e) {
       e.preventDefault()
-      this.display = true
+      this.display = !this.display
     },
     closeDialog (e) {
       e.preventDefault()
@@ -103,6 +138,17 @@ export default {
       })
       console.log('TODO set filter ...', filterSet)
       if (filterSet.length > 0) {
+        // TODO movements / documents!!
+        switch (this.tag) {
+          case sortTag.movementMeasure:
+            return (c) => {
+              return true
+            }
+          case sortTag.document:
+            return (c) => {
+              return true
+            }
+        }
         const filter = (c) => {
           const tags = c.tags[tag]
           for (const t of filterSet) {
@@ -128,9 +174,6 @@ export default {
   .cfg-dlg {
     display: block !important;
     position: relative;
-    width: 400px;
-    height: 400px;
-    background: white;
   }
   .cfd-btn {
     position: absolute;

@@ -311,6 +311,15 @@ const complaintsModule = {
    */
   getters: {
     [n.getters.showComplaintsList]: (state) => state.showComplaintsList,
+    [n.getters.allComplaints]: (state, getters) => {
+      const complaints = state.complaints.map(c => {
+        const mdiv = c.affects[0]?.mdiv
+        const movement = getters[n.getters.getMovementById](mdiv)
+        // console.log(mdiv, movement)
+        return { ...c, movement }
+      })
+      return complaints
+    },
     [n.getters.complaints]: (state, getters) => {
       // TODO keep filtered and sorted list in state !!
       const complaintFilter = state[n.state.complaintFilter]
@@ -333,9 +342,14 @@ const complaintsModule = {
       }).sort(getters[n.getters.complaintSorter])
       return state[n.state.sortReverse] ? complaintlist.reverse() : complaintlist
     },
-    [n.getters.workComplaints]: (state, getters) => (workId) => {
+    [n.getters.workComplaints]: (state, getters) => (workId, filtered = true) => {
       // TODO atId in loadComplaints?
-      return getters.complaints.filter(c => tb.atId(c.movement?.work) === workId)
+      const f = c => tb.atId(c.movement?.work) === workId
+      // console.log(getters.allComplaints)
+      if (filtered) {
+        return getters.complaints.filter(f)
+      }
+      return getters.allComplaints.filter(f)
     },
     [n.getters.displayComplaint]: (state) => state.displayComplaint,
     [n.getters.activeComplaintId]: (state) => state.activeComplaintId,

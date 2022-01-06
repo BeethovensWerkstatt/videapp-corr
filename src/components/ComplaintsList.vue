@@ -141,7 +141,7 @@ export default {
     },
     complaints () {
       // filter workComplaints optionally
-      const complaints = this.workComplaints(this.workId)
+      const complaints = (this.workId) ? this.workComplaints(this.workId) : this.$store.getters[n.getters.complaints]
       // console.log(complaints)
       return complaints
     }
