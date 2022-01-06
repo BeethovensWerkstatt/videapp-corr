@@ -1,11 +1,32 @@
 <template>
   <div class="complaint-container">
     <table class="complaint-list">
+      <tbody v-if="complaints.length === 0">
+        <tr class="mvt">
+          <th><span>Werk</span></th>
+          <th>
+            <span>{{ $t('terms.movement') }}, {{ $t('terms.measure') }}</span>
+            <complaints-filter-dialog :tag="sortTag.movementMeasure" />
+          </th>
+          <th
+            v-for="(tag, i) in [sortTag.revisionObject, sortTag.textOperation, sortTag.classification, sortTag.context, sortTag.implementation, sortTag.document]"
+            :key="i + '-label-' + tag"
+            :class="{ sortColumn: sortedBy === tag }"
+          >
+            <span @click="sort(tag)">
+              {{ $t(tagLabel[tag]) }}
+              <div :class="sortIconC(tag)" />
+            </span>
+            <complaints-filter-dialog :tag="tag" />
+          </th>
+          <th>&nbsp;</th>
+        </tr>
+      </tbody>
       <tbody :key="complaint['@id']"
         v-for="(complaint, ci) in complaints"
       >
         <tr
-          v-if="complaint.movement && checkMvt(complaint.movement.n)"
+          v-if="complaint.movement && (ci === 0 || checkMvt(complaint.movement.n))"
           class="mvt"
         >
           <!-- TODO work title column (optional) -->
