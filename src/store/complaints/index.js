@@ -370,7 +370,7 @@ const complaintsModule = {
     },
     [n.getters.filterSelect]: (state) => (tag, key) => {
       const tagSel = state.filterSelect[tag]
-      console.log(tagSel, key)
+      // console.log(tagSel, key)
       return tagSel ? !!tagSel[key] : false
     },
     [n.getters.complaintFilter]: (state) => state[n.state.complaintFilter],

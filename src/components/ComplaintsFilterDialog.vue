@@ -67,10 +67,17 @@ export default {
     },
     closeDialog (e) {
       e.preventDefault()
+      const filterSet = this.tags.filter((t) => {
+        const sel = this.isSelected(t)
+        // console.log(this.tag, t, sel)
+        return sel
+      })
+      console.log('TODO set filter ...', filterSet)
+      const filter = (c) => {
+        return true
+      }
+      this.$store.commit(n.mutations.SET_FILTER, { tag: this.tag, [this.tag]: filter })
       this.display = false
-    },
-    changeFilter (e) {
-      console.log(e, this.$el.querySelector('#' + this.sid).value)
     },
     select (t) {
       this.$store.commit(n.mutations.SET_FILTER_SELECT, {
@@ -79,7 +86,7 @@ export default {
     },
     isSelected (t) {
       const sel = this[n.getters.filterSelect](this.tag, t)
-      console.log(t, sel)
+      // console.log(t, sel)
       return sel
     }
   }
