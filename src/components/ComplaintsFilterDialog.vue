@@ -67,16 +67,8 @@ export default {
     },
     closeDialog (e) {
       e.preventDefault()
-      const filterSet = this.tags.filter((t) => {
-        const sel = this.isSelected(t)
-        // console.log(this.tag, t, sel)
-        return sel
-      })
-      console.log('TODO set filter ...', filterSet)
-      const filter = (c) => {
-        return true
-      }
-      this.$store.commit(n.mutations.SET_FILTER, { tag: this.tag, [this.tag]: filter })
+      const filter = this.createFilter()
+      this.$store.commit(n.mutations.SET_FILTER, { tag: this.tag, filter })
       this.display = false
     },
     select (t) {
@@ -88,6 +80,26 @@ export default {
       const sel = this[n.getters.filterSelect](this.tag, t)
       // console.log(t, sel)
       return sel
+    },
+    createFilter () {
+      const tag = this.tag
+      const filterSet = this.tags.filter((t) => {
+        const sel = this.isSelected(t)
+        // console.log(this.tag, t, sel)
+        return sel
+      })
+      console.log('TODO set filter ...', filterSet)
+      const filter = (c) => {
+        const tags = c.tags[tag]
+        for (const t of filterSet) {
+          // TODO OR or AND??
+          if (tags.indexOf(t) >= 0) {
+            return true
+          }
+        }
+        return false
+      }
+      return filter
     }
   }
 }
