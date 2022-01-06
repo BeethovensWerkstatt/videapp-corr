@@ -10,8 +10,8 @@
         >
           <!-- TODO work title column (optional) -->
           <th @click="sort(sortTag.movementMeasure)">
-            <span v-if="sortedBy === sortTag.movementMeasure">&nbsp;</span>
-            &nbsp;
+            <span v-if="sortedBy === sortTag.movementMeasure">{{ workTitle(complaint.movement.work) }}</span>
+            <span v-else>Werk</span>
           </th>
           <th
             :class="{ sortColumn: sortedBy === sortTag.movementMeasure }"
@@ -41,13 +41,16 @@
             'complaint-active': isActive(complaint),
             'complaint-error': (measures(complaint) === 'N/A')
           }"
+          :id="'data-' + ci"
+          :title="complaint.movement.work"
         >
           <!-- TODO work title column (optional) -->
           <td
             class="complaint-attribute"
             @click.prevent="toggleActivate(complaint)"
           >
-            <sub v-if="sortedBy === sortTag.movementMeasure">{{ ci + 1 }}</sub>
+            <span v-if="sortedBy === sortTag.movementMeasure" :title="workTitle(complaint.movement.work)">&nbsp;</span>
+            <span v-else>{{ workTitle(complaint.movement.work) }}</span>
           </td>
           <td
             class="complaint-attribute"
@@ -80,7 +83,7 @@
 <script>
 
 import { mapGetters } from 'vuex'
-import { actions, mutations, getters } from '@/store/names'
+import n from '@/store/names'
 import toolbox from '@/toolbox'
 import ComplaintsFilterDialog from './ComplaintsFilterDialog.vue'
 import { sortTag, tagLabel } from '@/store/complaints/names'
@@ -105,7 +108,13 @@ export default {
     this.sort(this.sortedBy)
   },
   computed: {
-    ...mapGetters([getters.workComplaints, getters.activeComplaintId, getters.complaintSorter, getters.getWork, getters.sortReverse, getters.sortedBy]),
+    ...mapGetters([
+      n.getters.workComplaints,
+      n.getters.activeComplaintId,
+      n.getters.complaintSorter,
+      n.getters.getWork,
+      n.getters.sortReverse,
+      n.getters.sortedBy]),
     workId () {
       return this.$route.params.id
     },
@@ -161,19 +170,19 @@ export default {
     toggleActivate (complaint) {
       const complaintId = complaint ? complaint['@id'] : null
       if (complaintId === this.activeComplaintId) {
-        this.$store.dispatch(actions.activateComplaint, null)
+        this.$store.dispatch(n.actions.activateComplaint, null)
       } else if (this.measures(complaint) !== 'N/A') { // TODO availability should be marked by another property
-        this.$store.dispatch(actions.activateComplaint, complaintId)
+        this.$store.dispatch(n.actions.activateComplaint, complaintId)
       }
     },
     openComplaint (complaint) {
       const complaintId = complaint ? complaint['@id'] : null
       // this.$store.dispatch(actions.loadComplaint, { complaint })
-      this.$store.dispatch(actions.openComplaintComparison, complaintId)
+      this.$store.dispatch(n.actions.openComplaintComparison, complaintId)
       // this.$store.commit(mutations.DISPLAY_COMPLAINT, !!complaintId)
     },
     openPages (complaint, close = true) {
-      this.$store.dispatch(actions.loadComplaint, {
+      this.$store.dispatch(n.actions.loadComplaint, {
         complaint,
         callback: (complaint) => {
           // console.log(complaint)
@@ -183,7 +192,7 @@ export default {
               const page = this.$store.getters.getPage(pageId)
               // console.log(state, page)
               this.$store.commit(
-                mutations.SET_PAGE,
+                n.mutations.SET_PAGE,
                 {
                   id: page.source,
                   page: page.pagenumber
@@ -193,7 +202,7 @@ export default {
         }
       })
       if (close) {
-        this.$store.commit(mutations.COMPLAINTS_LIST, false)
+        this.$store.commit(n.mutations.COMPLAINTS_LIST, false)
       }
     },
     sort (tag) {
@@ -227,14 +236,14 @@ export default {
         case sortTag.classification:
         case sortTag.context:
         case sortTag.implementation:
-          this.$store.commit(mutations.SET_SORTER, { sortedBy: tag, sorter: tagSorter(tag) })
+          this.$store.commit(n.mutations.SET_SORTER, { sortedBy: tag, sorter: tagSorter(tag) })
           break
         case sortTag.document:
-          this.$store.commit(mutations.SET_SORTER, { sortedBy: tag, sorter: docSorter })
+          this.$store.commit(n.mutations.SET_SORTER, { sortedBy: tag, sorter: docSorter })
           break
         case sortTag.movementMeasure: // use stdSort by work, movement and measure
         default:
-          this.$store.commit(mutations.SET_SORTER, { sortedBy: sortTag.movementMeasure, sorter: null })
+          this.$store.commit(n.mutations.SET_SORTER, { sortedBy: sortTag.movementMeasure, sorter: null })
       }
     },
     sortIconC (tag) {
@@ -242,8 +251,8 @@ export default {
       const classes = {
         sorted,
         icon: true,
-        'icon-arrow-up': sorted && this[getters.sortReverse] < 0,
-        'icon-arrow-down': !sorted || this[getters.sortReverse] > 0
+        'icon-arrow-up': sorted && this[n.getters.sortReverse] < 0,
+        'icon-arrow-down': !sorted || this[n.getters.sortReverse] > 0
       }
       return classes
     }
@@ -263,6 +272,7 @@ export default {
 
 tr.mvt {
   th {
+    position: relative;
     background-color: #eee;
     text-align: left;
     border-radius: 3pt;

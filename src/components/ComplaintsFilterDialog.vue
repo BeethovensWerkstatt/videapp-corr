@@ -1,10 +1,14 @@
 <template>
   <div class="complaints-filter-dialog">
-    <span>
-      <btn @click="openDialog" :class="{ 'btn-primary': hasFilter || display }">
+    <div class="cfd-btn">
+      <btn
+        @click="openDialog"
+        class="btn-sm"
+        :class="{ 'btn-primary': hasFilter || display }"
+      >
         Y
       </btn>
-    </span>
+    </div>
     <div :id="divid" v-if="display" class="cfg-dlg">
       <btn @click="closeDialog">{{ $t('terms.close') }}</btn>
       <div
@@ -94,6 +98,12 @@ export default {
     width: 600px;
     height: 400px;
     background: white;
+  }
+  .cfd-btn {
+    position: absolute;
+    display: inline-block;
+    right: 3px;
+    top: 3px;
   }
 }
 </style>
