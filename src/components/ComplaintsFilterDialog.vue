@@ -26,6 +26,9 @@
         />
         <label :for="sid + '-' + t">
           <template v-if="tag === 'movementMeasure'">
+            {{ movementTitle(t) }}
+          </template>
+          <template v-else-if="tag === 'document'">
             {{ t }}
           </template>
           <template v-else>
@@ -42,6 +45,7 @@ import { mapGetters } from 'vuex'
 import n from '@/store/names'
 import { complaintFilterTags } from '@/store/complaints'
 import { sortTag, tagLabel } from '@/store/complaints/names'
+import tb from '@/toolbox'
 
 export default {
   name: 'ComplaintsFilterDialog',
@@ -57,7 +61,12 @@ export default {
     tagLabel
   }),
   computed: {
-    ...mapGetters([n.getters.complaintFilter, n.getters.filterSelect, n.getters.allComplaints, n.getters.workComplaints]),
+    ...mapGetters([
+      n.getters.complaintFilter,
+      n.getters.filterSelect,
+      n.getters.allComplaints,
+      n.getters.workComplaints,
+      n.getters.getMovementById]),
     divid () {
       return 'cfd-' + this.tag
     },
@@ -94,13 +103,13 @@ export default {
     movements () {
       const complaints = this.workId ? this.workComplaints(this.workId, false) : this[n.getters.allComplaints]
       const movements = [...new Set(complaints.map(c => c.affects[0].mdiv))]
-      console.log(complaints, movements)
+      // console.log(complaints, movements)
       return movements
     },
     documents () {
       const complaints = this.workId ? this.workComplaints(this.workId, false) : this[n.getters.allComplaints]
       const documents = [...new Set(complaints.map(c => c.revisionDoc))]
-      console.log(this.workId, complaints, documents)
+      // console.log(this.workId, complaints, documents)
       return documents
     }
   },
@@ -129,6 +138,14 @@ export default {
       // console.log(t, sel)
       return sel
     },
+    movementTitle (mdiv) {
+      const movement = this[n.getters.getMovementById](mdiv)
+      if (movement) {
+        console.log(movement)
+        return tb.toRoman(movement.n) + '. ' + movement.label
+      }
+      return movement
+    },
     createFilter () {
       const tag = this.tag
       const filterSet = this.tags.filter((t) => {
@@ -142,11 +159,21 @@ export default {
         switch (this.tag) {
           case sortTag.movementMeasure:
             return (c) => {
-              return true
+              for (const mvt of filterSet) {
+                if (c.affects[0].mdiv === mvt) {
+                  return true
+                }
+              }
+              return false
             }
           case sortTag.document:
             return (c) => {
-              return true
+              for (const doc of filterSet) {
+                if (c.revisionDoc === doc) {
+                  return true
+                }
+              }
+              return false
             }
         }
         const filter = (c) => {
