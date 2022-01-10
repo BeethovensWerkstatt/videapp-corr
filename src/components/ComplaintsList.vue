@@ -3,7 +3,7 @@
     <table class="complaint-list">
       <tbody v-if="complaints.length === 0">
         <tr class="mvt">
-          <th><span>Werk</span></th>
+          <th v-if="!workId"><span>Werk</span></th>
           <th>
             <span>{{ $t('terms.movement') }}, {{ $t('terms.measure') }}</span>
             <complaints-filter-dialog :tag="sortTag.movementMeasure" />
@@ -30,7 +30,7 @@
           class="mvt"
         >
           <!-- TODO work title column (optional) -->
-          <th @click="sort(sortTag.movementMeasure)">
+          <th v-if="!workId" @click="sort(sortTag.movementMeasure)">
             <span v-if="sortedBy === sortTag.movementMeasure">{{ workTitle(complaint.movement.work) }}</span>
             <span v-else>Werk</span>
           </th>
@@ -40,9 +40,9 @@
             <span @click="sort(sortTag.movementMeasure)">
               <span v-if="sortedBy === sortTag.movementMeasure">{{ toRoman(complaint.movement.n) + '.' }} {{ complaint.movement.label }}</span>
               <span v-else>{{ $t('terms.movement') }}, {{ $t('terms.measure') }}</span>
-              <span :class="sortIconC(sortTag.movementMeasure)" />
+              <span :class="sortIconC(sortTag.movementMeasure)" v-if="ci === 0" />
             </span>
-            <complaints-filter-dialog :tag="sortTag.movementMeasure" />
+            <complaints-filter-dialog :tag="sortTag.movementMeasure" v-if="ci === 0" />
           </th>
           <th
             v-for="(tag, i) in [sortTag.revisionObject, sortTag.textOperation, sortTag.classification, sortTag.context, sortTag.implementation, sortTag.document]"
@@ -51,9 +51,9 @@
           >
             <span @click="sort(tag)">
               {{ $t(tagLabel[tag]) }}
-              <div :class="sortIconC(tag)" />
+              <div :class="sortIconC(tag)" v-if="ci === 0" />
             </span>
-            <complaints-filter-dialog :tag="tag" />
+            <complaints-filter-dialog :tag="tag" v-if="ci === 0" />
           </th>
           <th>&nbsp;</th>
         </tr>
@@ -67,6 +67,7 @@
         >
           <!-- TODO work title column (optional) -->
           <td
+            v-if="!workId"
             class="complaint-attribute"
             @click.prevent="toggleActivate(complaint)"
           >

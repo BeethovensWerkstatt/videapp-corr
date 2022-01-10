@@ -3,8 +3,8 @@
     <div class="cfd-btn">
       <btn
         @click="openDialog"
-        class="btn-sm"
-        :class="{ 'btn-primary': hasFilter || display }"
+        class="btn-sm btn-link"
+        :class="{ hasFilter, display }"
         title="Filter"
       >
         Y
@@ -203,10 +203,13 @@ export default {
     position: relative;
   }
   .cfd-btn {
-    position: absolute;
     display: inline-block;
-    right: 3px;
-    top: 3px;
+    .display {
+      outline-color: rgba(255, 118, 118, 0.432);
+    }
+    .hasFilter {
+      background-color: rgba(65, 105, 225, 0.568);
+    }
   }
 }
 </style>
