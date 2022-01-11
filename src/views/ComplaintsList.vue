@@ -1,5 +1,7 @@
 <template>
   <div>
+    <complaint-dialog />
+    <h1>{{ $t('terms.complaints') }}</h1>
     <complaints-list />
   </div>
 </template>
