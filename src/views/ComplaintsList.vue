@@ -8,11 +8,13 @@
 
 <script>
 import ComplaintsList from '@/components/ComplaintsList.vue'
+import ComplaintDialog from '@/components/ComplaintDialog.vue'
 
 export default {
   name: 'ComplaintsListView',
   components: {
-    ComplaintsList
+    ComplaintsList,
+    ComplaintDialog
   }
 }
 </script>

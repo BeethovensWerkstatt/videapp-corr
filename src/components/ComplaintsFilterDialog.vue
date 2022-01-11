@@ -66,7 +66,8 @@ export default {
       n.getters.filterSelect,
       n.getters.allComplaints,
       n.getters.workComplaints,
-      n.getters.getMovementById]),
+      n.getters.getMovementById,
+      n.getters.getWork]),
     divid () {
       return 'cfd-' + this.tag
     },
@@ -141,10 +142,15 @@ export default {
     movementTitle (mdiv) {
       const movement = this[n.getters.getMovementById](mdiv)
       if (movement) {
-        console.log(movement)
-        return tb.toRoman(movement.n) + '. ' + movement.label
+        // console.log(movement)
+        const wrk = !this.workId ? (this.workTitle(movement.work) + ', ') : ''
+        return wrk + tb.toRoman(movement.n) + '. ' + movement.label
       }
-      return movement
+      return mdiv
+    },
+    workTitle (workId) {
+      const work = this.getWork(workId)
+      return work?.title[0].title
     },
     createFilter () {
       const tag = this.tag
