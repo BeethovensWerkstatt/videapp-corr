@@ -305,8 +305,8 @@ export default {
       const classes = {
         sorted,
         icon: true,
-        'icon-arrow-up': sorted && this[n.getters.sortReverse] < 0,
-        'icon-arrow-down': !sorted || this[n.getters.sortReverse] > 0
+        'icon-arrow-up': sorted && this[n.getters.sortReverse],
+        'icon-arrow-down': !sorted || !this[n.getters.sortReverse]
       }
       return classes
     }

@@ -32,7 +32,7 @@ export default {
 .symbol-filter {
   svg {
     margin-top: .4em;
-    fill: lightgray;
+    fill: rgb(177, 177, 177);
   }
   svg.active {
     fill: blue !important;

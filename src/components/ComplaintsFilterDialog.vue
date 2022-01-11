@@ -32,7 +32,7 @@
             {{ t }}
           </template>
           <template v-else>
-            {{ $t('taxonomy.' + t) }}
+            {{ t ? $t('taxonomy.' + t) : '&mdash;' }}
           </template>
         </label>
       </div>
@@ -89,7 +89,7 @@ export default {
         case sortTag.document:
           return this.documents
       }
-      return complaintFilterTags[this.tag]
+      return ['', ...complaintFilterTags[this.tag]]
     },
     workId () {
       return this.$route.params.id
@@ -161,7 +161,7 @@ export default {
         // console.log(this.tag, t, sel)
         return sel
       })
-      console.log('TODO set filter ...', filterSet)
+      console.log('set filter ...', filterSet)
       if (filterSet.length > 0) {
         // TODO movements / documents!!
         switch (this.tag) {
@@ -187,8 +187,11 @@ export default {
         const filter = (c) => {
           const tags = c.tags[tag]
           for (const t of filterSet) {
-            // TODO OR or AND??
-            if (tags.indexOf(t) >= 0) {
+            if (t === '') {
+              if (tags.length === 0) {
+                return true
+              }
+            } else if (tags.indexOf(t) >= 0) {
               return true
             }
           }
