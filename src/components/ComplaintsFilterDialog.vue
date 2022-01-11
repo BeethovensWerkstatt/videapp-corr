@@ -7,7 +7,7 @@
         :class="{ hasFilter, display }"
         title="Filter"
       >
-        Y
+        <symbol-filter :SVGclass="hasFilter ? 'active' : ''" />
       </btn>
     </div>
     <div :id="divid" v-if="display" class="cfg-dlg">
@@ -46,8 +46,10 @@ import n from '@/store/names'
 import { complaintFilterTags } from '@/store/complaints'
 import { sortTag, tagLabel } from '@/store/complaints/names'
 import tb from '@/toolbox'
+import SymbolFilter from './symbols/SymbolFilter.vue'
 
 export default {
+  components: { SymbolFilter },
   name: 'ComplaintsFilterDialog',
   props: {
     tag: {
@@ -211,10 +213,10 @@ export default {
   .cfd-btn {
     display: inline-block;
     .display {
-      outline-color: rgba(255, 118, 118, 0.432);
+      border-color: rgba(255, 118, 118, 0.432);
     }
     .hasFilter {
-      background-color: rgba(65, 105, 225, 0.568);
+      outline-color: rgba(65, 105, 225, 0.568);
     }
   }
 }
