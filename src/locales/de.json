@@ -1,5 +1,8 @@
 {
-  "message": "Hallo Modul 3",
+  "messages": {
+    "hello-world": "Hallo Modul 3",
+    "openDesktop": "öffne Schreibtisch Ansicht"
+  },
   "terms": {
     "complaints": "Monita",
     "openComplaintsList": "Monita-Übersicht anzeigen",

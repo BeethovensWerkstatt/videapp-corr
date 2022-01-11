@@ -31,7 +31,14 @@
         >
           <!-- v-if="!workId": display work column if list is not constrained to work -->
           <th v-if="!workId" @click="sort(sortTag.movementMeasure)">
-            <span v-if="sortedBy === sortTag.movementMeasure">{{ workTitle(complaint.movement.work) }}</span>
+            <btn
+              v-if="sortedBy === sortTag.movementMeasure"
+              class="btn-link"
+              @click="openWork(complaint)"
+              :title="$t('messages.openDesktop')"
+            >
+              {{ workTitle(complaint.movement.work) }}
+            </btn>
             <span v-else>Werk</span>
           </th>
           <th
@@ -58,6 +65,7 @@
           <th>&nbsp;</th>
         </tr>
         <tr
+        v-if="complaint.movement"
           :class="{
             'complaint-active': isActive(complaint),
             'complaint-error': (measures(complaint) === 'N/A')
@@ -72,13 +80,23 @@
             @click.prevent="toggleActivate(complaint)"
           >
             <span v-if="sortedBy === sortTag.movementMeasure" :title="workTitle(complaint.movement.work)">&nbsp;</span>
-            <span v-else>{{ workTitle(complaint.movement.work) }}</span>
+            <btn
+              v-else
+              class="btn-link"
+              @click="openWork(complaint)"
+              :title="$t('messages.openDesktop')"
+            >
+              {{ workTitle(complaint.movement.work) }}
+            </btn>
           </td>
           <td
             class="complaint-attribute"
             @click.prevent="toggleActivate(complaint)"
           >
-            <span v-if="sortedBy !== sortTag.movementMeasure">{{ toRoman(complaint.movement.n) }}, </span>{{ measures(complaint) }}
+            <span v-if="sortedBy !== sortTag.movementMeasure && complaint.movement">
+              {{ toRoman(complaint.movement.n) }},
+            </span>
+            {{ measures(complaint) }}
           </td>
           <td
             v-for="(tag, i) in [sortTag.revisionObject, sortTag.textOperation, sortTag.classification, sortTag.context, sortTag.implementation]"
@@ -131,6 +149,7 @@ export default {
   },
   computed: {
     ...mapGetters([
+      n.getters.viewer,
       n.getters.workComplaints,
       n.getters.activeComplaintId,
       n.getters.complaintSorter,
@@ -227,9 +246,22 @@ export default {
         this.$store.commit(n.mutations.COMPLAINTS_LIST, false)
       }
     },
+    openWork (complaint) {
+      const work = this.getWork(complaint.movement.work)
+      if (work) {
+        this.openPages(complaint, false)
+        this.$router.push({ name: 'Schreibtisch', params: { id: work.id } }).then(() => {
+          this.$store.dispatch(n.actions.activateComplaint, complaint['@id'])
+          this.$store.commit(n.mutations.COMPLAINTS_LIST, true)
+          this.viewer.navigator.element.style.display = 'none'
+        })
+      }
+    },
     sort (tag) {
       // console.log('sort', tag)
       this.mvt = null
+      const toggle = tag === this.sortedBy
+      console.log(this[n.getters.sortReverse], toggle)
 
       const tagSorter = (tag) => (c1, c2) => {
         const o1 = c1.tags[tag]?.join('-')
@@ -258,14 +290,14 @@ export default {
         case sortTag.classification:
         case sortTag.context:
         case sortTag.implementation:
-          this.$store.commit(n.mutations.SET_SORTER, { sortedBy: tag, sorter: tagSorter(tag) })
+          this.$store.commit(n.mutations.SET_SORTER, { sortedBy: tag, sorter: tagSorter(tag), toggle })
           break
         case sortTag.document:
-          this.$store.commit(n.mutations.SET_SORTER, { sortedBy: tag, sorter: docSorter })
+          this.$store.commit(n.mutations.SET_SORTER, { sortedBy: tag, sorter: docSorter, toggle })
           break
         case sortTag.movementMeasure: // use stdSort by work, movement and measure
         default:
-          this.$store.commit(n.mutations.SET_SORTER, { sortedBy: sortTag.movementMeasure, sorter: null })
+          this.$store.commit(n.mutations.SET_SORTER, { sortedBy: sortTag.movementMeasure, sorter: null, toggle })
       }
     },
     sortIconC (tag) {

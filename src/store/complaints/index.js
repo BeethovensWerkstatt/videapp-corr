@@ -165,14 +165,14 @@ const complaintsModule = {
      * set sort function
      * @param {Object} parms { sortedBy, sorter }
      */
-    [n.mutations.SET_SORTER] (state, { sortedBy, sorter }) {
-      if (state[n.state.sortedBy] === sortedBy) {
+    [n.mutations.SET_SORTER] (state, { sortedBy, sorter, toggle }) {
+      console.log(sortedBy, toggle)
+      if (toggle) {
         state[n.state.sortReverse] = !state[n.state.sortReverse]
-        // console.log('sort', sortedBy, state[n.state.sortReverse])
-      } else {
-        state[n.state.sortedBy] = sortedBy
+      } else if (state[n.state.sortedBy] !== sortedBy) {
         state[n.state.sortReverse] = false
       }
+      state[n.state.sortedBy] = sortedBy
       state[n.state.complaintSorter] = sorter
     }
   },
@@ -395,7 +395,7 @@ const complaintsModule = {
     },
     [n.getters.complaintFilter]: (state) => state[n.state.complaintFilter],
     [n.getters.sortedBy]: (state) => state[n.state.sortedBy],
-    [n.getters.sortReverse]: (state) => state[n.state.sortReverse] ? -1 : 1,
+    [n.getters.sortReverse]: (state) => state[n.state.sortReverse],
     [n.getters.complaintSorter] (state, getters) {
       const complaintSorter = state[n.state.complaintSorter]
       const stdSort = (c1, c2) => {
