@@ -165,6 +165,7 @@ export default {
       if (filterSet.length > 0) {
         // TODO movements / documents!!
         switch (this.tag) {
+          // filter by movements
           case sortTag.movementMeasure:
             return (c) => {
               for (const mvt of filterSet) {
@@ -174,6 +175,7 @@ export default {
               }
               return false
             }
+          // filter by revision document
           case sortTag.document:
             return (c) => {
               for (const doc of filterSet) {
@@ -184,6 +186,7 @@ export default {
               return false
             }
         }
+        // filter by tag list
         const filter = (c) => {
           const tags = c.tags[tag]
           for (const t of filterSet) {
