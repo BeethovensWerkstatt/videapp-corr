@@ -29,7 +29,7 @@
           v-if="complaint.movement && (checkMvt(complaint.movement.n) || ci === 0)"
           class="mvt"
         >
-          <!-- TODO work title column (optional) -->
+          <!-- v-if="!workId": display work column if list is not constrained to work -->
           <th v-if="!workId" @click="sort(sortTag.movementMeasure)">
             <span v-if="sortedBy === sortTag.movementMeasure">{{ workTitle(complaint.movement.work) }}</span>
             <span v-else>Werk</span>

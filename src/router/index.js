@@ -22,6 +22,14 @@ const routes = [
     path: '/work/:id',
     name: 'Schreibtisch',
     component: () => import(/* webpackChunkName: "videapp" */ '../views/Desktop.vue')
+  },
+  {
+    path: '/complaints',
+    name: 'Monita',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "videapp" */ '../views/ComplaintsList.vue')
   }
 ]
 
