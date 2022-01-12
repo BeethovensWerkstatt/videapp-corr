@@ -399,7 +399,6 @@ const complaintsModule = {
     [n.getters.complaintSorter] (state, getters) {
       const complaintSorter = state[n.state.complaintSorter]
       const stdSort = (c1, c2) => {
-        // TODO work
         const work1 = c1.movement ? getters.getWork(c1.movement?.work) : undefined
         const work2 = c2.movement ? getters.getWork(c2.movement?.work) : undefined
         if (work1?.title[0].title !== work2?.title[0].title) {
