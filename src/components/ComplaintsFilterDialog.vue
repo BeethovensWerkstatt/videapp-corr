@@ -4,6 +4,7 @@
     :active="dialogActive"
     divid="filter-dialog"
     :title="$t(tagLabel[dialog.tag])"
+    :position="{}"
   >
     <div
       v-for="(t,i) in tags"
@@ -136,7 +137,7 @@ export default {
     },
     finishDialog () {
       console.log('close dialog ...')
-      this.$store.commit(n.mutations.DISPLAY_FILTER_DIALOG, '')
+      this.$store.commit(n.mutations.DISPLAY_FILTER_DIALOG, {})
     },
     createFilter () {
       const tag = this.dialog?.tag
