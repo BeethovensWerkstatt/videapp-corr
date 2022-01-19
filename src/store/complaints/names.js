@@ -1,28 +1,10 @@
-export const sortTag = {
-  movementMeasure: 'movementMeasure',
-  revisionObject: 'objects',
-  textOperation: 'operation',
-  classification: 'classes',
-  context: 'context',
-  implementation: 'implementation',
-  document: 'document'
-}
-export const tagLabel = {
-  [sortTag.movementMeasure]: 'terms.movement',
-  [sortTag.revisionObject]: 'terms.complaint.revision-object',
-  [sortTag.textOperation]: 'terms.complaint.text-operation',
-  [sortTag.classification]: 'terms.complaint.classification',
-  [sortTag.context]: 'terms.complaint.context',
-  [sortTag.implementation]: 'terms.complaint.implementation',
-  [sortTag.document]: 'terms.document'
-}
-
 export const complaintsNames = {
   state: {
     showComplaintsList: 'showComplaintsList',
     complaints: 'complaints',
     activeComplaintId: 'activeComplaintId',
     displayComplaint: 'displayComplaint',
+    complaintFilterDialog: 'complaintFilterDialog',
     complaintFilter: 'complaintFilter',
     sortedBy: 'sortedBy',
     sortReverse: 'sortReverse',
@@ -35,6 +17,7 @@ export const complaintsNames = {
     MODIFY_COMPLAINT: 'MODIFY_COMPLAINT',
     ACTIVATE_COMPLAINT: 'ACTIVATE_COMPLAINT',
     DISPLAY_COMPLAINT: 'DISPLAY_COMPLAINT',
+    DISPLAY_FILTER_DIALOG: 'DISPLAY_FILTER_DIALOG',
     SET_FILTER_SELECT: 'SET_FILTER_SELECT',
     SET_FILTER: 'SET_FILTER',
     REM_FILTER: 'REM_FILTER',
@@ -58,6 +41,7 @@ export const complaintsNames = {
     previousComplaintId: 'previousComplaintId',
     nextComplaintId: 'nextComplaintId',
     filterSelect: 'filterSelect',
+    complaintFilterDialog: 'complaintFilterDialog',
     complaintFilter: 'complaintFilter',
     sortedBy: 'sortedBy',
     complaintSorter: 'complaintSorter'

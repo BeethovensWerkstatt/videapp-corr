@@ -1,12 +1,13 @@
 <template>
   <div class="complaint-container">
+    <complaints-filter-dialog :dialog="filterDialog" />
     <table class="complaint-list">
       <tbody v-if="complaints.length === 0">
         <tr class="mvt">
           <th v-if="!workId"><span>Werk</span></th>
           <th>
             <span>{{ $t('terms.movement') }}, {{ $t('terms.measure') }}</span>
-            <complaints-filter-dialog :tag="sortTag.movementMeasure" />
+            <complaints-filter-button :tag="sortTag.movementMeasure" />
           </th>
           <th
             v-for="(tag, i) in [sortTag.revisionObject, sortTag.textOperation, sortTag.classification, sortTag.context, sortTag.implementation, sortTag.document]"
@@ -17,7 +18,7 @@
               {{ $t(tagLabel[tag]) }}
               <div :class="sortIconC(tag)" />
             </span>
-            <complaints-filter-dialog :tag="tag" />
+            <complaints-filter-button :tag="tag" />
           </th>
           <th>&nbsp;</th>
         </tr>
@@ -49,7 +50,7 @@
               <span v-else>{{ $t('terms.movement') }}, {{ $t('terms.measure') }}</span>
               <span :class="sortIconC(sortTag.movementMeasure)" v-if="ci === 0" />
             </span>
-            <complaints-filter-dialog :tag="sortTag.movementMeasure" v-if="ci === 0" />
+            <complaints-filter-button :tag="sortTag.movementMeasure" v-if="ci === 0" />
           </th>
           <th
             v-for="(tag, i) in [sortTag.revisionObject, sortTag.textOperation, sortTag.classification, sortTag.context, sortTag.implementation, sortTag.document]"
@@ -60,7 +61,7 @@
               {{ $t(tagLabel[tag]) }}
               <div :class="sortIconC(tag)" v-if="ci === 0" />
             </span>
-            <complaints-filter-dialog :tag="tag" v-if="ci === 0" />
+            <complaints-filter-button :tag="tag" v-if="ci === 0" />
           </th>
           <th>&nbsp;</th>
         </tr>
@@ -125,8 +126,9 @@
 import { mapGetters } from 'vuex'
 import n from '@/store/names'
 import toolbox from '@/toolbox'
+import ComplaintsFilterButton from './ComplaintsFilterButton.vue'
+import { sortTag, tagLabel } from '@/store/complaints/data'
 import ComplaintsFilterDialog from './ComplaintsFilterDialog.vue'
-import { sortTag, tagLabel } from '@/store/complaints/names'
 
 /**
  * component to display list of complaints
@@ -136,11 +138,13 @@ import { sortTag, tagLabel } from '@/store/complaints/names'
  * @vue-computed {String} activeComplaintId
  */
 export default {
-  components: { ComplaintsFilterDialog },
+  components: { ComplaintsFilterButton, ComplaintsFilterDialog },
   data () {
     return {
       sortTag,
-      tagLabel
+      tagLabel,
+      displayFilter: false,
+      filterTag: ''
     }
   },
   name: 'ComplaintsList',
@@ -155,7 +159,8 @@ export default {
       n.getters.complaintSorter,
       n.getters.getWork,
       n.getters.sortReverse,
-      n.getters.sortedBy]),
+      n.getters.sortedBy,
+      n.getters.complaintFilterDialog]),
     workId () {
       return this.$route.params.id
     },
@@ -164,6 +169,9 @@ export default {
       const complaints = (this.workId) ? this.workComplaints(this.workId) : this.$store.getters[n.getters.complaints]
       // console.log(complaints)
       return complaints
+    },
+    filterDialog () {
+      return this[n.getters.complaintFilterDialog]
     }
   },
   methods: {

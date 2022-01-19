@@ -1,59 +1,49 @@
 <template>
-  <div class="complaints-filter-dialog">
-    <div class="cfd-btn">
-      <btn
-        @click="openDialog"
-        class="btn-sm btn-link"
-        :class="{ hasFilter, display }"
-        title="Filter"
-      >
-        <symbol-filter :SVGclass="hasFilter ? 'active' : ''" />
-      </btn>
+  <context-modal
+    @context-modal="finishDialog"
+    :active="dialogActive"
+    divid="filter-dialog"
+    :title="$t(tagLabel[dialog.tag])"
+  >
+    <div
+      v-for="(t,i) in tags"
+      :key="i + '-opt'"
+    >
+      <input
+        :id="sid + '-' + t"
+        type="checkbox"
+        :checked="isSelected(t)"
+        @change="select"
+        :value="t"
+      />
+      <label :for="sid + '-' + t">
+        <template v-if="dialog.tag === 'movementMeasure'">
+          {{ movementTitle(t) }}
+        </template>
+        <template v-else-if="dialog.tag === 'document'">
+          {{ t }}
+        </template>
+        <template v-else>
+          {{ t ? $t('taxonomy.' + t) : '&mdash;' }}
+        </template>
+      </label>
     </div>
-    <div :id="divid" v-if="display" class="cfg-dlg">
-      <btn @click="closeDialog">{{ $t('terms.close') }}</btn>&nbsp;
-      <strong>{{ $t(tagLabel[tag]) }}</strong>
-      <div
-        v-for="(t,i) in tags"
-        :key="i + '-opt'"
-      >
-        <input
-          :id="sid + '-' + t"
-          type="checkbox"
-          :checked="isSelected(t)"
-          @change="select"
-          :value="t"
-        />
-        <label :for="sid + '-' + t">
-          <template v-if="tag === 'movementMeasure'">
-            {{ movementTitle(t) }}
-          </template>
-          <template v-else-if="tag === 'document'">
-            {{ t }}
-          </template>
-          <template v-else>
-            {{ t ? $t('taxonomy.' + t) : '&mdash;' }}
-          </template>
-        </label>
-      </div>
-    </div>
-  </div>
+  </context-modal>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 import n from '@/store/names'
-import { complaintFilterTags } from '@/store/complaints'
-import { sortTag, tagLabel } from '@/store/complaints/names'
+import { sortTag, tagLabel, complaintFilterTags } from '@/store/complaints/data'
 import tb from '@/toolbox'
-import SymbolFilter from './symbols/SymbolFilter.vue'
+import ContextModal from './ContextModal.vue'
 
 export default {
-  components: { SymbolFilter },
+  components: { ContextModal },
   name: 'ComplaintsFilterDialog',
   props: {
-    tag: {
-      type: String,
+    dialog: {
+      type: Object,
       required: true
     }
   },
@@ -64,32 +54,32 @@ export default {
   }),
   computed: {
     ...mapGetters([
+      n.getters.complaintFilterDialog,
       n.getters.complaintFilter,
       n.getters.filterSelect,
       n.getters.allComplaints,
       n.getters.workComplaints,
       n.getters.getMovementById,
       n.getters.getWork]),
-    divid () {
-      return 'cfd-' + this.tag
+    dialogActive () {
+      console.log(this[n.getters.complaintFilterDialog])
+      return !!this[n.getters.complaintFilterDialog]
     },
     sid () {
-      return 'sel-' + this.tag
-    },
-    hasFilter () {
-      const filters = this[n.getters.complaintFilter]
-      const fi = Object.keys(filters).indexOf(this.tag)
-      return fi >= 0 && Object.values(filters)[fi]
+      return 'sel-' + this.dialog?.tag
     },
     tags () {
       // console.log(this.tag, complaintFilterTags)
-      switch (this.tag) {
+      switch (this.dialog?.tag) {
         case sortTag.movementMeasure:
           return this.movements
         case sortTag.document:
           return this.documents
       }
-      return ['', ...complaintFilterTags[this.tag]]
+      if (this.dialog?.tag) {
+        return ['', ...complaintFilterTags[this.dialog?.tag]]
+      }
+      return []
     },
     workId () {
       return this.$route.params.id
@@ -117,27 +107,17 @@ export default {
     }
   },
   methods: {
-    openDialog (e) {
-      e.preventDefault()
-      this.display = !this.display
-    },
-    closeDialog (e) {
-      e.preventDefault()
-      const filter = this.createFilter()
-      this.$store.commit(n.mutations.SET_FILTER, { tag: this.tag, filter })
-      this.display = false
-    },
     select (e) {
       console.log(e.target)
       const t = e.target.value
       const v = e.target.checked
       console.log(e, t, v)
       this.$store.commit(n.mutations.SET_FILTER_SELECT, {
-        tag: this.tag, key: t, val: v
+        tag: this.dialog?.tag, key: t, val: v
       })
     },
     isSelected (t) {
-      const sel = this[n.getters.filterSelect](this.tag, t)
+      const sel = this[n.getters.filterSelect](this.dialog?.tag, t)
       // console.log(t, sel)
       return sel
     },
@@ -154,17 +134,21 @@ export default {
       const work = this.getWork(workId)
       return work?.title[0].title
     },
+    finishDialog () {
+      console.log('close dialog ...')
+      this.$store.commit(n.mutations.DISPLAY_FILTER_DIALOG, '')
+    },
     createFilter () {
-      const tag = this.tag
+      const tag = this.dialog?.tag
       const filterSet = this.tags.filter((t) => {
         const sel = this.isSelected(t)
-        // console.log(this.tag, t, sel)
+        // console.log(this.dialog?.tag, t, sel)
         return sel
       })
       console.log('set filter ...', filterSet)
       if (filterSet.length > 0) {
         // TODO movements / documents!!
-        switch (this.tag) {
+        switch (this.dialog?.tag) {
           // filter by movements
           case sortTag.movementMeasure:
             return (c) => {
@@ -209,21 +193,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.complaints-filter-dialog {
-  display: inline-block;
-
-  .cfg-dlg {
-    display: block !important;
-    position: relative;
-  }
-  .cfd-btn {
-    display: inline-block;
-    .display {
-      border-color: rgba(255, 118, 118, 0.432);
-    }
-    .hasFilter {
-      outline-color: rgba(65, 105, 225, 0.568);
-    }
-  }
-}
 </style>

@@ -29,6 +29,8 @@
     "transcript": {
       "annot": "annotierte Transkription"
     },
+    "ok": "OK",
+    "cancel": "Abbrechen",
     "open": "Öffnen",
     "close": "Schließen",
     "load": "Lade",
