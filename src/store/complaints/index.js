@@ -22,7 +22,7 @@ const complaintsModule = {
     [n.state.activeComplaintId]: null,
     [n.state.displayComplaint]: false,
     [n.state.complaintFilterDialog]: {},
-    [n.state.complaintFilter]: [],
+    [n.state.complaintFilter]: {},
     [n.state.sortedBy]: null,
     [n.state.sortReverse]: false,
     [n.state.complaintSorter]: null,

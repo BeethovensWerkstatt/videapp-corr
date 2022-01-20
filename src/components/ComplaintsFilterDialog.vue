@@ -64,7 +64,7 @@ export default {
       n.getters.getWork]),
     dialogActive () {
       console.log(this[n.getters.complaintFilterDialog])
-      return !!this[n.getters.complaintFilterDialog]
+      return !!this[n.getters.complaintFilterDialog]?.tag
     },
     sid () {
       return 'sel-' + this.dialog?.tag
@@ -135,8 +135,16 @@ export default {
       const work = this.getWork(workId)
       return work?.title[0].title
     },
-    finishDialog () {
-      console.log('close dialog ...')
+    finishDialog (e) {
+      console.log('close dialog ...', e)
+      switch (e) {
+        case 'ok':
+          this.$store.commit(n.mutations.SET_FILTER, {
+            tag: this.dialog.tag,
+            filter: this.createFilter()
+          })
+          break
+      }
       this.$store.commit(n.mutations.DISPLAY_FILTER_DIALOG, {})
     },
     createFilter () {

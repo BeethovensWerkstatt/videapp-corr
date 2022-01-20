@@ -17,17 +17,10 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import n from '@/store/names'
-import { complaintFilterTags } from '@/store/complaints'
-import { sortTag, tagLabel } from '@/store/complaints/names'
-// import tb from '@/toolbox'
 
 export default {
   name: 'ContextModal',
   data: () => ({
-    sortTag,
-    tagLabel
   }),
   props: {
     divid: {
@@ -51,41 +44,6 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([]),
-    tags () {
-      // console.log(this.tag, complaintFilterTags)
-      switch (this.tag) {
-        case sortTag.movementMeasure:
-          return this.movements
-        case sortTag.document:
-          return this.documents
-      }
-      return ['', ...complaintFilterTags[this.tag]]
-    },
-    workId () {
-      return this.$route.params.id
-    },
-    works () {
-      // if (this.workId) {
-      //  return [this.workId]
-      // }
-      const complaints = this.allComplaints
-      const works = [...new Set(complaints.map(c => c.movement.work))]
-      console.log(works)
-      return works
-    },
-    movements () {
-      const complaints = this.workId ? this.workComplaints(this.workId, false) : this[n.getters.allComplaints]
-      const movements = [...new Set(complaints.map(c => c.affects[0].mdiv))]
-      // console.log(complaints, movements)
-      return movements
-    },
-    documents () {
-      const complaints = this.workId ? this.workComplaints(this.workId, false) : this[n.getters.allComplaints]
-      const documents = [...new Set(complaints.map(c => c.revisionDoc))]
-      // console.log(this.workId, complaints, documents)
-      return documents
-    }
   },
   methods: {
     doClick (e) {
