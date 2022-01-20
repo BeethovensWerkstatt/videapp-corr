@@ -4,7 +4,7 @@
     :active="dialogActive"
     divid="filter-dialog"
     :title="$t(tagLabel[dialog.tag])"
-    :position="{}"
+    :position="dialogPosition"
   >
     <div
       v-for="(t,i) in tags"
@@ -65,6 +65,10 @@ export default {
     dialogActive () {
       console.log(this[n.getters.complaintFilterDialog])
       return !!this[n.getters.complaintFilterDialog]?.tag
+    },
+    dialogPosition () {
+      const position = this.dialog?.position || {}
+      return position
     },
     sid () {
       return 'sel-' + this.dialog?.tag

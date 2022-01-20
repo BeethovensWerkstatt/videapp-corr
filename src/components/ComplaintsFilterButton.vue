@@ -42,9 +42,15 @@ export default {
       e.preventDefault()
       console.log(e)
       // console.log('filter', this.tag)
+      // TODO calc position, with and height from userConf?
       this.$store.commit(n.mutations.DISPLAY_FILTER_DIALOG, {
         tag: this.tag,
-        e
+        position: {
+          x: e.pageX,
+          y: e.pageY,
+          w: 400,
+          h: 400
+        }
       })
     }
   }

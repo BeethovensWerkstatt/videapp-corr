@@ -1,6 +1,15 @@
 <template>
-  <div class="context-dialog" :class="{ active }">
-    <div :id="divid" v-if="active">
+  <div
+    class="context-dialog"
+    :class="{ active }"
+    @wheel="(e) => { e.preventDefault(); e.stopPropagation(); }"
+  >
+    <div
+      :id="divid"
+      class="context-modal"
+      :style="modalStyle"
+      v-if="active"
+    >
       <div class="context-modal-header">
         {{ title }}
       </div>
@@ -35,6 +44,10 @@ export default {
       type: String,
       required: true
     },
+    position: {
+      type: Object,
+      required: true
+    },
     buttons: {
       type: Array,
       default: () => ([
@@ -44,6 +57,16 @@ export default {
     }
   },
   computed: {
+    modalStyle () {
+      const modalStyle = {
+        top: this.position.y + 'px',
+        left: this.position.x + 'px',
+        width: this.position.w + 'px',
+        height: this.position.h + 'px'
+      }
+      console.log(modalStyle)
+      return modalStyle
+    }
   },
   methods: {
     doClick (e) {
@@ -70,8 +93,14 @@ export default {
   backdrop-filter: blur(3px);
   background-color: #33333333;
 }
-.context-dialog .context-modal-content {
+.context-dialog .context-modal {
+  position: absolute;
+  display: inline-block;
+  overflow: scroll;
+  background-color: white;
+  border-radius: 5px;
+}
+.context-dialog .context-modal .context-modal-content {
   text-align: left;
-  background-color: lightgray;
 }
 </style>
