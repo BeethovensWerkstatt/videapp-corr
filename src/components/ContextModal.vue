@@ -61,8 +61,8 @@ export default {
       const modalStyle = {
         top: this.position.y + 'px',
         left: this.position.x + 'px',
-        width: this.position.w + 'px',
-        height: this.position.h + 'px'
+        width: this.position.w + 'px'
+        // height: this.position.h + 'px'
       }
       console.log(modalStyle)
       return modalStyle
@@ -81,6 +81,22 @@ export default {
 .context-dialog {
   display: none;
   z-index: -1;
+
+  .context-modal {
+    position: absolute;
+    display: inline-block;
+    background-color: white;
+    border-radius: 5px;
+
+    .context-modal-header {
+      background: linear-gradient(180deg, #cccccc 0%, #f5f5f5 100%);
+      font-weight: bold;
+    }
+    .context-modal-content {
+      text-align: left;
+      padding: 5px;
+    }
+  }
 }
 .context-dialog.active {
   display: inline-block !important;
@@ -90,17 +106,7 @@ export default {
   left: 0%;
   width: 100%;
   height: 100%;
-  backdrop-filter: blur(3px);
+  backdrop-filter: blur(1px);
   background-color: #33333333;
-}
-.context-dialog .context-modal {
-  position: absolute;
-  display: inline-block;
-  overflow: scroll;
-  background-color: white;
-  border-radius: 5px;
-}
-.context-dialog .context-modal .context-modal-content {
-  text-align: left;
 }
 </style>
