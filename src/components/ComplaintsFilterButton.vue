@@ -1,5 +1,5 @@
 <template>
-  <div class="complaints-filter-button">
+  <div class="complaints-filter-button" :id="divid">
     <div class="cfd-btn">
       <btn
         @click="openDialog"
@@ -31,6 +31,9 @@ export default {
   }),
   computed: {
     ...mapGetters([n.getters.complaintFilter]),
+    divid () {
+      return 'ComplaintFilterButton-' + this.tag
+    },
     hasFilter () {
       const filters = this[n.getters.complaintFilter]
       const fi = Object.keys(filters).indexOf(this.tag)
@@ -45,6 +48,7 @@ export default {
       // TODO calc position, with and height from userConf?
       this.$store.commit(n.mutations.DISPLAY_FILTER_DIALOG, {
         tag: this.tag,
+        target: this.divid,
         position: {
           x: e.pageX,
           y: e.pageY,

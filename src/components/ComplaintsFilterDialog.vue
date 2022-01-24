@@ -38,6 +38,7 @@ import n from '@/store/names'
 import { sortTag, tagLabel, complaintFilterTags } from '@/store/complaints/data'
 import tb from '@/toolbox'
 import ContextModal from './ContextModal.vue'
+import Tether from 'tether'
 
 export default {
   components: { ContextModal },
@@ -51,8 +52,23 @@ export default {
   data: () => ({
     display: false,
     sortTag,
-    tagLabel
+    tagLabel,
+    tether: undefined
   }),
+  watch: {
+    dialog () {
+      console.log(this.$el)
+      if (this.dialogActive) {
+        const topts = this.tetherOptions
+        console.log(topts, document.querySelector(topts.target), document.querySelector(topts.element))
+        if (!this.tether) {
+          this.tether = new Tether(topts)
+        } else {
+          this.tether.setOptions(topts)
+        }
+      }
+    }
+  },
   computed: {
     ...mapGetters([
       n.getters.complaintFilterDialog,
@@ -61,10 +77,24 @@ export default {
       n.getters.allComplaints,
       n.getters.workComplaints,
       n.getters.getMovementById,
-      n.getters.getWork]),
+      n.getters.getWork
+    ]),
     dialogActive () {
-      console.log(this[n.getters.complaintFilterDialog])
+      // console.log(this[n.getters.complaintFilterDialog])
       return !!this[n.getters.complaintFilterDialog]?.tag
+    },
+    tetherOptions () {
+      const topts = {
+        element: this.$el,
+        target: '#' + this.dialog?.target,
+        constraints: [
+          {
+            to: 'scrollParent',
+            pin: true
+          }
+        ]
+      }
+      return topts
     },
     dialogPosition () {
       const position = this.dialog?.position || {}

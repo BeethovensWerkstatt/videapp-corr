@@ -2,7 +2,6 @@
   <div
     class="context-dialog"
     :class="{ active }"
-    @wheel="(e) => { e.preventDefault(); e.stopPropagation(); }"
   >
     <div
       :id="divid"
@@ -59,8 +58,8 @@ export default {
   computed: {
     modalStyle () {
       const modalStyle = {
-        top: this.position.y + 'px',
-        left: this.position.x + 'px',
+        // top: this.position.y + 'px',
+        // left: this.position.x + 'px',
         width: this.position.w + 'px'
         // height: this.position.h + 'px'
       }
@@ -100,7 +99,7 @@ export default {
 }
 .context-dialog.active {
   display: inline-block !important;
-  position: absolute;
+  position: fixed;
   z-index: 1000 !important;
   top: 0%;
   left: 0%;
