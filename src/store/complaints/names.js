@@ -28,7 +28,8 @@ export const complaintsNames = {
     loadComplaint: 'loadComplaint',
     activateComplaint: 'activateComplaint',
     activateSibling: 'activateSibling',
-    openComplaintComparison: 'openComplaintComparison'
+    openComplaintComparison: 'openComplaintComparison',
+    setFilterSelect: 'setFilterSelect'
   },
   getters: {
     showComplaintsList: 'showComplaintsList',
@@ -40,6 +41,7 @@ export const complaintsNames = {
     activeComplaint: 'activeComplaint',
     previousComplaintId: 'previousComplaintId',
     nextComplaintId: 'nextComplaintId',
+    filterSelection: 'filterSelection',
     filterSelect: 'filterSelect',
     complaintFilterDialog: 'complaintFilterDialog',
     complaintFilter: 'complaintFilter',

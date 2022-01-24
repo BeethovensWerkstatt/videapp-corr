@@ -127,6 +127,11 @@ const actions = {
       commit(n.mutations.DISPLAY_COMPLAINT, true)
     }
     dispatch(n.actions.loadComplaint, { complaint, callback: f })
+  },
+  [n.actions.setFilterSelect] ({ commit }, { tag, keys }) {
+    for (const key in keys) {
+      commit(n.mutations.SET_FILTER_SELECT, { tag, key })
+    }
   }
 }
 

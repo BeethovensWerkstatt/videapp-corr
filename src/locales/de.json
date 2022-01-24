@@ -1,7 +1,9 @@
 {
   "messages": {
     "hello-world": "Hallo Modul 3",
-    "openDesktop": "öffne Schreibtisch Ansicht"
+    "openDesktop": "öffne Schreibtisch Ansicht",
+    "no-filter": "kein Filter aktiv",
+    "filter-count": "Es sind Filter aktiv"
   },
   "terms": {
     "complaints": "Monita",

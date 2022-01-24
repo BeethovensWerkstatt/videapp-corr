@@ -193,7 +193,7 @@ const actions = {
                   px += source.maxDimensions.width + hgap
                   ph = Math.max(ph, source.maxDimensions.height)
                 }
-                console.log(source.position)
+                // console.log(source.position)
 
                 // hack !!!
                 const sid = (new Url(source.id)).path.elements.pop()

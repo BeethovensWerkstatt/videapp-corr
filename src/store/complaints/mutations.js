@@ -90,7 +90,7 @@ const mutations = {
    * @param {Function} parms { tag, filter }
    */
   [n.mutations.SET_FILTER] (state, { tag, filter }) {
-    console.log(tag, filter)
+    // console.log(tag, filter)
     state[n.state.complaintFilter] = {
       ...state[n.state.complaintFilter],
       [tag]: filter

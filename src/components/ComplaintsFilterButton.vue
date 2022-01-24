@@ -48,12 +48,20 @@ export default {
       // TODO calc position, with and height from userConf?
       this.$store.commit(n.mutations.DISPLAY_FILTER_DIALOG, {
         tag: this.tag,
-        target: this.divid,
-        position: {
-          x: e.pageX,
-          y: e.pageY,
-          w: 400,
-          h: 400
+        tether: {
+          target: '#' + this.divid,
+          attachment: 'top center',
+          targetAttachment: 'bottom center',
+          constraints: [
+            {
+              to: 'scrollParent',
+              pin: true
+            }
+          ]
+        },
+        dimension: {
+          width: '500px',
+          'padding-bottom': '1em'
         }
       })
     }

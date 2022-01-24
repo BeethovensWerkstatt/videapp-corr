@@ -86,8 +86,12 @@ const getters = {
     }
     return complaintIds.length > 0 ? complaintIds[0] : undefined
   },
-  [n.getters.filterSelect]: (state) => (tag, key) => {
+  [n.getters.filterSelection]: (state) => (tag) => {
     const tagSel = state.filterSelect[tag]
+    return tagSel || []
+  },
+  [n.getters.filterSelect]: (state, getters) => (tag, key) => {
+    const tagSel = getters[n.getters.filterSelection](tag)
     // console.log(tagSel, key)
     return tagSel ? !!tagSel[key] : false
   },
