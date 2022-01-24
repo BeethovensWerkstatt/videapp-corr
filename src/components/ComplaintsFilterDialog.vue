@@ -9,7 +9,11 @@
     <div class="filterInfo">{{ filterInfo }}</div>
     <hr />
     <div>
-      <input type="checkbox" @change="selectAll" id="filterSelectAll" />
+      <input
+        type="checkbox"
+        id="filterSelectAll"
+        v-model="selectAll"
+      />
       <label for="filterSelectAll">Alle Auswählen</label>
     </div>
     <div
@@ -130,16 +134,23 @@ export default {
     },
     filterInfo () {
       return this.tagsSelected?.length > 0 ? this.$t('messages.filter-count') : this.$t('messages.no-filter')
+    },
+    selectAll: {
+      get () {
+        const selection = this[n.getters.filterSelection]()
+        return selection.length === this.tags.length
+      },
+      set (v) {
+        console.log(v)
+        const keys = {}
+        for (const key of this.tags) {
+          keys[key] = v
+        }
+        this.$store.dispatch(n.actions.setFilterSelect, { tag: this.sortTag, keys })
+      }
     }
   },
   methods: {
-    setAll (val) {
-      const keys = {}
-      for (const key of this.tags) {
-        keys[key] = val
-      }
-      this.$store.dispatch(n.actions.setFilterSelect, { tag: this.tag, keys })
-    },
     select (e) {
       console.log(e.target)
       const t = e.target.value
@@ -149,9 +160,6 @@ export default {
         tag: this.dialog?.tag, key: t, val: v
       })
       this.tagsSelected = this.tags.filter(this.isSelected)
-    },
-    selectAll (e) {
-      console.log(e)
     },
     isSelected (t) {
       const sel = this[n.getters.filterSelect](this.dialog?.tag, t)
