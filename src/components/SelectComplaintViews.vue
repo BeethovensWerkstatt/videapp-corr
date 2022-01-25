@@ -86,9 +86,11 @@ export default {
 <style lang="scss" scoped>
 
 .dialogBack {
+  top: 0px;
+  left: 0px;
   width: 100%;
   height: 100%;
-  position: absolute;
+  position: fixed;
   z-index: 11; // dynamic by open dialog? (open/close Layer in store?)
   background-color: rgba(0,0,0,.3);
   backdrop-filter: blur(3px);

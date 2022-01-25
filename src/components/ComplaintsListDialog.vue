@@ -79,9 +79,11 @@ export default {
 <style lang="scss" scoped>
 
 .dialogBack {
+  top: 0px;
+  left: 0px;
   width: 100%;
   height: 100%;
-  position: absolute;
+  position: fixed;
   z-index: 10;
   background-color: rgba(0,0,0,.3);
   backdrop-filter: blur(3px);
@@ -93,7 +95,7 @@ export default {
 }
 
 .dialog {
-  position: absolute;
+  position: fixed;
   left: 1rem;
   top: 1rem;
   // TODO ??
