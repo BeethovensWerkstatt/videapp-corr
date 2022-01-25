@@ -137,7 +137,7 @@ export default {
     },
     selectAll: {
       get () {
-        const selection = this[n.getters.filterSelection]()
+        const selection = this.tagsSelected
         return selection.length === this.tags.length
       },
       set (v) {
@@ -147,6 +147,7 @@ export default {
             tag: this.dialog?.tag, key: t, val: v
           })
         }
+        this.tagsSelected = this.tags.filter(this.isSelected)
       }
     }
   },
