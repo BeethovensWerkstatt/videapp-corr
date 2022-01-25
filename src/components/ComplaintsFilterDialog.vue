@@ -8,13 +8,13 @@
   >
     <div class="filterInfo">{{ filterInfo }}</div>
     <hr />
-    <div>
+    <div class="selectAll">
       <input
         type="checkbox"
         id="filterSelectAll"
         v-model="selectAll"
       />
-      <label for="filterSelectAll"><i>{{ $t('terms.selectall') }}</i></label>
+      <label for="filterSelectAll">{{ $t('terms.selectall') }}</label>
     </div>
     <div
       v-for="(t,i) in tags"
@@ -249,6 +249,10 @@ export default {
 <style lang="scss" scoped>
 .filterInfo {
   color: gray;
+  font-style: italic;
+}
+.selectAll {
+  margin-bottom: 1em;
   font-style: italic;
 }
 </style>
