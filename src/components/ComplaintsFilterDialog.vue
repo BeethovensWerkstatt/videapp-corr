@@ -14,7 +14,7 @@
         id="filterSelectAll"
         v-model="selectAll"
       />
-      <label for="filterSelectAll">Alle Auswählen</label>
+      <label for="filterSelectAll"><i>{{ $t('terms.selectall') }}</i></label>
     </div>
     <div
       v-for="(t,i) in tags"
@@ -23,7 +23,7 @@
       <input
         :id="sid + '-' + t"
         type="checkbox"
-        :checked="isSelected(t)"
+        :checked="tagsSelected.indexOf(t) >= 0"
         @change="select"
         :value="t"
       />
@@ -142,11 +142,11 @@ export default {
       },
       set (v) {
         console.log(v)
-        const keys = {}
-        for (const key of this.tags) {
-          keys[key] = v
+        for (const t of this.tags) {
+          this.$store.commit(n.mutations.SET_FILTER_SELECT, {
+            tag: this.dialog?.tag, key: t, val: v
+          })
         }
-        this.$store.dispatch(n.actions.setFilterSelect, { tag: this.sortTag, keys })
       }
     }
   },

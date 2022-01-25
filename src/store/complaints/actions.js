@@ -129,8 +129,9 @@ const actions = {
     dispatch(n.actions.loadComplaint, { complaint, callback: f })
   },
   [n.actions.setFilterSelect] ({ commit }, { tag, keys }) {
+    console.log(tag, keys)
     for (const key in keys) {
-      commit(n.mutations.SET_FILTER_SELECT, { tag, key })
+      commit(n.mutations.SET_FILTER_SELECT, { tag, key, val: keys[key] })
     }
   }
 }
