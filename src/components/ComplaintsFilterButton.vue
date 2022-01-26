@@ -54,7 +54,7 @@ export default {
           targetAttachment: 'bottom center',
           constraints: [
             {
-              to: 'scrollParent',
+              to: 'window',
               pin: true
             }
           ]
