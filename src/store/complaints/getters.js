@@ -1,6 +1,27 @@
 import n from '@/store/names'
-import tb from '@/toolbox'
 import { compareWorks } from '@/store/works'
+import tb from '@/toolbox'
+import { sortTag } from './data'
+
+/**
+ * compare two complaints for sorting
+ * @function
+ * @param {Object} c1 first complaint
+ * @param {Object} c2 second complaint
+ * @returns -1 if c1<c2, 1 if c1>c2, 0 if c1==c2
+ */
+export const compareComplaints = (c1, c2) => {
+  const wc = compareWorks(c1.movement?.work, c2.movement?.work)
+  if (wc !== 0) {
+    return wc
+  }
+  if (c1.movement?.n !== c2.movement?.n) {
+    return c1.movement?.n < c2.movement?.n ? -1 : 1
+  }
+  const m1 = parseInt(c1.affects[0].measures.label?.match(/\d+/))
+  const m2 = parseInt(c2.affects[0].measures.label?.match(/\d+/))
+  return m1 <= m2 ? -1 : 1
+}
 
 /**
  * @namespace store.complaints.getters
@@ -16,7 +37,7 @@ const getters = {
       const movement = getters[n.getters.getMovementById](mdiv)
       // console.log(mdiv, movement)
       return { ...c, movement }
-    })
+    }).sort(getters[n.getters.complaintSorter])
     return complaints
   },
   [n.getters.complaints]: (state, getters) => {
@@ -43,12 +64,35 @@ const getters = {
   },
   [n.getters.workComplaints]: (state, getters) => (workId, filtered = true) => {
     // TODO atId in loadComplaints?
-    const f = c => tb.atId(c.movement?.work) === workId
+    const workFilter = c => {
+      console.log(c.movement?.work, workId)
+      return tb.atId(c.movement?.work) === workId
+    }
     // console.log(getters.allComplaints)
     if (filtered) {
-      return getters.complaints.filter(f)
+      const complaintFilter = { ...state[n.state.complaintFilter] } || {}
+      complaintFilter[sortTag.work] = workFilter
+      console.log(complaintFilter)
+      const filters = Object.values(complaintFilter).filter((f) => typeof f === 'function')
+      console.log(complaintFilter, filters)
+      const complaints = getters.allComplaints.filter((c) => {
+        for (const f of filters) {
+          // console.log(f)
+          if (!f(c)) {
+            return false
+          }
+        }
+        return true
+      })
+      const complaintlist = complaints.map(c => {
+        const mdiv = c.affects[0]?.mdiv
+        const movement = getters.getMovementById(mdiv)
+        // console.log(mdiv, movement)
+        return { ...c, movement }
+      }).sort(getters[n.getters.complaintSorter])
+      return state[n.state.sortReverse] ? complaintlist.reverse() : complaintlist
     }
-    return getters.allComplaints.filter(f)
+    return getters.allComplaints.filter(workFilter)
   },
   [n.getters.displayComplaint]: (state) => state.displayComplaint,
   [n.getters.activeComplaintId]: (state) => state.activeComplaintId,
@@ -100,24 +144,12 @@ const getters = {
   [n.getters.complaintFilter]: (state) => state[n.state.complaintFilter],
   [n.getters.sortedBy]: (state) => state[n.state.sortedBy],
   [n.getters.sortReverse]: (state) => state[n.state.sortReverse],
-  [n.getters.complaintSorter] (state, getters) {
+  [n.getters.complaintSorter] (state) {
     const complaintSorter = state[n.state.complaintSorter]
-    const stdSort = (c1, c2) => {
-      const wc = compareWorks(c1.movement?.work, c2.movement?.work)
-      if (wc !== 0) {
-        return wc
-      }
-      if (c1.movement?.n !== c2.movement?.n) {
-        return c1.movement?.n < c2.movement?.n ? -1 : 1
-      }
-      const m1 = parseInt(c1.affects[0].measures.label?.match(/\d+/))
-      const m2 = parseInt(c2.affects[0].measures.label?.match(/\d+/))
-      return m1 <= m2 ? -1 : 1
-    }
     const customSort = complaintSorter ? (c1, c2) => {
       const s = complaintSorter(c1, c2)
-      return s || stdSort(c1, c2)
-    } : stdSort
+      return s || compareComplaints(c1, c2)
+    } : compareComplaints
     return customSort
   }
 }

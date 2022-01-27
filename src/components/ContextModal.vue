@@ -121,6 +121,9 @@ export default {
   position: absolute;
   display: inline-block;
   z-index: 1001 !important;
+  max-height: calc(100%-2rem);
+  overflow: scroll;
+
   .context-modal-container {
     background-color: white;
     border-radius: 5px;

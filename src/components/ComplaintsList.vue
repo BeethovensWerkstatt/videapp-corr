@@ -4,9 +4,17 @@
     <table class="complaint-list">
       <tbody v-if="complaints.length === 0">
         <tr class="mvt">
-          <th v-if="!workId"><span>{{ $t('terms.work') }}</span></th>
-          <th>
-            <span>{{ $t('terms.movement') }}, {{ $t('terms.measure') }}</span>
+          <th v-if="!workId">
+            <span>
+              {{ $t('terms.work') }}
+            </span>
+            <complaints-filter-button :tag="sortTag.work" />
+          </th>
+          <th :class="{ sortColumn: sortedBy === sortTag.movementMeasure }">
+            <span @click="sort(sortTag.movementMeasure)">
+              <span>{{ $t('terms.movement') }}, {{ $t('terms.measure') }}</span>
+              <span :class="sortIconC(sortTag.movementMeasure)" />
+            </span>
             <complaints-filter-button :tag="sortTag.movementMeasure" />
           </th>
           <th
@@ -37,9 +45,7 @@
             </span>
             <complaints-filter-button :tag="sortTag.work" v-if="ci === 0" />
           </th>
-          <th
-            :class="{ sortColumn: sortedBy === sortTag.movementMeasure }"
-            :title="workTitle(complaint.movement.work)">
+          <th :class="{ sortColumn: sortedBy === sortTag.movementMeasure }">
             <span @click="sort(sortTag.movementMeasure)">
               <span>{{ $t('terms.movement') }}, {{ $t('terms.measure') }}</span>
               <span :class="sortIconC(sortTag.movementMeasure)" v-if="ci === 0" />
@@ -141,7 +147,7 @@ export default {
   },
   name: 'ComplaintsList',
   mounted () {
-    this.sort(this.sortedBy)
+    this.sort(this.sortedBy, false)
   },
   computed: {
     ...mapGetters([
@@ -261,10 +267,10 @@ export default {
         })
       }
     },
-    sort (tag) {
-      // console.log('sort', tag)
+    sort (tag, volatil = true) {
+      console.log('sort', tag)
       this.mvt = null
-      const toggle = !!tag && tag === this.sortedBy
+      const toggle = volatil && !!tag && tag === this.sortedBy
       // console.log(this[n.getters.sortReverse], toggle)
 
       const tagSorter = (tag) => (c1, c2) => {
