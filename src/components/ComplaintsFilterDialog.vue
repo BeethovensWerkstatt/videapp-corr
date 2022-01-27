@@ -28,7 +28,10 @@
         :value="t"
       />
       <label :for="sid + '-' + t">
-        <template v-if="dialog.tag === 'movementMeasure'">
+        <template v-if="dialog.tag === 'work'">
+          {{ workTitle(t) }}
+        </template>
+        <template v-else-if="dialog.tag === 'movementMeasure'">
           {{ movementTitle(t) }}
         </template>
         <template v-else-if="dialog.tag === 'document'">
@@ -79,25 +82,14 @@ export default {
       // console.log(this[n.getters.complaintFilterDialog])
       return !!this[n.getters.complaintFilterDialog]?.tag
     },
-    tetherOptions () {
-      const topts = {
-        element: this.$el,
-        target: '#' + this.dialog?.target,
-        constraints: [
-          {
-            to: 'scrollParent',
-            pin: true
-          }
-        ]
-      }
-      return topts
-    },
     sid () {
       return 'sel-' + this.dialog?.tag
     },
     tags () {
       // console.log(this.tag, complaintFilterTags)
       switch (this.dialog?.tag) {
+        case sortTag.work:
+          return this.works
         case sortTag.movementMeasure:
           return this.movements
         case sortTag.document:
@@ -117,14 +109,24 @@ export default {
       // }
       const complaints = this.allComplaints
       const works = [...new Set(complaints.map(c => c.movement.work))]
-      console.log(works)
       return works
     },
     movements () {
       const complaints = this.workId ? this.workComplaints(this.workId, false) : this[n.getters.allComplaints]
       const movements = [...new Set(complaints.map(c => c.affects[0].mdiv))]
+      // TODO has filter work ...
       // console.log(complaints, movements)
-      return movements
+      return movements.sort((mdiv1, mdiv2) => {
+        const m1 = this.getMovementById(mdiv1)
+        const m2 = this.getMovementById(mdiv2)
+        if (m1.work !== m2.work) {
+          // TODO compare work by opus
+          return this.workTitle(m1.work).localeCompare(this.workTitle(m2.work))
+        }
+        if (m1.n < m2.n) return -1
+        if (m1.n > m2.n) return 1
+        return 0
+      })
     },
     documents () {
       const complaints = this.workId ? this.workComplaints(this.workId, false) : this[n.getters.allComplaints]
@@ -203,6 +205,16 @@ export default {
       if (filterSet.length > 0) {
         // TODO movements / documents!!
         switch (this.dialog?.tag) {
+          // filter by work
+          case sortTag.work:
+            return (c) => {
+              const mvt = this.getMovementById(c.affects[0].mdiv)
+              for (const work of filterSet) {
+                if (mvt?.work === work) {
+                  return true
+                }
+              }
+            }
           // filter by movements
           case sortTag.movementMeasure:
             return (c) => {

@@ -1,4 +1,5 @@
 export const sortTag = {
+  work: 'work',
   movementMeasure: 'movementMeasure',
   revisionObject: 'objects',
   textOperation: 'operation',
@@ -8,6 +9,7 @@ export const sortTag = {
   document: 'document'
 }
 export const tagLabel = {
+  [sortTag.work]: 'terms.work',
   [sortTag.movementMeasure]: 'terms.movement',
   [sortTag.revisionObject]: 'terms.complaint.revision-object',
   [sortTag.textOperation]: 'terms.complaint.text-operation',

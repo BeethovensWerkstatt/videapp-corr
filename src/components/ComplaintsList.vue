@@ -4,7 +4,7 @@
     <table class="complaint-list">
       <tbody v-if="complaints.length === 0">
         <tr class="mvt">
-          <th v-if="!workId"><span>Werk</span></th>
+          <th v-if="!workId"><span>{{ $t('terms.work') }}</span></th>
           <th>
             <span>{{ $t('terms.movement') }}, {{ $t('terms.measure') }}</span>
             <complaints-filter-button :tag="sortTag.movementMeasure" />
@@ -27,27 +27,21 @@
         v-for="(complaint, ci) in complaints"
       >
         <tr
-          v-if="complaint.movement && (checkMvt(complaint.movement.n) || ci === 0)"
+          v-if="complaint.movement && (checkMvt(complaint.movement) || ci === 0)"
           class="mvt"
         >
           <!-- v-if="!workId": display work column if list is not constrained to work -->
-          <th v-if="!workId" @click="sort(sortTag.movementMeasure)">
-            <btn
-              v-if="sortedBy === sortTag.movementMeasure"
-              class="btn-link"
-              @click="openWork(complaint)"
-              :title="$t('messages.openDesktop')"
-            >
-              {{ workTitle(complaint.movement.work) }}
-            </btn>
-            <span v-else>Werk</span>
+          <th v-if="!workId">
+            <span>
+              {{ $t('terms.work') }}
+            </span>
+            <complaints-filter-button :tag="sortTag.work" v-if="ci === 0" />
           </th>
           <th
             :class="{ sortColumn: sortedBy === sortTag.movementMeasure }"
             :title="workTitle(complaint.movement.work)">
             <span @click="sort(sortTag.movementMeasure)">
-              <span v-if="sortedBy === sortTag.movementMeasure">{{ toRoman(complaint.movement.n) + '.' }} {{ complaint.movement.label }}</span>
-              <span v-else>{{ $t('terms.movement') }}, {{ $t('terms.measure') }}</span>
+              <span>{{ $t('terms.movement') }}, {{ $t('terms.measure') }}</span>
               <span :class="sortIconC(sortTag.movementMeasure)" v-if="ci === 0" />
             </span>
             <complaints-filter-button :tag="sortTag.movementMeasure" v-if="ci === 0" />
@@ -74,15 +68,13 @@
           :id="'data-' + ci"
           :title="complaint.movement.work"
         >
-          <!-- TODO work title column (optional) -->
+          <!-- if workId is set, we are in work related desktop view and column is not needed -->
           <td
             v-if="!workId"
             class="complaint-attribute"
             @click.prevent="toggleActivate(complaint)"
           >
-            <span v-if="sortedBy === sortTag.movementMeasure" :title="workTitle(complaint.movement.work)">&nbsp;</span>
             <btn
-              v-else
               class="btn-link"
               @click="openWork(complaint)"
               :title="$t('messages.openDesktop')"
@@ -94,9 +86,9 @@
             class="complaint-attribute"
             @click.prevent="toggleActivate(complaint)"
           >
-            <span v-if="sortedBy !== sortTag.movementMeasure && complaint.movement">
+            <template v-if="complaint.movement">
               {{ toRoman(complaint.movement.n) }},
-            </span>
+            </template>
             {{ measures(complaint) }}
           </td>
           <td
@@ -181,11 +173,15 @@ export default {
       return work?.title[0].title
     },
     /**
-     * check if new movement starts while looping through complaints
+     * check if new movement.work starts while looping through complaints
      * @param {String} mvt
      */
     checkMvt (mvt) {
-      const t = mvt !== this.mvt && (this.sortedBy === sortTag.movementMeasure || !this.mvt)
+      // console.log(this.mvt, mvt)
+      const t = mvt !== this.mvt &&
+        (!this.mvt ||
+          (this.sortedBy === sortTag.movementMeasure &&
+          this.mvt.work !== mvt?.work))
       this.mvt = mvt
       return t
     },
