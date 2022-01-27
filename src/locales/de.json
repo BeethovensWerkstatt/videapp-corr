@@ -3,7 +3,7 @@
     "hello-world": "Hallo Modul 3",
     "openDesktop": "öffne Schreibtisch Ansicht",
     "no-filter": "kein Filter aktiv",
-    "filter-count": "Es sind Filter aktiv"
+    "filter-count": "Es sind %u Filter aktiv"
   },
   "terms": {
     "complaints": "Monita",
