@@ -44,26 +44,32 @@ export default {
     openDialog (e) {
       e.preventDefault()
       console.log(e)
-      // console.log('filter', this.tag)
-      // TODO calc position, with and height from userConf?
-      this.$store.commit(n.mutations.DISPLAY_FILTER_DIALOG, {
-        tag: this.tag,
-        tether: {
-          target: '#' + this.divid,
-          attachment: 'top center',
-          targetAttachment: 'bottom center',
-          constraints: [
-            {
-              to: 'window',
-              pin: true
-            }
-          ]
-        },
-        dimension: {
-          width: '500px',
-          'padding-bottom': '1em'
-        }
-      })
+      if (e.altKey) {
+        this.$store.commit(n.mutations.SET_FILTER, {
+          tag: this.tag
+        })
+      } else {
+        // console.log('filter', this.tag)
+        // TODO calc position, with and height from userConf?
+        this.$store.commit(n.mutations.DISPLAY_FILTER_DIALOG, {
+          tag: this.tag,
+          tether: {
+            target: '#' + this.divid,
+            attachment: 'top center',
+            targetAttachment: 'bottom center',
+            constraints: [
+              {
+                to: 'window',
+                pin: true
+              }
+            ]
+          },
+          dimension: {
+            width: '500px',
+            'padding-bottom': '1em'
+          }
+        })
+      }
     }
   }
 }

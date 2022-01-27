@@ -166,10 +166,10 @@ export default {
   },
   methods: {
     select (e) {
-      console.log(e.target)
+      // console.log(e.target)
       const t = e.target.value
       const v = e.target.checked
-      console.log(e, t, v)
+      // console.log(e, t, v)
       this.$store.commit(n.mutations.SET_FILTER_SELECT, {
         tag: this.dialog?.tag, key: t, val: v
       })
