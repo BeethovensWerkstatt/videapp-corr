@@ -69,6 +69,11 @@ export default {
     tagLabel,
     tagsSelected: []
   }),
+  watch: {
+    dialog () {
+      this.tagsSelected = this.tags.filter(this.isSelected)
+    }
+  },
   computed: {
     ...mapGetters([
       n.getters.complaintFilterDialog,
