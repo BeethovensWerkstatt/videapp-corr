@@ -47,7 +47,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { vsprintf } from 'sprintf-js'
+// import { vsprintf } from 'sprintf-js'
 import n from '@/store/names'
 import { sortTag, tagLabel, complaintFilterTags } from '@/store/complaints/data'
 import { compareWorks } from '@/store/works'
@@ -144,8 +144,9 @@ export default {
       return documents
     },
     filterInfo () {
-      const msg = this.tagsSelected?.length > 0 ? this.$t('messages.filter-count') : this.$t('messages.no-filter')
-      return vsprintf(msg, [(this.tagsSelected ? this.tagsSelected.length : 0)])
+      const msg = this.$tc('messages.filter-count', (this.tagsSelected?.length ? this.tagsSelected.length : 0))
+      console.log(msg)
+      return msg
     },
     selectAll: {
       get () {
