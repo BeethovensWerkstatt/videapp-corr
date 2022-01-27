@@ -268,8 +268,8 @@ export default {
     sort (tag) {
       // console.log('sort', tag)
       this.mvt = null
-      const toggle = tag === this.sortedBy
-      console.log(this[n.getters.sortReverse], toggle)
+      const toggle = !!tag && tag === this.sortedBy
+      // console.log(this[n.getters.sortReverse], toggle)
 
       const tagSorter = (tag) => (c1, c2) => {
         const o1 = c1.tags[tag]?.join('-')
