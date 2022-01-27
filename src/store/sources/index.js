@@ -3,6 +3,10 @@ import mutations from './mutations'
 import actions from './actions'
 import getters from './getters'
 
+// TODO compareSources
+// TODO compareMovements
+// TODO comparePages?
+
 /**
  * @namespace store.sources
  */

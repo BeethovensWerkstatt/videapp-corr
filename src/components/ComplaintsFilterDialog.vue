@@ -49,6 +49,7 @@
 import { mapGetters } from 'vuex'
 import n from '@/store/names'
 import { sortTag, tagLabel, complaintFilterTags } from '@/store/complaints/data'
+import { compareWorks } from '@/store/works'
 import tb from '@/toolbox'
 import ContextModal from './ContextModal.vue'
 
@@ -120,8 +121,10 @@ export default {
         const m1 = this.getMovementById(mdiv1)
         const m2 = this.getMovementById(mdiv2)
         if (m1.work !== m2.work) {
-          // TODO compare work by opus
-          return this.workTitle(m1.work).localeCompare(this.workTitle(m2.work))
+          const mc = compareWorks(m1.work, m2.work)
+          if (mc !== 0) {
+            return mc
+          }
         }
         if (m1.n < m2.n) return -1
         if (m1.n > m2.n) return 1

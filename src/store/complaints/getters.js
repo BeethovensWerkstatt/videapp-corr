@@ -1,5 +1,6 @@
 import n from '@/store/names'
 import tb from '@/toolbox'
+import { compareWorks } from '@/store/works'
 
 /**
  * @namespace store.complaints.getters
@@ -102,10 +103,9 @@ const getters = {
   [n.getters.complaintSorter] (state, getters) {
     const complaintSorter = state[n.state.complaintSorter]
     const stdSort = (c1, c2) => {
-      const work1 = c1.movement ? getters.getWork(c1.movement?.work) : undefined
-      const work2 = c2.movement ? getters.getWork(c2.movement?.work) : undefined
-      if (work1?.title[0].title !== work2?.title[0].title) {
-        return work2?.title[0].title.localeCompare(work1?.title[0].title) >= 0 ? -1 : 1
+      const wc = compareWorks(c1.movement?.work, c2.movement?.work)
+      if (wc !== 0) {
+        return wc
       }
       if (c1.movement?.n !== c2.movement?.n) {
         return c1.movement?.n < c2.movement?.n ? -1 : 1
