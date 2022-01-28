@@ -159,6 +159,7 @@ const getters = {
   },
   /**
    * create filter function for complaint table column of filterTag
+   * @memberof store.complaints.getters
    * @param {String} filterTag complaint table column to filter
    * @param {String[]} keySet allowed keys in this column
    * @returns {Function} filter function
@@ -218,14 +219,17 @@ const getters = {
   },
   /**
    * column of complaint table to sort by
+   * @memberof store.complaints.getters
    */
   [n.getters.sortedBy]: (state) => state[n.state.sortedBy],
   /**
    * sort in reverse direction
+   * @memberof store.complaints.getters
    */
   [n.getters.sortReverse]: (state) => state[n.state.sortReverse],
   /**
    * current sorter for complaints
+   * @memberof store.complaints.getters
    */
   [n.getters.complaintSorter] (state) {
     const complaintSorter = state[n.state.complaintSorter]
