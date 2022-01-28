@@ -5,6 +5,7 @@ import { complaintFilterTags, sortTag } from './data'
 
 /**
  * compare two complaints for sorting
+ * @memberof store.complaints.getters
  * @function
  * @param {Object} c1 first complaint
  * @param {Object} c2 second complaint
