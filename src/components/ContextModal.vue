@@ -121,7 +121,9 @@ export default {
   position: absolute;
   display: inline-block;
   z-index: 1001 !important;
+  max-width: calc(100vw - 1rem);
   max-height: calc(100vh - 2rem);
+  margin: 1rem;
   overflow: scroll;
 
   .context-modal-container {
