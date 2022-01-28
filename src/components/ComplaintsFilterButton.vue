@@ -43,7 +43,7 @@ export default {
   methods: {
     openDialog (e) {
       e.preventDefault()
-      console.log(e)
+      // console.log(e)
       if (e.altKey) {
         this.$store.commit(n.mutations.SET_FILTER, {
           tag: this.tag

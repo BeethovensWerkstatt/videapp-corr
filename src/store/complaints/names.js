@@ -6,10 +6,10 @@ export const complaintsNames = {
     displayComplaint: 'displayComplaint',
     complaintFilterDialog: 'complaintFilterDialog',
     complaintFilter: 'complaintFilter',
+    filterSelect: 'filterSelect',
     sortedBy: 'sortedBy',
     sortReverse: 'sortReverse',
-    complaintSorter: 'complaintSorter',
-    filterSelect: 'filterSelect'
+    complaintSorter: 'complaintSorter'
   },
   mutations: {
     COMPLAINTS_LIST: 'COMPLAINTS_LIST',
@@ -46,7 +46,10 @@ export const complaintsNames = {
     complaintFilterDialog: 'complaintFilterDialog',
     complaintFilter: 'complaintFilter',
     sortedBy: 'sortedBy',
-    complaintSorter: 'complaintSorter'
+    complaintSorter: 'complaintSorter',
+    complaintWorks: 'complaintWorks',
+    complaintMovements: 'complaintMovements',
+    complaintDocuments: 'complaintDocuments'
   }
 }
 

@@ -142,8 +142,27 @@ const getters = {
   },
   [n.getters.complaintFilterDialog]: (state) => state[n.state.complaintFilterDialog],
   [n.getters.complaintFilter]: (state) => state[n.state.complaintFilter],
+  /**
+   * TODO not implemented yet
+   * create filter function for complaint table column of filterTag
+   * @param {String} filterTag
+   * @param {String[]} keySet
+   * @returns {Function} filter function
+   */
+  [n.getters.createComplaintFilter]: (state, getters) => (filterTag, keySet) => {
+    return (c) => true
+  },
+  /**
+   * column of complaint table to sort by
+   */
   [n.getters.sortedBy]: (state) => state[n.state.sortedBy],
+  /**
+   * sort in reverse direction
+   */
   [n.getters.sortReverse]: (state) => state[n.state.sortReverse],
+  /**
+   * current sorter for complaints
+   */
   [n.getters.complaintSorter] (state) {
     const complaintSorter = state[n.state.complaintSorter]
     const customSort = complaintSorter ? (c1, c2) => {
@@ -151,6 +170,37 @@ const getters = {
       return s || compareComplaints(c1, c2)
     } : compareComplaints
     return customSort
+  },
+
+  [n.getters.complaintWorks] (state, getters) {
+    const complaints = getters[n.getters.allComplaints]
+    const works = [...new Set(complaints.map(c => c.movement.work))]
+    return works
+  },
+  [n.getters.complaintMovements]: (state, getters) => (workId) => {
+    // console.log('complaintMovements', workId)
+    const complaints = workId ? getters[n.getters.workComplaints](workId, false) : getters[n.getters.allComplaints]
+    const movements = [...new Set(complaints.map(c => c.affects[0].mdiv))]
+    // console.log(workId, complaints, movements)
+    return movements.sort((mdiv1, mdiv2) => {
+      const m1 = getters[n.getters.getMovementById](mdiv1)
+      const m2 = getters[n.getters.getMovementById](mdiv2)
+      if (m1.work !== m2.work) {
+        const mc = compareWorks(m1.work, m2.work)
+        if (mc !== 0) {
+          return mc
+        }
+      }
+      if (m1.n < m2.n) return -1
+      if (m1.n > m2.n) return 1
+      return 0
+    })
+  },
+  [n.getters.complaintDocuments]: (state, getters) => (workId) => {
+    const complaints = workId ? getters[n.getters.workComplaints](workId, false) : getters[n.getters.allComplaints]
+    const documents = [...new Set(complaints.map(c => c.revisionDoc))]
+    // console.log('complaintDocuments', workId, complaints, documents)
+    return documents
   }
 }
 

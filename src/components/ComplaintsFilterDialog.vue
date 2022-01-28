@@ -50,7 +50,6 @@ import { mapGetters } from 'vuex'
 // import { vsprintf } from 'sprintf-js'
 import n from '@/store/names'
 import { sortTag, tagLabel, complaintFilterTags } from '@/store/complaints/data'
-import { compareWorks } from '@/store/works'
 import tb from '@/toolbox'
 import ContextModal from './ContextModal.vue'
 
@@ -111,37 +110,13 @@ export default {
       return this.$route.params.id
     },
     works () {
-      // if (this.workId) {
-      //  return [this.workId]
-      // }
-      const complaints = this.allComplaints
-      const works = [...new Set(complaints.map(c => c.movement.work))]
-      return works
+      return this.$store.getters[n.getters.complaintWorks]
     },
     movements () {
-      const complaints = this.workId ? this.workComplaints(this.workId, false) : this[n.getters.allComplaints]
-      const movements = [...new Set(complaints.map(c => c.affects[0].mdiv))]
-      // TODO has filter work ...
-      // console.log(complaints, movements)
-      return movements.sort((mdiv1, mdiv2) => {
-        const m1 = this.getMovementById(mdiv1)
-        const m2 = this.getMovementById(mdiv2)
-        if (m1.work !== m2.work) {
-          const mc = compareWorks(m1.work, m2.work)
-          if (mc !== 0) {
-            return mc
-          }
-        }
-        if (m1.n < m2.n) return -1
-        if (m1.n > m2.n) return 1
-        return 0
-      })
+      return this.$store.getters[n.getters.complaintMovements](this.workId)
     },
     documents () {
-      const complaints = this.workId ? this.workComplaints(this.workId, false) : this[n.getters.allComplaints]
-      const documents = [...new Set(complaints.map(c => c.revisionDoc))]
-      // console.log(this.workId, complaints, documents)
-      return documents
+      return this.$store.getters[n.getters.complaintDocuments](this.workId)
     },
     filterInfo () {
       const msg = this.$tc('messages.filter-count', (this.tagsSelected?.length ? this.tagsSelected.length : 0))
