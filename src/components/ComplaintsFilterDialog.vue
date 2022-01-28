@@ -145,7 +145,7 @@ export default {
     },
     filterInfo () {
       const msg = this.$tc('messages.filter-count', (this.tagsSelected?.length ? this.tagsSelected.length : 0))
-      console.log(msg)
+      // console.log(msg)
       return msg
     },
     selectAll: {
@@ -154,7 +154,7 @@ export default {
         return selection.length === this.tags.length
       },
       set (v) {
-        console.log(v)
+        // console.log(v)
         for (const t of this.tags) {
           this.$store.commit(n.mutations.SET_FILTER_SELECT, {
             tag: this.dialog?.tag, key: t, val: v
@@ -194,7 +194,7 @@ export default {
       return work?.title[0].title
     },
     finishDialog (e) {
-      console.log('close dialog ...', e)
+      // console.log('close dialog ...', e)
       switch (e) {
         case 'ok':
           this.$store.commit(n.mutations.SET_FILTER, {
@@ -212,7 +212,7 @@ export default {
         // console.log(this.dialog?.tag, t, sel)
         return sel
       })
-      console.log('set filter ...', filterSet)
+      // console.log('set filter ...', filterSet)
       if (filterSet.length > 0) {
         // TODO movements / documents!!
         switch (this.dialog?.tag) {
