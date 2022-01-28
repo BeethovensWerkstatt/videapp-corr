@@ -170,64 +170,18 @@ export default {
       this.$store.commit(n.mutations.DISPLAY_FILTER_DIALOG, {})
     },
     createFilter () {
-      const tag = this.dialog?.tag
+      const filterTag = this.dialog?.tag
       const filterSet = this.tags.filter((t) => {
         const sel = this.isSelected(t)
         // console.log(this.dialog?.tag, t, sel)
         return sel
       })
-      // console.log('set filter ...', filterSet)
-      if (filterSet.length > 0) {
-        // TODO movements / documents!!
-        switch (this.dialog?.tag) {
-          // filter by work
-          case sortTag.work:
-            return (c) => {
-              const mvt = this.getMovementById(c.affects[0].mdiv)
-              for (const work of filterSet) {
-                if (mvt?.work === work) {
-                  return true
-                }
-              }
-            }
-          // filter by movements
-          case sortTag.movementMeasure:
-            return (c) => {
-              for (const mvt of filterSet) {
-                if (c.affects[0].mdiv === mvt) {
-                  return true
-                }
-              }
-              return false
-            }
-          // filter by revision document
-          case sortTag.document:
-            return (c) => {
-              for (const doc of filterSet) {
-                if (c.revisionDoc === doc) {
-                  return true
-                }
-              }
-              return false
-            }
-        }
-        // filter by tag list
-        const filter = (c) => {
-          const tags = c.tags[tag]
-          for (const t of filterSet) {
-            if (t === '') {
-              if (tags.length === 0) {
-                return true
-              }
-            } else if (tags.indexOf(t) >= 0) {
-              return true
-            }
-          }
-          return false
-        }
-        return filter
+      if (filterTag) {
+        return this.$store.getters[n.getters.createComplaintFilter](filterTag, filterSet)
       }
-      return undefined
+      console.warn('noe filter tag given!')
+      // if no filterTag is given return dummy filter
+      return (c) => true
     }
   }
 }

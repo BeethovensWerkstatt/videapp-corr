@@ -157,18 +157,12 @@ const getters = {
     return []
   },
   /**
-   * TODO not implemented yet
    * create filter function for complaint table column of filterTag
    * @param {String} filterTag complaint table column to filter
    * @param {String[]} keySet allowed keys in this column
    * @returns {Function} filter function
    */
-  [n.getters.createComplaintFilter]: (state, getters) => (filterTag, keySet) => {
-    const filterSet = this.tags.filter((t) => {
-      const sel = this.isSelected(t)
-      // console.log(this.dialog?.tag, t, sel)
-      return sel
-    })
+  [n.getters.createComplaintFilter]: (state, getters) => (filterTag, filterSet) => {
     // console.log('set filter ...', filterSet)
     if (filterSet.length > 0) {
       // TODO movements / documents!!
@@ -176,7 +170,7 @@ const getters = {
         // filter by work
         case sortTag.work:
           return (c) => {
-            const mvt = this.getMovementById(c.affects[0].mdiv)
+            const mvt = getters[n.getters.getMovementById](c.affects[0].mdiv)
             for (const work of filterSet) {
               if (mvt?.work === work) {
                 return true
