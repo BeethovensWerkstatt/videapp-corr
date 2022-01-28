@@ -49,7 +49,7 @@
 import { mapGetters } from 'vuex'
 // import { vsprintf } from 'sprintf-js'
 import n from '@/store/names'
-import { sortTag, tagLabel, complaintFilterTags } from '@/store/complaints/data'
+import { sortTag, tagLabel } from '@/store/complaints/data'
 import tb from '@/toolbox'
 import ContextModal from './ContextModal.vue'
 
@@ -93,18 +93,7 @@ export default {
     },
     tags () {
       // console.log(this.tag, complaintFilterTags)
-      switch (this.dialog?.tag) {
-        case sortTag.work:
-          return this.works
-        case sortTag.movementMeasure:
-          return this.movements
-        case sortTag.document:
-          return this.documents
-      }
-      if (this.dialog?.tag) {
-        return ['', ...complaintFilterTags[this.dialog?.tag]]
-      }
-      return []
+      return this.$store.getters[n.getters.complaintFilterKeys](this.dialog?.tag, this.workId)
     },
     workId () {
       return this.$route.params.id

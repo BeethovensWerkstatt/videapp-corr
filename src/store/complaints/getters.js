@@ -1,7 +1,7 @@
 import n from '@/store/names'
 import { compareWorks } from '@/store/works'
 import tb from '@/toolbox'
-import { sortTag } from './data'
+import { complaintFilterTags, sortTag } from './data'
 
 /**
  * compare two complaints for sorting
@@ -142,15 +142,84 @@ const getters = {
   },
   [n.getters.complaintFilterDialog]: (state) => state[n.state.complaintFilterDialog],
   [n.getters.complaintFilter]: (state) => state[n.state.complaintFilter],
+  [n.getters.complaintFilterKeys]: (state, getters) => (filterTag, workId) => {
+    switch (filterTag) {
+      case sortTag.work:
+        return getters[n.getters.complaintWorks]
+      case sortTag.movementMeasure:
+        return getters[n.getters.complaintMovements](workId)
+      case sortTag.document:
+        return getters[n.getters.complaintDocuments](workId)
+    }
+    if (filterTag) {
+      return ['', ...complaintFilterTags[filterTag]]
+    }
+    return []
+  },
   /**
    * TODO not implemented yet
    * create filter function for complaint table column of filterTag
-   * @param {String} filterTag
-   * @param {String[]} keySet
+   * @param {String} filterTag complaint table column to filter
+   * @param {String[]} keySet allowed keys in this column
    * @returns {Function} filter function
    */
   [n.getters.createComplaintFilter]: (state, getters) => (filterTag, keySet) => {
-    return (c) => true
+    const filterSet = this.tags.filter((t) => {
+      const sel = this.isSelected(t)
+      // console.log(this.dialog?.tag, t, sel)
+      return sel
+    })
+    // console.log('set filter ...', filterSet)
+    if (filterSet.length > 0) {
+      // TODO movements / documents!!
+      switch (filterTag) {
+        // filter by work
+        case sortTag.work:
+          return (c) => {
+            const mvt = this.getMovementById(c.affects[0].mdiv)
+            for (const work of filterSet) {
+              if (mvt?.work === work) {
+                return true
+              }
+            }
+          }
+        // filter by movements
+        case sortTag.movementMeasure:
+          return (c) => {
+            for (const mvt of filterSet) {
+              if (c.affects[0].mdiv === mvt) {
+                return true
+              }
+            }
+            return false
+          }
+        // filter by revision document
+        case sortTag.document:
+          return (c) => {
+            for (const doc of filterSet) {
+              if (c.revisionDoc === doc) {
+                return true
+              }
+            }
+            return false
+          }
+      }
+      // filter by tag list
+      const filter = (c) => {
+        const tags = c.tags[filterTag]
+        for (const t of filterSet) {
+          if (t === '') {
+            if (tags.length === 0) {
+              return true
+            }
+          } else if (tags.indexOf(t) >= 0) {
+            return true
+          }
+        }
+        return false
+      }
+      return filter
+    }
   },
   /**
    * column of complaint table to sort by

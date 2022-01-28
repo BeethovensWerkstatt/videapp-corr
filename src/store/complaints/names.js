@@ -45,6 +45,7 @@ export const complaintsNames = {
     filterSelect: 'filterSelect',
     complaintFilterDialog: 'complaintFilterDialog',
     complaintFilter: 'complaintFilter',
+    complaintFilterKeys: 'complaintFilterKeys',
     sortedBy: 'sortedBy',
     complaintSorter: 'complaintSorter',
     complaintWorks: 'complaintWorks',
