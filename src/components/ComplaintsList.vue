@@ -1,7 +1,7 @@
 <template>
-  <div class="complaint-container">
+  <div class="complaint-list-container">
     <complaints-filter-dialog :dialog="filterDialog" />
-    <table class="complaint-list">
+    <table class="complaint-list unselectable">
       <tbody v-if="complaints.length === 0">
         <tr class="mvt">
           <th v-if="!workId">
@@ -13,8 +13,8 @@
           <th :class="{ sortColumn: sortedBy === sortTag.movementMeasure }">
             <span @click="sort(sortTag.movementMeasure)">
               <span>{{ $t('terms.movement') }}, {{ $t('terms.measure') }}</span>
-              <span :class="sortIconC(sortTag.movementMeasure)" />
             </span>
+            <span :class="sortIconC(sortTag.movementMeasure)" @click="sort(sortTag.movementMeasures)" />
             <complaints-filter-button :tag="sortTag.movementMeasure" />
           </th>
           <th
@@ -24,8 +24,8 @@
           >
             <span @click="sort(tag)">
               {{ $t(tagLabel[tag]) }}
-              <div :class="sortIconC(tag)" />
             </span>
+            <div :class="sortIconC(tag)" @click="sort(tag)" />
             <complaints-filter-button :tag="tag" />
           </th>
           <th>&nbsp;</th>
@@ -325,15 +325,29 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.complaint-container {
+.complaint-list-container {
   width: 100%;
   max-height: 100%;
   overflow: scroll;
 }
 .complaint-list {
   width: 100%;
+
+  table {
+    min-width: 1920px;
+  }
 }
 
+.sortColumn {
+  color: blue;
+}
+th .icon {
+  margin-left: 5px;
+  color: lightgray;
+}
+th .icon.sorted {
+  color: blue !important;
+}
 tr.mvt {
   th {
     position: relative;
@@ -366,14 +380,4 @@ tr.mvt {
   text-decoration: line-through;
 }
 
-.sortColumn {
-  color: blue;
-}
-th .icon {
-  margin-left: 5px;
-  color: lightgray;
-}
-th .icon.sorted {
-  color: blue !important;
-}
 </style>

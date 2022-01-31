@@ -100,7 +100,11 @@ const mutations = {
    * remove filter function
    * @param {Function} parms tag
    */
-  [n.mutations.REM_FILTER] (state, tag) {
+  [n.mutations.REM_FILTER] (state, { tag, callback }) {
+    if (typeof callback === 'function') {
+      const filter = state[n.state.complaintFilter][tag]
+      callback(tag, filter)
+    }
     delete state[n.state.complaintFilter][tag]
   },
   /**

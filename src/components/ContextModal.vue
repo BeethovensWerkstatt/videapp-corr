@@ -108,8 +108,8 @@ export default {
 }
 .context-dialog.active {
   display: inline-block !important;
-  position: fixed;
   z-index: 1000 !important;
+  position: fixed;
   top: 0px;
   left: 0px;
   width: 100%;
@@ -121,12 +121,14 @@ export default {
   position: absolute;
   display: inline-block;
   z-index: 1001 !important;
-  max-width: calc(100vw - 1rem);
+  max-width: calc(100vw - 2rem);
   max-height: calc(100vh - 2rem);
-  margin: 1rem;
-  overflow: scroll;
 
   .context-modal-container {
+    max-width: calc(100vw - 2rem);
+    max-height: calc(100vh - 2rem);
+    margin: 1rem;
+    overflow: scroll;
     background-color: white;
     border-radius: 5px;
 

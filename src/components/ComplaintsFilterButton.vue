@@ -82,7 +82,10 @@ export default {
   .cfd-btn {
     display: inline-block;
     .hasFilter {
-      outline-color: rgba(65, 105, 225, 0.568);
+      outline-color: rgba(65, 105, 225, 0.568) !important;
+    }
+    button, button:focus {
+      outline: none;
     }
   }
 }

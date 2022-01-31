@@ -5,6 +5,7 @@
     divid="filter-dialog"
     :title="$t(tagLabel[dialog.tag])"
     :dialog="dialog"
+    :buttons="buttons"
   >
     <div class="filterInfo">{{ filterInfo }}</div>
     <hr />
@@ -82,30 +83,42 @@ export default {
       n.getters.allComplaints,
       n.getters.workComplaints,
       n.getters.getMovementById,
-      n.getters.getWork
+      n.getters.getWork,
+      n.getters.complaintFilterKeys,
+      n.getters.complaintWorks,
+      n.getters.complaintMovements,
+      n.getters.complaintDocuments,
+      n.getters.createComplaintFilter
     ]),
     dialogActive () {
       // console.log(this[n.getters.complaintFilterDialog])
       return !!this[n.getters.complaintFilterDialog]?.tag
+    },
+    buttons () {
+      // TODO change OK to 'reactivate filters' conditionally
+      return ([
+        { label: 'terms.cancel', value: 'cancel' },
+        { label: 'terms.ok', value: 'ok', class: 'btn-primary' }
+      ])
     },
     sid () {
       return 'sel-' + this.dialog?.tag
     },
     tags () {
       // console.log(this.tag, complaintFilterTags)
-      return this.$store.getters[n.getters.complaintFilterKeys](this.dialog?.tag, this.workId)
+      return this[n.getters.complaintFilterKeys](this.dialog?.tag, this.workId)
     },
     workId () {
       return this.$route.params.id
     },
     works () {
-      return this.$store.getters[n.getters.complaintWorks]
+      return this[n.getters.complaintWorks]
     },
     movements () {
-      return this.$store.getters[n.getters.complaintMovements](this.workId)
+      return this[n.getters.complaintMovements](this.workId)
     },
     documents () {
-      return this.$store.getters[n.getters.complaintDocuments](this.workId)
+      return this[n.getters.complaintDocuments](this.workId)
     },
     filterInfo () {
       const msg = this.$tc('messages.filter-count', (this.tagsSelected?.length ? this.tagsSelected.length : 0))
@@ -159,13 +172,13 @@ export default {
     },
     finishDialog (e) {
       // console.log('close dialog ...', e)
+      const tag = this.dialog.tag
+      const filter = this.createFilter()
       switch (e) {
         case 'ok':
-          this.$store.commit(n.mutations.SET_FILTER, {
-            tag: this.dialog.tag,
-            filter: this.createFilter()
-          })
+          this.$store.commit(n.mutations.SET_FILTER, { tag, filter })
           break
+        // case 'cancel':
       }
       this.$store.commit(n.mutations.DISPLAY_FILTER_DIALOG, {})
     },
@@ -177,7 +190,7 @@ export default {
         return sel
       })
       if (filterTag) {
-        return this.$store.getters[n.getters.createComplaintFilter](filterTag, filterSet)
+        return this[n.getters.createComplaintFilter](filterTag, filterSet)
       }
       console.warn('noe filter tag given!')
       // if no filterTag is given return dummy filter
