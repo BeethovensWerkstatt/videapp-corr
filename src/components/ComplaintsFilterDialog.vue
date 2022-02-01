@@ -68,7 +68,11 @@ export default {
     sortTag,
     tagLabel,
     tagsSelected: [],
-    filterInfo: ''
+    filterInfo: '',
+    buttons: [
+      { label: 'terms.cancel', value: 'cancel' },
+      { label: 'terms.ok', value: 'ok', class: 'btn-primary' }
+    ]
   }),
   watch: {
     dialog () {
@@ -97,14 +101,6 @@ export default {
     dialogActive () {
       // console.log(this[n.getters.complaintFilterDialog])
       return !!this[n.getters.complaintFilterDialog]?.tag
-    },
-    buttons () {
-      // TODO change OK to 'reactivate filters' conditionally
-      return ([
-        { label: 'terms.cancel', value: 'cancel' },
-        // TODO change or activate
-        { label: 'terms.ok', value: 'ok', class: 'btn-primary' }
-      ])
     },
     sid () {
       return 'sel-' + this.dialog?.tag
@@ -143,9 +139,21 @@ export default {
   },
   methods: {
     updateFilterInfo () {
-      const filtermap = this.dialog.tag
-        ? { ...this[n.getters.complaintFilter], [this.dialog.tag]: this.createFilter() }
-        : this[n.getters.complaintFilter]
+      // current filter mapping
+      const filtermap = { ...this[n.getters.complaintFilter] }
+      // current filter
+      const curFilter = filtermap[this.dialog?.tag]
+      // filter by current checkboxes
+      const newFilter = this.createFilter()
+      // add/remove filter from filtermap
+      if (this.dialog?.tag) {
+        if (typeof newFilter === 'function') {
+          filtermap[this.dialog.tag] = newFilter
+        } else {
+          delete filtermap[this.dialog.tag]
+        }
+      }
+
       const filters = Object.values(filtermap).filter(f => (typeof f === 'function'))
       // console.log(filters.map(f => f.filterTag))
       const allComplaints = this[n.getters.allComplaints]
@@ -156,6 +164,24 @@ export default {
       const msg = this.$tc('messages.complaint-count', complaints.length)
       // console.log(msg)
       this.filterInfo = msg
+
+      // update ok-button-label
+      let label = 'terms.ok'
+      if (curFilter) {
+        if (newFilter) {
+          label = 'terms.complaint.filter.change'
+        } else {
+          label = 'terms.complaint.filter.deactivate'
+        }
+      } else {
+        if (newFilter) {
+          label = 'terms.complaint.filter.activate'
+        }
+      }
+      this.buttons = [
+        { label: 'terms.cancel', value: 'cancel' },
+        { label, value: 'ok', class: 'btn-primary' }
+      ]
     },
     select (e) {
       // console.log(e.target)

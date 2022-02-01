@@ -22,6 +22,11 @@
         "postDoc": "Zieldokument",
         "postText": "Zieltext"
       },
+      "filter": {
+        "activate": "Filter aktivieren",
+        "deactivate": "Filter deaktivieren",
+        "change": "Filter ändern"
+      },
       "revision-object": "Revisionsobjekt",
       "text-operation": "Textoperation",
       "classification": "Klassifikation",
