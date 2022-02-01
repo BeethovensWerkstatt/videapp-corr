@@ -210,8 +210,8 @@ export const filterOrCol = (filters) => (c) => {
     if (filter(c)) {
       return true
     }
-    return false
   }
+  return false
 }
 
 export default { uuidv4, atId, parsexywh, toRoman, createImageFromText, findPrevious, findNext, desktopTile }
