@@ -147,12 +147,12 @@ export default {
         ? { ...this[n.getters.complaintFilter], [this.dialog.tag]: this.createFilter() }
         : this[n.getters.complaintFilter]
       const filters = Object.values(filtermap).filter(f => (typeof f === 'function'))
-      console.log(filters.map(f => f.filterTag))
+      // console.log(filters.map(f => f.filterTag))
       const allComplaints = this[n.getters.allComplaints]
       const complaints = filters.length > 0
         ? allComplaints.filter(filterAndCol(filters))
         : allComplaints
-      console.log(Object.keys(filtermap), filters.length, complaints.length)
+      // console.log(Object.keys(filtermap), filters.length, complaints.length)
       const msg = this.$tc('messages.complaint-count', complaints.length)
       // console.log(msg)
       this.filterInfo = msg
