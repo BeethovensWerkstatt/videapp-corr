@@ -14,8 +14,10 @@
             <span @click="sort(sortTag.movementMeasure)">
               <span>{{ $t('terms.movement') }}, {{ $t('terms.measure') }}</span>
             </span>
-            <span :class="sortIconC(sortTag.movementMeasure)" @click="sort(sortTag.movementMeasures)" />
-            <complaints-filter-button :tag="sortTag.movementMeasure" />
+            <div class="nobreak">
+              <span :class="sortIconC(sortTag.movementMeasure)" @click="sort(sortTag.movementMeasures)" />
+              <complaints-filter-button :tag="sortTag.movementMeasure" />
+            </div>
           </th>
           <th
             v-for="(tag, i) in [sortTag.revisionObject, sortTag.textOperation, sortTag.classification, sortTag.context, sortTag.implementation, sortTag.document]"
@@ -25,8 +27,10 @@
             <span @click="sort(tag)">
               {{ $t(tagLabel[tag]) }}
             </span>
-            <div :class="sortIconC(tag)" @click="sort(tag)" />
-            <complaints-filter-button :tag="tag" />
+            <div class="nobreak">
+              <div :class="sortIconC(tag)" @click="sort(tag)" />
+              <complaints-filter-button :tag="tag" />
+            </div>
           </th>
           <th>&nbsp;</th>
         </tr>
@@ -46,11 +50,13 @@
             <complaints-filter-button :tag="sortTag.work" v-if="ci === 0" />
           </th>
           <th :class="{ sortColumn: sortedBy === sortTag.movementMeasure }">
-            <span @click="sort(sortTag.movementMeasure)">
+            <div @click="sort(sortTag.movementMeasure)" class="nobreak">
               <span>{{ $t('terms.movement') }}, {{ $t('terms.measure') }}</span>
-              <span :class="sortIconC(sortTag.movementMeasure)" v-if="ci === 0" />
-            </span>
-            <complaints-filter-button :tag="sortTag.movementMeasure" v-if="ci === 0" />
+            </div>
+            <div class="nobreak">
+              <span :class="sortIconC(sortTag.movementMeasure)" v-if="ci === 0" @click="sort(sortTag.movementMeasure)" />
+              <complaints-filter-button :tag="sortTag.movementMeasure" v-if="ci === 0" />
+            </div>
           </th>
           <th
             v-for="(tag, i) in [sortTag.revisionObject, sortTag.textOperation, sortTag.classification, sortTag.context, sortTag.implementation, sortTag.document]"
@@ -59,9 +65,11 @@
           >
             <span @click="sort(tag)">
               {{ $t(tagLabel[tag]) }}
-              <div :class="sortIconC(tag)" v-if="ci === 0" />
             </span>
-            <complaints-filter-button :tag="tag" v-if="ci === 0" />
+            <div class="nobreak">
+              <div :class="sortIconC(tag)" v-if="ci === 0" @click="sort(tag)" />
+              <complaints-filter-button :tag="tag" v-if="ci === 0" />
+            </div>
           </th>
           <th>&nbsp;</th>
         </tr>
@@ -357,6 +365,11 @@ tr.mvt {
     padding: 2pt 3pt 0pt 4pt;
     cursor: pointer;
   }
+}
+
+.nobreak {
+  display: inline-block;
+  white-space: nowrap;
 }
 
 .complaint-attribute {

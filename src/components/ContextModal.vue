@@ -134,6 +134,7 @@ export default {
 
     .context-modal-header {
       background: linear-gradient(180deg, #cccccc 0%, #f5f5f5 100%);
+      border: 1px solid rgb(182, 182, 182);
       font-weight: bold;
       padding: 3px;
     }

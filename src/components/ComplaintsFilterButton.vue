@@ -81,8 +81,12 @@ export default {
 
   .cfd-btn {
     display: inline-block;
+    border-radius: 5px;
     .hasFilter {
       outline-color: rgba(65, 105, 225, 0.568) !important;
+    }
+    &:hover {
+      background-color: rgba(245, 220, 81, 0.493);
     }
     button, button:focus {
       outline: none;
