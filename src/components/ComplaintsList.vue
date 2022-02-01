@@ -332,9 +332,9 @@ export default {
 }
 .complaint-list {
   width: 100%;
-
+  min-width: 1200px;
   table {
-    min-width: 1920px;
+    width: 100%;
   }
 }
 

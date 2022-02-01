@@ -184,4 +184,34 @@ const findNext = function (arr, pred, fltr, srtr) {
   return arr.find(findN)
 }
 
+/**
+ * conjunction of all filters of an array
+ * @function
+ * @param {function[]} filters array of filter functions
+ * @returns combined filter function
+ */
+export const filterAndCol = (filters) => (c) => {
+  for (const filter of filters) {
+    if (!filter(c)) {
+      return false
+    }
+    return true
+  }
+}
+
+/**
+ * disjunction of all filters of an array
+ * @function
+ * @param {function[]} filters array of filter functions
+ * @returns combined filter function
+ */
+export const filterOrCol = (filters) => (c) => {
+  for (const filter of filters) {
+    if (filter(c)) {
+      return true
+    }
+    return false
+  }
+}
+
 export default { uuidv4, atId, parsexywh, toRoman, createImageFromText, findPrevious, findNext, desktopTile }

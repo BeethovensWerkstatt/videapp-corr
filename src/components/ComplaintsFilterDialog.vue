@@ -51,7 +51,7 @@ import { mapGetters } from 'vuex'
 // import { vsprintf } from 'sprintf-js'
 import n from '@/store/names'
 import { sortTag, tagLabel } from '@/store/complaints/data'
-import tb from '@/toolbox'
+import tb, { filterAndCol } from '@/toolbox'
 import ContextModal from './ContextModal.vue'
 
 export default {
@@ -67,11 +67,16 @@ export default {
     display: false,
     sortTag,
     tagLabel,
-    tagsSelected: []
+    tagsSelected: [],
+    filterInfo: ''
   }),
   watch: {
     dialog () {
       this.tagsSelected = this.tags.filter(this.isSelected)
+      this.updateFilterInfo()
+    },
+    tagsSelected () {
+      this.updateFilterInfo()
     }
   },
   computed: {
@@ -98,6 +103,7 @@ export default {
       // TODO change OK to 'reactivate filters' conditionally
       return ([
         { label: 'terms.cancel', value: 'cancel' },
+        // TODO change or activate
         { label: 'terms.ok', value: 'ok', class: 'btn-primary' }
       ])
     },
@@ -120,11 +126,6 @@ export default {
     documents () {
       return this[n.getters.complaintDocuments](this.workId)
     },
-    filterInfo () {
-      const msg = this.$tc('messages.filter-count', (this.tagsSelected?.length ? this.tagsSelected.length : 0))
-      // console.log(msg)
-      return msg
-    },
     selectAll: {
       get () {
         const selection = this.tagsSelected
@@ -138,10 +139,25 @@ export default {
           })
         }
         this.tagsSelected = this.tags.filter(this.isSelected)
+        this.updateFilterInfo()
       }
     }
   },
   methods: {
+    updateFilterInfo () {
+      const filtermap = this.dialog.tag
+        ? { ...this[n.getters.complaintFilter], [this.dialog.tag]: this.createFilter() }
+        : this[n.getters.complaintFilter]
+      const filters = Object.values(filtermap).filter(f => (typeof f === 'function'))
+      const allComplaints = this[n.getters.allComplaints]
+      const complaints = filters.length > 0
+        ? allComplaints.filter(filterAndCol(filters))
+        : allComplaints
+      console.log(Object.keys(filtermap), filters.length, complaints.length)
+      const msg = this.$tc('messages.complaint-count', complaints.length)
+      // console.log(msg)
+      this.filterInfo = msg
+    },
     select (e) {
       // console.log(e.target)
       const t = e.target.value
@@ -151,6 +167,8 @@ export default {
         tag: this.dialog?.tag, key: t, val: v
       })
       this.tagsSelected = this.tags.filter(this.isSelected)
+
+      this.updateFilterInfo()
     },
     isSelected (t) {
       const sel = this[n.getters.filterSelect](this.dialog?.tag, t)
@@ -192,7 +210,7 @@ export default {
       if (filterTag) {
         return this[n.getters.createComplaintFilter](filterTag, filterSet)
       }
-      console.warn('noe filter tag given!')
+      console.warn('no filter tag given!')
       // if no filterTag is given return dummy filter
       return (c) => true
     }

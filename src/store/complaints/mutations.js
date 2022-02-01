@@ -73,7 +73,7 @@ const mutations = {
   [n.mutations.SET_FILTER_SELECT] (state, { tag, key, val }) {
     const filterSelect = state.filterSelect
     const tagSel = filterSelect[tag]
-    console.log(tag, key, val)
+    // console.log(tag, key, val)
     if (val) {
       filterSelect[tag] = {
         ...tagSel,
@@ -83,7 +83,7 @@ const mutations = {
       delete tagSel[key]
     }
     state.filterSelect = filterSelect
-    console.log(state.filterSelect)
+    // console.log(state.filterSelect)
   },
   /**
    * set filter function

@@ -1,6 +1,6 @@
 import n from '@/store/names'
 import { compareWorks } from '@/store/works'
-import tb from '@/toolbox'
+import tb, { filterAndCol } from '@/toolbox'
 import { complaintFilterTags, sortTag } from './data'
 
 /**
@@ -73,18 +73,9 @@ const getters = {
     if (filtered) {
       const complaintFilter = { ...state[n.state.complaintFilter] } || {}
       complaintFilter[sortTag.work] = workFilter
-      console.log(complaintFilter)
       const filters = Object.values(complaintFilter).filter((f) => typeof f === 'function')
-      console.log(complaintFilter, filters)
-      const complaints = getters.allComplaints.filter((c) => {
-        for (const f of filters) {
-          // console.log(f)
-          if (!f(c)) {
-            return false
-          }
-        }
-        return true
-      })
+      // console.log(complaintFilter, filters)
+      const complaints = getters.allComplaints.filter(filterAndCol(filters))
       const complaintlist = complaints.map(c => {
         const mdiv = c.affects[0]?.mdiv
         const movement = getters.getMovementById(mdiv)
