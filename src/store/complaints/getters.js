@@ -205,6 +205,8 @@ const getters = {
         }
         return false
       }
+      filter.filterTag = filterTag
+      filter.filterSet = filterSet
       return filter
     }
   },

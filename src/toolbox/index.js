@@ -195,8 +195,8 @@ export const filterAndCol = (filters) => (c) => {
     if (!filter(c)) {
       return false
     }
-    return true
   }
+  return true
 }
 
 /**

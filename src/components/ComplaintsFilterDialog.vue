@@ -73,7 +73,6 @@ export default {
   watch: {
     dialog () {
       this.tagsSelected = this.tags.filter(this.isSelected)
-      this.updateFilterInfo()
     },
     tagsSelected () {
       this.updateFilterInfo()
@@ -139,7 +138,6 @@ export default {
           })
         }
         this.tagsSelected = this.tags.filter(this.isSelected)
-        this.updateFilterInfo()
       }
     }
   },
@@ -149,6 +147,7 @@ export default {
         ? { ...this[n.getters.complaintFilter], [this.dialog.tag]: this.createFilter() }
         : this[n.getters.complaintFilter]
       const filters = Object.values(filtermap).filter(f => (typeof f === 'function'))
+      console.log(filters.map(f => f.filterTag))
       const allComplaints = this[n.getters.allComplaints]
       const complaints = filters.length > 0
         ? allComplaints.filter(filterAndCol(filters))
@@ -167,8 +166,6 @@ export default {
         tag: this.dialog?.tag, key: t, val: v
       })
       this.tagsSelected = this.tags.filter(this.isSelected)
-
-      this.updateFilterInfo()
     },
     isSelected (t) {
       const sel = this[n.getters.filterSelect](this.dialog?.tag, t)
