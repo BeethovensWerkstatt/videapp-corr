@@ -42,7 +42,7 @@
           v-if="complaint.movement && (checkMvt(complaint.movement) > 0 || ci === 0)"
           class="mvt"
         >
-          <template v-if="mvtsep === 2">
+          <template v-if="mvtsep === 2 || ci === 0">
             <!-- v-if="!workId": display work column if list is not constrained to work -->
             <th v-if="!workId">
               <span>
