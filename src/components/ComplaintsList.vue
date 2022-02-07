@@ -39,39 +39,52 @@
         v-for="(complaint, ci) in complaints"
       >
         <tr
-          v-if="complaint.movement && (checkMvt(complaint.movement) || ci === 0)"
+          v-if="complaint.movement && (checkMvt(complaint.movement) > 0 || ci === 0)"
           class="mvt"
         >
-          <!-- v-if="!workId": display work column if list is not constrained to work -->
-          <th v-if="!workId">
-            <span>
-              {{ $t('terms.work') }}
-            </span>
-            <complaints-filter-button :tag="sortTag.work" v-if="ci === 0" />
-          </th>
-          <th :class="{ sortColumn: sortedBy === sortTag.movementMeasure }">
-            <div @click="sort(sortTag.movementMeasure)" class="nobreak">
-              <span>{{ $t('terms.movement') }}, {{ $t('terms.measure') }}</span>
-            </div>
-            <div class="nobreak">
-              <span :class="sortIconC(sortTag.movementMeasure)" v-if="ci === 0" @click="sort(sortTag.movementMeasure)" />
-              <complaints-filter-button :tag="sortTag.movementMeasure" v-if="ci === 0" />
-            </div>
-          </th>
-          <th
-            v-for="(tag, i) in [sortTag.revisionObject, sortTag.textOperation, sortTag.classification, sortTag.context, sortTag.implementation, sortTag.document]"
-            :key="i + '-label-' + tag"
-            :class="{ sortColumn: sortedBy === tag }"
-          >
-            <span @click="sort(tag)">
-              {{ $t(tagLabel[tag]) }}
-            </span>
-            <div class="nobreak">
-              <div :class="sortIconC(tag)" v-if="ci === 0" @click="sort(tag)" />
-              <complaints-filter-button :tag="tag" v-if="ci === 0" />
-            </div>
-          </th>
-          <th>&nbsp;</th>
+          <template v-if="mvtsep === 2">
+            <!-- v-if="!workId": display work column if list is not constrained to work -->
+            <th v-if="!workId">
+              <span>
+                {{ $t('terms.work') }}
+              </span>
+              <complaints-filter-button :tag="sortTag.work" v-if="ci === 0" />
+            </th>
+            <th :class="{ sortColumn: sortedBy === sortTag.movementMeasure }">
+              <div @click="sort(sortTag.movementMeasure)" class="nobreak">
+                <span>{{ $t('terms.movement') }}, {{ $t('terms.measure') }}</span>
+              </div>
+              <div class="nobreak">
+                <span :class="sortIconC(sortTag.movementMeasure)" v-if="ci === 0" @click="sort(sortTag.movementMeasure)" />
+                <complaints-filter-button :tag="sortTag.movementMeasure" v-if="ci === 0" />
+              </div>
+            </th>
+            <th
+              v-for="(tag, i) in [sortTag.revisionObject, sortTag.textOperation, sortTag.classification, sortTag.context, sortTag.implementation, sortTag.document]"
+              :key="i + '-label-' + tag"
+              :class="{ sortColumn: sortedBy === tag }"
+            >
+              <span @click="sort(tag)">
+                {{ $t(tagLabel[tag]) }}
+              </span>
+              <div class="nobreak">
+                <div :class="sortIconC(tag)" v-if="ci === 0" @click="sort(tag)" />
+                <complaints-filter-button :tag="tag" v-if="ci === 0" />
+              </div>
+            </th>
+            <th>&nbsp;</th>
+          </template>
+          <template v-else>
+            <th v-if="!workId"></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+          </template>
         </tr>
         <tr
         v-if="complaint.movement"
@@ -189,15 +202,22 @@ export default {
     /**
      * check if new movement.work starts while looping through complaints
      * @param {String} mvt
+     * @returns 1 if movement changes, 2 if work changes
      */
     checkMvt (mvt) {
-      // console.log(this.mvt, mvt)
-      const t = mvt !== this.mvt &&
-        (!this.mvt ||
-          (this.sortedBy === sortTag.movementMeasure &&
-          this.mvt.work !== mvt?.work))
+      // if mvtsep is part of data an infinite loop is triggered so this is a hidden property of this vue component
+      // !!! this is not recommended practice !!!
+      this.mvtsep = 0
+      if (mvt !== this.mvt && (!this.mvt || (this.sortedBy === sortTag.movementMeasure))) {
+        if (this.mvt?.work !== mvt?.work) {
+          this.mvtsep = 2
+        } else if (this.mvt?.n !== mvt?.n) {
+          this.mvtsep = 1
+        }
+      }
       this.mvt = mvt
-      return t
+      // console.log(this.mvt, mvt, this.mvtsep)
+      return this.mvtsep
     },
     /**
      * check if complaint is active

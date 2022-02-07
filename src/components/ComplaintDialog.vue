@@ -5,7 +5,7 @@
       <div class="head" v-if="active">
         <div class="title">
           <div class="titletext">
-            {{ toRoman(activeComplaint.movement.n) }}. {{ activeComplaint.movement.label }} {{ (activeComplaint.label !== '') ? ', ' + activeComplaint.label : ''}}, Takt: {{ measures }}
+            {{ toRoman(activeComplaint.movement.n) }}. {{ activeComplaint.movement.label }}{{ (complaintLabel !== '') ? (', ' + complaintLabel) : '' }}, Takt: {{ measures }}
             <!-- <btn :inactive="!previousComplaintId" @click="loadPrevious">voriges</btn> -->
             <!-- <btn :inactive="!nextComplaintId" @click="loadNext">nächstes</btn> -->
           </div>
@@ -112,6 +112,26 @@ export default {
         return complaint.affects[0].measures.label
       }
       return ''
+    },
+    complaintLabel () {
+      const complaint = this.activeComplaint
+      const label = complaint?.label
+      if (complaint.affects?.length > 0) {
+        const staves = complaint.affects[0].staves
+        if (staves?.length > 0) {
+          // console.log(staves)
+          const insts = label ? [label] : []
+          for (const sn of staves) {
+            const sa = complaint.movement.staves.filter(s => s.n === sn)
+            for (const s of sa) {
+              insts.push(s.label || '[?]')
+            }
+          }
+          // console.log(insts)
+          return insts.join(', ')
+        }
+      }
+      return label
     },
     select: {
       get () {

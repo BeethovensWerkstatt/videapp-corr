@@ -3,7 +3,11 @@
     "hello-world": "Hallo Modul 3",
     "openDesktop": "öffne Schreibtisch Ansicht",
     "filter-count": "Der Filter ist nicht aktiv | Es ist ein Filter aktiv | Es sind {n} Filter aktiv",
-    "complaint-count": "keine Monita | ein Monitum | {n} Monita"
+    "complaint-count": "keine Monita | ein Monitum | {n} Monita",
+    "comparative-view": {
+      "zoom-lock": "Zoom gesperrt",
+      "zoom-unlock": "Zoom automatisch"
+    }
   },
   "terms": {
     "complaints": "Monita",
