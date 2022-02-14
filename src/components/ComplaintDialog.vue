@@ -5,15 +5,15 @@
       <div class="head" v-if="active">
         <div class="title">
           <div class="titletext">
-            {{ toRoman(activeComplaint.movement.n) }}. {{ activeComplaint.movement.label }}{{ (complaintLabel !== '') ? (', ' + complaintLabel) : '' }}, Takt: {{ measures }}
-            <!-- <btn :inactive="!previousComplaintId" @click="loadPrevious">voriges</btn> -->
-            <!-- <btn :inactive="!nextComplaintId" @click="loadNext">nächstes</btn> -->
+            {{ toRoman(activeComplaint.movement.n) }}. {{ activeComplaint.movement.label }}{{ (complaintLabel !== '') ? (', ' + complaintLabel) : '' }}, {{ $t('terms.measure') }} {{ measures }}
           </div>
           <div class="measures">
             Monitum <a class="monitumLink" :href="activeComplaint['@id']" target="_blank" rel="noopener noreferrer" :title="monitumId">{{ monitumId.split('-')[0] }}</a>
           </div>
         </div>
         <div class="close">
+          <button :disabled="!previousComplaintId" @click="loadPrevious" class="btn btn-sm"><span class="icon icon-arrow-left">&nbsp;</span></button>
+          <button :disabled="!nextComplaintId" @click="loadNext" class="btn btn-sm"><span class="icon icon-arrow-right">&nbsp;</span></button>
           <button class="btn btn-sm" @click.prevent="displayViewSelection"><i class="icon icon-menu"></i> Optionen</button>
           <button class="btn btn-sm" @click.prevent="closeDialog"><i class="icon icon-cross"></i> {{ $t('terms.close') }}</button>
         </div>
@@ -42,7 +42,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { mutations, actions } from '@/store/names'
+import n from '@/store/names'
 // import VerovioComponent from '@/components/VerovioComponent.vue'
 import toolbox from '@/toolbox'
 import ComplaintDialogTabRow from '@/components/ComplaintDialog/TabRow.vue'
@@ -87,9 +87,9 @@ export default {
     */
     active () {
       if (this.active) {
-        this.$store.commit(mutations.ADD_MODAL, this.$vnode.tag)
+        this.$store.commit(n.mutations.ADD_MODAL, this.$vnode.tag)
       } else {
-        this.$store.commit(mutations.REM_MODAL, this.$vnode.tag)
+        this.$store.commit(n.mutations.REM_MODAL, this.$vnode.tag)
       }
     }
   },
@@ -128,7 +128,7 @@ export default {
             }
           }
           // console.log(insts)
-          return insts.join(', ')
+          return [...new Set(insts)].join(', ')
         }
       }
       return label
@@ -138,7 +138,7 @@ export default {
         return this.complaintDisplaySelect
       },
       set (sel) {
-        this.$store.commit(mutations.SET_COMPLAINT_DISPLAY_SELECT, sel)
+        this.$store.commit(n.mutations.SET_COMPLAINT_DISPLAY_SELECT, sel)
       }
     },
     docMap () {
@@ -269,7 +269,7 @@ export default {
      * close this dialog
      */
     closeDialog (e) {
-      this.$store.commit(mutations.DISPLAY_COMPLAINT, false)
+      this.$store.commit(n.mutations.DISPLAY_COMPLAINT, false)
     },
     /**
      * display select dialog
@@ -343,10 +343,12 @@ export default {
       this.innerHeight = window.innerHeight
     },
     loadPrevious () {
-      this.$store.dispatch(actions.activateSibling, true)
+      console.log('activate previous sibling')
+      // this.$store.dispatch(n.actions.activateSibling, true)
     },
     loadNext () {
-      this.$store.dispatch(actions.activateSibling, false)
+      console.log('activate next sibling')
+      // this.$store.dispatch(n.actions.activateSibling, false)
     }
   }
 }

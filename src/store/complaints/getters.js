@@ -117,7 +117,7 @@ const getters = {
     const complaintIds = getters[n.getters.complaints].map((c) => c['@id'])
     console.log(acid, complaintIds)
     if (acid) {
-      const ncid = tb.findPrevious(complaintIds, (cid) => cid === acid)
+      const ncid = tb.findNext(complaintIds, (cid) => cid === acid)
       console.log(acid, ncid, complaintIds)
       return ncid
     }
