@@ -3,10 +3,12 @@
     <h2>{{ $t("terms.complaint.description") }}</h2>
     <div class="tags" v-if="tags && state === 'revision'">
       <!-- objects, classes, context, operation -->
+      <!--
       <div class="objects" v-if="tags['objects'].length > 0">
         <span class="title">{{ $t('terms.complaint.revision-object') }}: </span>
         <span v-for="(o,i) in tags['objects']" :key="o + '_' + i"><span v-if="i > 0">, </span>{{ $t('taxonomy.' + o) }}</span>
       </div>
+      -->
       <div class="operation" v-if="tags['operation'].length > 0">
         <span class="title">{{ $t('terms.complaint.text-operation') }} <a class="glossaryLink" target="_blank" rel="noopener noreferrer" href="https://beethovens-werkstatt.de/glossary/textoperation/"><i class="icon icon-link"></i></a>: </span>
         <span v-for="(o,i) in tags['operation']" :key="o + '_' + i"><span v-if="i > 0">, </span>{{ $t('taxonomy.' + o) }}</span>
