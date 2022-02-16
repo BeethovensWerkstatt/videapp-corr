@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2 @click="openPage">
-      {{ $t("terms.document") }}: <span class="sourceSiglum">{{ label }}</span>
+      {{ $t("terms.complaint.state." + state + "Doc") }}: <span class="sourceSiglum">{{ label }}</span>
       <div
         class="zoomLocker"
         @click="rezoom(500, true)"
