@@ -5,18 +5,18 @@
       <table id="worksList" class="table">
         <thead>
           <tr>
-            <th>Komponist</th>
+            <!-- <th>Komponist</th> -->
             <th>Werk</th>
             <th>Modul</th>
-            <th>Sonstwas</th>
+            <!-- <th>Sonstwas</th> -->
           </tr>
         </thead>
         <tbody>
           <tr v-for="work in works" :key="work['@id']">
-            <td><a :href="work.composer['@id']">{{ work.composer.name }}</a></td>
-            <td><router-link :to="getLink(work.id)">{{ work.title[0].title }}</router-link></td>
-            <td>Modul 3</td>
-            <td><router-link :to="getLink(work.id)">Link</router-link></td>
+            <!-- <td><a :href="work.composer['@id']">{{ work.composer.name }}</a></td> -->
+            <td><router-link :to="getLink(work.id)">{{ work.label }}: {{ work.title /*[0].title*/ }}</router-link></td>
+            <td><!-- Modul 3 -->{{ work.modules.join(', ') }}</td>
+            <!-- <td><router-link :to="getLink(work.id)">Link</router-link></td> -->
           </tr>
         </tbody>
       </table>
@@ -26,7 +26,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-// import { actions } from '@/store/names'
+import n from '@/store/names'
 
 /**
  * list of works component
@@ -39,7 +39,9 @@ export default {
     // this.$store.dispatch(actions.loadWorks)
   },
   computed: {
-    ...mapGetters(['works'])
+    // ...mapGetters(['works'])
+    ...mapGetters([n.getters.directory_works]),
+    works () { return this[n.getters.directory_works] }
   },
   methods: {
     getLink (id) {

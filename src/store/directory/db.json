@@ -7,6 +7,14 @@
       "title": "5. Klavierkonzert",
       "opus": 73,
       "modules": ["modul3"]
+    },
+    "op120": {
+      "@id": "https://api.beethovens-werkstatt.de/module3/xfae46dc1-e2dc-412a-a27c-91a31cd18ab8.json",
+      "id": "xfae46dc1-e2dc-412a-a27c-91a31cd18ab8",
+      "label": "Op. 120",
+      "title": "Diabelli-Variationen",
+      "opus": 120,
+      "modules": ["module3","module4"]
     }
   },
   "modules": {
@@ -14,7 +22,7 @@
       "label": "Modul 3",
       "title": "VideApp corr",
       "n": 3,
-      "opus": ["op73"]
+      "opus": ["op73", "op120"]
     }
   }
 }

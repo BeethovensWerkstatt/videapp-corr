@@ -14,8 +14,8 @@ const actions = {
   }
 }
 const getters = {
-  [n.getters.directory_works]: ({ state }) => ({ ...state[n.state.directory_works] }),
-  [n.getters.directory_modules]: ({ state }) => ({ ...state[n.state.directory_modules] })
+  [n.getters.directory_works]: (state) => ({ ...state[n.state.directory_works] }),
+  [n.getters.directory_modules]: (state) => ({ ...state[n.state.directory_modules] })
 }
 
 const directoryModule = {
