@@ -1,10 +1,16 @@
 <template>
-  <header>
-    <span :title="versionText" @click="openCommit">VideApp<sub>corr</sub></span>
-    <router-link to="/">{{ $t('terms.home') }}</router-link>
-    <router-link to="/works">{{ $t('terms.worklist') }}</router-link>
-    <router-link to="/complaints">{{ $t('terms.complaints') }}</router-link>
-    <div class="progress"><Progress /></div>
+  <header class="navbar">
+    <section class="navbar-section">
+      <span :title="versionText" @click="openCommit" class="navbar-brand mr-2">VideApp<sub>corr</sub></span>
+    </section>
+    <section class="navbar-section">
+      <div class="progress"><Progress /></div>
+    </section>
+    <section class="navbar-section">
+      <router-link to="/">{{ $t('terms.home') }}</router-link>
+      <router-link to="/works">{{ $t('terms.worklist') }}</router-link>
+      <router-link to="/complaints">{{ $t('terms.complaints') }}</router-link>
+    </section>
   </header>
 </template>
 
@@ -28,11 +34,15 @@ export default {
   },
   methods: {
     openCommit (e) {
-      if (e.shiftKey && this.version?.commit) {
-        const url = 'https://github.com/BeethovensWerkstatt/videapp-corr/commit/' + this.version.commit
-        console.log(url)
-        // we could open '_blank', but named it will open only one new tab/window
-        window.open(url, 'videapp-commit')
+      if (e.shiftKey) {
+        if (this.version?.commit) {
+          const url = 'https://github.com/BeethovensWerkstatt/videapp-corr/commit/' + this.version.commit
+          console.log(url)
+          // we could open '_blank', but named it will open only one new tab/window
+          window.open(url, 'videapp-commit')
+        }
+      } else {
+        this.$router.push({ name: 'Home' })
       }
     }
   }
@@ -52,7 +62,7 @@ header {
     color: $link-color;
   }
 
-  a:before {
+  a:not(:first-child):before {
     content: '|';
     padding: 0 .5rem;
     color: $text-color;
@@ -61,7 +71,7 @@ header {
 
   .progress {
     display: inline-block;
-    position: absolute;
+    // position: absolute;
     top: 0;
     right: 5pt;
     width: auto;

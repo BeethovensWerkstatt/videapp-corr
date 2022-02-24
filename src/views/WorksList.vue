@@ -20,7 +20,7 @@
             <td>
               <span v-for="(module, i) in work.modules" :key="module">
                 <template v-if="i > 0">, </template>
-                <a :href="moduleURL(module)" target="_blank" :title="module">{{ moduleLabel(module) }}</a>
+                <a :href="moduleURL(module)" target="_blank" :title="moduleTitel(module)">{{ moduleLabel(module) }}</a>
               </span>
             </td>
             <!-- <td><router-link :to="getLink(work.id)">Link</router-link></td> -->
@@ -76,12 +76,17 @@ export default {
     },
     moduleLabel (module) {
       const modules = this[n.getters.directory_modules]
-      console.log(module, modules[module]?.label)
+      // console.log(module, modules[module]?.label)
       return modules[module]?.label || '[?]'
+    },
+    moduleTitel (module) {
+      const modules = this[n.getters.directory_modules]
+      // console.log(module, modules[module]?.label)
+      return modules[module]?.title || ('[?]' + module)
     },
     moduleURL (module) {
       const modules = this[n.getters.directory_modules]
-      console.log(module, modules[module]?.url)
+      // console.log(module, modules[module]?.url)
       return modules[module]?.url || '[?]'
     }
   }
