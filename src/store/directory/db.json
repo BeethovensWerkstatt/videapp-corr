@@ -1,20 +1,22 @@
 {
   "works": {
-    "op73": {
-      "@id": "https://api.beethovens-werkstatt.de/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d.json",
-      "id": "xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d",
-      "label": "Op. 73",
-      "title": "5. Klavierkonzert",
-      "opus": 73,
-      "modules": ["modul3"]
-    },
     "op120": {
       "@id": "https://api.beethovens-werkstatt.de/module3/xfae46dc1-e2dc-412a-a27c-91a31cd18ab8.json",
       "id": "xfae46dc1-e2dc-412a-a27c-91a31cd18ab8",
       "label": "Op. 120",
       "title": "Diabelli-Variationen",
       "opus": 120,
-      "modules": ["module3","module4"]
+      "modules": ["modul3","modul4"],
+      "url": "https://beethovens-werkstatt.de/modul-4/"
+    },
+    "op73": {
+      "@id": "https://api.beethovens-werkstatt.de/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d.json",
+      "id": "xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d",
+      "label": "Op. 73",
+      "title": "5. Klavierkonzert",
+      "opus": 73,
+      "modules": ["modul3"],
+      "url": "https://beethovens-werkstatt.de/modul-3/"
     }
   },
   "modules": {
@@ -22,7 +24,15 @@
       "label": "Modul 3",
       "title": "VideApp corr",
       "n": 3,
-      "opus": ["op73", "op120"]
+      "opus": ["op73", "op120"],
+      "url": "https://beethovens-werkstatt.de/modul-3/"
+    },
+    "modul4": {
+      "label": "Modul 4",
+      "title": "Engelmann Skizzenbuch",
+      "n": 4,
+      "opus": ["op120"],
+      "url": "https://beethovens-werkstatt.de/modul-4/"
     }
   }
 }

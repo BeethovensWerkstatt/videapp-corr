@@ -2,7 +2,7 @@
   <header>
     <span :title="versionText" @click="openCommit">VideApp<sub>corr</sub></span>
     <router-link to="/">{{ $t('terms.home') }}</router-link>
-    <router-link to="/works">{{ $t('terms.works') }}</router-link>
+    <router-link to="/works">{{ $t('terms.worklist') }}</router-link>
     <router-link to="/complaints">{{ $t('terms.complaints') }}</router-link>
     <div class="progress"><Progress /></div>
   </header>

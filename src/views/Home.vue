@@ -3,22 +3,24 @@
     <header>
       <img alt="Beethovens Werkstatt" src="@/assets/beethovensw_finale01.png"/>
     </header>
-    <div class="front-table">
-      <div class="front-row">
-        <div class="cell link">
-          <btn @click="openWorks">Fallbeispiele</btn>
+    <div class="container">
+      <div class="columns">
+        <div class="column col-4">
+          <btn @click="openWorks">{{ $tc('terms.case-study', 2) }}</btn>
         </div>
-        <div class="cell description">
-          Fallbeispiele ...
-        </div>
+        <div class="column col-8" v-html="$t('messages.case-studies')" />
       </div>
-      <div class="front-row">
-        <div class="cell link">
-          <btn @click="openModules">Module</btn>
+      <div class="columns">
+        <div class="column col-4">
+          <btn @click="openModules">{{ $tc('terms.module', 2) }}</btn>
         </div>
-        <div class="cell description">
-          Module ...
+        <div class="column sol-8" v-html="$t('messages.modules')" />
+      </div>
+      <div class="columns">
+        <div class="column col-4">
+          <btn @click="openDesktop" :disabled="true">{{ $t('terms.desktop-view') }}</btn>
         </div>
+        <div class="column col-8" v-html="$t('messages.desktop-view')" />
       </div>
     </div>
     <!--
@@ -74,6 +76,9 @@ export default {
     },
     openModules () {
       console.log('open modules ...')
+    },
+    openDesktop () {
+      console.log('open desktop ...')
     }
   }
 }
@@ -95,16 +100,9 @@ p {
   text-align: left;
 }
 
-.front-table {
+.container {
   max-width: 50rem;
   margin: 2rem auto;
   text-align: left;
-  display: table;
-  .front-row {
-    display: table-row;
-    .cell {
-      display: table-cell;
-    }
-  }
 }
 </style>

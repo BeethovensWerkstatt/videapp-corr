@@ -7,7 +7,10 @@
     "comparative-view": {
       "zoom-lock": "Zoom gesperrt",
       "zoom-unlock": "Zoom automatisch"
-    }
+    },
+    "case-studies": "Fallstudien ...",
+    "modules": "Module ...",
+    "desktop-view": "Schreibtischansicht ..."
   },
   "terms": {
     "complaints": "Monita",
@@ -47,12 +50,16 @@
     "load": "Lade",
     "selectall": "Alles Auswählen",
     "home": "Startseite",
-    "works": "Werkliste",
+    "worklist": "Werkliste",
     "document": "Dokument",
     "measure": "Takt",
     "staff": "System",
-    "work": "Werk",
-    "movement": "Satz"
+    "work": "Werk | Werke",
+    "movement": "Satz",
+    "case-study": "Fallstudie | Fallstudien",
+    "module": "Modul | Module",
+    "desktop-view": "Schreibtischansicht",
+    "opus": "Opus"
   },
   "taxonomy": {
     "document_type": "",

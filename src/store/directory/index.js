@@ -6,11 +6,11 @@ const state = {
 }
 const mutations = {}
 const actions = {
-  [n.actions.directory_load_db] ({ state }) {
+  [n.actions.directory_load_db] ({ state, getters }) {
     const db = require('./db.json')
     state[n.state.directory_works] = db.works
     state[n.state.directory_modules] = db.modules
-    console.log(state)
+    console.log(getters[n.getters.directory_modules])
   }
 }
 const getters = {
