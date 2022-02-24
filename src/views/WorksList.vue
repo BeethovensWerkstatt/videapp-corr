@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div class="workslist">
     <h1>Werkliste</h1>
     <p>
       <table id="worksList" class="table">
@@ -42,9 +42,8 @@ export default {
     ...mapGetters(['works'])
   },
   methods: {
-    // TODO link creator?
     getLink (id) {
-      return '/work/' + id
+      return { name: 'Schreibtisch', params: { id } }
     }
   }
 }

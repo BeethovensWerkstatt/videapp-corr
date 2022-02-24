@@ -1,0 +1,20 @@
+{
+  "works": {
+    "op73": {
+      "@id": "https://api.beethovens-werkstatt.de/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d.json",
+      "id": "xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d",
+      "label": "Op. 73",
+      "title": "5. Klavierkonzert",
+      "opus": 73,
+      "modules": ["modul3"]
+    }
+  },
+  "modules": {
+    "modul3": {
+      "label": "Modul 3",
+      "title": "VideApp corr",
+      "n": 3,
+      "opus": ["op73"]
+    }
+  }
+}

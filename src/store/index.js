@@ -15,8 +15,9 @@ import Pages from './pages'
 import Complaints from './complaints'
 import Verovio from './vrv'
 import Infobox from './infobox'
+import Directory from './directory'
 
-import { state, mutations, getters } from './names'
+import n from './names'
 
 Vue.use(Vuex)
 
@@ -27,14 +28,14 @@ const store = new Vuex.Store({
    * @property {String} version - version string containing date and git hash
    */
   state: {
-    [state.version]: 'N/A'
+    [n.state.version]: 'N/A'
   },
   /**
    * @namespace store.mutations
    * @memberof store
    */
   mutations: {
-    [mutations.SET_VERSION] (state, version) {
+    [n.mutations.SET_VERSION] (state, version) {
       console.log('Version:\n' + version?.version)
       state.version = version
     }
@@ -51,10 +52,11 @@ const store = new Vuex.Store({
    * @property {String} version - git commt info
    */
   getters: {
-    [getters.version]: (state) => state.version
+    [n.getters.version]: (state) => state.version
   },
   modules: {
     runtime,
+    Directory,
     OSD,
     userDisplayOptions,
     dataAccess,
@@ -72,7 +74,7 @@ const store = new Vuex.Store({
  * @function
  */
 export const startProc = function () {
-  store.commit(mutations.SET_WORKING, true)
+  store.commit(n.mutations.SET_WORKING, true)
 }
 
 /**
@@ -80,7 +82,7 @@ export const startProc = function () {
  * @function
  */
 export const finishProc = function () {
-  store.commit(mutations.SET_WORKING, false)
+  store.commit(n.mutations.SET_WORKING, false)
 }
 
 export default store

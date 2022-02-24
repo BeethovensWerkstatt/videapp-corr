@@ -3,6 +3,25 @@
     <header>
       <img alt="Beethovens Werkstatt" src="@/assets/beethovensw_finale01.png"/>
     </header>
+    <div class="front-table">
+      <div class="front-row">
+        <div class="cell link">
+          <btn @click="openWorks">Fallbeispiele</btn>
+        </div>
+        <div class="cell description">
+          Fallbeispiele ...
+        </div>
+      </div>
+      <div class="front-row">
+        <div class="cell link">
+          <btn @click="openModules">Module</btn>
+        </div>
+        <div class="cell description">
+          Module ...
+        </div>
+      </div>
+    </div>
+    <!--
     <p>
       Herzlich Willkommen im dritten Modul von Beethovens Werkstatt. Dieses ist
       "Auf der Suche nach dem Werktext: Originalausgaben, variante Drucke und
@@ -23,6 +42,7 @@
         auch Materialien aus früheren Modulen des Projekts. Folgen Sie dazu
         bitte dem <router-link to="/works">Link zu den Werken des Projekts</router-link>.
     </p>
+    -->
   </div>
 </template>
 
@@ -47,6 +67,14 @@ export default {
       // TODO query
       return this.$store.getters.sources
     }
+  },
+  methods: {
+    openWorks () {
+      this.$router.push({ name: 'Werke' })
+    },
+    openModules () {
+      console.log('open modules ...')
+    }
   }
 }
 </script>
@@ -65,5 +93,18 @@ p {
   max-width: 50rem;
   margin: 2rem auto;
   text-align: left;
+}
+
+.front-table {
+  max-width: 50rem;
+  margin: 2rem auto;
+  text-align: left;
+  display: table;
+  .front-row {
+    display: table-row;
+    .cell {
+      display: table-cell;
+    }
+  }
 }
 </style>
