@@ -117,17 +117,18 @@ p {
 .columns {
   margin-bottom: 1rem;
   padding: 12px;
+  border-radius: 15px;
   .column {
     background-color: rgba(255, 255, 255, 0.425);
     padding: 3px;
   }
 }
 .columns:nth-child(odd) {
-  background-color: lightblue;
+  background-color: #eeeeee;
   border: 1px solid lightgray;
 }
 .columns:nth-child(even) {
-  background-color: lightgreen;
+  background-color: #dddddd;
   border: 1px solid lightgray;
 }
 .column button {

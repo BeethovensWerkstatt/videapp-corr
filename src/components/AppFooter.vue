@@ -1,6 +1,6 @@
 <template>
   <div class="app-footer">
-    &copy; {{ (new Date().getFullYear()) }}
+    &copy; {{ (new Date().getFullYear()) }} Beethovens Werkstatt
   </div>
 </template>
 

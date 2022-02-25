@@ -20,8 +20,8 @@
       -->
       <div class="website-menu">
         <router-link to="/">Home</router-link>
-        <a href="https://beethovens-werkstatt.de/" target="_blank">
-          Beethovens&nbsp;Werkstatt
+        <a href="https://beethovens-werkstatt.de/" target="_blank" title="Beethovens Werkstatt">
+          Website
         </a>
         <a href="https://beethovens-werkstatt.de/projekt/" target="_blank">
           Projekt
