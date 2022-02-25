@@ -22,6 +22,12 @@
         </div>
         <div class="column col-8" v-html="$t('messages.desktop-view')" />
       </div>
+      <div class="columns">
+        <div class="column col-4">
+          <btn @click="openComplaints">{{ $t('terms.complaints') }}</btn>
+        </div>
+        <div class="column col-8" v-html="$t('messages.complaints-list')" />
+      </div>
     </div>
     <!--
     <p>
@@ -75,10 +81,13 @@ export default {
       this.$router.push({ name: 'Werke' })
     },
     openModules () {
-      console.log('open modules ...')
+      this.$router.push({ name: 'Module' })
     },
     openDesktop () {
       console.log('open desktop ...')
+    },
+    openComplaints () {
+      this.$router.push({ name: 'Monita' })
     }
   }
 }
@@ -104,5 +113,26 @@ p {
   max-width: 50rem;
   margin: 2rem auto;
   text-align: left;
+}
+.columns {
+  margin-bottom: 1rem;
+  padding: 12px;
+  .column {
+    background-color: rgba(255, 255, 255, 0.425);
+    padding: 3px;
+  }
+}
+.columns:nth-child(odd) {
+  background-color: lightblue;
+  border: 1px solid lightgray;
+}
+.columns:nth-child(even) {
+  background-color: lightgreen;
+  border: 1px solid lightgray;
+}
+.column button {
+  width: 100%;
+  border-radius: 5px;
+  font-weight: bold;
 }
 </style>

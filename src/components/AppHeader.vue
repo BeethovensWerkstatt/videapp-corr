@@ -1,10 +1,9 @@
 <template>
   <header class="navbar">
     <section class="navbar-section">
-      <span :title="versionText" @click="openCommit" class="navbar-brand mr-2">VideApp<sub>corr</sub></span>
-    </section>
-    <section class="navbar-section">
-      <div class="progress"><Progress /></div>
+      <span :title="versionText" @click="openCommit" class="navbar-brand mr-2 home">
+        VideApp<!--<sub>corr</sub>-->
+      </span>
     </section>
     <section class="navbar-section">
       <!--
@@ -14,9 +13,30 @@
       Glossar: https://beethovens-werkstatt.de/glossar/
       Kontakt: https://beethovens-werkstatt.de/kontakt/
       -->
+      <!--
       <router-link to="/">{{ $t('terms.home') }}</router-link>
       <router-link to="/works">{{ $t('terms.worklist') }}</router-link>
       <router-link to="/complaints">{{ $t('terms.complaints') }}</router-link>
+      -->
+      <div class="website-menu">
+        <router-link to="/">Home</router-link>
+        <a href="https://beethovens-werkstatt.de/" target="_blank">
+          Beethovens&nbsp;Werkstatt
+        </a>
+        <a href="https://beethovens-werkstatt.de/projekt/" target="_blank">
+          Projekt
+        </a>
+        <a href="https://beethovens-werkstatt.de/modul-3/" target="_blank">
+          Module
+        </a>
+        <a href="https://beethovens-werkstatt.de/glossar/" target="_blank">
+          Glossar
+        </a>
+        <a href="https://beethovens-werkstatt.de/kontakt/" target="_blank">
+          Kontakt
+        </a>
+      </div>
+      <div class="progress"><Progress /></div>
     </section>
   </header>
 </template>
@@ -76,9 +96,15 @@ header {
     cursor: default;
   }
 
+  .home {
+    cursor: pointer;
+  }
+
   .progress {
-    display: inline-block;
+    // display: inline-block;
+    float: right;
     // position: absolute;
+    margin-left: 25px;
     top: 0;
     right: 5pt;
     width: auto;

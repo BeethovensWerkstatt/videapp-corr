@@ -19,6 +19,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "videapp" */ '../views/WorksList.vue')
   },
   {
+    path: '/modules',
+    name: 'Module',
+    component: () => import(/* webpackChunkName: "videapp" */ '../views/Modules.vue')
+  },
+  {
     path: '/work/:id',
     name: 'Schreibtisch',
     component: () => import(/* webpackChunkName: "videapp" */ '../views/Desktop.vue')
