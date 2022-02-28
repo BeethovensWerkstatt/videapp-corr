@@ -9,7 +9,9 @@ const actions = {
 }
 const getters = {
   directory_works: 'directory_works',
-  directory_modules: 'directory_modules'
+  directory_get_work: 'directory_get_work',
+  directory_modules: 'directory_modules',
+  directory_get_module: 'directory_get_module'
 }
 
 export const directoryNames = {

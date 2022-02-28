@@ -1,5 +1,29 @@
 {
   "works": {
+    "op111": {
+      "label": "Op. 111",
+      "title": "Sonate für Klavier c-Moll",
+      "opus": 111,
+      "modules": ["modul1"],
+      "url": "https://beethovens-werkstatt.de/modul-1/",
+      "app": "https://beethovens-werkstatt.de/prototyp-1/"
+    },
+    "op59/3": {
+      "label": "Op. 59/3",
+      "title": "Streichquartett C-Dur",
+      "opus": 59.3,
+      "modules": ["modul1"],
+      "url": "https://beethovens-werkstatt.de/modul-1/",
+      "app": "https://beethovens-werkstatt.de/prototyp-2-0/"
+    },
+    "woo32": {
+      "label": "WoO 32",
+      "title": "Duett mit zwei obligaten Augengläsern",
+      "woo": 32,
+      "modules": ["modul1"],
+      "url": "https://beethovens-werkstatt.de/modul-1/",
+      "app": "http://nagano.upb.de:29999/02030482"
+    },
     "op73": {
       "@id": "https://api.beethovens-werkstatt.de/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d.json",
       "id": "xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d",
@@ -7,7 +31,8 @@
       "title": "5. Klavierkonzert",
       "opus": 73,
       "modules": ["modul3"],
-      "url": "https://beethovens-werkstatt.de/modul-3/"
+      "url": "https://beethovens-werkstatt.de/modul-3/",
+      "route": "Schreibtisch"
     },
     "op120": {
       "@id": "https://api.beethovens-werkstatt.de/module3/xfae46dc1-e2dc-412a-a27c-91a31cd18ab8.json",
@@ -16,7 +41,8 @@
       "title": "Diabelli-Variationen",
       "opus": 120,
       "modules": ["modul3","modul4"],
-      "url": "https://beethovens-werkstatt.de/modul-4/"
+      "url": "https://beethovens-werkstatt.de/modul-4/",
+      "route": "Schreibtisch"
     }
   },
   "modules": {
@@ -24,36 +50,38 @@
       "label": "Modul 1",
       "title": "Variantendarstellung in symphonischen, kammermusikalischen und vokalen Werken",
       "n": 1,
-      "opus": [],
+      "works": ["op111","op59/3","woo32"],
       "url": "https://beethovens-werkstatt.de/modul-1/"
     },
     "modul2": {
       "label": "Modul 2",
       "title": "Beethoven als Bearbeiter eigener Werke",
       "n": 2,
-      "opus": [],
+      "works": [],
       "url": "https://beethovens-werkstatt.de/modul-2/"
     },
     "modul3": {
       "label": "Modul 3",
       "title": "Auf der Suche nach dem Werktext",
       "n": 3,
-      "opus": ["op73", "op120"],
+      "works": ["op73", "op120"],
       "url": "https://beethovens-werkstatt.de/modul-3/"
     },
     "modul4": {
       "label": "Modul 4",
       "title": "Skizzenbuch-Edition",
       "n": 4,
-      "opus": ["op120"],
-      "url": "https://beethovens-werkstatt.de/modul-4/"
+      "works": [],
+      "url": "https://beethovens-werkstatt.de/modul-4/",
+      "inactive": true
     },
     "modul5": {
       "label": "Modul 5",
       "title": "Kombination von Editionskonzepten in einer Edition: Drei Modelleditionen der Diabelli-Variationen op. 120",
       "n": 5,
-      "opus": ["op120"],
-      "url": "https://beethovens-werkstatt.de/modul-5/"
+      "works": [],
+      "url": "https://beethovens-werkstatt.de/modul-5/",
+      "inactive": true
     }
   }
 }

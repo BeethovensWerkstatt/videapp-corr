@@ -15,8 +15,14 @@
         <tbody>
           <tr v-for="work in works" :key="work['@id']">
             <!-- <td><a :href="work.composer['@id']">{{ work.composer.name }}</a></td> -->
-            <td><router-link :to="getLink(work.id)">{{ work.label }}</router-link></td>
-            <td><router-link :to="getLink(work.id)">{{ work.title /*[0].title*/ }}</router-link></td>
+            <template v-if="work.id">
+              <td><router-link :to="getLink(work.id)">{{ work.label }}</router-link></td>
+              <td><router-link :to="getLink(work.id)">{{ work.title /*[0].title*/ }}</router-link></td>
+            </template>
+            <template v-else>
+              <td><a :href="work.app" target="_blank">{{ work.label }}</a></td>
+              <td><a :href="work.app" target="_blank">{{ work.title }}</a></td>
+            </template>
             <td>
               <span v-for="(module, i) in work.modules" :key="module">
                 <template v-if="i > 0">, </template>

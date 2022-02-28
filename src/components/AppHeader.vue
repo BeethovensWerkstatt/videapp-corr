@@ -19,9 +19,8 @@
       <router-link to="/complaints">{{ $t('terms.complaints') }}</router-link>
       -->
       <div class="website-menu">
-        <router-link to="/">Home</router-link>
         <a href="https://beethovens-werkstatt.de/" target="_blank" title="Beethovens Werkstatt">
-          Website
+          <img src="../assets/beethovensw_finale01.png" />
         </a>
         <a href="https://beethovens-werkstatt.de/projekt/" target="_blank">
           Projekt
@@ -89,15 +88,24 @@ header {
     color: $link-color;
   }
 
-  a:not(:first-child):before {
-    content: '|';
-    padding: 0 .5rem;
-    color: $text-color;
-    cursor: default;
-  }
-
   .home {
     cursor: pointer;
+  }
+
+  .website-menu {
+    a {
+      display: inline-block;
+      font-family: "Open Sans", GillSans, Calibri, Trebuchet, sans-serif;
+      font-weight: 800;
+      margin: 0 25px;
+      &:hover {
+        color: #c93b22;
+        text-decoration:none;
+      }
+      img {
+        height: 15px;
+      }
+    }
   }
 
   .progress {

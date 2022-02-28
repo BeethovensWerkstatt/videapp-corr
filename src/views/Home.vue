@@ -22,12 +22,14 @@
         </div>
         <div class="column col-8" v-html="$t('messages.desktop-view')" />
       </div>
+      <!--
       <div class="columns">
         <div class="column col-4">
           <btn @click="openComplaints">{{ $t('terms.complaints') }}</btn>
         </div>
         <div class="column col-8" v-html="$t('messages.complaints-list')" />
       </div>
+      -->
     </div>
     <!--
     <p>
