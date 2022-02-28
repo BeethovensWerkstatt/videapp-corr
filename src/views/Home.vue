@@ -5,22 +5,22 @@
     </header>
     <div class="container">
       <div class="columns">
-        <div class="column col-4">
-          <btn @click="openWorks">{{ $tc('terms.case-study', 2) }}</btn>
+        <div class="column col-3">
+          <button class="btn heroBtn" @click="openWorks">{{ $tc('terms.case-study', 2) }}</button>
         </div>
-        <div class="column col-8" v-html="$t('messages.case-studies')" />
+        <div class="column col-9 content" v-html="$t('messages.case-studies')" />
       </div>
       <div class="columns">
-        <div class="column col-4">
-          <btn @click="openModules">{{ $tc('terms.module', 2) }}</btn>
+        <div class="column col-3">
+          <button class="btn heroBtn" @click="openModules">{{ $tc('terms.module', 2) }}</button>
         </div>
-        <div class="column sol-8" v-html="$t('messages.modules')" />
+        <div class="column col-9 content" v-html="$t('messages.modules')" />
       </div>
       <div class="columns">
-        <div class="column col-4">
-          <btn @click="openDesktop" :disabled="true">{{ $t('terms.desktop-view') }}</btn>
+        <div class="column col-3">
+          <button class="btn heroBtn" @click="openDesktop" :disabled="true">{{ $t('terms.desktop-view') }}</button>
         </div>
-        <div class="column col-8" v-html="$t('messages.desktop-view')" />
+        <div class="column col-9 content" v-html="$t('messages.desktop-view')" />
       </div>
       <!--
       <div class="columns">
@@ -115,27 +115,30 @@ p {
   max-width: 50rem;
   margin: 2rem auto;
   text-align: left;
-}
-.columns {
-  margin-bottom: 1rem;
-  padding: 12px;
-  border-radius: 15px;
-  .column {
-    background-color: rgba(255, 255, 255, 0.425);
-    padding: 3px;
+
+  .columns {
+    margin-bottom: 1rem;
+    padding: 1rem;
+
+    .column button.heroBtn {
+      background-color: #e5e5e5;
+      color: #333333;
+      border-color: #333333;
+      margin: 0;
+      padding: 1rem 0;
+      height: 3rem;
+      width: 100%;
+      font-weight: 500;
+      font-size: 1rem;
+      border-radius: .5rem;
+      line-height: 1;
+    }
+
+    .column.content {
+      padding: 0 2rem;
+    }
+
   }
 }
-.columns:nth-child(odd) {
-  background-color: #eeeeee;
-  border: 1px solid lightgray;
-}
-.columns:nth-child(even) {
-  background-color: #dddddd;
-  border: 1px solid lightgray;
-}
-.column button {
-  width: 100%;
-  border-radius: 5px;
-  font-weight: bold;
-}
+
 </style>
