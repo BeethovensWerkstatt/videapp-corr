@@ -9,6 +9,19 @@ const actions = {
   [n.actions.directory_load_db] ({ state, getters }) {
     const db = require('./db.json')
     state[n.state.directory_works] = db.works
+    for (const w in db.works) {
+      const work = db.works[w]
+      for (const m in work.modules) {
+        const mod = work.modules[m]
+        if (db.modules[mod]) {
+          db.modules[mod].works = db.modules[mod].works
+            ? [...new Set([...db.modules[mod].works, w])]
+            : [w]
+        } else {
+          console.warn('module not found', m, '(' + w + ')')
+        }
+      }
+    }
     state[n.state.directory_modules] = db.modules
     console.log(getters[n.getters.directory_modules])
   }
@@ -23,4 +36,20 @@ const getters = {
 const directoryModule = {
   state, mutations, actions, getters
 }
+
+export const workSorter = (w1, w2) => {
+  if (w1.opus && w2.opus) {
+    if (w1.opus < w2.opus) return -1
+    if (w1.opus > w2.opus) return 1
+    if (w1.opus === w2.opus) return 0
+  }
+  if (w1.woo && w2.woo) {
+    if (w1.woo < w2.woo) return -1
+    if (w1.woo > w2.woo) return 1
+    if (w1.woo === w2.woo) return 0
+  }
+  if (w1.opus && w2.woo) return -1
+  if (w1.woo && w2.opus) return 1
+}
+
 export default directoryModule

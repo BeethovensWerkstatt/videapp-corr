@@ -25,7 +25,7 @@
         <div>
           <a :href="mod.url" target="_blank">mehr</a>
         </div>
-        <div>
+        <div v-if="!mod.inactive">
           <span v-for="(w, i) in module_works(mod)" :key="i">
             <template v-if="i > 0">, </template>
             <router-link v-if="w.route" :to="{ name: w.route, params: { id: w.id } }" target="_blank" :title="w.title">{{ w.label }}</router-link>
@@ -40,6 +40,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import n from '@/store/names'
+import { workSorter } from '@/store/directory'
 
 export default {
   name: 'Modules',
@@ -62,20 +63,7 @@ export default {
     module_works (module) {
       if (module.works) {
         const works = module.works.map(w => this.get_work(w))
-        return works.sort((w1, w2) => {
-          if (w1.opus && w2.opus) {
-            if (w1.opus < w2.opus) return -1
-            if (w1.opus > w2.opus) return 1
-            if (w1.opus === w2.opus) return 0
-          }
-          if (w1.woo && w2.woo) {
-            if (w1.woo < w2.woo) return -1
-            if (w1.woo > w2.woo) return 1
-            if (w1.woo === w2.woo) return 0
-          }
-          if (w1.opus && w2.woo) return -1
-          if (w1.woo && w2.opus) return 1
-        })
+        return works.sort(workSorter)
       }
       return []
     }

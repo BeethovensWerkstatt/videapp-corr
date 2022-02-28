@@ -40,6 +40,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import n from '@/store/names'
+import { workSorter } from '@/store/directory'
 
 /**
  * list of works component
@@ -57,23 +58,7 @@ export default {
     works () {
       const works = Object.values(this[n.getters.directory_works])
       // console.log(works)
-      return works.sort((w1, w2) => {
-        if (w1.opus && w2.opus) {
-          if (w1.opus < w2.opus) {
-            return -1
-          }
-          if (w1.opus > w2.opus) {
-            return 1
-          }
-          // this shouldn't happen!
-          if (w1.opus === w2.opus) {
-            return w1.title.localeCompare(w2.title)
-          }
-        }
-        if (w1.opus || w1.opus) {
-          return w1.opus ? -1 : 1
-        }
-      })
+      return works.sort(workSorter)
     }
   },
   methods: {

@@ -16,6 +16,30 @@
       "url": "https://beethovens-werkstatt.de/modul-1/",
       "app": "https://beethovens-werkstatt.de/prototyp-2-0/"
     },
+    "op75/2": {
+      "label": "Op. 75/2",
+      "title": "Lied \"Neue Liebe, neues Leben\"",
+      "opus": 75.2,
+      "modules": ["modul1"],
+      "url": "https://beethovens-werkstatt.de/modul-1/",
+      "app": "http://nagano.upb.de:29999/02030482"
+    },
+    "op93": {
+      "label": "Op. 93",
+      "title": "8. Sinfonie in F-Dur",
+      "opus": 93,
+      "modules": ["modul1"],
+      "url": "https://beethovens-werkstatt.de/modul-1/",
+      "app": "http://nagano.upb.de:29999/02030482"
+    },
+    "op86": {
+      "label": "Op. 86",
+      "title": "Messe C-Dur",
+      "opus": 86,
+      "modules": ["modul1"],
+      "url": "https://beethovens-werkstatt.de/?page_id=2566",
+      "app": "https://beethovens-werkstatt.de/?page_id=2566"
+    },
     "woo32": {
       "label": "WoO 32",
       "title": "Duett mit zwei obligaten Augengläsern",
@@ -40,7 +64,7 @@
       "label": "Op. 120",
       "title": "Diabelli-Variationen",
       "opus": 120,
-      "modules": ["modul3","modul4"],
+      "modules": ["modul3", "modul4", "modul5"],
       "url": "https://beethovens-werkstatt.de/modul-4/",
       "route": "Schreibtisch"
     }
@@ -50,28 +74,24 @@
       "label": "Modul 1",
       "title": "Variantendarstellung in symphonischen, kammermusikalischen und vokalen Werken",
       "n": 1,
-      "works": ["op111","op59/3","woo32"],
       "url": "https://beethovens-werkstatt.de/modul-1/"
     },
     "modul2": {
       "label": "Modul 2",
       "title": "Beethoven als Bearbeiter eigener Werke",
       "n": 2,
-      "works": [],
       "url": "https://beethovens-werkstatt.de/modul-2/"
     },
     "modul3": {
       "label": "Modul 3",
       "title": "Auf der Suche nach dem Werktext",
       "n": 3,
-      "works": ["op73", "op120"],
       "url": "https://beethovens-werkstatt.de/modul-3/"
     },
     "modul4": {
       "label": "Modul 4",
       "title": "Skizzenbuch-Edition",
       "n": 4,
-      "works": [],
       "url": "https://beethovens-werkstatt.de/modul-4/",
       "inactive": true
     },
@@ -79,7 +99,6 @@
       "label": "Modul 5",
       "title": "Kombination von Editionskonzepten in einer Edition: Drei Modelleditionen der Diabelli-Variationen op. 120",
       "n": 5,
-      "works": [],
       "url": "https://beethovens-werkstatt.de/modul-5/",
       "inactive": true
     }
