@@ -54,7 +54,7 @@ export default {
       const works = this[n.getters.directory_get_work]
       return (key) => {
         const work = works(key) || { label: key, title: '[?]' }
-        console.log('get work', key, work)
+        // console.log('get work', key, work)
         return work
       }
     }
