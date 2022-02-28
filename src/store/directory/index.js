@@ -23,7 +23,7 @@ const actions = {
       }
     }
     state[n.state.directory_modules] = db.modules
-    console.log(getters[n.getters.directory_modules])
+    // console.log(getters[n.getters.directory_modules])
   }
 }
 const getters = {
@@ -39,17 +39,21 @@ const directoryModule = {
 
 export const workSorter = (w1, w2) => {
   if (w1.opus && w2.opus) {
+    // console.log('opus', w1.opus, w2.opus)
     if (w1.opus < w2.opus) return -1
     if (w1.opus > w2.opus) return 1
-    if (w1.opus === w2.opus) return 0
+    if (w1.opus === w2.opus) return w1.title?.localeCompare(w2.title)
   }
   if (w1.woo && w2.woo) {
+    // console.log('woo', w1.woo, w2.woo)
     if (w1.woo < w2.woo) return -1
     if (w1.woo > w2.woo) return 1
-    if (w1.woo === w2.woo) return 0
+    if (w1.woo === w2.woo) return w1.title?.localeCompare(w2.title)
   }
   if (w1.opus && w2.woo) return -1
   if (w1.woo && w2.opus) return 1
+  console.warn('opus?/woo?', w1, w2)
+  return w1.title?.localeCompare(w2.title) || 0
 }
 
 export default directoryModule

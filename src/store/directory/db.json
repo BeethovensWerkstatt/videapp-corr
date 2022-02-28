@@ -48,6 +48,54 @@
       "url": "https://beethovens-werkstatt.de/modul-1/",
       "app": "http://nagano.upb.de:29999/02030482"
     },
+    "op14/1": {
+      "label": "Op. 14/1",
+      "title": "Klaviersonate E-Dur",
+      "opus": 14.1,
+      "modules": ["modul2"],
+      "url": "https://beethovens-werkstatt.de/vergleich-14/",
+      "app": "https://videapp-arr.beethovens-werkstatt.de/"
+    },
+    "opus20": {
+      "label": "Op. 20",
+      "title": "Septett",
+      "opus": 20,
+      "modules": ["modul2"],
+      "url": "https://beethovens-werkstatt.de/vergleich-20-38/",
+      "app": "https://videapp-arr.beethovens-werkstatt.de/"
+    },
+    "opus38": {
+      "label": "Op. 38",
+      "title": "Trio (Bearbeitung von Septett Op. 20)",
+      "opus": 38,
+      "modules": ["modul2"],
+      "url": "https://beethovens-werkstatt.de/vergleich-20-38/",
+      "app": "https://videapp-arr.beethovens-werkstatt.de/"
+    },
+    "op121b": {
+      "label": "Op. 121b",
+      "title": "Opferlied",
+      "opus": 121,
+      "modules": ["modul2"],
+      "url": "https://beethovens-werkstatt.de/vergleich-121b",
+      "app": "https://videapp-arr.beethovens-werkstatt.de/"
+    },
+    "op122": {
+      "label": "Op. 122",
+      "title": "Bundeslied",
+      "opus": 122,
+      "modules": ["modul2"],
+      "url": "https://beethovens-werkstatt.de/vergleich-122",
+      "app": "https://videapp-arr.beethovens-werkstatt.de/"
+    },
+    "op133": {
+      "label": "Op. 133",
+      "title": "Große Fuge",
+      "opus": 133,
+      "modules": ["modul2"],
+      "url": "https://beethovens-werkstatt.de/vergleich-133",
+      "app": "https://videapp-arr.beethovens-werkstatt.de/"
+    },
     "op73": {
       "@id": "https://api.beethovens-werkstatt.de/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d.json",
       "id": "xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d",
@@ -74,33 +122,43 @@
       "label": "Modul 1",
       "title": "Variantendarstellung in symphonischen, kammermusikalischen und vokalen Werken",
       "n": 1,
-      "url": "https://beethovens-werkstatt.de/modul-1/"
+      "url": "https://beethovens-werkstatt.de/modul-1/",
+      "start": 2014,
+      "finish": 2016
     },
     "modul2": {
       "label": "Modul 2",
       "title": "Beethoven als Bearbeiter eigener Werke",
       "n": 2,
-      "url": "https://beethovens-werkstatt.de/modul-2/"
+      "url": "https://beethovens-werkstatt.de/modul-2/",
+      "start": 2017,
+      "finish": 2019
     },
     "modul3": {
       "label": "Modul 3",
       "title": "Auf der Suche nach dem Werktext",
       "n": 3,
-      "url": "https://beethovens-werkstatt.de/modul-3/"
+      "url": "https://beethovens-werkstatt.de/modul-3/",
+      "start": 2020,
+      "finish": 2021
     },
     "modul4": {
       "label": "Modul 4",
       "title": "Skizzenbuch-Edition",
       "n": 4,
       "url": "https://beethovens-werkstatt.de/modul-4/",
-      "inactive": true
+      "inactive": true,
+      "start": 2022,
+      "finish": 2026
     },
     "modul5": {
       "label": "Modul 5",
       "title": "Kombination von Editionskonzepten in einer Edition: Drei Modelleditionen der Diabelli-Variationen op. 120",
       "n": 5,
       "url": "https://beethovens-werkstatt.de/modul-5/",
-      "inactive": true
+      "inactive": true,
+      "start": 2027,
+      "finish": 2029
     }
   }
 }
