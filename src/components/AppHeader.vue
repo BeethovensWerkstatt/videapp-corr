@@ -2,7 +2,7 @@
   <header class="navbar">
     <section class="navbar-section">
       <span :title="versionText" @click="openCommit" class="navbar-brand mr-2 home">
-        VideApp<!--<sub>corr</sub>-->
+        <img src="../assets/beethovensw_finale01.png" />
       </span>
     </section>
     <section class="navbar-section">
@@ -20,7 +20,10 @@
       -->
       <div class="website-menu">
         <a href="https://beethovens-werkstatt.de/" target="_blank" title="Beethovens Werkstatt">
-          <img src="../assets/beethovensw_finale01.png" />
+          Home
+        </a>
+        <a href="https://videapp.beethovens-werkstatt.de/" class="active" title="VideApp">
+          VideApp
         </a>
         <a href="https://beethovens-werkstatt.de/projekt/" target="_blank">
           Projekt
@@ -81,11 +84,19 @@ export default {
 
 header {
   background-color: $background-flat;
-  border-bottom: .5px solid $light-border-color;
-  padding: .2rem 1rem;
+  border-bottom: 1px solid $light-border-color;
+
+  border-top: 5px solid $highlight-color;
 
   a, a:active, a:visited, a:hover {
     color: $link-color;
+  }
+
+  img {
+    height: 1rem;
+    position: relative;
+    top: 5px;
+    left: 1rem;
   }
 
   .home {
@@ -97,13 +108,24 @@ header {
       display: inline-block;
       font-family: "Open Sans", GillSans, Calibri, Trebuchet, sans-serif;
       font-weight: 800;
-      margin: 0 25px;
+      font-size: .5rem;
+      text-transform: uppercase;
+      letter-spacing: -0.08px;
+      margin: 0;
+      padding: .3rem .5rem;
+      color: #3a3a3a;
+      text-decoration:none;
+      position: relative;
       &:hover {
         color: #c93b22;
-        text-decoration:none;
       }
-      img {
-        height: 15px;
+
+      &.active {
+        color: $highlight-color;
+        border-bottom: 1px solid $highlight-color;
+        position: relative;
+        bottom: -1px;
+        background-color: lighten($background-flat, 10%)
       }
     }
   }
