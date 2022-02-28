@@ -8,7 +8,8 @@
         <div class="column col-3">
           <button class="btn heroBtn" @click="openWorks">{{ $tc('terms.case-study', 2) }}</button>
         </div>
-        <div class="column col-9 content" v-html="$t('messages.case-studies')" />
+        <case-studies class="column col-9 content" />
+        <!-- <div class="column col-9 content" v-html="$t('messages.case-studies')" /> -->
       </div>
       <div class="columns">
         <div class="column col-3">
@@ -57,7 +58,7 @@
 </template>
 
 <script>
-// @ is an alias to /src
+import CaseStudies from '@/components/text/CaseStudies.vue'
 
 /**
  * Home view
@@ -68,6 +69,7 @@
 export default {
   name: 'Home',
   components: {
+    CaseStudies
   },
   mounted () {
     // console.log(this.sources)
