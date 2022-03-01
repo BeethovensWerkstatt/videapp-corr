@@ -1,17 +1,12 @@
 {
   "messages": {
-    "hello-world": "Hallo Modul 3",
     "openDesktop": "öffne Schreibtisch Ansicht",
     "filter-count": "Der Filter ist nicht aktiv | Es ist ein Filter aktiv | Es sind {n} Filter aktiv",
     "complaint-count": "keine Monita | ein Monitum | {n} Monita",
     "comparative-view": {
       "zoom-lock": "Zoom gesperrt",
       "zoom-unlock": "Zoom automatisch"
-    },
-    "case-studies": "Über diese Seite haben Sie die Möglichkeit, sämtliche im Rahmen von <em>Beethovens Werkstatt</em> thematisierten Werke Beethovens zu sehen, und die jeweils zugehörigen Fallstudien zu öffnen. Der Zugriff erfolgt hier also über Werknummern. Dabei ist zu beachten, dass i.d.R. nur sehr begrenzte Ausschnitte aus den jeweiligen Werken thematisiert werden.",
-    "modules": "Hier können Sie sich den Arbeitsergebnissen von <em>Beethovens Werkstatt</em> anhand der projektinternen Untergliederung in fünf aufeinander aufbauende Module annähern. Dabei handelt es sich um die identischen Fallbeispiele aus Beethovens Werken, allerdings erfolgt der Zugriff der Projektchronologie folgend.",
-    "desktop-view": "Über die Schreibtisch-Ansicht werden Sie zu einem späteren Zeitpunkt freien Zugriff auf sämtliche im Projekt erarbeiteten Ressourcen erhalten.",
-    "complaints-list": "<em>!!! Der Link für die Monita-Liste soll noch <strong>woanders</strong> hin !!!</em>"
+    }
   },
   "terms": {
     "complaints": "Monita",
