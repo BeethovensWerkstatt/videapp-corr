@@ -32,14 +32,6 @@
       "url": "https://beethovens-werkstatt.de/modul-1/",
       "app": "http://nagano.upb.de:29999/02030482"
     },
-    "op86": {
-      "label": "Op. 86",
-      "title": "Messe C-Dur",
-      "opus": 86,
-      "modules": ["modul1"],
-      "url": "https://beethovens-werkstatt.de/?page_id=2566",
-      "app": "https://beethovens-werkstatt.de/?page_id=2566"
-    },
     "woo32": {
       "label": "WoO 32",
       "title": "Duett mit zwei obligaten Augengläsern",
