@@ -288,14 +288,6 @@ export default {
       const overlay = this.viewer ? this.viewer.getOverlayById(this.divid) : null
       if (overlay) {
         overlay.update(this.pos)
-        /*
-        const rect = this.viewer.viewport.viewportToViewerElementRectangle(this.pos)
-        // console.log(rect)
-        const canvas = this.viewer.canvas.querySelector('canvas')
-        const ctx = canvas.getContext('2d')
-        const imgdata = ctx.getImageData(rect.x, rect.y, rect.width, rect.height)
-        // console.log(imgdata)
-        */
       } else {
         // console.debug('no overlay!', this.divid)
         if (this.page?.id) {
@@ -305,6 +297,14 @@ export default {
       if (this.tiledimage) {
         this.tiledimage.setPosition(this.pos, true)
       }
+    },
+    async updateOverlayPage () {
+      const rect = this.viewer.viewport.viewportToViewerElementRectangle(this.pos)
+      // console.log(rect)
+      const canvas = this.viewer.canvas.querySelector('canvas')
+      const ctx = canvas.getContext('2d')
+      const imgdata = ctx.getImageData(rect.x, rect.y, rect.width, rect.height)
+      console.log(imgdata)
     },
     /**
      * load new tiled image on start or page flip
