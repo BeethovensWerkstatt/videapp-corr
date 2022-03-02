@@ -55,7 +55,9 @@
     "case-study": "Fallbeispiel | Fallbeispiele",
     "module": "Modul | Module",
     "desktop-view": "Schreibtisch",
-    "opus": "Opus"
+    "opus": "Opus",
+    "software": "Software",
+    "explanatory": "Erläuternder Text | Erläuternde Texte"
   },
   "taxonomy": {
     "document_type": "",

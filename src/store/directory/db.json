@@ -5,40 +5,40 @@
       "title": "Sonate für Klavier c-Moll",
       "opus": 111,
       "modules": ["modul1"],
-      "url": "https://beethovens-werkstatt.de/modul-1/",
-      "app": "https://beethovens-werkstatt.de/prototyp-1/"
+      "app": "https://beethovens-werkstatt.de/prototyp-1/",
+      "apptitle": "Prototyp 1"
     },
     "op59/3": {
       "label": "Op. 59/3",
       "title": "Streichquartett C-Dur",
       "opus": 59.3,
       "modules": ["modul1"],
-      "url": "https://beethovens-werkstatt.de/modul-1/",
-      "app": "https://beethovens-werkstatt.de/prototyp-2-0/"
+      "app": "https://beethovens-werkstatt.de/prototyp-2-0/",
+      "apptitle": "Prototyp 2"
     },
     "op75/2": {
       "label": "Op. 75/2",
       "title": "Lied \"Neue Liebe, neues Leben\"",
       "opus": 75.2,
       "modules": ["modul1"],
-      "url": "https://beethovens-werkstatt.de/modul-1/",
-      "app": "http://nagano.upb.de:29999/02030482"
+      "app": "http://nagano.upb.de:29999/02030482",
+      "apptitle": "VideApp var"
     },
     "op93": {
       "label": "Op. 93",
       "title": "8. Sinfonie in F-Dur",
       "opus": 93,
       "modules": ["modul1"],
-      "url": "https://beethovens-werkstatt.de/modul-1/",
-      "app": "http://nagano.upb.de:29999/02030482"
+      "app": "http://nagano.upb.de:29999/02030482",
+      "apptitle": "VideApp var"
     },
     "woo32": {
       "label": "WoO 32",
       "title": "Duett mit zwei obligaten Augengläsern",
       "woo": 32,
       "modules": ["modul1"],
-      "url": "https://beethovens-werkstatt.de/modul-1/",
-      "app": "http://nagano.upb.de:29999/02030482"
+      "app": "http://nagano.upb.de:29999/02030482",
+      "apptitle": "VideApp var"
     },
     "op14/1": {
       "label": "Op. 14/1",
@@ -46,7 +46,8 @@
       "opus": 14.1,
       "modules": ["modul2"],
       "url": "https://beethovens-werkstatt.de/vergleich-14/",
-      "app": "https://videapp-arr.beethovens-werkstatt.de/"
+      "app": "https://videapp-arr.beethovens-werkstatt.de/",
+      "apptitle": "VideApp arr"
     },
     "opus20": {
       "label": "Op. 20",
@@ -54,7 +55,8 @@
       "opus": 20,
       "modules": ["modul2"],
       "url": "https://beethovens-werkstatt.de/vergleich-20-38/",
-      "app": "https://videapp-arr.beethovens-werkstatt.de/"
+      "app": "https://videapp-arr.beethovens-werkstatt.de/",
+      "apptitle": "VideApp arr"
     },
     "opus38": {
       "label": "Op. 38",
@@ -62,7 +64,8 @@
       "opus": 38,
       "modules": ["modul2"],
       "url": "https://beethovens-werkstatt.de/vergleich-20-38/",
-      "app": "https://videapp-arr.beethovens-werkstatt.de/"
+      "app": "https://videapp-arr.beethovens-werkstatt.de/",
+      "apptitle": "VideApp arr"
     },
     "op121b": {
       "label": "Op. 121b",
@@ -70,7 +73,8 @@
       "opus": 121,
       "modules": ["modul2"],
       "url": "https://beethovens-werkstatt.de/vergleich-121b",
-      "app": "https://videapp-arr.beethovens-werkstatt.de/"
+      "app": "https://videapp-arr.beethovens-werkstatt.de/",
+      "apptitle": "VideApp arr"
     },
     "op122": {
       "label": "Op. 122",
@@ -78,7 +82,8 @@
       "opus": 122,
       "modules": ["modul2"],
       "url": "https://beethovens-werkstatt.de/vergleich-122",
-      "app": "https://videapp-arr.beethovens-werkstatt.de/"
+      "app": "https://videapp-arr.beethovens-werkstatt.de/",
+      "apptitle": "VideApp arr"
     },
     "op133": {
       "label": "Op. 133",
@@ -86,7 +91,8 @@
       "opus": 133,
       "modules": ["modul2"],
       "url": "https://beethovens-werkstatt.de/vergleich-133",
-      "app": "https://videapp-arr.beethovens-werkstatt.de/"
+      "app": "https://videapp-arr.beethovens-werkstatt.de/",
+      "apptitle": "VideApp arr"
     },
     "op73": {
       "@id": "https://api.beethovens-werkstatt.de/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d.json",
@@ -95,8 +101,8 @@
       "title": "5. Klavierkonzert",
       "opus": 73,
       "modules": ["modul3"],
-      "url": "https://beethovens-werkstatt.de/modul-3/",
-      "route": "Schreibtisch"
+      "route": "Schreibtisch",
+      "apptitle": "VideApp corr"
     },
     "op120": {
       "@id": "https://api.beethovens-werkstatt.de/module3/xfae46dc1-e2dc-412a-a27c-91a31cd18ab8.json",
@@ -104,9 +110,39 @@
       "label": "Op. 120",
       "title": "Diabelli-Variationen",
       "opus": 120,
-      "modules": ["modul3", "modul4", "modul5"],
-      "url": "https://beethovens-werkstatt.de/modul-4/",
-      "route": "Schreibtisch"
+      "modules": ["modul3"],
+      "route": "Schreibtisch",
+      "apptitle": "VideApp corr"
+    },
+    "op104": {
+      "label": "Op. 104",
+      "title": "Streichquintett c-Moll",
+      "opus": 104,
+      "modules": ["modul3"]
+    },
+    "op106": {
+      "label": "Op. 106",
+      "title": "Klaviersonate B-Dur",
+      "opus": 106,
+      "modules": ["modul3"]
+    },
+    "op109": {
+      "label": "Op. 109",
+      "title": "Klaviersonate E-Dur",
+      "opus": 109,
+      "modules": ["modul3"]
+    },
+    "op127": {
+      "label": "Op. 127",
+      "title": "Streichquartett Es-Dur",
+      "opus": 127,
+      "modules": ["modul3"]
+    },
+    "woo152": {
+      "label": "WoO 152",
+      "title": "Irische Lieder",
+      "woo": 152,
+      "modules": ["modul3"]
     }
   },
   "modules": {

@@ -3,7 +3,7 @@ module.exports = {
     config
       .plugin('html')
       .tap(args => {
-        args[0].title = 'VideApp_corr'
+        args[0].title = 'VideApp'
         return args
       })
   },
