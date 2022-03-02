@@ -1,35 +1,46 @@
 <template>
   <div class="workslist">
-    <h1>Werkliste</h1>
+    <h1>{{ $tc('terms.case-study', 2) }}</h1>
     <div class="works-table">
       <table id="worksList" class="table">
         <thead>
           <tr>
-            <!-- <th>Komponist</th> -->
             <th>{{ $t('terms.opus') }}</th>
             <th>{{ $tc('terms.work', 1) }}</th>
+            <th>{{ $t('terms.software') }}</th>
+            <th>{{ $tc('terms.explanatory', 2) }}</th>
             <th>{{ $tc('terms.module', 2) }}</th>
-            <!-- <th>Sonstwas</th> -->
           </tr>
         </thead>
         <tbody>
           <tr v-for="work in works" :key="work['@id']">
-            <!-- <td><a :href="work.composer['@id']">{{ work.composer.name }}</a></td> -->
-            <template v-if="work.id">
-              <td><router-link :to="getLink(work.id)">{{ work.label }}</router-link></td>
-              <td><router-link :to="getLink(work.id)">{{ work.title /*[0].title*/ }}</router-link></td>
-            </template>
-            <template v-else>
-              <td><a :href="work.app" target="_blank">{{ work.label }}</a></td>
-              <td><a :href="work.app" target="_blank">{{ work.title }}</a></td>
-            </template>
+            <td>
+              {{ work.label }}
+            </td>
+            <td>
+              {{ work.title }}
+            </td>
+            <td>
+              <router-link :to="getLink(work.id)" target="_blank" v-if="work.route">
+                &#x06de; {{ work.apptitle || '[?]' }}
+              </router-link>
+              <a :href="work.app" target="_blank" v-else-if="work.app">
+                &#x06de; {{ work.apptitle || '[?]' }}
+              </a>
+              <template v-else>&mdash;</template>
+            </td>
+            <td>
+              <a :href="work.url" target="_blank" v-if="work.url">
+                &#x2799; zu {{ work.label }} ...
+              </a>
+              <template v-else>&mdash;</template>
+            </td>
             <td>
               <span v-for="(module, i) in work.modules" :key="module">
                 <template v-if="i > 0">, </template>
                 <a :href="moduleURL(module)" target="_blank" :title="moduleTitel(module)">{{ moduleLabel(module) }}</a>
               </span>
             </td>
-            <!-- <td><router-link :to="getLink(work.id)">Link</router-link></td> -->
           </tr>
         </tbody>
       </table>
