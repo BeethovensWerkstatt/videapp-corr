@@ -31,7 +31,7 @@
             </td>
             <td>
               <a :href="work.dossier" target="_blank" v-if="work.dossier" :title="work.dossiertitle">
-                &#x2799; {{ work.dossierlabel || $t('terms.about') + ' ' + work.label + ' ...' }}
+                &#x2799; <document-symbol height="1.2rem" /> <!-- {{ work.dossierlabel || $t('terms.about') + ' ' + work.label + ' ...' }} -->
               </a>
               <template v-else>&mdash;</template>
             </td>
@@ -52,6 +52,7 @@
 import { mapGetters } from 'vuex'
 import n from '@/store/names'
 import { workSorter } from '@/store/directory'
+import DocumentSymbol from '@/components/symbols/DocumentSymbol.vue'
 
 /**
  * list of works component
@@ -60,6 +61,9 @@ import { workSorter } from '@/store/directory'
  */
 export default {
   name: 'WorksList',
+  components: {
+    DocumentSymbol
+  },
   beforeCreate () {
     // this.$store.dispatch(actions.loadWorks)
   },
