@@ -154,6 +154,14 @@
       "opus": 127,
       "modules": ["modul3"]
     },
+    "op86": {
+      "label": "Op. 86",
+      "title": "Messe C-Dur",
+      "opus": 86,
+      "modules": ["modul1"],
+      "dossier": "https://beethovens-werkstatt.de/schreibchronologie-bei-orchestrierungsvarianten/",
+      "dossiertitle": "Schreibchronologie bei Orchestrierungsvarianten: ein Beispiel aus Beethovens Messe C-Dur op. 86"
+    },
     "woo152": {
       "label": "WoO 152",
       "title": "Irische Lieder",
