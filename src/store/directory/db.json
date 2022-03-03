@@ -21,7 +21,7 @@
       "title": "Lied \"Neue Liebe, neues Leben\"",
       "opus": 75.2,
       "modules": ["modul1"],
-      "app": "http://nagano.upb.de:29999/02030482",
+      "app": "http://nagano.upb.de:29999/",
       "apptitle": "VideApp var"
     },
     "op93": {
@@ -29,7 +29,7 @@
       "title": "8. Sinfonie in F-Dur",
       "opus": 93,
       "modules": ["modul1"],
-      "app": "http://nagano.upb.de:29999/02030482",
+      "app": "http://nagano.upb.de:29999/",
       "apptitle": "VideApp var"
     },
     "woo32": {
@@ -37,7 +37,7 @@
       "title": "Duett mit zwei obligaten Augengläsern",
       "woo": 32,
       "modules": ["modul1"],
-      "app": "http://nagano.upb.de:29999/02030482",
+      "app": "http://nagano.upb.de:29999/",
       "apptitle": "VideApp var"
     },
     "op14/1": {
