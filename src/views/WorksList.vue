@@ -30,8 +30,8 @@
               <template v-else>&mdash;</template>
             </td>
             <td>
-              <a :href="work.url" target="_blank" v-if="work.url">
-                &#x2799; zu {{ work.label }} ...
+              <a :href="work.dossier" target="_blank" v-if="work.dossier" :title="work.dossiertitle">
+                &#x2799; {{ work.dossierlabel || $t('terms.about') + ' ' + work.label + ' ...' }}
               </a>
               <template v-else>&mdash;</template>
             </td>
