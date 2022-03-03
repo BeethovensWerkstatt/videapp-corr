@@ -45,7 +45,8 @@
       "title": "Klaviersonate E-Dur",
       "opus": 14.1,
       "modules": ["modul2"],
-      "url": "https://beethovens-werkstatt.de/vergleich-14/",
+      "dossier": "https://beethovens-werkstatt.de/vergleich-14/",
+      "dossiertitle": "Klaviersonate E-Dur op. 14 Nr. 1 und Bearbeitung als Streichquartett F-Dur",
       "app": "https://videapp-arr.beethovens-werkstatt.de/",
       "apptitle": "VideApp arr"
     },
@@ -54,7 +55,8 @@
       "title": "Septett",
       "opus": 20,
       "modules": ["modul2"],
-      "url": "https://beethovens-werkstatt.de/vergleich-20-38/",
+      "dossier": "https://beethovens-werkstatt.de/vergleich-20-38/",
+      "dossiertitle": "Septett Es-Dur op. 20 und Bearbeitung als Trio op. 38",
       "app": "https://videapp-arr.beethovens-werkstatt.de/",
       "apptitle": "VideApp arr"
     },
@@ -63,7 +65,8 @@
       "title": "Trio (Bearbeitung von Septett Op. 20)",
       "opus": 38,
       "modules": ["modul2"],
-      "url": "https://beethovens-werkstatt.de/vergleich-20-38/",
+      "dossier": "https://beethovens-werkstatt.de/vergleich-20-38/",
+      "dossiertitle": "Septett Es-Dur op. 20 und Bearbeitung als Trio op. 38",
       "app": "https://videapp-arr.beethovens-werkstatt.de/",
       "apptitle": "VideApp arr"
     },
@@ -72,7 +75,8 @@
       "title": "Opferlied",
       "opus": 121,
       "modules": ["modul2"],
-      "url": "https://beethovens-werkstatt.de/vergleich-121b",
+      "dossier": "https://beethovens-werkstatt.de/vergleich-121b",
+      "dossiertitle": "Opferlied op. 121b und Bearbeitung als Klavierauszug",
       "app": "https://videapp-arr.beethovens-werkstatt.de/",
       "apptitle": "VideApp arr"
     },
@@ -81,7 +85,8 @@
       "title": "Bundeslied",
       "opus": 122,
       "modules": ["modul2"],
-      "url": "https://beethovens-werkstatt.de/vergleich-122",
+      "dossier": "https://beethovens-werkstatt.de/vergleich-122",
+      "dossiertitle": "Bundeslied op. 122 und Bearbeitung als Klavierauszug",
       "app": "https://videapp-arr.beethovens-werkstatt.de/",
       "apptitle": "VideApp arr"
     },
@@ -90,7 +95,18 @@
       "title": "Große Fuge",
       "opus": 133,
       "modules": ["modul2"],
-      "url": "https://beethovens-werkstatt.de/vergleich-133",
+      "dossier": "https://beethovens-werkstatt.de/vergleich-133",
+      "dossiertitle": "Große Fuge (B-Dur) op. 133 für Streichquartett und Bearbeitung für Klavier zu vier Händen op. 134",
+      "app": "https://videapp-arr.beethovens-werkstatt.de/",
+      "apptitle": "VideApp arr"
+    },
+    "op134": {
+      "label": "Op. 134",
+      "title": "Große Fuge für Klavier zu vier Händen",
+      "opus": 134,
+      "modules": ["modul2"],
+      "dossier": "https://beethovens-werkstatt.de/vergleich-133",
+      "dossiertitle": "Große Fuge (B-Dur) op. 133 für Streichquartett und Bearbeitung für Klavier zu vier Händen op. 134",
       "app": "https://videapp-arr.beethovens-werkstatt.de/",
       "apptitle": "VideApp arr"
     },
