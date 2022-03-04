@@ -45,7 +45,7 @@
           Im vierten Modul (ab 2022) soll mit Beethovens <em>Engelmann-Skizzenbuch</em>
           ein typisches Werkstattdokument von Beethoven untersucht und digital
           erschlossen werden. In diesem Skizzenbuch finden sich u.a. Entwürfe zu
-          den Diabelli-Variationen Op.120 sowie zur Neuten Sinfonie Op.125.
+          den Diabelli-Variationen Op.120 sowie zur Neunten Sinfonie Op.125.
           [<a class="moreLink" :href="mod.url" target="_blank">mehr</a>]
         </div>
         <div v-if="mod.n === 5">
