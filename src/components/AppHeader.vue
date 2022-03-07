@@ -6,25 +6,13 @@
       </span>
     </section>
     <section class="navbar-section">
-      <!--
-      Beethovens Werkstatt: https://beethovens-werkstatt.de/
-      Projekt: https://beethovens-werkstatt.de/projekt/
-      Module: https://beethovens-werkstatt.de/modul-1/ (2,3,4,5?)
-      Glossar: https://beethovens-werkstatt.de/glossar/
-      Kontakt: https://beethovens-werkstatt.de/kontakt/
-      -->
-      <!--
-      <router-link to="/">{{ $t('terms.home') }}</router-link>
-      <router-link to="/works">{{ $t('terms.worklist') }}</router-link>
-      <router-link to="/complaints">{{ $t('terms.complaints') }}</router-link>
-      -->
       <div class="website-menu">
         <a href="https://beethovens-werkstatt.de/" target="_blank" title="Beethovens Werkstatt">
           Home
         </a>
-        <a href="https://videapp.beethovens-werkstatt.de/" class="active" title="VideApp">
+        <router-link :to="{ name: 'Home' }" class="active" title="VideApp">
           VideApp
-        </a>
+        </router-link>
         <a href="https://beethovens-werkstatt.de/projekt/" target="_blank">
           Projekt
         </a>

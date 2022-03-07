@@ -20,7 +20,7 @@
             </div>
           </th>
           <th
-            v-for="(tag, i) in [sortTag.revisionObject, sortTag.textOperation, sortTag.classification, sortTag.context, sortTag.implementation, sortTag.document]"
+            v-for="(tag, i) in [/*sortTag.revisionObject, */sortTag.textOperation, sortTag.classification, sortTag.context, sortTag.implementation, sortTag.document]"
             :key="i + '-label-' + tag"
             :class="{ sortColumn: sortedBy === tag }"
           >
@@ -60,7 +60,7 @@
               </div>
             </th>
             <th
-              v-for="(tag, i) in [sortTag.revisionObject, sortTag.textOperation, sortTag.classification, sortTag.context, sortTag.implementation, sortTag.document]"
+              v-for="(tag, i) in [/*sortTag.revisionObject, */sortTag.textOperation, sortTag.classification, sortTag.context, sortTag.implementation, sortTag.document]"
               :key="i + '-label-' + tag"
               :class="{ sortColumn: sortedBy === tag }"
             >
@@ -77,7 +77,7 @@
           <template v-else>
             <th v-if="!workId"></th>
             <th></th>
-            <th></th>
+            <!-- <th></th> -->
             <th></th>
             <th></th>
             <th></th>
@@ -119,7 +119,7 @@
             {{ measures(complaint) }}
           </td>
           <td
-            v-for="(tag, i) in [sortTag.revisionObject, sortTag.textOperation, sortTag.classification, sortTag.context, sortTag.implementation]"
+            v-for="(tag, i) in [/*sortTag.revisionObject, */sortTag.textOperation, sortTag.classification, sortTag.context, sortTag.implementation]"
             :key="i + '-value-' + tag"
             class="complaint-attribute"
             @click.prevent="toggleActivate(complaint)"

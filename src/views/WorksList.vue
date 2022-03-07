@@ -21,19 +21,19 @@
               {{ work.title }}
             </td>
             <td>
-              <router-link :to="getLink(work.id)" target="_blank" v-if="work.route">
-                &#x06de; {{ work.apptitle || '[?]' }}
+              <router-link :to="getLink(work.id)" v-if="work.route">
+                <span v-html="appTitle(work)" />
               </router-link>
               <a :href="work.app" target="_blank" v-else-if="work.app">
-                &#x06de; {{ work.apptitle || '[?]' }}
+                &#x2799; <span v-html="appTitle(work)" />
               </a>
-              <template v-else>&mdash;</template>
+              <span class="nofile" v-else>&mdash;</span>
             </td>
             <td>
               <a :href="work.dossier" target="_blank" v-if="work.dossier" :title="work.dossiertitle">
                 &#x2799; <document-symbol height="1.2rem" /> <!-- {{ work.dossierlabel || $t('terms.about') + ' ' + work.label + ' ...' }} -->
               </a>
-              <template v-else>&mdash;</template>
+              <span class="nofile" v-else>&mdash;</span>
             </td>
             <td>
               <span v-for="(module, i) in work.modules" :key="module">
@@ -53,6 +53,8 @@ import { mapGetters } from 'vuex'
 import n from '@/store/names'
 import { workSorter } from '@/store/directory'
 import DocumentSymbol from '@/components/symbols/DocumentSymbol.vue'
+
+const VideAppRE = /VideApp *(\w+)/i
 
 /**
  * list of works component
@@ -94,6 +96,13 @@ export default {
       const modules = this[n.getters.directory_modules]
       // console.log(module, modules[module]?.url)
       return modules[module]?.url || '[?]'
+    },
+    appTitle (work) {
+      const m = VideAppRE.exec(work.apptitle || '')
+      if (m) {
+        return 'VideApp<sub>' + m[1] + '</sub>'
+      }
+      return work.apptitle || '[?]'
     }
   }
 }
@@ -114,5 +123,8 @@ h1 {
   .table {
     width: 100%;
   }
+}
+.nofile {
+  color: lightgray;
 }
 </style>
