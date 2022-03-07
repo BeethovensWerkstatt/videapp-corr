@@ -1,21 +1,19 @@
 <template>
   <container id="app">
-    <AppHeader/>
-    <router-view/>
+    <app-header />
+    <router-view />
+    <app-footer />
   </container>
-    <!--<div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>-->
 </template>
 
 <script>
 import AppHeader from '@/components/AppHeader.vue'
+import AppFooter from '@/components/AppFooter.vue'
 
 export default {
   name: 'App',
   components: {
-    AppHeader
+    AppHeader, AppFooter
   }
 }
 </script>
@@ -58,4 +56,14 @@ body {
     }
   }
 }
+
+.unselectable {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 </style>

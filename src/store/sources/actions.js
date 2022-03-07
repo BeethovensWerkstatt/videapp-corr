@@ -30,7 +30,7 @@ const actions = {
    * @param {function} commit
    * @param {object} state
    */
-  async [actionNames.loadSources] ({ commit, dispatch, state, getters }, workId) {
+  async [act.loadSources] ({ commit, dispatch, state, getters }, workId) {
     if (workId) {
       // console.log(state.works, workId)
       const work = getters.works.find(w => {
@@ -104,9 +104,11 @@ const actions = {
                   }
                   // console.log(canvas, place)
                   // default page height is 300mm if physicalScale is not defined
-                  const physScale = (canvas.service && canvas.service.physicalScale)
-                    ? canvas.service.physicalScale
+
+                  const physScale = (canvas.images[0] && canvas.images[0].resource && canvas.images[0].resource.service && canvas.images[0].resource.service.service && canvas.images[0].resource.service.service.physicalScale)
+                    ? canvas.images[0].resource.service.service.physicalScale
                     : (300 / canvas.height)
+
                   const page = {
                     work: workId,
                     source: source.id,
@@ -198,19 +200,36 @@ const actions = {
                   px += source.maxDimensions.width + hgap
                   ph = Math.max(ph, source.maxDimensions.height)
                 }
-                console.log(source.position)
+                // console.log(source.position)
 
                 // hack !!!
                 const sid = (new Url(source.id)).path.elements.pop()
                 switch (sid) {
+                  // Op. 73
                   case 'US-NYj_31_B393cp_no.5_errata.json':
                     source.position = { x: 838, y: 220 }
                     break
                   case 'D-BNba_C73-9.json':
-                    source.position = { x: 316, y: 220 }
+                    source.position = { x: 316, y: 390 }
+                    break
+                  case 'D-BNba_HCB_BBr_9.json':
+                    source.position = { x: 838, y: 620 }
                     break
                   case 'A-Wn_SH.Beethoven.323.json':
-                    source.position = { x: 1370, y: 220 }
+                    source.position = { x: 1370, y: 390 }
+                    break
+                  // Op. 120
+                  case 'D-BNba_Slg.H.C.Bodmer_HCB_C_Md_42.json':
+                    source.position = { x: 410, y: 185 }
+                    break
+                  case 'D-BNba_HCB_Mh_60.json':
+                    source.position = { x: 1235, y: 333 }
+                    break
+                  case 'D-BNba_NE_294.json':
+                    source.position = { x: 410, y: 590 }
+                    break
+                  case 'D-BNba_Slg.H.C.Bodmer_HCB_Mh_55.json':
+                    source.position = { x: 1235, y: 825 }
                     break
                 }
 
@@ -234,7 +253,7 @@ const actions = {
    * @memberof store.sources.actions
    * @param {Object} payload object containing property `movements`
    */
-  async [actionNames.loadMovements] ({ commit }, { movements }) {
+  async [act.loadMovements] ({ commit }, { movements }) {
     if (movements) {
       for (const m of movements) {
         // console.log(m)
@@ -253,7 +272,7 @@ const actions = {
    * @param {Object} context
    * @param {Object} payload - sourceId, pagenr, place, uri
    */
-  [actionNames.loadZones] ({ dispatch }, page) {
+  [act.loadZones] ({ dispatch }, page) {
     if (!page) {
       return
     }
@@ -316,7 +335,7 @@ const actions = {
    * @param {Object} callback commit, getters
    * @param {Object} payload source: String, zone: String
    */
-  [actionNames.activateZone] ({ commit, getters }, { source, zone }) {
+  [act.activateZone] ({ commit, getters }, { source, zone }) {
     if (source) {
       const src = getters.getSourceById(source)
       if (src) {

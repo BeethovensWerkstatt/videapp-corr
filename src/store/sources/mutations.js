@@ -1,12 +1,4 @@
-
-export const mutationsNames = {
-  LOAD_SOURCE: 'LOAD_SOURCE',
-  LOAD_MOVEMENT: 'LOAD_MOVEMENT',
-  MODIFY_SOURCE: 'MODIFY_SOURCE',
-  MOVE_SOURCE: 'MOVE_SOURCE',
-  SET_PAGE: 'SET_PAGE',
-  ACTIVATE_SOURCE: 'ACTIVATE_SOURCE'
-}
+import { sourceMutationNames } from './names'
 
 /**
  * @namespace store.sources.mutations
@@ -17,7 +9,7 @@ const mutations = {
    * @memberof store.sources.mutations
    * @param {object} source - (*TBD typedef source object*)
    */
-  LOAD_SOURCE (state, source) {
+  [sourceMutationNames.LOAD_SOURCE] (state, source) {
     const sources = [...state.sources]
     // console.log(source)
     sources.push(source)
@@ -27,7 +19,7 @@ const mutations = {
    * @memberof store.sources.mutations
    * @param {Object} movement
    */
-  LOAD_MOVEMENT (state, movement) {
+  [sourceMutationNames.LOAD_MOVEMENT] (state, movement) {
     const movements = { ...state.movements }
     movements[movement['@id']] = movement
     state.movements = movements
@@ -38,7 +30,7 @@ const mutations = {
    * @memberof store.sources.mutations
    * @param {object} source - properties to modify with id
    */
-  MODIFY_SOURCE (state, source) {
+  [sourceMutationNames.MODIFY_SOURCE] (state, source) {
     state.sources = state.sources.map(src => {
       if (src.id === source.id) {
         return { ...src, ...source }
@@ -52,7 +44,7 @@ const mutations = {
    * @memberof store.sources.mutations
    * @param {object} src
    */
-  MOVE_SOURCE (state, { id, x, y }) {
+  [sourceMutationNames.MOVE_SOURCE] (state, { id, x, y }) {
     // console.log('move source ' + id + ': ' + x + ',' + y)
     const msrc = { ...state.sources.find(src => src.id === id), position: { x: x, y: y } }
     if (msrc.id) {
@@ -64,7 +56,7 @@ const mutations = {
    * @memberof store.sources.mutations
    * @param {Object} payload id: String, page: Number
    */
-  SET_PAGE (state, { id, page }) {
+  [sourceMutationNames.SET_PAGE] (state, { id, page }) {
     const msrc = { ...state.sources.find(src => src.id === id), pagenr: page }
     if (msrc.id) {
       state.sources = state.sources.map(src => src.id === msrc.id ? msrc : src)
@@ -75,7 +67,7 @@ const mutations = {
    * @memberof store.sources.mutations
    * @param {String} src source id
    */
-  ACTIVATE_SOURCE (state, src) {
+  [sourceMutationNames.ACTIVATE_SOURCE] (state, src) {
     state.activeSourceId = src
   }
 }

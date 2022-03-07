@@ -1,0 +1,70 @@
+src/components/SelectComplaintViews.vue:5:        <h3>Ansichtseinstellungen</h3><!-- TODO: Get this into i18n -->
+src/components/SelectComplaintViews.vue:79:      // TODO avoid empty
+src/components/DocumentMarginComponent.vue:153:    // TODO color consts in separate file
+src/components/DocumentMarginComponent.vue:161:    // TODO color consts in separate file
+src/components/ComplaintDialog/TabColVerovio.vue:66:  /* TODO
+src/components/ComplaintDialog/TabColVerovio.vue:86:    // TODO toolkit destroy??
+src/components/ComplaintDialog/TabColVerovio.vue:120:      // TODO config?
+src/components/ComplaintDialog/TabColVerovio.vue:136:      // TODO useDisplayOptions for aspect-ratio of canvas and default clip
+src/components/ComplaintDialog/TabColVerovio.vue:169:        // TODO store in pouchdb or localStorage?
+src/components/ComplaintDialog/TabColVerovio.vue:207:    /* TODO refactor methods:
+src/components/ComplaintDialog/TabColFacs.vue:55:  /* TODO
+src/components/ComplaintDialog/TabColFacs.vue:77:      console.log('TODO reload tiled image')
+src/components/ComplaintDialog/TabColFacs.vue:80:      console.log('TODO reload tiled image')
+src/components/ComplaintDialog/TabColTei.vue:50:      // TODO store getter function
+src/components/ComplaintDialog/TabColTei.vue:55:          // TODO options in data or computed
+src/components/ComplaintsListDialog.vue:91:  // TODO ??
+src/components/PageComponent.vue:388:     * TODO: We need to preserve a reference to all listeners and
+src/components/__ModalDialog.vue:43:  // TODO ??
+src/components/_SourceComponentAlt.vue:164:      // TODO check pagenr
+src/components/_SourceComponentAlt.vue:369:      // move debug markers ... TODO SimpleOverlay!
+src/components/_SourceComponentAlt.vue:463:      // TODO srcovl lives only for this moment. This should be cleaned up!
+src/components/_VerovioComponent.vue:125:      // TODO?
+src/components/ComplaintDialog.vue:217:              // TODO scaling? NO goto OSD
+src/components/ComplaintDialog.vue:355:  // TODO ??
+src/components/DocumentHeaderComponent.vue:101:  // TODO before destroy cleanup: remove Overlay, remove handlers
+src/components/DocumentHeaderComponent.vue:330:    // TODO color consts in separate file
+src/components/ComplaintsList.vue:11:          <!-- TODO work title column (optional) -->
+src/components/ComplaintsList.vue:53:          <!-- TODO work title column (optional) -->
+src/components/ComplaintsList.vue:117:// TODO export in store/complaints
+src/components/ComplaintsList.vue:203:      } else if (this.measures(complaint) !== 'N/A') { // TODO availability should be marked by another property
+src/components/ComplaintsList.vue:244:        // TODO i18n?
+src/openseadragon/openseadragon-html-overlay.js:78:            // TODO: Expose an accessor for _containerInnerSize in the OSD API so we don't have to use the private variable.
+src/openseadragon/openseadragon-html-overlay.js:87:            // TODO: Fast click for mobile browsers
+src/openseadragon/fabric.adapted.js:2019:     * TODO: this function return an empty object if you try to clone null
+src/openseadragon/fabric.adapted.js:2802:                // TODO: move abort call after calculation
+src/openseadragon/fabric.adapted.js:4687:         * TODO: rename in scalarMultiply in 2.0
+src/openseadragon/fabric.adapted.js:4697:         * TODO: rename in scalarMultiplyEquals in 2.0
+src/openseadragon/fabric.adapted.js:4710:         * TODO: rename in scalarDivide in 2.0
+src/openseadragon/fabric.adapted.js:4720:         * TODO: rename in scalarDivideEquals in 2.0
+src/openseadragon/fabric.adapted.js:4959:     * TODO: rename in intersectSegmentSegment
+src/openseadragon/fabric.adapted.js:4996:     * TODO: rename in intersectSegmentPolygon
+src/openseadragon/fabric.adapted.js:7985:        // TODO: fix stretched examples
+src/openseadragon/fabric.adapted.js:8314:            // TODO: just change the scale, preserve other transformations
+src/openseadragon/fabric.adapted.js:11086:         * 11/09/2018 TODO: would be cool if findTarget could discern between being a full target
+src/openseadragon/fabric.adapted.js:14427:            // TODO find a better solution?
+src/openseadragon/fabric.adapted.js:15354:            //TODO: this function does not consider mixed situation like top, center.
+src/openseadragon/fabric.adapted.js:17341:            // TODO: test this
+src/openseadragon/fabric.adapted.js:18926:                        // TODO: optimize this
+src/openseadragon/fabric.adapted.js:18941:                        // TODO: optimize this
+src/openseadragon/fabric.adapted.js:19375:                        // TODO: optimize this
+src/openseadragon/fabric.adapted.js:19390:                        // TODO: optimize this
+src/config/index.js:4:// TODO import from (e.g) public/config.json ?
+src/store/dataAccess/index.js:31:      //   TODO refetch data on TTL
+src/store/complaints/index.js:7:// TODO filter & sort complaint list in extra state property
+src/store/complaints/index.js:131:        // TODO this looks like a workaround
+src/store/complaints/index.js:252:      // TODO keep filtered and sorted list in state !!
+src/store/complaints/index.js:272:      // TODO atId in loadComplaints?
+src/store/complaints/index.js:319:        // TODO work
+src/store/sources/actions.js:36:        // TODO select language
+src/store/sources/actions.js:86:                // TODO workaround!
+src/store/sources/actions.js:91:                // end TODO
+src/store/sources/actions.js:145:                  // TODO database/webSQL for fast retrievement of source+page for measure and/or complaint
+src/store/sources/actions.js:166:                  // END TODO
+src/store/sources/actions.js:229:                // TODO unfold
+src/store/sources/getters.js:14:  // TODO: get source/movement title image, get image from HTML/SVG (canvas.toDataURL)
+src/store/sources/getters.js:42:    // TODO sources should be stored per work
+src/views/WorksList.vue:45:    // TODO link creator?
+src/views/Home.vue:47:      // TODO query
+src/toolbox/net.js:335:    // TODO punycode
+src/toolbox/net.js:343:    // TODO punycode

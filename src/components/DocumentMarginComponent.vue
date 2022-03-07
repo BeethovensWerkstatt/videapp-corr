@@ -60,6 +60,7 @@ export default {
   },
   watch: {
     position () {
+      // console.log(this.position)
       this.updatePosition()
     }
   },
@@ -84,9 +85,19 @@ export default {
     marginPerc () {
       return (100 * this.sourceMarginWidth / this.position.width)
     },
+    markerHeight () {
+      const mh = this.sourceMarkerHeight
+      const len = this.markers.length
+      const ph = this.position.height
+      // console.log(mh, ph, len, len * mh)
+      if (len * mh <= ph) {
+        return mh
+      }
+      return ph / len
+    },
     markerPerc () {
       // console.log('marcerPerc')
-      return (100 * this.sourceMarkerHeight / this.position.height)
+      return (100 * this.markerHeight / this.position.height)
     },
     style () {
       const zoom = this.viewer.viewport.getZoom(true)
@@ -97,17 +108,18 @@ export default {
         'font-size': scale * 2 + 'mm'
       }
     },
+    markers () {
+      return this.getPageMarkers(this.sourceId)
+    },
     leftMarkers () {
       // console.log('leftMarkers')
-      const markers = this.getPageMarkers(this.sourceId)
       const pn = this.source.pagenr ? this.source.pagenr : 0
-      return markers.filter(m => (m.page < pn || (m.page === pn && m.place === 'verso')))
+      return this.markers.filter(m => (m.page < pn || (m.page === pn && m.place === 'verso')))
     },
     rightMarkers () {
       // console.log('rightMarkers')
-      const markers = this.getPageMarkers(this.sourceId)
       const pn = this.source.pagenr ? this.source.pagenr : 0
-      return markers.filter(m => {
+      return this.markers.filter(m => {
         // if (m.page === pn) console.log(m.page, m.place)
         return (m.page > pn || (m.page === pn && m.place === 'recto'))
       })
@@ -171,8 +183,8 @@ export default {
     }
 
     &:hover {
-      // outline: 1px solid orange;
-      // background-color: rgba(255, 255, 181, 0.685);
+      background: rgb(248, 234, 130);
+      background: linear-gradient(0deg, rgba(248, 234, 130, 1) 0%, rgb(238, 236, 103) 100%);
     }
     div {
       width: 500px;
@@ -181,7 +193,7 @@ export default {
   .curmarkerL {
     font-weight: bold;
     width: 110% !important;
-    right: -20%;
+    right: -20% !important;
     background-color: rgba(255, 255, 181, 0.8);
   }
   .curmarkerR {

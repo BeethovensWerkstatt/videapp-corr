@@ -1,6 +1,14 @@
 <template>
   <div>
-    <h2 @click="openPage">{{ $t("terms.document") }}: {{ label }}</h2>
+    <h2 @click="openPage">
+      {{ $t("terms.complaint.state." + state + "Doc") }}: <span class="sourceSiglum">{{ label }}</span>
+      <div
+        class="zoomLocker"
+        @click="rezoom(500, true)"
+        v-html="pinned ? '&#x1F512;' : '&#x1F513;'"
+        :title="$t('messages.comparative-view.' + (pinned ? 'zoom-lock' : 'zoom-unlock'))"
+      />
+    </h2>
     <div :id="divid" class="ComplaintDialogOSD" :class="{ ['facs-' + state]: true, facs: true, [state]: true }" :style="styles">
       <div :id="ovlid" class="complaint-region" />
     </div>
@@ -26,7 +34,8 @@ export default {
   data () {
     return {
       viewer: undefined,
-      rezoomTime: Date.now()
+      rezoomTime: Date.now(),
+      pinned: false
     }
   },
   props: {
@@ -78,6 +87,11 @@ export default {
     region () {
       console.log('TODO reload tiled image')
       this.rezoom()
+    },
+    pinned () {
+      if (!this.pinned) {
+        this.rezoom()
+      }
     }
   },
   computed: {
@@ -155,11 +169,14 @@ export default {
     }
   },
   methods: {
-    rezoom (timeout = 5000) {
+    rezoom (timeout = 5000, toggle) {
+      if (toggle) {
+        this.pinned = !this.pinned
+      }
       return () => {
         this.rezoomTime = Date.now()
         setTimeout(() => {
-          if (Date.now() - this.rezoomTime >= timeout) {
+          if (Date.now() - this.rezoomTime >= timeout && !this.pinned) {
             this.viewer.viewport.fitBounds(this.fitBounds, timeout === 0)
           }
         }, timeout)
@@ -185,11 +202,22 @@ export default {
 <style lang="scss" scoped>
 
 h2 {
-    text-align: left;
-    font-size: .9rem;
-    font-weight: 400;
-    margin: 0 0 .2rem;
-    padding: 0;
+  text-align: left;
+  font-size: .8rem;
+  font-weight: 500;
+  margin: 0.5rem 0rem .2rem;
+  padding: .3rem;
+  background-color: #6CA5B4;
+  border: 1px solid #333333;
+  cursor: default;
+
+  .sourceSiglum {
+    font-weight: 700;
+  }
+
+  .zoomLocker {
+    float: right;
+  }
 }
 
 .ComplaintDialogOSD {

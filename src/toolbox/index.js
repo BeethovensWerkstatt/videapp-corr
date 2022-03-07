@@ -2,10 +2,11 @@ import { Url } from './net'
 
 /**
  * create UUID (v4)
+ * @function
  * @module toolbox
  * @returns {String} - unique UUID
  */
-function uuidv4 () {
+export const uuidv4 = function () {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
     var r = Math.random() * 16 | 0; var v = c === 'x' ? r : (r & 0x3 | 0x8)
     return v.toString(16)
@@ -19,11 +20,11 @@ const AtReId = new RegExp('^.*\\/([^\\/\\.]*)\\.json')
  *
  * extract `xf07b16aa-ddbe-4548-9e78-0b3f1752bf0c`
  *
- * @memberof toolbox
+ * @function
  * @param {String} atid
  * @returns {String} - uuid part of url
  */
-function atId (atid) {
+export const atId = function (atid) {
   const m = AtReId.exec(atid)
   if (m && m[1]) {
     return m[1]
@@ -36,10 +37,10 @@ function atId (atid) {
  *
  * taken from <https://stackoverflow.com/questions/9083037/convert-a-number-into-a-roman-numeral-in-javascript?page=1&tab=votes#tab-top>
  *
- * @memberof toolbox
+ * @function
  * @param {Number} num - number to convert
  */
-function toRoman (num) {
+export const toRoman = function (num) {
   num = Math.floor(num)
   var val
   var s = ''
@@ -49,9 +50,10 @@ function toRoman (num) {
 
   /**
    * convert bif integer to roaman string
+   * @function
    * @param {Number} num - num > 39999
    */
-  function toBigRoman (num) {
+  const toBigRoman = function (num) {
     var ret = ''
     var n1 = ''
     var rem = num
@@ -86,7 +88,7 @@ function toRoman (num) {
     ++i
   }
   return s
-};
+}
 
 /**
  * data URL for desktop background image
@@ -100,10 +102,11 @@ export const transpTile = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAE
 
 const rexywh = new RegExp('xywh=(\\d+),(\\d+),(\\d+),(\\d+)')
 /**
+ * @function
  * @param {String} xywh X-Y-W-H value
  * @returns {Object} with properties x, y, width, height
  */
-function parsexywh (xywh) {
+export const parsexywh = function (xywh) {
   const m = rexywh.exec(xywh)
   return {
     x: parseInt(m[1]),
@@ -117,8 +120,11 @@ const imageCache = {}
 
 /**
  * create image data URL
+ * @function
+ * @param {Object} parms { width, height, text, x, y, f }
+ * @returns {Object} PNG image object
  */
-function createImageFromText ({ width, height, text, x, y, f }) {
+export const createImageFromText = function ({ width, height, text, x, y, f }) {
   const id = new Url()
   id.path = [width, height, x, y, f, text]
   let img = imageCache[id.toString()]
@@ -141,4 +147,71 @@ function createImageFromText ({ width, height, text, x, y, f }) {
   return img
 }
 
-export default { uuidv4, atId, parsexywh, toRoman, createImageFromText, desktopTile }
+/**
+ * find previous element in array
+ * @function
+ * @param {Object[]} arr array of objects
+ * @param {Function} pred predicate for object next to the one to return
+ * @param {Function} [fltr] filter elements before search
+ * @param {Function} [srtr] sort elements before search
+ */
+const findPrevious = function (arr, pred, fltr, srtr) {
+  if (fltr) {
+    arr = arr.filter(fltr)
+  }
+  if (srtr) {
+    arr = arr.sort(srtr)
+  }
+  const findP = (el, i, arr) => i < arr.length - 1 && pred(arr[i + 1])
+  return arr.find(findP)
+}
+/**
+ * find next element in array
+ * @function
+ * @param {Object[]} arr array of objects
+ * @param {Function} pred predicate for object next to the one to return
+ * @param {Function} [fltr] filter elements before search
+ * @param {Function} [srtr] sort elements before search
+ */
+const findNext = function (arr, pred, fltr, srtr) {
+  if (fltr) {
+    arr = arr.filter(fltr)
+  }
+  if (srtr) {
+    arr = arr.sort(srtr)
+  }
+  const findN = (el, i, arr) => i > 0 && pred(arr[i - 1])
+  return arr.find(findN)
+}
+
+/**
+ * conjunction of all filters of an array
+ * @function
+ * @param {function[]} filters array of filter functions
+ * @returns combined filter function
+ */
+export const filterAndCol = (filters) => (c) => {
+  for (const filter of filters) {
+    if (!filter(c)) {
+      return false
+    }
+  }
+  return true
+}
+
+/**
+ * disjunction of all filters of an array
+ * @function
+ * @param {function[]} filters array of filter functions
+ * @returns combined filter function
+ */
+export const filterOrCol = (filters) => (c) => {
+  for (const filter of filters) {
+    if (filter(c)) {
+      return true
+    }
+  }
+  return false
+}
+
+export default { uuidv4, atId, parsexywh, toRoman, createImageFromText, findPrevious, findNext, desktopTile }

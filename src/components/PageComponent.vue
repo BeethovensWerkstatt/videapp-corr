@@ -30,8 +30,8 @@
 import { mapGetters } from 'vuex'
 import OpenSeadragon from 'openseadragon'
 import ZoneComponent from '@/components/ZoneComponent.vue'
-import { actions } from '@/store/names'
-// import axios from 'axios'
+import n from '@/store/names'
+import axios from 'axios'
 import tb from '@/toolbox'
 
 /**
@@ -100,7 +100,7 @@ export default {
     // console.log('updated ' + this.page ? this.page.id : '[null]')
     this.updateTI()
     if (this.page && this.page.measures_uri) {
-      this.$store.dispatch(actions.loadZones, this.page)
+      this.$store.dispatch(n.actions.loadZones, this.page)
     }
   },
   watch: {
@@ -108,7 +108,7 @@ export default {
       // console.log('change page', this.page, this.page?.measures_uri)
       this.updateTI()
       if (this.page && this.page.measures_uri) {
-        this.$store.dispatch(actions.loadZones, this.page)
+        this.$store.dispatch(n.actions.loadZones, this.page)
       }
     },
     pos () {
@@ -137,7 +137,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['viewer', 'scale', 'displayMeasures']),
+    ...mapGetters([n.getters.viewer, n.getters.scale, n.getters.displayMeasures]),
     tiledimage: {
       get () {
         return this.tidata
@@ -269,7 +269,7 @@ export default {
     },
     svgShapeUrl () {
       const svgurl = this.page?.svg_shapes
-      console.log(svgurl)
+      // console.log(svgurl)
       return svgurl
     },
     activeComplaintId () {
@@ -289,7 +289,7 @@ export default {
       if (overlay) {
         overlay.update(this.pos)
       } else {
-      //   console.debug('no overlay!', this.divid)
+        // console.debug('no overlay!', this.divid)
         if (this.page?.id) {
           setTimeout(1000, this.updatePosition)
         }
@@ -298,6 +298,14 @@ export default {
         this.tiledimage.setPosition(this.pos, true)
       }
     },
+    async updateOverlayPage () {
+      const rect = this.viewer.viewport.viewportToViewerElementRectangle(this.pos)
+      // console.log(rect)
+      const canvas = this.viewer.canvas.querySelector('canvas')
+      const ctx = canvas.getContext('2d')
+      const imgdata = ctx.getImageData(rect.x, rect.y, rect.width, rect.height)
+      console.log(imgdata)
+    },
     /**
      * load new tiled image on start or page flip
      */
@@ -305,6 +313,11 @@ export default {
       // console.log('update TI ' + (this.pgdata !== this.pageID))
       this.updatePosition()
       if (!this.tiledimage || this.pgdata !== this.pageID) {
+        /* console.log('\n\nopening new page ' + this.pgdata)
+        console.log('this.tiledimage:')
+        console.log(this.tiledimage)
+        console.log('this.isActive: ' + this.isActive)
+        console.log('.\n\n') */
         // new page
         if (this.isActive) {
           // refresh tiled image
@@ -323,7 +336,39 @@ export default {
             success: (e) => {
               // when the tiled image is loaded (on success), a previous image is removed
               this.tiledimage = e.item
-              console.log(this.svgShapeUrl)
+              // TODO create image data -> in overlay
+              const svgContainer = this.$el.querySelector('.svg-shapes')
+              try {
+                svgContainer.removeEventListener('click', this.clickShapes)
+                svgContainer.innerHTML = ''
+                console.log('got rid of old stuff')
+              } catch (err) {
+                console.log('cannot remove svg')
+              }
+
+              if (this.svgShapeUrl && svgContainer) {
+                // console.log('got in')
+                // svgContainer.innerHTML = '<img width="100%" src="' + page.svg_shapes + '" />'
+
+                const callback = ({ data }) => {
+                  // console.log(this.svgShapeUrl)
+                  const parser = new DOMParser()
+                  const serializer = new XMLSerializer()
+                  const svg = parser.parseFromString(data, 'image/svg+xml')
+                  const svgroot = svg.documentElement
+                  svgroot.setAttribute('width', '100%')
+                  svgroot.setAttribute('height', '100%')
+                  // const shapes = svgroot.querySelectorAll('path')
+                  svgContainer.innerHTML = serializer.serializeToString(svg)
+                  svgContainer.addEventListener('click', this.clickShapes)
+                }
+                const url = this.svgShapeUrl
+                // if (!this.page.svgRequested) {
+                axios.get(url).then(callback)
+                // } else {    console.log('skipping second loading of SVG shapes')
+                // }
+                this.page.svgRequested = true
+              }
             },
             x,
             y,
@@ -335,27 +380,8 @@ export default {
           // console.log(tisrc)
           this.viewer.addTiledImage(tisrc)
 
-          const svgContainer = this.$el.querySelector('.svg-shapes')
-          console.log(this.svgShapeUrl, svgContainer)
-          if (this.svgShapeUrl && svgContainer) {
-            // svgContainer.innerHTML = '<img width="100%" src="' + page.svg_shapes + '" />'
-            const callback = ({ data }) => {
-              // console.log(this.svgShapeUrl)
-              const parser = new DOMParser()
-              const serializer = new XMLSerializer()
-              const svg = parser.parseFromString(data, 'image/svg+xml')
-              const svgroot = svg.documentElement
-              svgroot.setAttribute('width', '100%')
-              svgroot.setAttribute('height', '100%')
-              // const shapes = svgroot.querySelectorAll('path')
-              svgContainer.innerHTML = serializer.serializeToString(svg)
-              svgContainer.addEventListener('click', this.clickShapes)
-            }
-            const url = this.svgShapeUrl
-            // axios.get(url).then(callback)
-            // TODO why does this sometimes not work???
-            this.$store.dispatch('getData', { url, callback })
-          }
+          // console.log(svgContainer)
+          // console.log('--CALLING ELVIS ' + this.sourceId.split('/').slice(-1)[0] + ' – ' + typeof this.svgShapeUrl + ' – ' + typeof svgContainer)
         } else {
           this.tiledimage = null
         }
@@ -394,9 +420,9 @@ export default {
           }) */
           const oldId = this.$store.getters.activeComplaintId
           if (oldId === null) {
-            this.$store.dispatch(actions.activateComplaint, monitumId)
+            this.$store.dispatch(n.actions.activateComplaint, monitumId)
           } else if (oldId !== monitumId && !oldId.endsWith('/' + monitumId + '.json')) {
-            this.$store.dispatch(actions.activateComplaint, monitumId)
+            this.$store.dispatch(n.actions.activateComplaint, monitumId)
           }
         } else {
           console.log('clicked on ' + path.id + ', which is not part of a monitum ')
@@ -404,7 +430,7 @@ export default {
 
         if (meiId !== '') {
           const firstItem = meiId.split(' ')[0]
-          this.$store.dispatch(actions.setCurrentItem, firstItem)
+          this.$store.dispatch(n.actions.setCurrentItem, firstItem)
         }
       }
     },

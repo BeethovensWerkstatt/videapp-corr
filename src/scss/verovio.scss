@@ -3,21 +3,60 @@
 
 @import "./variables.scss";
 
+.revision.trans svg {
+   .add g:not([class*="bounding-box"]) {
+      stroke: green;
+      fill: green;
+
+      path {
+        stroke: green;
+        fill: green;
+      }
+   }
+
+   .del g:not([class*="bounding-box"]) {
+      stroke: red;
+      fill: red;
+
+      path {
+        stroke: red;
+        fill: red;
+      }
+   }
+}
+
+.trans svg {
+   .sic g:not([class*="bounding-box"]) {
+      stroke: #d825da;
+      fill: #d825da;
+
+      path {
+        stroke: #d825da;
+        fill: #d825da;
+      }
+   }
+}
+
 svg {
+
+   text {
+      cursor: default;
+   }
+
   .measure.invis {
     .staff > path {
       stroke: transparent;
+    }
+
+    .barLine, .barLine path {
+      stroke: transparent;
+      fill: transparent;
     }
 
     .dir.metaMark.rightmar + .barLineAttr > path {
       stroke: transparent;
       fill: transparent;
     }
-  }
-
-  .add g:not([class*="bounding-box"]) {
-    stroke: green;
-    fill: green;
   }
 
   .grpSym > path {
@@ -36,7 +75,7 @@ svg {
   }
 
   g rect.bg {
-    opacity: 20%;
+    fill: rgba(0,0,255,.2);
   }
 
   g.activeComplaint path {

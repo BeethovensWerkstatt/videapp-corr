@@ -133,7 +133,8 @@ export default {
       const x = (pp.v ? this.versoPos.x : this.rectoPos.x) - this.sourceMarginWidth
       const y = (pp.v ? this.versoPos.y : this.rectoPos.y) - this.sourceHeaderHeight
       const width = this.rectoPos.width + this.versoPos.width + (2 * this.sourceMarginWidth)
-      return new OpenSeadragon.Rect(x, y, width, this.sourceHeaderHeight)
+      const pos = new OpenSeadragon.Rect(x, y, width, this.sourceHeaderHeight)
+      return pos
     },
     marginPos () {
       const pp = this.source.pages[this.pagenr]
@@ -141,7 +142,8 @@ export default {
       const y = (pp.v ? this.versoPos.y : this.rectoPos.y)
       const width = this.rectoPos.width + this.versoPos.width + (2 * this.sourceMarginWidth)
       const height = Math.max(this.rectoPos.height, this.versoPos.height)
-      return new OpenSeadragon.Rect(x, y, width, height)
+      const pos = new OpenSeadragon.Rect(x, y, width, height)
+      return pos
     },
     rectoPos () {
       const pp = this.source.pages[this.pagenr]

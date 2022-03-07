@@ -1,32 +1,60 @@
 <template>
-  <div class="hello">
-    <h1>Werkliste</h1>
-    <p>
+  <div class="workslist">
+    <h1>{{ $tc('terms.case-study', 2) }}</h1>
+    <div class="works-table">
       <table id="worksList" class="table">
         <thead>
           <tr>
-            <th>Komponist</th>
-            <th>Werk</th>
-            <th>Modul</th>
-            <th>Sonstwas</th>
+            <th>{{ $t('terms.opus') }}</th>
+            <th>{{ $tc('terms.work', 1) }}</th>
+            <th>{{ $t('terms.software') }}</th>
+            <th>{{ $tc('terms.explanatory', 2) }}</th>
+            <th>{{ $tc('terms.module', 2) }}</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="work in works" :key="work['@id']">
-            <td><a :href="work.composer['@id']">{{ work.composer.name }}</a></td>
-            <td><router-link :to="getLink(work.id)">{{ work.title[0].title }}</router-link></td>
-            <td>Modul 3</td>
-            <td><router-link :to="getLink(work.id)">Link</router-link></td>
+            <td>
+              {{ work.label }}
+            </td>
+            <td>
+              {{ work.title }}
+            </td>
+            <td>
+              <router-link :to="getLink(work.id)" v-if="work.route">
+                <span v-html="appTitle(work)" />
+              </router-link>
+              <a :href="work.app" target="_blank" v-else-if="work.app">
+                &#x2799; <span v-html="appTitle(work)" />
+              </a>
+              <span class="nofile" v-else>&mdash;</span>
+            </td>
+            <td>
+              <a :href="work.dossier" target="_blank" v-if="work.dossier" :title="work.dossiertitle">
+                &#x2799; <document-symbol height="1.2rem" /> <!-- {{ work.dossierlabel || $t('terms.about') + ' ' + work.label + ' ...' }} -->
+              </a>
+              <span class="nofile" v-else>&mdash;</span>
+            </td>
+            <td>
+              <span v-for="(module, i) in work.modules" :key="module">
+                <template v-if="i > 0">, </template>
+                <a :href="moduleURL(module)" target="_blank" :title="moduleTitel(module)">{{ moduleLabel(module) }}</a>
+              </span>
+            </td>
           </tr>
         </tbody>
       </table>
-    </p>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-// import { actions } from '@/store/names'
+import n from '@/store/names'
+import { workSorter } from '@/store/directory'
+import DocumentSymbol from '@/components/symbols/DocumentSymbol.vue'
+
+const VideAppRE = /VideApp *(\w+)/i
 
 /**
  * list of works component
@@ -35,16 +63,46 @@ import { mapGetters } from 'vuex'
  */
 export default {
   name: 'WorksList',
+  components: {
+    DocumentSymbol
+  },
   beforeCreate () {
     // this.$store.dispatch(actions.loadWorks)
   },
   computed: {
-    ...mapGetters(['works'])
+    // ...mapGetters(['works'])
+    ...mapGetters([n.getters.directory_works, n.getters.directory_modules]),
+    works () {
+      const works = Object.values(this[n.getters.directory_works])
+      // console.log(works)
+      return works.sort(workSorter)
+    }
   },
   methods: {
-    // TODO link creator?
     getLink (id) {
-      return '/work/' + id
+      return { name: 'Schreibtisch', params: { id } }
+    },
+    moduleLabel (module) {
+      const modules = this[n.getters.directory_modules]
+      // console.log(module, modules[module]?.label)
+      return modules[module]?.label || '[?]'
+    },
+    moduleTitel (module) {
+      const modules = this[n.getters.directory_modules]
+      // console.log(module, modules[module]?.label)
+      return modules[module]?.title || ('[?]' + module)
+    },
+    moduleURL (module) {
+      const modules = this[n.getters.directory_modules]
+      // console.log(module, modules[module]?.url)
+      return modules[module]?.url || '[?]'
+    },
+    appTitle (work) {
+      const m = VideAppRE.exec(work.apptitle || '')
+      if (m) {
+        return 'VideApp<sub>' + m[1] + '</sub>'
+      }
+      return work.apptitle || '[?]'
     }
   }
 }
@@ -58,5 +116,15 @@ h1 {
 #worksList {
   margin: 0 3rem 0;
   width: calc(100% - 6rem);
+}
+.works-table {
+  max-width: 80rem;
+  margin: 2rem auto;
+  .table {
+    width: 100%;
+  }
+}
+.nofile {
+  color: lightgray;
 }
 </style>

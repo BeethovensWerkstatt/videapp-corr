@@ -1,18 +1,11 @@
-import mutations, { mutationsNames } from './mutations'
-import actions, { actionNames } from './actions'
-import getters, { getterNames } from './getters'
+import { sourcesNames } from './names'
+import mutations from './mutations'
+import actions from './actions'
+import getters from './getters'
 
-export const sourcesNames = {
-  state: {
-    movements: 'movements',
-    sources: 'sources',
-    activeSourceId: 'activeSourceId',
-    page: 'pages'
-  },
-  mutations: mutationsNames,
-  actions: actionNames,
-  getters: getterNames
-}
+// TODO compareSources
+// TODO compareMovements
+// TODO comparePages?
 
 /**
  * @namespace store.sources

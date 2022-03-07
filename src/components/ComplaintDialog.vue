@@ -5,13 +5,15 @@
       <div class="head" v-if="active">
         <div class="title">
           <div class="titletext">
-            {{ toRoman(activeComplaint.movement.n) }}. {{ activeComplaint.movement.label }} {{ (activeComplaint.label !== '') ? ', ' + activeComplaint.label : ''}}, Takt: {{ measures }}
+            {{ toRoman(activeComplaint.movement.n) }}. {{ activeComplaint.movement.label }}{{ (complaintLabel !== '') ? (', ' + complaintLabel) : '' }}, {{ $t('terms.measure') }} {{ measures }}
           </div>
           <div class="measures">
-            Monitum <a class="monitumLink" :href="activeComplaint['@id']" target="_blank">1</a>
+            Monitum <a class="monitumLink" :href="activeComplaint['@id']" target="_blank" rel="noopener noreferrer" :title="monitumId">{{ monitumId.split('-')[0] }}</a>
           </div>
         </div>
         <div class="close">
+          <button :disabled="!previousComplaintId" @click="loadPrevious" class="btn btn-sm"><span class="icon icon-arrow-left">&nbsp;</span></button>
+          <button :disabled="!nextComplaintId" @click="loadNext" class="btn btn-sm"><span class="icon icon-arrow-right">&nbsp;</span></button>
           <button class="btn btn-sm" @click.prevent="displayViewSelection"><i class="icon icon-menu"></i> Optionen</button>
           <button class="btn btn-sm" @click.prevent="closeDialog"><i class="icon icon-cross"></i> {{ $t('terms.close') }}</button>
         </div>
@@ -40,7 +42,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { mutations } from '@/store/names'
+import n from '@/store/names'
 // import VerovioComponent from '@/components/VerovioComponent.vue'
 import toolbox from '@/toolbox'
 import ComplaintDialogTabRow from '@/components/ComplaintDialog/TabRow.vue'
@@ -85,14 +87,14 @@ export default {
     */
     active () {
       if (this.active) {
-        this.$store.commit(mutations.ADD_MODAL, this.$vnode.tag)
+        this.$store.commit(n.mutations.ADD_MODAL, this.$vnode.tag)
       } else {
-        this.$store.commit(mutations.REM_MODAL, this.$vnode.tag)
+        this.$store.commit(n.mutations.REM_MODAL, this.$vnode.tag)
       }
     }
   },
   computed: {
-    ...mapGetters(['viewer', 'displayComplaint', 'activeComplaintId', 'activeComplaint', 'complaintDisplaySelect']),
+    ...mapGetters(['viewer', 'displayComplaint', 'activeComplaintId', 'activeComplaint', 'complaintDisplaySelect', 'previousComplaintId', 'nextComplaintId']),
     active () {
       if (this.displayComplaint && this.activeComplaintId) {
         return true
@@ -111,12 +113,32 @@ export default {
       }
       return ''
     },
+    complaintLabel () {
+      const complaint = this.activeComplaint
+      const label = complaint?.label
+      if (complaint.affects?.length > 0) {
+        const staves = complaint.affects[0].staves
+        if (staves?.length > 0) {
+          // console.log(staves)
+          const insts = label ? [label] : []
+          for (const sn of staves) {
+            const sa = complaint.movement.staves.filter(s => s.n === sn)
+            for (const s of sa) {
+              insts.push(s.label || '[?]')
+            }
+          }
+          // console.log(insts)
+          return [...new Set(insts)].join(', ')
+        }
+      }
+      return label
+    },
     select: {
       get () {
         return this.complaintDisplaySelect
       },
       set (sel) {
-        this.$store.commit(mutations.SET_COMPLAINT_DISPLAY_SELECT, sel)
+        this.$store.commit(n.mutations.SET_COMPLAINT_DISPLAY_SELECT, sel)
       }
     },
     docMap () {
@@ -169,6 +191,11 @@ export default {
       }
       // console.log(styles)
       return styles
+    },
+    monitumId () {
+      let id = this.activeComplaintId.split('/').splice(-1)[0]
+      id = id.substring(0, id.length - 5)
+      return id
     }
   },
   methods: {
@@ -202,6 +229,9 @@ export default {
       if (textStatus) {
         textStatus.forEach(stat => {
           // console.log(stat.iiif[0]?.on.full)
+          if (stat.tei) {
+            console.log('TEI', stat.tei)
+          }
           docs.push({
             img: {
               // TODO scaling? NO goto OSD
@@ -211,12 +241,14 @@ export default {
               label: stat.labels?.source + ', ' + stat.labels?.pages // 'Sigel / Datum'
             }
           })
-          // TODO where is the right MEI
           docs.push({
             mei: {
               url: stat.mei,
               trans: 'dipl',
               label: 'Transkription' // 'transcription of ' + stat.labels?.source // 'Annot. Transkript.'
+            },
+            tei: {
+              url: stat.tei
             }
           })
           docs.push({
@@ -226,7 +258,6 @@ export default {
               label: 'Text'
             }
           })
-          // TODO we need the complaint text here
           docs.push({
             anno: stat.comment
           })
@@ -238,7 +269,7 @@ export default {
      * close this dialog
      */
     closeDialog (e) {
-      this.$store.commit(mutations.DISPLAY_COMPLAINT, false)
+      this.$store.commit(n.mutations.DISPLAY_COMPLAINT, false)
     },
     /**
      * display select dialog
@@ -310,6 +341,14 @@ export default {
     resize () {
       // console.log('resize dialog')
       this.innerHeight = window.innerHeight
+    },
+    loadPrevious () {
+      console.log('activate previous sibling')
+      // this.$store.dispatch(n.actions.activateSibling, true)
+    },
+    loadNext () {
+      console.log('activate next sibling')
+      // this.$store.dispatch(n.actions.activateSibling, false)
     }
   }
 }
@@ -318,9 +357,11 @@ export default {
 <style lang="scss" scoped>
 
 .dialogBack {
+  top: 0px;
+  left: 0px;
   width: 100%;
   height: 100%;
-  position: absolute;
+  position: fixed;
   z-index: 10;
   background-color: rgba(0,0,0,.3);
   backdrop-filter: blur(3px);
@@ -332,7 +373,7 @@ export default {
 }
 
 .dialog {
-  position: absolute;
+  position: fixed;
   left: 1rem;
   top: 1rem;
   // TODO ??
@@ -363,7 +404,8 @@ export default {
         font-size: 90%;
 
         .monitumLink {
-          font-weight: 700;
+          // font-weight: 700;
+          color: rgb(44, 62, 80);
         }
       }
     }

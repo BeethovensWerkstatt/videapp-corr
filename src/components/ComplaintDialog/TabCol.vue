@@ -7,6 +7,13 @@
       :region="facsRegion"
       :state="state"
     />
+    <tab-col-tei
+      v-if="tei"
+      :tei="tei"
+      :label="transLabel"
+      :state="state"
+      layer="trans"
+    />
     <tab-col-verovio
       v-if="transOptions"
       :options="transOptions"
@@ -33,9 +40,10 @@
 </template>
 
 <script>
-import TabColAnno from './TabColAnno.vue'
 import TabColFacs from './TabColFacs.vue'
 import TabColVerovio from './TabColVerovio.vue'
+import TabColTei from './TabColTei.vue'
+import TabColAnno from './TabColAnno.vue'
 
 // translate text state labels to i18n tags
 const labels = {
@@ -72,7 +80,7 @@ const labels = {
  * @vue-computed {String} anno - text/html of annotation or undefined
  */
 export default {
-  components: { TabColFacs, TabColVerovio, TabColAnno },
+  components: { TabColFacs, TabColVerovio, TabColTei, TabColAnno },
   name: 'ComplaintDialogTabCol',
   props: {
     row: {
@@ -142,11 +150,12 @@ export default {
       return label
     },
     tags () {
-      if (this.state === 'revision') {
-        // console.log(this.row?.tags)
-        return this.row?.tags
-      }
-      return undefined
+      // console.log(this.row?.tags)
+      return this.row?.tags
+    },
+    tei () {
+      const tei = this.row[this.state]?.tei?.url
+      return tei
     },
     anno () {
       // console.log(this.row[this.state])

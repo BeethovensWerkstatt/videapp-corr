@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import { actions } from './store/names'
+import n from './store/names'
 
 import 'spectre.css/dist/spectre-exp.css'
 import 'spectre.css/dist/spectre-icons.css'
@@ -36,5 +36,6 @@ new Vue({
   render: h => h(App)
 }).$mount('#app')
 
-store.dispatch(actions.initVerovio)
-store.dispatch(actions.loadWorks)
+store.dispatch(n.actions.initVerovio)
+store.dispatch(n.actions.loadWorks)
+store.dispatch(n.actions.directory_load_db)

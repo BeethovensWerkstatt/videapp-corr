@@ -1,0 +1,216 @@
+{
+  "works": {
+    "op111": {
+      "label": "Op. 111",
+      "title": "Sonate für Klavier c-Moll",
+      "opus": 111,
+      "modules": ["modul1"],
+      "app": "https://beethovens-werkstatt.de/prototyp-1/",
+      "apptitle": "Prototyp 1"
+    },
+    "op59/3": {
+      "label": "Op. 59/3",
+      "title": "Streichquartett C-Dur",
+      "opus": 59.3,
+      "modules": ["modul1"],
+      "app": "https://beethovens-werkstatt.de/prototyp-2-0/",
+      "apptitle": "Prototyp 2"
+    },
+    "op75/2": {
+      "label": "Op. 75/2",
+      "title": "Lied \"Neue Liebe, neues Leben\"",
+      "opus": 75.2,
+      "modules": ["modul1"],
+      "app": "http://nagano.upb.de:29999/",
+      "apptitle": "VideApp var"
+    },
+    "op93": {
+      "label": "Op. 93",
+      "title": "8. Sinfonie in F-Dur",
+      "opus": 93,
+      "modules": ["modul1"],
+      "app": "http://nagano.upb.de:29999/",
+      "apptitle": "VideApp var"
+    },
+    "woo32": {
+      "label": "WoO 32",
+      "title": "Duett mit zwei obligaten Augengläsern",
+      "woo": 32,
+      "modules": ["modul1"],
+      "app": "http://nagano.upb.de:29999/",
+      "apptitle": "VideApp var"
+    },
+    "op14/1": {
+      "label": "Op. 14/1",
+      "title": "Klaviersonate E-Dur",
+      "opus": 14.1,
+      "modules": ["modul2"],
+      "dossier": "https://beethovens-werkstatt.de/vergleich-14/",
+      "dossiertitle": "Klaviersonate E-Dur op. 14 Nr. 1 und Bearbeitung als Streichquartett F-Dur",
+      "app": "https://videapp-arr.beethovens-werkstatt.de/",
+      "apptitle": "VideApp arr"
+    },
+    "opus20": {
+      "label": "Op. 20",
+      "title": "Septett",
+      "opus": 20,
+      "modules": ["modul2"],
+      "dossier": "https://beethovens-werkstatt.de/vergleich-20-38/",
+      "dossiertitle": "Septett Es-Dur op. 20 und Bearbeitung als Trio op. 38",
+      "app": "https://videapp-arr.beethovens-werkstatt.de/",
+      "apptitle": "VideApp arr"
+    },
+    "opus38": {
+      "label": "Op. 38",
+      "title": "Trio (Bearbeitung von Septett Op. 20)",
+      "opus": 38,
+      "modules": ["modul2"],
+      "dossier": "https://beethovens-werkstatt.de/vergleich-20-38/",
+      "dossiertitle": "Septett Es-Dur op. 20 und Bearbeitung als Trio op. 38",
+      "app": "https://videapp-arr.beethovens-werkstatt.de/",
+      "apptitle": "VideApp arr"
+    },
+    "op121b": {
+      "label": "Op. 121b",
+      "title": "Opferlied",
+      "opus": 121,
+      "modules": ["modul2"],
+      "dossier": "https://beethovens-werkstatt.de/vergleich-121b",
+      "dossiertitle": "Opferlied op. 121b und Bearbeitung als Klavierauszug",
+      "app": "https://videapp-arr.beethovens-werkstatt.de/",
+      "apptitle": "VideApp arr"
+    },
+    "op122": {
+      "label": "Op. 122",
+      "title": "Bundeslied",
+      "opus": 122,
+      "modules": ["modul2"],
+      "dossier": "https://beethovens-werkstatt.de/vergleich-122",
+      "dossiertitle": "Bundeslied op. 122 und Bearbeitung als Klavierauszug",
+      "app": "https://videapp-arr.beethovens-werkstatt.de/",
+      "apptitle": "VideApp arr"
+    },
+    "op133": {
+      "label": "Op. 133",
+      "title": "Große Fuge",
+      "opus": 133,
+      "modules": ["modul2"],
+      "dossier": "https://beethovens-werkstatt.de/vergleich-133",
+      "dossiertitle": "Große Fuge (B-Dur) op. 133 für Streichquartett und Bearbeitung für Klavier zu vier Händen op. 134",
+      "app": "https://videapp-arr.beethovens-werkstatt.de/",
+      "apptitle": "VideApp arr"
+    },
+    "op134": {
+      "label": "Op. 134",
+      "title": "Große Fuge für Klavier zu vier Händen",
+      "opus": 134,
+      "modules": ["modul2"],
+      "dossier": "https://beethovens-werkstatt.de/vergleich-133",
+      "dossiertitle": "Große Fuge (B-Dur) op. 133 für Streichquartett und Bearbeitung für Klavier zu vier Händen op. 134",
+      "app": "https://videapp-arr.beethovens-werkstatt.de/",
+      "apptitle": "VideApp arr"
+    },
+    "op73": {
+      "@id": "https://api.beethovens-werkstatt.de/module3/xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d.json",
+      "id": "xf3f76067-b8a1-48ce-878f-41b9a0ef0c8d",
+      "label": "Op. 73",
+      "title": "5. Klavierkonzert",
+      "opus": 73,
+      "modules": ["modul3"],
+      "route": "Schreibtisch",
+      "apptitle": "VideApp rev"
+    },
+    "op120": {
+      "@id": "https://api.beethovens-werkstatt.de/module3/xfae46dc1-e2dc-412a-a27c-91a31cd18ab8.json",
+      "id": "xfae46dc1-e2dc-412a-a27c-91a31cd18ab8",
+      "label": "Op. 120",
+      "title": "Diabelli-Variationen",
+      "opus": 120,
+      "modules": ["modul3"],
+      "route": "Schreibtisch",
+      "apptitle": "VideApp rev"
+    },
+    "op104": {
+      "label": "Op. 104",
+      "title": "Streichquintett c-Moll",
+      "opus": 104,
+      "modules": ["modul3"]
+    },
+    "op106": {
+      "label": "Op. 106",
+      "title": "Klaviersonate B-Dur",
+      "opus": 106,
+      "modules": ["modul3"]
+    },
+    "op109": {
+      "label": "Op. 109",
+      "title": "Klaviersonate E-Dur",
+      "opus": 109,
+      "modules": ["modul3"]
+    },
+    "op127": {
+      "label": "Op. 127",
+      "title": "Streichquartett Es-Dur",
+      "opus": 127,
+      "modules": ["modul3"]
+    },
+    "op86": {
+      "label": "Op. 86",
+      "title": "Messe C-Dur",
+      "opus": 86,
+      "modules": ["modul1"],
+      "dossier": "https://beethovens-werkstatt.de/schreibchronologie-bei-orchestrierungsvarianten/",
+      "dossiertitle": "Schreibchronologie bei Orchestrierungsvarianten: ein Beispiel aus Beethovens Messe C-Dur op. 86"
+    },
+    "woo152": {
+      "label": "WoO 152",
+      "title": "Irische Lieder",
+      "woo": 152,
+      "modules": ["modul3"]
+    }
+  },
+  "modules": {
+    "modul1": {
+      "label": "Modul 1",
+      "title": "Variantendarstellung in symphonischen, kammermusikalischen und vokalen Werken",
+      "n": 1,
+      "url": "https://beethovens-werkstatt.de/modul-1/",
+      "start": 2014,
+      "finish": 2016
+    },
+    "modul2": {
+      "label": "Modul 2",
+      "title": "Beethoven als Bearbeiter eigener Werke",
+      "n": 2,
+      "url": "https://beethovens-werkstatt.de/modul-2/",
+      "start": 2017,
+      "finish": 2019
+    },
+    "modul3": {
+      "label": "Modul 3",
+      "title": "Auf der Suche nach dem Werktext",
+      "n": 3,
+      "url": "https://beethovens-werkstatt.de/modul-3/",
+      "start": 2020,
+      "finish": 2021
+    },
+    "modul4": {
+      "label": "Modul 4",
+      "title": "Skizzenbuch-Edition",
+      "n": 4,
+      "url": "https://beethovens-werkstatt.de/modul-4/",
+      "inactive": true,
+      "start": 2022,
+      "finish": 2026
+    },
+    "modul5": {
+      "label": "Modul 5",
+      "title": "Kombination von Editionskonzepten in einer Edition: Drei Modelleditionen der Diabelli-Variationen op. 120",
+      "n": 5,
+      "url": "https://beethovens-werkstatt.de/modul-5/",
+      "inactive": true,
+      "start": 2027,
+      "finish": 2029
+    }
+  }
+}

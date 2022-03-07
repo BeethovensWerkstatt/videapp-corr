@@ -1,17 +1,5 @@
 import { Url } from '@/toolbox/net'
-
-export const pagesNames = {
-  state: {
-    pages: 'pages'
-  },
-  mutations: {
-    LOAD_PAGE: 'LOAD_PAGE'
-  },
-  actions: {},
-  getters: {
-    getPage: 'getPage'
-  }
-}
+import { pagesNames } from './names'
 
 /**
  * @namespace store.processing

@@ -1,8 +1,45 @@
 // import axios from 'axios'
 import config from '@/config'
-import { startProc, finishProc } from '..'
-import { mutations, actions, registerMutations, registerActions } from '../names'
+import store, { startProc, finishProc } from '..'
+import n from '@/store/names'
 import tb from '@/toolbox'
+
+/**
+ * compare two works by opus number for sorting
+ * @function
+ * @param {String} wid1 id of first work
+ * @param {String} wid2 id of second work
+ */
+export const compareWorks = (wid1, wid2) => {
+  // console.log(wid1, wid2)
+  if (wid1 === wid2) {
+    return 0
+  }
+  // TODO why do I need to separate them?
+  // TODO erase workaround if opus number is part of work structure!
+  const matchOpus1 = /Op.\s*(\d+)/gm
+  const matchOpus2 = /Op.\s*(\d+)/gm
+
+  const work1 = store.getters[n.getters.getWork](wid1)
+  const work2 = store.getters[n.getters.getWork](wid2)
+  if (work1?.title[0].title !== work2?.title[0].title) {
+    const t1 = work1?.title[0].title
+    const t2 = work2?.title[0].title
+    if (!!t1 && !!t2) {
+      const m1 = matchOpus1.exec(t1)
+      const o1 = m1 ? parseInt(m1[1]) : 0
+      const m2 = matchOpus2.exec(t2)
+      const o2 = m2 ? parseInt(m2[1]) : 0
+      if (o1 < o2) {
+        return -1
+      } else if (o1 > o2) {
+        return 1
+      }
+    }
+    return t2?.localeCompare(t1) > 0 ? -1 : 1
+  }
+  return 0
+}
 
 /**
  * @namespace store.works
@@ -13,7 +50,7 @@ const worksModule = {
    * @property {Object[]} works available works
    */
   state: {
-    works: []
+    [n.state.works]: []
   },
   /**
    * @namespace store.works.mutations
@@ -24,7 +61,7 @@ const worksModule = {
      * @memberof store.works.mutations
      * @param {object} work
      */
-    LOAD_WORK (state, work) {
+    [n.mutations.LOAD_WORK] (state, work) {
       const works = [...state.works]
       if (!work.id) {
         work.id = tb.atId(work['@id'])
@@ -45,7 +82,7 @@ const worksModule = {
      * load works
      * @memberof store.works.actions
      */
-    async loadWorks ({ commit, dispatch }) {
+    async [n.actions.loadWorks] ({ commit, dispatch }) {
       startProc()
       try {
         const url = config.api.works.url
@@ -54,11 +91,11 @@ const worksModule = {
         const callback = ({ data }) => {
           for (const work of data) {
             // console.log(work)
-            commit(mutations.LOAD_WORK, work)
-            dispatch(actions.loadSources, work.id)
+            commit(n.mutations.LOAD_WORK, work)
+            dispatch(n.actions.loadSources, work.id)
           }
         }
-        dispatch(actions.getData, { url, callback })
+        dispatch(n.actions.getData, { url, callback })
       } finally {
         finishProc()
       }
@@ -69,13 +106,11 @@ const worksModule = {
    * @property {Object[]} works array of available works
    */
   getters: {
-    works: (state) => {
+    [n.getters.works]: (state) => {
       return state.works
-    }
+    },
+    [n.getters.getWork]: (state) => (id) => state.works.find((w) => w['@id'] === id || w.id === id)
   }
 }
-
-registerMutations(worksModule.mutations)
-registerActions(worksModule.actions)
 
 export default worksModule

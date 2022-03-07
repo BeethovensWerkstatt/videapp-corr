@@ -24,6 +24,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import ComplaintsList from './ComplaintsList.vue'
+import n from '@/store/names'
 
 export default {
   components: { ComplaintsList },
@@ -43,7 +44,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['viewer', 'showComplaintsList']),
+    ...mapGetters([n.getters.viewer, n.getters.showComplaintsList, n.getters.getWork]),
     active: {
       get () {
         return this.showComplaintsList
@@ -52,8 +53,15 @@ export default {
         this.$store.commit('COMPLAINTS_LIST', show)
       }
     },
+    workId () {
+      return this.$route.params.id
+    },
+    workTitle () {
+      const work = this.getWork(this.workId)
+      return work?.title[0].title
+    },
     title () {
-      return this.$t('terms.complaints')
+      return this.$t('terms.complaints') + (this.workTitle ? (': ' + this.workTitle) : '')
     },
     styles () {
       return {}
@@ -71,9 +79,11 @@ export default {
 <style lang="scss" scoped>
 
 .dialogBack {
+  top: 0px;
+  left: 0px;
   width: 100%;
   height: 100%;
-  position: absolute;
+  position: fixed;
   z-index: 10;
   background-color: rgba(0,0,0,.3);
   backdrop-filter: blur(3px);
@@ -85,7 +95,7 @@ export default {
 }
 
 .dialog {
-  position: absolute;
+  position: fixed;
   left: 1rem;
   top: 1rem;
   // TODO ??

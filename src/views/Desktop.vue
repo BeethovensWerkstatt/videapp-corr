@@ -18,7 +18,7 @@
       </div>
       <zone-info />
       <complaint-info />
-      <complaint-details v-if="activeComplaint" />
+      <complaint-details v-if="hasCurrentItem" />
       <!-- <source-info /> -->
     </div>
   </div>
@@ -32,7 +32,7 @@ import ZoneInfo from '@/components/ZoneInfo.vue'
 import ComplaintsListDialog from '../components/ComplaintsListDialog.vue'
 import ComplaintDialog from '@/components/ComplaintDialog.vue'
 import ComplaintInfo from '../components/ComplaintInfo.vue'
-import { mutations, getters } from '@/store/names'
+import n from '@/store/names'
 import ComplaintDetails from '../components/ComplaintDetails.vue'
 
 /**
@@ -58,7 +58,7 @@ export default {
   watch: {
     modalsOpen () {
       // console.log(this.$vnode.tag)
-      if (this[getters.modalsOpen] > 0) {
+      if (this[n.getters.modalsOpen] > 0) {
         this.viewer.navigator.element.style.display = 'none'
       } else {
         this.viewer.navigator.element.style.display = 'inline-block'
@@ -69,7 +69,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['viewer', 'scale', getters.modalsOpen, getters.activeComplaint]),
+    ...mapGetters(['viewer', 'scale', n.getters.modalsOpen, n.getters.hasCurrentItem]),
     displayMeasures: {
       get () {
         const displayMeasures = this.$store.getters.displayMeasures
@@ -77,7 +77,7 @@ export default {
         return displayMeasures
       },
       set (val) {
-        this.$store.commit(mutations.SET_DISPLAY_MEASURES, val)
+        this.$store.commit(n.mutations.SET_DISPLAY_MEASURES, val)
       }
     }
   }

@@ -17,10 +17,13 @@
     "openseadragon": "^2.4.2",
     "pouchdb": "^7.2.2",
     "spectre.css": "^0.5.9",
+    "sprintf-js": "^1.1.2",
+    "tether": "^2.0.0",
     "typescript": "^4.1.2",
     "vue": "^2.6.11",
     "vue-i18n": "^8.22.3",
     "vue-router": "^3.4.9",
+    "vue2-ace-editor": "0.0.15",
     "vue2-d3": "^1.0.0",
     "vuex": "^3.6.0"
   },
@@ -51,7 +54,7 @@
     "markdown-pdf": "^10.0.0",
     "node-sass": "^4.12.0",
     "sass-loader": "^8.0.2",
-    "verovio": "^3.4.1",
+    "verovio": "^3.7.0",
     "vue-cli-plugin-i18n": "~2.0.2",
     "vue-template-compiler": "^2.6.11"
   },

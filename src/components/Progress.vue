@@ -1,5 +1,6 @@
 <template>
-  <div :class="{ 'progress': working }">🕛</div>
+  <!--<div :class="{ 'progress': working }">🕛</div>-->
+  <div :class="{ 'loading': working }"></div>
 </template>
 
 <script>

@@ -1,85 +1,76 @@
-import { runtimeNames } from './runtime'
-import { processingNames } from './processing'
-import { DAnames } from './dataAccess'
-import { OSDnames } from './osd'
-import { sourcesNames } from './sources'
-import { pagesNames } from './pages'
-import { infoboxnames } from './infobox'
-import { complaintsNames } from './complaints'
+import { runtimeNames } from './runtime/names'
+import { optionNames } from './userDisplayOptions/names'
+import { DAnames } from './dataAccess/names'
+import { OSDnames } from './osd/names'
+import { verovioNames } from './vrv/names'
+import { worksNames } from './works/names'
+import { sourcesNames } from './sources/names'
+import { pagesNames } from './pages/names'
+import { infoboxnames } from './infobox/names'
+import { complaintsNames } from './complaints/names'
+import { directoryNames } from './directory/names'
 
 /**
  * register action and mutation names
  *
  * @module store.names
  */
-
 export const state = {
+  version: 'version',
   ...runtimeNames.state,
-  ...processingNames.state,
+  ...optionNames.state,
   ...DAnames.state,
   ...OSDnames.state,
+  ...verovioNames.state,
+  ...worksNames.state,
   ...sourcesNames.state,
   ...pagesNames.state,
   ...infoboxnames.state,
-  ...complaintsNames.state
+  ...complaintsNames.state,
+  ...directoryNames.state
 }
 export const getters = {
+  version: 'version',
   ...runtimeNames.getters,
-  ...processingNames.getters,
+  ...optionNames.getters,
   ...DAnames.getters,
   ...OSDnames.getters,
+  ...verovioNames.getters,
+  ...worksNames.getters,
   ...sourcesNames.getters,
   ...pagesNames.getters,
   ...infoboxnames.getters,
-  ...complaintsNames.getters
+  ...complaintsNames.getters,
+  ...directoryNames.getters
 }
 
 export const mutations = {
+  SET_VERSION: 'SET_VERSION',
   ...runtimeNames.mutations,
-  ...processingNames.mutations,
+  ...optionNames.mutations,
   ...DAnames.mutations,
   ...OSDnames.mutations,
+  ...verovioNames.mutations,
+  ...worksNames.mutations,
   ...sourcesNames.mutations,
   ...pagesNames.mutations,
   ...infoboxnames.mutations,
-  ...complaintsNames.mutations
+  ...complaintsNames.mutations,
+  ...directoryNames.mutations
 }
 
 export const actions = {
   ...runtimeNames.actions,
-  ...processingNames.actions,
+  ...optionNames.actions,
   ...DAnames.actions,
   ...OSDnames.actions,
+  ...verovioNames.actions,
+  ...worksNames.actions,
   ...sourcesNames.actions,
   ...pagesNames.actions,
   ...infoboxnames.actions,
-  ...complaintsNames.actions
+  ...complaintsNames.actions,
+  ...directoryNames.actions
 }
 
-/**
- * register action name
- * @memberof store.names
- * @param {Object} actions
- */
-export const registerMutations = function (obj) {
-  for (const n in obj) {
-    if (obj[n] instanceof Function) {
-      mutations[n] = n
-    }
-  }
-}
-
-/**
- * register action name
- * @memberof store.names
- * @param {Object} actions
- */
-export const registerActions = function (obj) {
-  for (const n in obj) {
-    if (obj[n] instanceof Function) {
-      actions[n] = n
-    }
-  }
-}
-
-export default { actions, mutations, getters, state, registerMutations, registerActions }
+export default { actions, mutations, getters, state }
