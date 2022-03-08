@@ -36,7 +36,7 @@ const store = new Vuex.Store({
    */
   mutations: {
     [n.mutations.SET_VERSION] (state, version) {
-      console.log('Version:\n' + version?.version)
+      console.log('Version:\n' + version?.version + version?.branch)
       state.version = version
     }
   },
