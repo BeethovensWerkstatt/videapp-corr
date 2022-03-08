@@ -18,9 +18,19 @@ gulp.task('gitlog', async function () {
       json.author = v[1]
       json.subject = v[2]
       json.commit = v[3]
-      fs.writeFile('dist/version.json', JSON.stringify(json, null, 2), function () {
-        console.log(json, 'fertig')
-      })
+      git.exec(
+        {
+          args: 'rev-parse --abbrev-ref HEAD',
+          log: false
+        },
+        function (err, stdout) {
+          if (err) throw err
+          json.branch = stdout.trim()
+          fs.writeFile('dist/version.json', JSON.stringify(json, null, 2), function () {
+            console.log(json, 'fertig')
+          })
+        }
+      )
     }
   )
 })
