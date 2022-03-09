@@ -9,7 +9,7 @@
       <div class="info">
         <div v-if="mod.n === 1">
           Das zwei Jahre (2014–16) umfassende erste Modul beschäftigte sich mit
-          Variantenbildungen in ausgewählten Werken Beethovens. Ziel war die Erfassung, 
+          Variantenbildungen in ausgewählten Werken Beethovens. Ziel war die Erfassung,
           Erforschung und Beschreibung sowie die
           digitale Darstellung von Beethovens Kompositionsstrategien unter
           verschiedenen Fragestellungen: Wie bzw. inwieweit kann man
@@ -52,8 +52,8 @@
           Im letzten Modul des Projekts (ab 2026) soll erstmals eine vollständige
           genetische Edition eines musikalischen Werks am Beispiel der Diabelli-Variationen
           erarbeitet werden. Diese Diese Edition soll gleichzeitig in eine traditionell konzipierte,
-          digitale Edition des Werks sowie in eine Quellenedition des überlieferten Autographs eingebettet 
-          werden. 
+          digitale Edition des Werks sowie in eine Quellenedition des überlieferten Autographs eingebettet
+          werden.
           [<a class="moreLink" :href="mod.url" target="_blank">mehr</a>]
         </div>
         <div class="workPills" v-if="!mod.inactive">
