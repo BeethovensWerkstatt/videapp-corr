@@ -40,7 +40,7 @@ export const getAPIURL = function (path) {
     url.host = API_HOST[config.version.branch]
   }
   url.path = path
-  console.log(config, 'API: ' + url)
+  console.log(config.version.branch, 'API: ' + url)
   return url.toString()
 }
 
