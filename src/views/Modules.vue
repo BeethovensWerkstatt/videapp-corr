@@ -58,8 +58,31 @@
         </div>
         <div class="workPills" v-if="!mod.inactive">
           <span class="workPill" v-for="(w, i) in module_works(mod)" :key="i">
-            <router-link v-if="w.route" :to="{ name: w.route, params: { id: w.id } }" target="_blank" :title="w.title">{{ w.label }}</router-link>
-            <a v-else :href="w.app" target="_blank" :title="w.title">{{ w.label }}</a>
+            <router-link
+              v-if="w.route"
+              :to="{ name: w.route, params: { id: w.id } }"
+              target="_blank"
+              :title="w.apptitle + ': ' + w.title"
+              class="app"
+            >{{ w.label }}</router-link>
+            <a
+              v-else-if="w.app"
+              :href="w.app"
+              target="_blank"
+              :title="w.apptitle + ': ' + w.title"
+              class="app"
+            >{{ w.label }}</a>
+            <a
+              v-else-if="w.dossier"
+              :href="w.dossier"
+              target="_blank"
+              :title="'Dossier: ' + (w.dossiertitle || w.title)"
+              class="dossier"
+            >{{ w.label }}</a>
+            <span
+              v-else
+              :title="w.title"
+            >{{ w.label }}</span>
           </span>
         </div>
       </div>
@@ -148,6 +171,10 @@ export default {
           color: $highlight-color;
           text-decoration: none;
           font-weight: 500;
+        }
+
+        .dossier {
+          font-style: italic;
         }
       }
     }
