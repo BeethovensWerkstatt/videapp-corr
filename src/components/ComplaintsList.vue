@@ -6,7 +6,7 @@
         <tr class="mvt">
           <th v-if="!workId">
             <span>
-              {{ $t('terms.work') }}
+              {{ $tc('terms.work', 1) }}
             </span>
             <complaints-filter-button :tag="sortTag.work" />
           </th>
@@ -46,7 +46,7 @@
             <!-- v-if="!workId": display work column if list is not constrained to work -->
             <th v-if="!workId">
               <span>
-                {{ $t('terms.work') }}
+                {{ $tc('terms.work', 1) }}
               </span>
               <complaints-filter-button :tag="sortTag.work" v-if="ci === 0" />
             </th>
