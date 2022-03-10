@@ -85,7 +85,7 @@ const worksModule = {
     async [n.actions.loadWorks] ({ commit, dispatch }) {
       startProc()
       try {
-        const url = config.api.works.url
+        const url = await config.api.works.url()
         // console.log(axios, url)
         // const { data } = await axios.get(url)
         const callback = ({ data }) => {

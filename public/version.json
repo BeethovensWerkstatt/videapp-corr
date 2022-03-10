@@ -1,7 +1,8 @@
 {
-  "version": "2021-04-27 11:31:52 +0200\nJan-Peter Voigt\nreact on no facsimile\n776f02460b6695ea0a731649c7879c8837f46ab9\n\n",
-  "date": "2021-04-27 11:31:52 +0200",
+  "version": "2022-03-07 11:05:11 +0100\nJan-Peter Voigt\nreset PageComponent\n54520bc40a6a9196ce6a90f7a849b235b0217888\n\n",
+  "date": "2022-03-07 11:05:11 +0100",
   "author": "Jan-Peter Voigt",
-  "subject": "react on no facsimile",
-  "commit": "776f02460b6695ea0a731649c7879c8837f46ab9"
+  "subject": "reset PageComponent",
+  "commit": "54520bc40a6a9196ce6a90f7a849b235b0217888",
+  "branch": "jpv/dev"
 }

@@ -46,7 +46,7 @@ export default {
   computed: {
     ...mapGetters(['version']),
     versionText () {
-      return this.version?.version
+      return this.version?.version ? this.version.version + this.version.branch : this.version?.branch
     }
   },
   methods: {

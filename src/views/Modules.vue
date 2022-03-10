@@ -9,8 +9,8 @@
       <div class="info">
         <div v-if="mod.n === 1">
           Das zwei Jahre (2014–16) umfassende erste Modul beschäftigte sich mit
-          Variantenbildungen in ausgewählten Werken Beethovens. Ziel des ersten
-          Moduls war die Erfassung, Erforschung und Beschreibung sowie die
+          Variantenbildungen in ausgewählten Werken Beethovens. Ziel war die Erfassung,
+          Erforschung und Beschreibung sowie die
           digitale Darstellung von Beethovens Kompositionsstrategien unter
           verschiedenen Fragestellungen: Wie bzw. inwieweit kann man
           Schreibprozesse und deren Zeitlichkeit rekonstruieren? Mit welchen
@@ -23,8 +23,8 @@
         <div v-if="mod.n === 2">
           Das drei Jahre (2017–19) umfassende zweite Modul beschäftigte sich mit
           Beethoven als Bearbeiter eigener Werke. Dabei war das Ziel, die
-          Originalfassungen und Beethovens Eigenbearbeitungen in synoptischen
-          Editionen so zu verknüpfen, dass Fassungszusammenhänge und
+          Originalfassungen und Beethovens Eigenbearbeitungen so zu verknüpfen, dass
+          Fassungszusammenhänge und
           -differenzen möglichst unmittelbar sichtbar werden.
           [<a class="moreLink" :href="mod.url" target="_blank">mehr</a>]
         </div>
@@ -49,17 +49,40 @@
           [<a class="moreLink" :href="mod.url" target="_blank">mehr</a>]
         </div>
         <div v-if="mod.n === 5">
-          Im letzen Modul des Projekts (ab 2026) soll erstmals eine vollständige
-          genetische Edition eines musikalischen Werks erarbeitet werden. Diese
-          Edition der Diabelli-Variationen soll gleichzeitig eingebettet werden
-          in traditionell konzipierte, digitale Editionen des Werks sowie des
-          überlieferten Autographs als Hauptquelle des Werks.
+          Im letzten Modul des Projekts (ab 2026) soll erstmals eine vollständige
+          genetische Edition eines musikalischen Werks am Beispiel der Diabelli-Variationen
+          erarbeitet werden. Diese Diese Edition soll gleichzeitig in eine traditionell konzipierte,
+          digitale Edition des Werks sowie in eine Quellenedition des überlieferten Autographs eingebettet
+          werden.
           [<a class="moreLink" :href="mod.url" target="_blank">mehr</a>]
         </div>
         <div class="workPills" v-if="!mod.inactive">
           <span class="workPill" v-for="(w, i) in module_works(mod)" :key="i">
-            <router-link v-if="w.route" :to="{ name: w.route, params: { id: w.id } }" target="_blank" :title="w.title">{{ w.label }}</router-link>
-            <a v-else :href="w.app" target="_blank" :title="w.title">{{ w.label }}</a>
+            <router-link
+              v-if="w.route"
+              :to="{ name: w.route, params: { id: w.id } }"
+              target="_blank"
+              :title="w.apptitle + ': ' + w.title"
+              class="app"
+            >{{ w.label }}</router-link>
+            <a
+              v-else-if="w.app"
+              :href="w.app"
+              target="_blank"
+              :title="w.apptitle + ': ' + w.title"
+              class="app"
+            >{{ w.label }}</a>
+            <a
+              v-else-if="w.dossier"
+              :href="w.dossier"
+              target="_blank"
+              :title="'Dossier: ' + (w.dossiertitle || w.title)"
+              class="dossier"
+            >{{ w.label }}</a>
+            <span
+              v-else
+              :title="w.title"
+            >{{ w.label }}</span>
           </span>
         </div>
       </div>
@@ -148,6 +171,10 @@ export default {
           color: $highlight-color;
           text-decoration: none;
           font-weight: 500;
+        }
+
+        .dossier {
+          font-style: italic;
         }
       }
     }
