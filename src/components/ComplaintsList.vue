@@ -106,7 +106,7 @@
               @click="openWork(complaint)"
               :title="$t('messages.openDesktop')"
             >
-              {{ + workTitle(complaint.movement.work) }}
+              {{ workTitle(complaint.movement.work) }}
             </btn>
           </td>
           <td
