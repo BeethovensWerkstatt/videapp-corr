@@ -106,7 +106,7 @@
               @click="openWork(complaint)"
               :title="$t('messages.openDesktop')"
             >
-              {{ workTitle(complaint.movement.work) }}
+              {{ + workTitle(complaint.movement.work) }}
             </btn>
           </td>
           <td
@@ -114,9 +114,9 @@
             @click.prevent="toggleActivate(complaint)"
           >
             <template v-if="complaint.movement">
-              {{ toRoman(complaint.movement.n) }},
+              {{ complaint.movement.label }},
             </template>
-            {{ measures(complaint) }}
+            {{ 'T. ' + measures(complaint) }}
           </td>
           <td
             v-for="(tag, i) in [/*sortTag.revisionObject, */sortTag.textOperation, sortTag.classification, sortTag.context, sortTag.implementation]"

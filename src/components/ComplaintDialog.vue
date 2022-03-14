@@ -5,7 +5,7 @@
       <div class="head" v-if="active">
         <div class="title">
           <div class="titletext">
-            {{ toRoman(activeComplaint.movement.n) }}. {{ activeComplaint.movement.label }}{{ (complaintLabel !== '') ? (', ' + complaintLabel) : '' }}, {{ $t('terms.measure') }} {{ measures }}
+            {{ activeComplaint.movement.label }}{{ (complaintLabel !== '') ? (', ' + complaintLabel) : '' }}, {{ $t('terms.measure') }} {{ measures }}
           </div>
           <div class="measures">
             Monitum <a class="monitumLink" :href="activeComplaint['@id']" target="_blank" rel="noopener noreferrer" :title="monitumId">{{ monitumId.split('-')[0] }}</a>
