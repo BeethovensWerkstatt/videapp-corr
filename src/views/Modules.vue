@@ -72,17 +72,17 @@
               :title="w.apptitle + ': ' + w.title"
               class="app"
             >{{ w.label }}</a>
+            <span
+              v-else
+              :title="w.title"
+            >{{ w.label }}</span>
             <a
               v-if="w.dossier"
               :href="w.dossier"
               target="_blank"
               :title="'Dossier: ' + (w.dossiertitle || w.title)"
               class="dossier"
-            >{{ (w.route || w.app) ? ' [i]' : w.label }}</a>
-            <span
-              v-else-if="!w.route && !w.app && !w.dossier"
-              :title="w.title"
-            >{{ w.label }}</span>
+            >&nbsp;[i]</a>
           </span>
         </div>
       </div>
@@ -174,7 +174,7 @@ export default {
         }
 
         .dossier {
-          font-style: italic;
+          font-weight: bold;
         }
       }
     }
