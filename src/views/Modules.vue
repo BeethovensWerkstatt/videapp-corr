@@ -62,25 +62,25 @@
               v-if="w.route"
               :to="{ name: w.route, params: { id: w.id } }"
               target="_blank"
-              :title="w.apptitle + ': ' + w.title"
+              :title="w.apptitle + '\r\n' + worktitle(w)"
               class="app"
             >{{ w.label }}</router-link>
             <a
               v-else-if="w.app"
               :href="w.app"
               target="_blank"
-              :title="w.apptitle + ': ' + w.title"
+              :title="w.apptitle + '\r\n' + worktitle(w)"
               class="app"
             >{{ w.label }}</a>
             <span
               v-else
-              :title="w.title"
+              :title="worktitle(w)"
             >{{ w.label }}</span>
             <a
               v-if="w.dossier"
               :href="w.dossier"
               target="_blank"
-              :title="'Dossier – ' + titlestring(w.dossiertitle || w.title)"
+              :title="'Dossier\r\n' + titlestring(w.dossiertitle || w.title)"
               class="dossier"
             >&nbsp;[i]</a>
           </span>
@@ -122,6 +122,9 @@ export default {
     },
     titlestring (s) {
       return s.replace(': ', ':\r\n')
+    },
+    worktitle (w) {
+      return w.label + ', ' + w.title
     }
   }
 }
