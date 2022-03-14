@@ -73,14 +73,14 @@
               class="app"
             >{{ w.label }}</a>
             <a
-              v-else-if="w.dossier"
+              v-if="w.dossier"
               :href="w.dossier"
               target="_blank"
               :title="'Dossier: ' + (w.dossiertitle || w.title)"
               class="dossier"
-            >{{ w.label }}</a>
+            >{{ (w.route || w.app) ? ' [i]' : w.label }}</a>
             <span
-              v-else
+              v-else-if="!w.route && !w.app && !w.dossier"
               :title="w.title"
             >{{ w.label }}</span>
           </span>
