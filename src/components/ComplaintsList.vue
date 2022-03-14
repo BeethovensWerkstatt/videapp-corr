@@ -12,7 +12,7 @@
           </th>
           <th :class="{ sortColumn: sortedBy === sortTag.movementMeasure }">
             <span @click="sort(sortTag.movementMeasure)">
-              <span>{{ $t('terms.movement') }}, {{ $t('terms.measure') }}</span>
+              <span>{{ $t('terms.location') }}</span>
             </span>
             <div class="nobreak">
               <span :class="sortIconC(sortTag.movementMeasure)" @click="sort(sortTag.movementMeasures)" />
@@ -52,7 +52,7 @@
             </th>
             <th :class="{ sortColumn: sortedBy === sortTag.movementMeasure }">
               <div @click="sort(sortTag.movementMeasure)" class="nobreak">
-                <span>{{ $t('terms.movement') }}, {{ $t('terms.measure') }}</span>
+                <span>{{ $t('terms.location') }}</span>
               </div>
               <div class="nobreak">
                 <span :class="sortIconC(sortTag.movementMeasure)" v-if="ci === 0" @click="sort(sortTag.movementMeasure)" />

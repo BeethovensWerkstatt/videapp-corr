@@ -58,7 +58,8 @@
     "opus": "Opus",
     "software": "Software",
     "explanatory": "Erläuternder Text | Erläuternde Texte",
-    "about": "über"
+    "about": "über",
+    "location": "Ortsangabe"
   },
   "taxonomy": {
     "document_type": "",
