@@ -80,7 +80,7 @@
               v-if="w.dossier"
               :href="w.dossier"
               target="_blank"
-              :title="'Dossier: ' + (w.dossiertitle || w.title)"
+              :title="'Dossier – ' + titlestring(w.dossiertitle || w.title)"
               class="dossier"
             >&nbsp;[i]</a>
           </span>
@@ -119,6 +119,9 @@ export default {
         return works.sort(workSorter)
       }
       return []
+    },
+    titlestring (s) {
+      return s.replace(': ', ':\r\n')
     }
   }
 }
