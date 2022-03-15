@@ -53,9 +53,15 @@ export default {
       required: true
     }
   },
+  mount () {
+    console.log('Comment', this.anno)
+  },
   watch: {
     tags () {
       console.log(this.tags)
+    },
+    anno () {
+      console.log(this.anno)
     }
   },
   computed: {
