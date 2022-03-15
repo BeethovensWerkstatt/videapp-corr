@@ -238,7 +238,7 @@ export default {
               url: stat.iiif[0]?.target.selector[0]['@id'],
               page: stat.iiif[0]?.on.full,
               region: stat.iiif[0]?.on.selector.value,
-              label: stat.labels?.source + ', ' + stat.labels?.pages // 'Sigel / Datum'
+              label: stat.labels?.source + ', S.' + stat.labels?.pages // 'Sigel / Seite'
             }
           })
           docs.push({
