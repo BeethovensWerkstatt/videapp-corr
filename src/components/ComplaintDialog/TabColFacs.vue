@@ -100,10 +100,10 @@ export default {
       'complaintFacsimileAspect'
     ]),
     divid () {
-      return this.page.uuid + '_osd'
+      return this.page.uuid + '_' + this.state + '_osd'
     },
     ovlid () {
-      return this.page.uuid + '_ovl'
+      return this.page.uuid + '_' + this.state + '_ovl'
     },
     page () {
       return this.getPage(this.pageId)
