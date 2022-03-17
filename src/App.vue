@@ -1,7 +1,9 @@
 <template>
   <container id="app">
     <app-header />
-    <router-view />
+    <div id="app-router-view">
+      <router-view />
+    </div>
     <app-footer />
   </container>
 </template>
@@ -57,13 +59,8 @@ body {
   }
 }
 
-.unselectable {
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+#app-router-view {
+  padding-bottom: 1rem;
 }
 
 </style>
