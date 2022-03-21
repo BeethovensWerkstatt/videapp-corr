@@ -92,6 +92,10 @@ export default {
     vid () {
       // this.loadMEI()
       // this.createViewer()
+    },
+    options () {
+      console.log(this.options?.url)
+      this.loadMEI()
     }
   },
   computed: {
