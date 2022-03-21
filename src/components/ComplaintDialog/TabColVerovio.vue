@@ -213,59 +213,47 @@ export default {
      * 2. prepare OSD viewer
      */
     createViewer () {
-      if (this.viewer) {
-        this.viewer.destroy()
-      }
-      const props = this.viewerConfig
-      // console.log(props)
-      this.viewer = OpenSeadragon(props)
-      // this.viewer.addHandler('zoom', () => console.log(this.viewer.viewport.getZoom(true)))
-      // console.log(desktopTile)
-      const TIback1 = {
-        x: 0,
-        y: 0,
-        width: this.width,
-        height: this.height,
-        tileSize: 256,
-        minLevel: 8,
-        getTileUrl: function (level, x, y) {
-          // console.log(desktopTile)
-          return transpTile
-        }
-      }
-      // console.log(TIback1)
-      this.viewer.addTiledImage({ tileSource: TIback1 })
-      /*
-      const TIback2 = {
-        x: this.width,
-        y: this.height,
-        height: 1,
-        width: 1,
-        tileSize: 256,
-        minLevel: 8,
-        getTileUrl: function (level, x, y) {
-          // console.log(desktopTile)
-          return desktopTile
-        }
-      }
-      this.viewer.addTiledImage({ tileSource: TIback2 })
-      */
-
-      // const svgcontainer = document.createElement('div')
-      // svgcontainer.setAttribute('id', this.verovioSvgContainer)
-      // svgcontainer.innerHTML = this.svg
       const svgcontainer = this.$el.querySelector('#' + this.verovioSvgContainerId)
-      if (!svgcontainer.classList.contains('VSVGContainer')) {
-        svgcontainer.classList.add('VSVGContainer')
-      }
+      // console.log(props)
+      if (!this.viewer) {
+        const props = this.viewerConfig
+        this.viewer = OpenSeadragon(props)
+        // this.viewer.addHandler('zoom', () => console.log(this.viewer.viewport.getZoom(true)))
+        // console.log(desktopTile)
+        const TIback1 = {
+          x: 0,
+          y: 0,
+          width: this.width,
+          height: this.height,
+          tileSize: 256,
+          minLevel: 8,
+          getTileUrl: function (level, x, y) {
+            // console.log(desktopTile)
+            return transpTile
+          }
+        }
+        // console.log(TIback1)
+        this.viewer.addTiledImage({ tileSource: TIback1 })
 
-      console.log(this.position, this.clipping)
-      this.viewer.addOverlay({
-        element: svgcontainer,
-        location: this.position
-      }, new OpenSeadragon.Point(0, 0))
-      this.viewer.viewport.fitBounds(this.clipping, false)
-      // this.viewer.viewport.fitVertically()
+        // const svgcontainer = document.createElement('div')
+        // svgcontainer.setAttribute('id', this.verovioSvgContainer)
+        // svgcontainer.innerHTML = this.svg
+        if (!svgcontainer.classList.contains('VSVGContainer')) {
+          svgcontainer.classList.add('VSVGContainer')
+        }
+
+        console.log(this.position, this.clipping)
+        this.viewer.addOverlay({
+          element: svgcontainer,
+          location: this.position
+        }, new OpenSeadragon.Point(0, 0))
+        this.viewer.viewport.fitBounds(this.clipping, false)
+        // this.viewer.viewport.fitVertically()
+      } else {
+        const overlay = this.viewer.getOverlayById(this.verovioSvgContainerId)
+        overlay.update(this.position)
+        this.viewer.viewport.fitBounds(this.clipping, false)
+      }
     }
   }
 }
