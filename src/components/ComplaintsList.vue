@@ -357,6 +357,7 @@ export default {
   width: 100%;
   max-height: 100%;
   overflow: scroll;
+  padding-bottom: 1rem;
 }
 .complaint-list {
   width: 100%;
