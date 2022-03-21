@@ -87,6 +87,7 @@ export default {
     }
   },
   mounted () {
+    // console.log('desktop dimensions', this.width, this.height)
     this.$store.commit(mutations.SET_DESK_DIMENSIONS, { width: this.width, height: this.height })
     // create OpenSeadragon viewer
     this.$store.dispatch(actions.createOpenSeaDragon, {

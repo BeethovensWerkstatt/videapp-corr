@@ -344,11 +344,11 @@ export default {
     },
     loadPrevious () {
       console.log('activate previous sibling')
-      // this.$store.dispatch(n.actions.activateSibling, true)
+      this.$store.dispatch(n.actions.activateSibling, true)
     },
     loadNext () {
       console.log('activate next sibling')
-      // this.$store.dispatch(n.actions.activateSibling, false)
+      this.$store.dispatch(n.actions.activateSibling, false)
     }
   }
 }

@@ -19,7 +19,7 @@
 import { mapGetters } from 'vuex'
 import OpenSeadragon from 'openseadragon'
 import tb from '@/toolbox'
-import { mutations, getters } from '@/store/names'
+import n from '@/store/names'
 import config from '@/config'
 
 /**
@@ -39,6 +39,10 @@ export default {
     }
   },
   props: {
+    idx: {
+      type: Number,
+      default: 0 // TODO: TabCol.vue with counter
+    },
     label: {
       type: String,
       required: true
@@ -85,7 +89,10 @@ export default {
       console.log('TODO reload tiled image')
     },
     region () {
-      console.log('TODO reload tiled image')
+      console.log('change region')
+      const overlay = this.viewer.getOverlayById(this.ovlid)
+      overlay.update(this.bounds)
+      this.viewer.viewport.fitBounds(this.fitBounds, false)
       this.rezoom()
     },
     pinned () {
@@ -96,17 +103,17 @@ export default {
   },
   computed: {
     ...mapGetters([
-      getters.getPage,
-      'complaintFacsimileAspect'
+      n.getters.getPage,
+      n.getters.complaintFacsimileAspect
     ]),
     divid () {
-      return this.page.uuid + '_' + this.state + '_osd'
+      return 'q' + this.idx + '_' + this.state + '_osd'
     },
     ovlid () {
-      return this.page.uuid + '_' + this.state + '_ovl'
+      return 'q' + this.idx + '_' + this.state + '_ovl'
     },
     page () {
-      return this.getPage(this.pageId)
+      return this[n.getters.getPage](this.pageId)
     },
     viewerConfig () {
       // console.log(this.pageId, tb.parsexywh(this.region))
@@ -188,7 +195,7 @@ export default {
     openPage () {
       // console.log(this.page.pagenumber)
       this.$store.commit(
-        mutations.SET_PAGE,
+        n.mutations.SET_PAGE,
         {
           id: this.page.source,
           page: this.page.pagenumber
