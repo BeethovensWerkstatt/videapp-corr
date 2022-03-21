@@ -35,7 +35,8 @@ export default {
     return {
       viewer: undefined,
       rezoomTime: Date.now(),
-      pinned: false
+      pinned: false,
+      tidata: undefined
     }
   },
   props: {
@@ -86,7 +87,22 @@ export default {
   },
   watch: {
     pageId () {
-      console.log('TODO reload tiled image')
+      console.log('reload tiled image')
+      const tisrc = {
+        tileSource: this.tileSource,
+        success: (e) => {
+          if (this.tidata) {
+            this.viewer.world.setItemIndex(this.tidata, 0)
+            this.tidata.setOpacity(0)
+            this.tidata.destroy()
+          }
+          this.tidata = e.item
+        },
+        x: 0,
+        y: 0,
+        width: this.page.dimensions.width
+      }
+      this.viewer.addTiledImage(tisrc)
     },
     region () {
       console.log('change region')
@@ -115,26 +131,33 @@ export default {
     page () {
       return this[n.getters.getPage](this.pageId)
     },
+    tileSource () {
+      return {
+        '@context': 'http://iiif.io/api/image/2/context.json',
+        '@id': this.page.uri,
+        profile: 'http://iiif.io/api/image/2/level2.json',
+        protocol: 'http://iiif.io/api/image',
+        width: this.page.pixels.width,
+        height: this.page.pixels.height
+      }
+    },
     viewerConfig () {
       // console.log(this.pageId, tb.parsexywh(this.region))
       // console.log(this.page.uri)
+      const tileSource = {
+        ...this.tileSource,
+        success: (e) => {
+          this.tidata = e.item
+          this.viewer.addOverlay(this.$el.querySelector('#' + this.ovlid), this.bounds)
+        }
+      }
       const props = {
         ...config.osd,
         ...this.osdinit,
         id: this.divid,
         showNavigator: false,
         tileSources: {
-          tileSource: {
-            '@context': 'http://iiif.io/api/image/2/context.json',
-            '@id': this.page.uri,
-            profile: 'http://iiif.io/api/image/2/level2.json',
-            protocol: 'http://iiif.io/api/image',
-            width: this.page.pixels.width,
-            height: this.page.pixels.height,
-            success: (e) => {
-              this.viewer.addOverlay(this.$el.querySelector('#' + this.ovlid), this.bounds)
-            }
-          },
+          tileSource: tileSource,
           x: 0,
           y: 0,
           width: this.page.dimensions.width
