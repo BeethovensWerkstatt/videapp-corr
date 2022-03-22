@@ -5,6 +5,9 @@
       <div class="head" v-if="active">
         <div class="title">
           <div class="titletext">
+            <template v-if="!workId">
+              {{ workTitle(activeComplaint['@work']) }},
+            </template>
             {{ activeComplaint.movement.label }}{{ (complaintLabel !== '') ? (', ' + complaintLabel) : '' }}, {{ $t('terms.measure') }} {{ measures }}
           </div>
           <div class="measures">
@@ -94,7 +97,19 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['viewer', 'displayComplaint', 'activeComplaintId', 'activeComplaint', 'complaintDisplaySelect', 'previousComplaintId', 'nextComplaintId']),
+    ...mapGetters([
+      n.getters.viewer,
+      n.getters.getWork,
+      n.getters.displayComplaint,
+      n.getters.activeComplaintId,
+      n.getters.activeComplaint,
+      n.getters.complaintDisplaySelect,
+      n.getters.previousComplaintId,
+      n.getters.nextComplaintId
+    ]),
+    workId () {
+      return this.$route.params.id
+    },
     active () {
       if (this.displayComplaint && this.activeComplaintId) {
         return true
@@ -201,6 +216,10 @@ export default {
   methods: {
     toRoman (num) {
       return toolbox.toRoman(num)
+    },
+    workTitle (workId) {
+      const work = this.getWork(workId)
+      return work?.title[0].title
     },
     /**
      * create array of objects `[{ mei: { url }}, { img: { url } }, ...]`
