@@ -33,6 +33,8 @@
             </div>
           </th>
           <th>&nbsp;</th>
+          <th>&nbsp;</th>
+          <th>&nbsp;</th>
         </tr>
       </tbody>
       <tbody :key="complaint['@id']"
@@ -73,11 +75,15 @@
               </div>
             </th>
             <th>&nbsp;</th>
+            <th>&nbsp;</th>
+            <th>&nbsp;</th>
           </template>
           <template v-else>
             <th v-if="!workId"></th>
             <th></th>
             <!-- <th></th> -->
+            <th></th>
+            <th></th>
             <th></th>
             <th></th>
             <th></th>
@@ -101,13 +107,7 @@
             class="complaint-attribute"
             @click.prevent="toggleActivate(complaint)"
           >
-            <btn
-              class="btn-link"
-              @click="openWork(complaint)"
-              :title="$t('messages.openDesktop')"
-            >
-              {{ workTitle(complaint.movement.work) }}
-            </btn>
+            {{ workTitle(complaint.movement.work) }}
           </td>
           <td
             class="complaint-attribute"
@@ -132,7 +132,14 @@
           </td>
           <td class="complaint-attribute">
             <btn @click.prevent="openComplaint(complaint)">Monitum öffnen</btn>
-            <!-- <btn @click.prevent="openPages(complaint)">Seiten öffnen</btn> -->
+          </td>
+          <td class="complaint-attribute">
+            <btn @click="openWork(complaint)">
+              {{ $t('messages.openDesktop') }}
+            </btn>
+          </td>
+          <td class="complaint-attribute">
+            <btn>statische Ansicht</btn>
           </td>
         </tr>
       </tbody>
