@@ -123,8 +123,8 @@
             class="complaint-attribute"
             @click.prevent="toggleActivate(complaint)"
           >
-            <span v-if="complaint.tags[tag].length === 0">&mdash;</span>
-            <span v-for="(o,i) in complaint.tags[tag]" :key="o + '_' + i"><span v-if="i > 0">, </span>{{ $t('taxonomy.' + o) }}</span>
+            <template v-if="complaint.tags[tag].length === 0">&mdash;</template>
+            <template v-for="(o,i) in complaint.tags[tag]"><template v-if="i > 0">, </template>{{ $t('taxonomy.' + o) }}</template>
           </td>
           <td class="complaint-attribute">
             {{ complaintSigle(complaint) }}
