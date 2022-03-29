@@ -99,7 +99,6 @@
             'complaint-error': (measures(complaint) === 'N/A')
           }"
           :id="'data-' + ci"
-          :title="complaint.movement.work"
         >
           <!-- if workId is set, we are in work related desktop view and column is not needed -->
           <td
