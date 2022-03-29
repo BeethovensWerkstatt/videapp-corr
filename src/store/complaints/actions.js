@@ -13,7 +13,7 @@ const actions = {
    */
   [n.actions.loadComplaints] ({ commit, /* dispatch, */ getters }, { complaints, work }) {
     complaints.forEach(c => {
-      console.log(c, work)
+      // console.log(c, work)
       const mdiv = c.affects[0]?.mdiv
       // console.log(state.movements, mdiv)
       const movement = mdiv ? getters.movements[mdiv] : undefined
@@ -47,7 +47,7 @@ const actions = {
       commit(n.mutations.CANCEL_CURRENT_ITEM)
       return
     }
-    console.log(complaintId, state.activeComplaintId)
+    // console.log(complaintId, state.activeComplaintId)
     if (complaintId !== state.activeComplaintId) {
       commit(n.mutations.CANCEL_CURRENT_ITEM)
     }

@@ -58,7 +58,7 @@ const getters = {
     const complaintlist = complaints.map(c => {
       const mdiv = c.affects[0]?.mdiv
       const movement = getters.getMovementById(mdiv)
-      console.log(mdiv, movement)
+      // console.log(mdiv, movement)
       return { ...c, movement }
     }).sort(getters[n.getters.complaintSorter])
     return state[n.state.sortReverse] ? complaintlist.reverse() : complaintlist
@@ -66,7 +66,7 @@ const getters = {
   [n.getters.workComplaints]: (state, getters) => (workId, filtered = true) => {
     // TODO atId in loadComplaints?
     const workFilter = c => {
-      console.log(c.movement, tb.atId(c.movement?.work), workId)
+      // console.log(c.movement, tb.atId(c.movement?.work), workId)
       return tb.atId(c.movement?.work) === workId
     }
     // console.log(getters.allComplaints)
@@ -107,7 +107,7 @@ const getters = {
     if (acid) {
       const complaintIds = getters[n.getters.complaints].map((c) => c['@id'])
       const ncid = tb.findPrevious(complaintIds, (cid) => cid === acid)
-      console.log(acid, ncid, complaintIds)
+      // console.log(acid, ncid, complaintIds)
       return ncid
     }
     return undefined
@@ -115,10 +115,10 @@ const getters = {
   [n.getters.nextComplaintId] (state, getters) {
     const acid = state[n.state.activeComplaintId]
     const complaintIds = getters[n.getters.complaints].map((c) => c['@id'])
-    console.log(acid, complaintIds)
+    // console.log(acid, complaintIds)
     if (acid) {
       const ncid = tb.findNext(complaintIds, (cid) => cid === acid)
-      console.log(acid, ncid, complaintIds)
+      // console.log(acid, ncid, complaintIds)
       return ncid
     }
     return complaintIds.length > 0 ? complaintIds[0] : undefined

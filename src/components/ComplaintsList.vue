@@ -76,13 +76,11 @@
             </th>
             <th>&nbsp;</th>
             <th>&nbsp;</th>
-            <th>&nbsp;</th>
           </template>
           <template v-else>
             <th v-if="!workId"></th>
             <th></th>
             <!-- <th></th> -->
-            <th></th>
             <th></th>
             <th></th>
             <th></th>
@@ -130,15 +128,13 @@
             {{ complaintSigle(complaint) }}
           </td>
           <td class="complaint-attribute">
-            <btn @click.prevent="openComplaint(complaint)">Monitum öffnen</btn>
+            <btn v-if="complaint.staticExample">statische Ansicht</btn>
+            <btn v-else @click.prevent="openComplaint(complaint)">Monitum öffnen</btn>
           </td>
           <td class="complaint-attribute">
-            <btn @click="openWork(complaint)">
+            <btn @click="openWork(complaint)" v-if="!complaint.staticExample">
               {{ $t('messages.openDesktop') }}
             </btn>
-          </td>
-          <td class="complaint-attribute">
-            <btn>statische Ansicht</btn>
           </td>
         </tr>
       </tbody>
