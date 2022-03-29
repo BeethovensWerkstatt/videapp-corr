@@ -47,10 +47,10 @@ const actions = {
         var py = 0
         var ph = 0
 
-        dispatch(act.loadMovements, data)
+        dispatch(act.loadMovements, { work: work['@id'], ...data })
 
         // load complaints for this work
-        dispatch(act.loadComplaints, data)
+        dispatch(act.loadComplaints, { work: work['@id'], ...data })
 
         // console.log(data.manifestations)
 
@@ -246,16 +246,20 @@ const actions = {
    * @memberof store.sources.actions
    * @param {Object} payload object containing property `movements`
    */
-  async [act.loadMovements] ({ commit }, { movements }) {
+  async [act.loadMovements] ({ commit }, { movements, work }) {
     if (movements) {
       for (const m of movements) {
         // console.log(m)
-        const resp = await axios.get(m)
-        if (resp.data) {
-          commit(mut.LOAD_MOVEMENT, resp.data)
-        } else {
-          console.error(resp)
-        }
+        axios.get(m).then(({ data }) => {
+          const movement = {
+            '@id': m,
+            work,
+            ...data
+          }
+          commit(mut.LOAD_MOVEMENT, movement)
+        }).catch(error => {
+          console.error(error)
+        })
       }
     }
   },

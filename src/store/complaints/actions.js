@@ -11,14 +11,14 @@ const actions = {
    * @memberof store.complaints.actions
    * @param {Object} payload object containing complaints property `{ complaints: Object[] }`
    */
-  [n.actions.loadComplaints] ({ commit, /* dispatch, */ getters }, { complaints }) {
+  [n.actions.loadComplaints] ({ commit, /* dispatch, */ getters }, { complaints, work }) {
     complaints.forEach(c => {
-      // console.log(c)
+      console.log(c, work)
       const mdiv = c.affects[0]?.mdiv
       // console.log(state.movements, mdiv)
       const movement = mdiv ? getters.movements[mdiv] : undefined
       // TODO this looks like a workaround
-      const complaint = movement ? { ...c, movement } : { ...c }
+      const complaint = movement ? { work, ...c, movement } : { work, ...c }
       // console.log(complaint)
       /*
       dispatch(act.getData, {

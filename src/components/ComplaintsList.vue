@@ -112,7 +112,7 @@
             class="complaint-attribute"
             @click.prevent="toggleActivate(complaint)"
           >
-            <template v-if="complaint.movement">
+            <template v-if="complaint.movement && complaint.movement.label">
               {{ complaint.movement.label }},
             </template>
             {{ 'T. ' + measures(complaint) }}

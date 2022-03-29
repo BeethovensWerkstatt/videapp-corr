@@ -149,14 +149,18 @@
       "title": "Klaviersonate E-Dur",
       "opus": 109,
       "modules": ["modul3"],
-      "route": "Schreibtisch",
+      "route": "Monita",
       "apptitle": "VideApp rev"
     },
     "op127": {
+      "@id": "https://dev-api.beethovens-werkstatt.de/module3/t0c09f04e-e36d-4eaa-a064-029b5a232332.json",
+      "id": "t0c09f04e-e36d-4eaa-a064-029b5a232332",
       "label": "Op. 127",
       "title": "Streichquartett Es-Dur",
       "opus": 127,
-      "modules": ["modul3"]
+      "modules": ["modul3"],
+      "route": "Monita",
+      "apptitle": "VideApp rev"
     },
     "op86": {
       "label": "Op. 86",

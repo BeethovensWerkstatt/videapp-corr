@@ -58,7 +58,7 @@ const getters = {
     const complaintlist = complaints.map(c => {
       const mdiv = c.affects[0]?.mdiv
       const movement = getters.getMovementById(mdiv)
-      // console.log(mdiv, movement)
+      console.log(mdiv, movement)
       return { ...c, movement }
     }).sort(getters[n.getters.complaintSorter])
     return state[n.state.sortReverse] ? complaintlist.reverse() : complaintlist
@@ -66,7 +66,7 @@ const getters = {
   [n.getters.workComplaints]: (state, getters) => (workId, filtered = true) => {
     // TODO atId in loadComplaints?
     const workFilter = c => {
-      console.log(c.movement?.work, workId)
+      console.log(c.movement, tb.atId(c.movement?.work), workId)
       return tb.atId(c.movement?.work) === workId
     }
     // console.log(getters.allComplaints)
