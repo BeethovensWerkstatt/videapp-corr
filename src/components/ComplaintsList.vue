@@ -103,6 +103,7 @@
             v-if="!workId"
             class="complaint-attribute"
             @click.prevent="toggleActivate(complaint)"
+            :title="workLongTitle(complaint.movement.work)"
           >
             {{ workTitle(complaint.movement.work) }}
           </td>
@@ -198,6 +199,10 @@ export default {
   methods: {
     toRoman: toolbox.toRoman,
     workTitle (workId) {
+      const work = this.getWork(workId)
+      return work?.label[0].title ? work?.label[0].title : work?.title[0].title
+    },
+    workLongTitle (workId) {
       const work = this.getWork(workId)
       return work?.title[0].title
     },

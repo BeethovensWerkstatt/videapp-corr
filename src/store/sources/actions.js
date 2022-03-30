@@ -39,6 +39,8 @@ const actions = {
         const url = work['@id']
         startProc()
         const { data } = await axios.get(url)
+        work.label = work.title
+        work.title = data.title
 
         // default placement of sources
         const hgap = getters.sourceHorizontalGap + (2 * getters.sourceMarginWidth)
