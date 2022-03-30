@@ -158,6 +158,10 @@ h2 {
   color: red;
 }
 
+.rend.overwritten {
+  display: none;
+}
+
 .notatedMusic {
   svg {
     height: 5em;
