@@ -1,4 +1,5 @@
 import n from '@/store/names'
+import config from '@/config'
 
 const state = {
   [n.state.directory_works]: [],
@@ -6,11 +7,19 @@ const state = {
 }
 const mutations = {}
 const actions = {
-  [n.actions.directory_load_db] ({ state, getters }) {
+  async [n.actions.directory_load_db] ({ state, getters }) {
     const db = require('./db.json')
     state[n.state.directory_works] = db.works
     for (const w in db.works) {
       const work = db.works[w]
+      // TODO main!
+      const version = await config.version
+      if (work.dev && version.branch === 'main') {
+        delete work.app
+        delete work.route
+        delete work.apptitle
+        console.log('hide dev', work)
+      }
       for (const m in work.modules) {
         const mod = work.modules[m]
         if (db.modules[mod]) {

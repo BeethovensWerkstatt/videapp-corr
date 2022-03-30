@@ -134,13 +134,15 @@
       "label": "Op. 104",
       "title": "Streichquintett c-Moll",
       "opus": 104,
-      "modules": ["modul3"]
+      "modules": ["modul3"],
+      "dev": true
     },
     "op106": {
       "label": "Op. 106",
       "title": "Klaviersonate B-Dur",
       "opus": 106,
-      "modules": ["modul3"]
+      "modules": ["modul3"],
+      "dev": true
     },
     "op109": {
       "@id": "https://api.beethovens-werkstatt.de/module3/u99c226c2-03f0-476b-889d-9232b724fe44.json",
@@ -150,7 +152,8 @@
       "opus": 109,
       "modules": ["modul3"],
       "route": "Monita",
-      "apptitle": "VideApp rev"
+      "apptitle": "VideApp rev",
+      "dev": true
     },
     "op127": {
       "@id": "https://dev-api.beethovens-werkstatt.de/module3/t0c09f04e-e36d-4eaa-a064-029b5a232332.json",
@@ -160,7 +163,8 @@
       "opus": 127,
       "modules": ["modul3"],
       "route": "Monita",
-      "apptitle": "VideApp rev"
+      "apptitle": "VideApp rev",
+      "dev": true
     },
     "op86": {
       "label": "Op. 86",
@@ -174,7 +178,8 @@
       "label": "WoO 152",
       "title": "Irische Lieder",
       "woo": 152,
-      "modules": ["modul3"]
+      "modules": ["modul3"],
+      "dev": true
     }
   },
   "modules": {
