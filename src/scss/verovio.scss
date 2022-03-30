@@ -64,7 +64,7 @@ svg {
     fill: $verovio-supplied-color;
   }
 
-  .grpSym + .label {
+  .grpSym + .label, .system + .label {
     stroke: $verovio-supplied-color;
     fill: $verovio-supplied-color;
   }
