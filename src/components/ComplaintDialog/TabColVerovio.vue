@@ -165,7 +165,7 @@ export default {
       // console.log(this.options)
       if (this.options?.url) {
         startProc()
-        console.log('load', this.options.url)
+        // console.log('load', this.options.url)
         this.mei = undefined
         this.svg = undefined
         this.width = 1
@@ -242,7 +242,7 @@ export default {
           svgcontainer.classList.add('VSVGContainer')
         }
 
-        console.log(this.position, this.clipping)
+        // console.log(this.position, this.clipping)
         this.viewer.addOverlay({
           element: svgcontainer,
           location: this.position
