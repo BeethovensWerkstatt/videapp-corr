@@ -13,7 +13,6 @@ const actions = {
     state[n.state.directory_works] = db.works
     for (const w in db.works) {
       const work = db.works[w]
-      // TODO main!
       const version = await config.version
       if (work.dev && version.branch === config.mainbranch) {
         delete work.app
