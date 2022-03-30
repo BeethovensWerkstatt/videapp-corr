@@ -13,7 +13,7 @@
       </a>
     </h2>
     <!-- <a :href="tei" v-if="tei">TEI</a> -->
-    <div class="teitext" v-html="teitext" v-if="teitext" />
+    <div class="teitext" :class="{ [state]: true, [layer]: true, [state + '-' + layer]: true }" v-html="teitext" v-if="teitext" />
   </div>
 </template>
 
@@ -162,6 +162,20 @@ h2 {
   svg {
     height: 5em;
     vertical-align: -80%;
+
+    .supplied * {
+      fill: #999;
+      stroke: #999;
+    }
+
+    .supplied .bounding-box * {
+      fill: transparent;
+    }
+
+  }
+
+  &.small svg {
+    height: 2.5em;
   }
 }
 </style>
