@@ -1,9 +1,11 @@
-import { runtimeNames } from './names'
+import n from '@/store/names'
+import config from '@/config'
 
 const runtimeModule = {
   state: {
-    [runtimeNames.state.working]: 0,
-    [runtimeNames.state.modals]: []
+    [n.state.working]: 0,
+    [n.state.modals]: [],
+    [n.state.mainbranch]: config.mainbranch
   },
   mutations: {
     /**
@@ -11,25 +13,26 @@ const runtimeModule = {
      * @memberof store.processing.mutations
      * @param {Boolean} act if true increase working number, else decrease
      */
-    [runtimeNames.mutations.SET_WORKING] (state, act) {
+    [n.mutations.SET_WORKING] (state, act) {
       // console.log('set working: ' + act)
       state.working += act ? 1 : -1
     },
-    [runtimeNames.mutations.ADD_MODAL] (state, key) {
+    [n.mutations.ADD_MODAL] (state, key) {
       const modals = [...state.modals.filter(m => m !== key)]
       modals.push(key)
       state.modals = modals
     },
-    [runtimeNames.mutations.REM_MODAL] (state, key) {
+    [n.mutations.REM_MODAL] (state, key) {
       const modals = [...state.modals.filter(m => m !== key)]
       state.modals = modals
     }
   },
   actions: {},
   getters: {
-    [runtimeNames.getters.working]: (state) => (state.working > 0),
-    [runtimeNames.getters.modals]: (state) => state.modals,
-    [runtimeNames.getters.modalsOpen]: (state) => state.modals.length
+    [n.getters.working]: (state) => (state.working > 0),
+    [n.getters.modals]: (state) => state.modals,
+    [n.getters.modalsOpen]: (state) => state.modals.length,
+    [n.getters.mainbranch]: (state) => state.mainbranch
   }
 }
 

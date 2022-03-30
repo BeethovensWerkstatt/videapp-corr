@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { startProc, finishProc } from '..'
 import n from '@/store/names'
+import tb from '@/toolbox'
 
 /**
  * @namespace store.complaints.actions
@@ -12,26 +13,15 @@ const actions = {
    * @param {Object} payload object containing complaints property `{ complaints: Object[] }`
    */
   [n.actions.loadComplaints] ({ commit, /* dispatch, */ getters }, { complaints, work }) {
+    console.log(getters[n.getters.directory_is_dev_work](tb.atId(work)), work)
+    if (getters[n.getters.mainbranch] === getters[n.getters.version].branch && getters[n.getters.directory_is_dev_work](tb.atId(work))) return
     complaints.forEach(c => {
       // console.log(c, work)
       const mdiv = c.affects[0]?.mdiv
       // console.log(state.movements, mdiv)
-      const movement = mdiv ? getters.movements[mdiv] : undefined
+      const movement = mdiv ? getters.movements[tb.atId(mdiv)] : undefined
       // TODO this looks like a workaround
       const complaint = movement ? { work, ...c, movement } : { work, ...c }
-      // console.log(complaint)
-      /*
-      dispatch(act.getData, {
-        url: complaint['@id'],
-        callback ({ data }) {
-          const c = { ...data, ...complaint }
-          commit(mut.LOAD_COMPLAINT, c)
-        },
-        error (error) {
-          console.error(error)
-        }
-      })
-      */
       commit(n.mutations.LOAD_COMPLAINT, complaint)
     })
   },

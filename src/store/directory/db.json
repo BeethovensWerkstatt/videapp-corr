@@ -145,7 +145,7 @@
       "dev": true
     },
     "op109": {
-      "@id": "https://api.beethovens-werkstatt.de/module3/u99c226c2-03f0-476b-889d-9232b724fe44.json",
+      "@id": "https://dev-api.beethovens-werkstatt.de/module3/u99c226c2-03f0-476b-889d-9232b724fe44.json",
       "id": "u99c226c2-03f0-476b-889d-9232b724fe44",
       "label": "Op. 109",
       "title": "Klaviersonate E-Dur",

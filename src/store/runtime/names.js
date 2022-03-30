@@ -1,7 +1,8 @@
 export const runtimeNames = {
   state: {
     working: 'working',
-    modals: 'modals'
+    modals: 'modals',
+    mainbranch: 'mainbranch'
   },
   mutations: {
     SET_WORKING: 'SET_WORKING',
@@ -12,7 +13,8 @@ export const runtimeNames = {
   getters: {
     working: 'working',
     modals: 'modals',
-    modalsOpen: 'modalsOpen'
+    modalsOpen: 'modalsOpen',
+    mainbranch: 'mainbranch'
   }
 }
 

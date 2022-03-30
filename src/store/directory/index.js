@@ -3,7 +3,8 @@ import config from '@/config'
 
 const state = {
   [n.state.directory_works]: [],
-  [n.state.directory_modules]: []
+  [n.state.directory_modules]: [],
+  [n.state.directory_dev_works]: []
 }
 const mutations = {}
 const actions = {
@@ -14,11 +15,11 @@ const actions = {
       const work = db.works[w]
       // TODO main!
       const version = await config.version
-      if (work.dev && version.branch === 'main') {
+      if (work.dev && version.branch === config.mainbranch) {
         delete work.app
         delete work.route
         delete work.apptitle
-        console.log('hide dev', work)
+        state[n.state.directory_dev_works] = [...state[n.state.directory_dev_works], work]
       }
       for (const m in work.modules) {
         const mod = work.modules[m]
@@ -39,7 +40,10 @@ const getters = {
   [n.getters.directory_works]: (state) => ({ ...state[n.state.directory_works] }),
   [n.getters.directory_get_work]: (state) => (key) => state[n.state.directory_works][key],
   [n.getters.directory_modules]: (state) => ({ ...state[n.state.directory_modules] }),
-  [n.getters.directory_get_module]: (state) => (key) => state[n.state.directory_modules][key]
+  [n.getters.directory_get_module]: (state) => (key) => state[n.state.directory_modules][key],
+  [n.getters.directory_is_dev_work]: (state) => (work) => {
+    return !!(state[n.state.directory_dev_works].find(w => w.id === work))
+  }
 }
 
 const directoryModule = {

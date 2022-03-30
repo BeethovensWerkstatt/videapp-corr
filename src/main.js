@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import n from './store/names'
+import config from '@/config'
 
 import 'spectre.css/dist/spectre-exp.css'
 import 'spectre.css/dist/spectre-icons.css'
@@ -39,3 +40,5 @@ new Vue({
 store.dispatch(n.actions.initVerovio)
 store.dispatch(n.actions.loadWorks)
 store.dispatch(n.actions.directory_load_db)
+
+console.log(config)

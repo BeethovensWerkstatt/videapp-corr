@@ -7,6 +7,7 @@
         @click="rezoom(500, true)"
         v-html="pinned ? '&#x1F512;' : '&#x1F513;'"
         :title="$t('messages.comparative-view.' + (pinned ? 'zoom-lock' : 'zoom-unlock'))"
+        v-if="version.branch !== mainbranch"
       />
     </h2>
     <div :id="divid" class="ComplaintDialogOSD" :class="{ ['facs-' + state]: true, facs: true, [state]: true }" :style="styles">
@@ -120,8 +121,11 @@ export default {
   computed: {
     ...mapGetters([
       n.getters.getPage,
-      n.getters.complaintFacsimileAspect
+      n.getters.complaintFacsimileAspect,
+      n.getters.version,
+      n.getters.mainbranch
     ]),
+    mainbranch: () => this[n.getters.mainbranch],
     divid () {
       return 'q' + this.idx + '_' + this.state + '_osd'
     },

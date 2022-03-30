@@ -16,6 +16,7 @@ const config = {
   couchdb: {
     defaultName: 'axios-data'
   },
+  mainbranch: 'main',
   version: new Promise((resolve, reject) => {
     axios.get('./version.json').then(({ status, data }) => {
       if (status === 200) {

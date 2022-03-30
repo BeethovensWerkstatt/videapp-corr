@@ -13,7 +13,9 @@ export const uuidv4 = function () {
   })
 }
 
-const AtReId = new RegExp('^.*\\/([^\\/\\.]*)\\.json')
+const AtReId = /^.*\/([^/.]*)\.json/i
+const ReUUID = /^\w?[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+
 /**
  * extract id from URL. For example from
  * `https://api.beethovens-werkstatt.de/module3/xf07b16aa-ddbe-4548-9e78-0b3f1752bf0c.json`
@@ -29,7 +31,7 @@ export const atId = function (atid) {
   if (m && m[1]) {
     return m[1]
   }
-  return null
+  return ReUUID.test(atid) ? atid : undefined
 }
 
 /**
