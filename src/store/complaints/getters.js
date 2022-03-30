@@ -105,7 +105,7 @@ const getters = {
   [n.getters.previousComplaintId] (state, getters) {
     const acid = state[n.state.activeComplaintId]
     if (acid) {
-      const complaintIds = getters[n.getters.complaints].map((c) => c['@id'])
+      const complaintIds = getters[n.getters.complaints].filter((c) => c.videapp).map((c) => c['@id'])
       const ncid = tb.findPrevious(complaintIds, (cid) => cid === acid)
       // console.log(acid, ncid, complaintIds)
       return ncid
@@ -114,7 +114,7 @@ const getters = {
   },
   [n.getters.nextComplaintId] (state, getters) {
     const acid = state[n.state.activeComplaintId]
-    const complaintIds = getters[n.getters.complaints].map((c) => c['@id'])
+    const complaintIds = getters[n.getters.complaints].filter((c) => c.videapp).map((c) => c['@id'])
     // console.log(acid, complaintIds)
     if (acid) {
       const ncid = tb.findNext(complaintIds, (cid) => cid === acid)

@@ -20,8 +20,10 @@ const actions = {
       const mdiv = c.affects[0]?.mdiv
       // console.log(state.movements, mdiv)
       const movement = mdiv ? getters.movements[tb.atId(mdiv)] : undefined
+      const workobj = getters[n.getters.getWork](work)
+      const videapp = workobj?.level === 'videapp'
       // TODO this looks like a workaround
-      const complaint = movement ? { work, ...c, movement } : { work, ...c }
+      const complaint = movement ? { videapp, work, ...c, movement } : { videapp, work, ...c }
       commit(n.mutations.LOAD_COMPLAINT, complaint)
     })
   },
