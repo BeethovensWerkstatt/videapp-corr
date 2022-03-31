@@ -5,16 +5,20 @@
       "title": "Sonate für Klavier c-Moll",
       "opus": 111,
       "modules": ["modul1"],
-      "app": "https://beethovens-werkstatt.de/prototyp-1/",
-      "apptitle": "Prototyp 1"
+      "app": "https://demo.beethovens-werkstatt.de/index.html",
+      "apptitle": "Prototyp 1",
+      "dossier": "https://beethovens-werkstatt.de/prototyp-1/",
+      "dossiertitle": "Prototyp 1"
     },
     "op59/3": {
       "label": "Op. 59/3",
       "title": "Streichquartett C-Dur",
       "opus": 59.3,
       "modules": ["modul1"],
-      "app": "https://beethovens-werkstatt.de/prototyp-2-0/",
-      "apptitle": "Prototyp 2"
+      "app": "https://demo2.beethovens-werkstatt.de/index.html",
+      "apptitle": "Prototyp 2",
+      "dossier": "https://beethovens-werkstatt.de/prototyp-2-0/",
+      "dossiertitle": "Prototyp 2"
     },
     "op75/2": {
       "label": "Op. 75/2",
