@@ -13,9 +13,9 @@
           </div>
         </div>
         <div class="close">
-          <button @click="desktopComplaint" class="btn btn-sm"><span class="icon icon-copy">Schreibtisch</span></button>
-          <button :disabled="!previousComplaintId" @click="loadPrevious" class="btn btn-sm"><span class="icon icon-arrow-left">&nbsp;</span></button>
-          <button :disabled="!nextComplaintId" @click="loadNext" class="btn btn-sm"><span class="icon icon-arrow-right">&nbsp;</span></button>
+          <button @click="desktopComplaint" class="btn btn-sm iconBtn"><i class="icon icon-copy"></i></button>
+          <button :disabled="!previousComplaintId" @click="loadPrevious" class="btn btn-sm iconBtn"><i class="icon icon-arrow-left"></i></button>
+          <button :disabled="!nextComplaintId" @click="loadNext" class="btn btn-sm iconBtn"><i class="icon icon-arrow-right"></i></button>
           <button class="btn btn-sm" @click.prevent="displayViewSelection"><i class="icon icon-menu"></i> Optionen</button>
           <button class="btn btn-sm" @click.prevent="closeDialog"><i class="icon icon-cross"></i> {{ $t('terms.close') }}</button>
         </div>
@@ -492,6 +492,11 @@ export default {
     top: 1em;
     right: 1em;
   }
+}
+
+.iconBtn i {
+  position: relative;
+  left: -2px;
 }
 
 </style>
