@@ -1,7 +1,7 @@
 <template>
   <div class="complaint-list-container">
     <complaints-filter-dialog :dialog="filterDialog" />
-    <table class="complaint-list unselectable">
+    <table class="table table-hover complaint-list unselectable">
       <tbody v-if="complaints.length === 0">
         <tr class="mvt">
           <th v-if="!workId">
@@ -105,7 +105,7 @@
             @click.prevent="toggleActivate(complaint)"
             :title="workLongTitle(complaint.movement.work)"
           >
-            {{ workTitle(complaint.movement.work) }}
+            {{ workTitle(complaint.movement.work).split(' ')[1] }}
           </td>
           <td
             class="complaint-attribute"
@@ -129,8 +129,8 @@
             {{ complaintSigle(complaint) }}
           </td>
           <td class="complaint-attribute">
-            <btn v-if="complaint.staticExample">statische Ansicht</btn>
-            <btn v-else @click.prevent="openComplaint(complaint)">Monitum öffnen</btn>
+            <btn class="btn btn-link" v-if="complaint.staticExample">Details <i class="icon icon-share"></i></btn>
+            <btn class="btn btn-link" v-else @click.prevent="openComplaint(complaint)">Details <i class="icon icon-forward"></i></btn>
           </td>
           <!-- <td class="complaint-attribute">
             <btn @click="openWork(complaint)" v-if="!complaint.staticExample">
@@ -360,11 +360,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/scss/variables.scss";
 .complaint-list-container {
   width: 100%;
   max-height: 100%;
   overflow: scroll;
-  padding-bottom: 1rem;
+  padding: 0 .5rem 1rem .5rem;
 }
 .complaint-list {
   width: 100%;
@@ -412,8 +413,8 @@ tr.mvt {
 }
 
 .complaint-active {
-  background-color: rgb(241, 241, 190);
-  outline: 1px solid rgb(230, 116, 116);
+  background-color: lighten($highlight-color, 50%);//rgb(241, 241, 190);
+  outline: 1px solid $highlight-color;
 }
 
 .complaint-error {
