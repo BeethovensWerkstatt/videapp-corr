@@ -171,6 +171,8 @@ export default {
     cursor: pointer;
     font-size: 60%;
     // outline: 1px solid rgba(255, 166, 0, 0.349);
+    padding-left: 3px;
+    vertical-align: middle;
 
     &.markerLeft {
       right: 0;

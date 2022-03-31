@@ -5,9 +5,7 @@
       <div class="head" v-if="active">
         <div class="title">
           <div class="titletext">
-            <template v-if="!workId">
-              {{ workTitle(activeComplaint['@work']) }},
-            </template>
+            {{ workTitle(activeComplaint['@work']) }},
             {{ activeComplaint.movement.label }}{{ (complaintLabel !== '') ? (', ' + complaintLabel) : '' }}, {{ $t('terms.measure') }} {{ measures }}
           </div>
           <div class="measures">
@@ -15,6 +13,7 @@
           </div>
         </div>
         <div class="close">
+          <button @click="desktopComplaint" class="btn btn-sm"><span class="icon icon-copy">Schreibtisch</span></button>
           <button :disabled="!previousComplaintId" @click="loadPrevious" class="btn btn-sm"><span class="icon icon-arrow-left">&nbsp;</span></button>
           <button :disabled="!nextComplaintId" @click="loadNext" class="btn btn-sm"><span class="icon icon-arrow-right">&nbsp;</span></button>
           <button class="btn btn-sm" @click.prevent="displayViewSelection"><i class="icon icon-menu"></i> Optionen</button>
@@ -219,7 +218,7 @@ export default {
     },
     workTitle (workId) {
       const work = this.getWork(workId)
-      return work?.title[0].title
+      return work?.label ? work?.label[0].title : work?.title[0].title
     },
     /**
      * create array of objects `[{ mei: { url }}, { img: { url } }, ...]`
@@ -368,6 +367,42 @@ export default {
     loadNext () {
       console.log('activate next sibling')
       this.$store.dispatch(n.actions.activateSibling, false)
+    },
+    openPages (complaint) {
+      this.$store.dispatch(n.actions.loadComplaint, {
+        complaint,
+        callback: (complaint) => {
+          // console.log(complaint)
+          for (const state of ['anteDocs', 'revisionDocs', 'postDocs']) {
+            for (const c of complaint[state]) {
+              const pageId = c.iiif[0]?.on.full
+              const page = this.$store.getters.getPage(pageId)
+              // console.log(state, page)
+              this.$store.commit(
+                n.mutations.SET_PAGE,
+                {
+                  id: page.source,
+                  page: page.pagenumber
+                })
+            }
+          }
+          this.closeDialog()
+          this.$store.commit(n.mutations.COMPLAINTS_LIST, false)
+        }
+      })
+    },
+    desktopComplaint () {
+      const complaint = this.activeComplaint
+      const work = this.getWork(complaint.movement.work)
+      if (work) {
+        this.openPages(complaint)
+        if (this.$route.name !== 'Schreibtisch' || this.workId !== work.id) {
+          console.log(this.$router.name, this.workId, work.id)
+          this.$router.push({ name: 'Schreibtisch', params: { id: work.id } }).then(() => {
+            this.$store.dispatch(n.actions.activateComplaint, complaint['@id'])
+          })
+        }
+      }
     }
   }
 }

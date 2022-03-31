@@ -34,7 +34,7 @@
           </th>
           <th>&nbsp;</th>
           <th>&nbsp;</th>
-          <th>&nbsp;</th>
+          <!-- <th>&nbsp;</th> -->
         </tr>
       </tbody>
       <tbody :key="complaint['@id']"
@@ -75,7 +75,7 @@
               </div>
             </th>
             <th>&nbsp;</th>
-            <th>&nbsp;</th>
+            <!-- <th>&nbsp;</th> -->
           </template>
           <template v-else>
             <th v-if="!workId"></th>
@@ -87,7 +87,7 @@
             <th></th>
             <th></th>
             <th></th>
-            <th></th>
+            <!-- <th></th> -->
           </template>
         </tr>
         <tr
@@ -132,11 +132,11 @@
             <btn v-if="complaint.staticExample">statische Ansicht</btn>
             <btn v-else @click.prevent="openComplaint(complaint)">Monitum öffnen</btn>
           </td>
-          <td class="complaint-attribute">
+          <!-- <td class="complaint-attribute">
             <btn @click="openWork(complaint)" v-if="!complaint.staticExample">
               {{ $t('messages.openDesktop') }}
             </btn>
-          </td>
+          </td> -->
         </tr>
       </tbody>
     </table>

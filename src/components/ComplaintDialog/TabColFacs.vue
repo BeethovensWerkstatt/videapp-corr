@@ -2,12 +2,12 @@
   <div>
     <h2 @click="openPage">
       {{ $t("terms.complaint.state." + state + "Doc") }}: <span class="sourceSiglum">{{ label }}</span>
-      <div
+      <!-- <div
         class="zoomLocker"
         @click="rezoom(500, true)"
         v-html="pinned ? '&#x1F512;' : '&#x1F513;'"
         :title="$t('messages.comparative-view.' + (pinned ? 'zoom-lock' : 'zoom-unlock'))"
-      />
+      /> -->
     </h2>
     <div :id="divid" class="ComplaintDialogOSD" :class="{ ['facs-' + state]: true, facs: true, [state]: true }" :style="styles">
       <div :id="ovlid" class="complaint-region" />
