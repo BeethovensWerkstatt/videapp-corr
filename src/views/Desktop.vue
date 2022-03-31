@@ -4,6 +4,10 @@
     <complaints-list-dialog />
     <complaint-dialog />
     <div id="sidebar">
+      <div class="workTitle">
+        <strong>{{ workTitle }}</strong>
+        <p>{{ workLongTitle }}</p>
+      </div>
       <div>
         <div id="navigatorBox">
           <div id="navigator"></div>
@@ -79,6 +83,15 @@ export default {
       set (val) {
         this.$store.commit(n.mutations.SET_DISPLAY_MEASURES, val)
       }
+    },
+    work () {
+      return this.$store.getters[n.getters.getWork](this.$route.params.id)
+    },
+    workTitle () {
+      return this.work?.label[0].title ? this.work?.label[0].title : this.work?.title[0].title
+    },
+    workLongTitle () {
+      return this.work?.title[0].title
     }
   }
 }
@@ -155,6 +168,14 @@ export default {
     background-color: #ffffff;
     // box-shadow: 0 .1rem .5rem #00000033 inset;
     padding: 8px;
+  }
+
+  .workTitle {
+    p {
+      color: gray;
+      font-size: 80%;
+      margin-bottom: 0;
+    }
   }
 
   #navigator {
