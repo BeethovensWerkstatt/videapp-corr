@@ -88,7 +88,7 @@ export default {
       return this.$store.getters[n.getters.getWork](this.$route.params.id)
     },
     workTitle () {
-      return this.work?.label[0].title ? this.work?.label[0].title : this.work?.title[0].title
+      return this.work?.label ? this.work?.label[0].title : this.work?.title[0].title
     },
     workLongTitle () {
       return this.work?.title[0].title
