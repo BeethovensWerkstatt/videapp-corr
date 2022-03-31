@@ -1,7 +1,7 @@
 <template>
   <div class="complaint-list-container">
     <complaints-filter-dialog :dialog="filterDialog" />
-    <table class="complaint-list unselectable">
+    <table class="table table-hover complaint-list unselectable">
       <tbody v-if="complaints.length === 0">
         <tr class="mvt">
           <th v-if="!workId">
@@ -12,7 +12,7 @@
           </th>
           <th :class="{ sortColumn: sortedBy === sortTag.movementMeasure }">
             <span @click="sort(sortTag.movementMeasure)">
-              <span>{{ $t('terms.movement') }}, {{ $t('terms.measure') }}</span>
+              <span>{{ $t('terms.location') }}</span>
             </span>
             <div class="nobreak">
               <span :class="sortIconC(sortTag.movementMeasure)" @click="sort(sortTag.movementMeasures)" />
@@ -33,6 +33,8 @@
             </div>
           </th>
           <th>&nbsp;</th>
+          <th>&nbsp;</th>
+          <!-- <th>&nbsp;</th> -->
         </tr>
       </tbody>
       <tbody :key="complaint['@id']"
@@ -52,7 +54,7 @@
             </th>
             <th :class="{ sortColumn: sortedBy === sortTag.movementMeasure }">
               <div @click="sort(sortTag.movementMeasure)" class="nobreak">
-                <span>{{ $t('terms.movement') }}, {{ $t('terms.measure') }}</span>
+                <span>{{ $t('terms.location') }}</span>
               </div>
               <div class="nobreak">
                 <span :class="sortIconC(sortTag.movementMeasure)" v-if="ci === 0" @click="sort(sortTag.movementMeasure)" />
@@ -73,6 +75,7 @@
               </div>
             </th>
             <th>&nbsp;</th>
+            <!-- <th>&nbsp;</th> -->
           </template>
           <template v-else>
             <th v-if="!workId"></th>
@@ -84,6 +87,7 @@
             <th></th>
             <th></th>
             <th></th>
+            <!-- <th></th> -->
           </template>
         </tr>
         <tr
@@ -93,30 +97,24 @@
             'complaint-error': (measures(complaint) === 'N/A')
           }"
           :id="'data-' + ci"
-          :title="complaint.movement.work"
         >
           <!-- if workId is set, we are in work related desktop view and column is not needed -->
           <td
             v-if="!workId"
             class="complaint-attribute"
             @click.prevent="toggleActivate(complaint)"
+            :title="workLongTitle(complaint.movement.work)"
           >
-            <btn
-              class="btn-link"
-              @click="openWork(complaint)"
-              :title="$t('messages.openDesktop')"
-            >
-              {{ workTitle(complaint.movement.work) }}
-            </btn>
+            {{ workTitle(complaint.movement.work).split(' ')[1] }}
           </td>
           <td
             class="complaint-attribute"
             @click.prevent="toggleActivate(complaint)"
           >
-            <template v-if="complaint.movement">
-              {{ toRoman(complaint.movement.n) }},
+            <template v-if="complaint.movement && complaint.movement.label">
+              {{ complaint.movement.label }},
             </template>
-            {{ measures(complaint) }}
+            {{ 'T. ' + measures(complaint) }}
           </td>
           <td
             v-for="(tag, i) in [/*sortTag.revisionObject, */sortTag.textOperation, sortTag.classification, sortTag.context, sortTag.implementation]"
@@ -124,16 +122,21 @@
             class="complaint-attribute"
             @click.prevent="toggleActivate(complaint)"
           >
-            <span v-if="complaint.tags[tag].length === 0">&mdash;</span>
-            <span v-for="(o,i) in complaint.tags[tag]" :key="o + '_' + i"><span v-if="i > 0">, </span>{{ $t('taxonomy.' + o) }}</span>
+            <template v-if="complaint.tags[tag].length === 0">&mdash;</template>
+            <template v-for="(o,i) in complaint.tags[tag]"><template v-if="i > 0">, </template>{{ $t('taxonomy.' + o) }}</template>
           </td>
           <td class="complaint-attribute">
             {{ complaintSigle(complaint) }}
           </td>
           <td class="complaint-attribute">
-            <btn @click.prevent="openComplaint(complaint)">Monitum öffnen</btn>
-            <!-- <btn @click.prevent="openPages(complaint)">Seiten öffnen</btn> -->
+            <btn class="btn btn-link" v-if="complaint.staticExample">Details <i class="icon icon-share"></i></btn>
+            <btn class="btn btn-link" v-else @click.prevent="openComplaint(complaint)">Details <i class="icon icon-forward"></i></btn>
           </td>
+          <!-- <td class="complaint-attribute">
+            <btn @click="openWork(complaint)" v-if="!complaint.staticExample">
+              {{ $t('messages.openDesktop') }}
+            </btn>
+          </td> -->
         </tr>
       </tbody>
     </table>
@@ -196,6 +199,10 @@ export default {
   methods: {
     toRoman: toolbox.toRoman,
     workTitle (workId) {
+      const work = this.getWork(workId)
+      return work?.label[0].title ? work?.label[0].title : work?.title[0].title
+    },
+    workLongTitle (workId) {
       const work = this.getWork(workId)
       return work?.title[0].title
     },
@@ -353,10 +360,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/scss/variables.scss";
 .complaint-list-container {
   width: 100%;
   max-height: 100%;
   overflow: scroll;
+  padding: 0 .5rem 1rem .5rem;
 }
 .complaint-list {
   width: 100%;
@@ -404,8 +413,8 @@ tr.mvt {
 }
 
 .complaint-active {
-  background-color: rgb(241, 241, 190);
-  outline: 1px solid rgb(230, 116, 116);
+  background-color: lighten($highlight-color, 50%);//rgb(241, 241, 190);
+  outline: 1px solid $highlight-color;
 }
 
 .complaint-error {

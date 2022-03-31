@@ -66,7 +66,7 @@ const getters = {
   [n.getters.workComplaints]: (state, getters) => (workId, filtered = true) => {
     // TODO atId in loadComplaints?
     const workFilter = c => {
-      console.log(c.movement?.work, workId)
+      // console.log(c.movement, tb.atId(c.movement?.work), workId)
       return tb.atId(c.movement?.work) === workId
     }
     // console.log(getters.allComplaints)
@@ -105,20 +105,20 @@ const getters = {
   [n.getters.previousComplaintId] (state, getters) {
     const acid = state[n.state.activeComplaintId]
     if (acid) {
-      const complaintIds = getters[n.getters.complaints].map((c) => c['@id'])
+      const complaintIds = getters[n.getters.complaints].filter((c) => c.videapp).map((c) => c['@id'])
       const ncid = tb.findPrevious(complaintIds, (cid) => cid === acid)
-      console.log(acid, ncid, complaintIds)
+      // console.log(acid, ncid, complaintIds)
       return ncid
     }
     return undefined
   },
   [n.getters.nextComplaintId] (state, getters) {
     const acid = state[n.state.activeComplaintId]
-    const complaintIds = getters[n.getters.complaints].map((c) => c['@id'])
-    console.log(acid, complaintIds)
+    const complaintIds = getters[n.getters.complaints].filter((c) => c.videapp).map((c) => c['@id'])
+    // console.log(acid, complaintIds)
     if (acid) {
       const ncid = tb.findNext(complaintIds, (cid) => cid === acid)
-      console.log(acid, ncid, complaintIds)
+      // console.log(acid, ncid, complaintIds)
       return ncid
     }
     return complaintIds.length > 0 ? complaintIds[0] : undefined

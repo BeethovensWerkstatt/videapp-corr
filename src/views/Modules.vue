@@ -57,33 +57,37 @@
           [<a class="moreLink" :href="mod.url" target="_blank">mehr</a>]
         </div>
         <div class="workPills" v-if="!mod.inactive">
-          <span class="workPill" v-for="(w, i) in module_works(mod)" :key="i">
-            <router-link
-              v-if="w.route"
-              :to="{ name: w.route, params: { id: w.id } }"
-              target="_blank"
-              :title="w.apptitle + ': ' + w.title"
-              class="app"
-            >{{ w.label }}</router-link>
-            <a
-              v-else-if="w.app"
-              :href="w.app"
-              target="_blank"
-              :title="w.apptitle + ': ' + w.title"
-              class="app"
-            >{{ w.label }}</a>
-            <a
-              v-else-if="w.dossier"
+          <template v-for="(w, i) in module_works(mod)">
+
+            <span class="workPill" :class="{hasDossier: w.dossier}" :key="i">
+              <router-link
+                v-if="w.route"
+                :to="{ name: w.route, params: { id: w.id } }"
+                target="_blank"
+                :title="w.apptitle + '\r\n' + worktitle(w)"
+                class="app"
+              >{{ w.label }}</router-link>
+              <a
+                v-else-if="w.app"
+                :href="w.app"
+                target="_blank"
+                :title="w.apptitle + '\r\n' + worktitle(w)"
+                class="app"
+              >{{ w.label }}</a>
+              <span
+                v-else
+                :title="worktitle(w)"
+              >{{ w.label }}</span>
+            </span>
+
+            <a :key="i"
+              v-if="w.dossier"
               :href="w.dossier"
               target="_blank"
-              :title="'Dossier: ' + (w.dossiertitle || w.title)"
+              :title="'Dossier\r\n' + titlestring(w.dossiertitle || w.title)"
               class="dossier"
-            >{{ w.label }}</a>
-            <span
-              v-else
-              :title="w.title"
-            >{{ w.label }}</span>
-          </span>
+            ><document-symbol height="1rem"/></a>
+          </template>
         </div>
       </div>
     </div>
@@ -94,9 +98,13 @@
 import { mapGetters } from 'vuex'
 import n from '@/store/names'
 import { workSorter } from '@/store/directory'
+import DocumentSymbol from '@/components/symbols/DocumentSymbol.vue'
 
 export default {
   name: 'Modules',
+  components: {
+    DocumentSymbol
+  },
   computed: {
     ...mapGetters([n.getters.directory_modules, n.getters.directory_get_work]),
     modules () {
@@ -119,6 +127,12 @@ export default {
         return works.sort(workSorter)
       }
       return []
+    },
+    titlestring (s) {
+      return s.replace(': ', ':\r\n')
+    },
+    worktitle (w) {
+      return w.label + ', ' + w.title
     }
   }
 }
@@ -156,10 +170,12 @@ export default {
 
     .workPills {
       margin-top: .5rem;
+
       .workPill {
         border: .5px solid $border-color;
         border-radius: .3rem;
         background-color: $background-flat;
+        background: linear-gradient(180deg, lighten($background-flat, 10%) 0%, darken($background-flat, 5%) 100%);
         padding: .05rem .5rem;
         margin: 0 .5rem .5rem 0;
 
@@ -173,8 +189,25 @@ export default {
           font-weight: 500;
         }
 
-        .dossier {
-          font-style: italic;
+        &.hasDossier {
+          border-radius: .3rem 0 0 .3rem;
+          margin-right: 0;
+          padding-right: .1rem;
+        }
+      }
+
+      .dossier {
+        border: .5px solid $border-color;
+        border-left: none;
+        border-radius: 0 .3rem .3rem 0;
+        background-color: darken($background-flat, 10%);
+        background: linear-gradient(180deg, darken($background-flat, 15%) 0%, darken($background-flat, 25%) 100%);
+        padding: .05rem 0 .05rem .1rem;
+        margin: 0 .5rem .5rem 0;
+        position: relative;
+        & > * {
+          position: relative;
+          left: -5px;
         }
       }
     }

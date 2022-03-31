@@ -17,8 +17,8 @@ export const compareWorks = (wid1, wid2) => {
   }
   // TODO why do I need to separate them?
   // TODO erase workaround if opus number is part of work structure!
-  const matchOpus1 = /Op.\s*(\d+)/gm
-  const matchOpus2 = /Op.\s*(\d+)/gm
+  const matchOpus1 = /Op.\s*(\d+)/igm
+  const matchOpus2 = /Op.\s*(\d+)/igm
 
   const work1 = store.getters[n.getters.getWork](wid1)
   const work2 = store.getters[n.getters.getWork](wid2)

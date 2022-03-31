@@ -147,6 +147,7 @@ export default {
 
   .left-margin {
     position: absolute;
+    display: table;
     left: 0;
     top: 0;
     height: 100%;
@@ -164,6 +165,7 @@ export default {
 
   .marker {
     position: absolute;
+    vertical-align: middle;
     width: 90%;
     overflow: hidden;
     background: rgb(250,226,50);
@@ -171,6 +173,7 @@ export default {
     cursor: pointer;
     font-size: 60%;
     // outline: 1px solid rgba(255, 166, 0, 0.349);
+    padding-left: 2%;
 
     &.markerLeft {
       right: 0;
@@ -187,7 +190,12 @@ export default {
       background: linear-gradient(0deg, rgba(248, 234, 130, 1) 0%, rgb(238, 236, 103) 100%);
     }
     div {
-      width: 500px;
+      position: relative;
+      top: 50%;
+      -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+      transform: translateY(-50%);
+      width: 99.5%;
     }
   }
   .curmarkerL {

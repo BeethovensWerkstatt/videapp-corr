@@ -5,16 +5,20 @@
       "title": "Sonate für Klavier c-Moll",
       "opus": 111,
       "modules": ["modul1"],
-      "app": "https://beethovens-werkstatt.de/prototyp-1/",
-      "apptitle": "Prototyp 1"
+      "app": "https://demo.beethovens-werkstatt.de/index.html",
+      "apptitle": "Prototyp 1",
+      "dossier": "https://beethovens-werkstatt.de/prototyp-1/",
+      "dossiertitle": "Variantendarstellung am Beispiel"
     },
     "op59/3": {
       "label": "Op. 59/3",
       "title": "Streichquartett C-Dur",
       "opus": 59.3,
       "modules": ["modul1"],
-      "app": "https://beethovens-werkstatt.de/prototyp-2-0/",
-      "apptitle": "Prototyp 2"
+      "app": "https://demo2.beethovens-werkstatt.de/index.html",
+      "apptitle": "Prototyp 2",
+      "dossier": "https://beethovens-werkstatt.de/prototyp-2-0/",
+      "dossiertitle": "Schreibschichten und Invarianz"
     },
     "op75/2": {
       "label": "Op. 75/2",
@@ -134,25 +138,37 @@
       "label": "Op. 104",
       "title": "Streichquintett c-Moll",
       "opus": 104,
-      "modules": ["modul3"]
+      "modules": ["modul3"],
+      "dev": true
     },
     "op106": {
       "label": "Op. 106",
       "title": "Klaviersonate B-Dur",
       "opus": 106,
-      "modules": ["modul3"]
+      "modules": ["modul3"],
+      "dev": true
     },
     "op109": {
+      "@id": "https://dev-api.beethovens-werkstatt.de/module3/u99c226c2-03f0-476b-889d-9232b724fe44.json",
+      "id": "u99c226c2-03f0-476b-889d-9232b724fe44",
       "label": "Op. 109",
       "title": "Klaviersonate E-Dur",
       "opus": 109,
-      "modules": ["modul3"]
+      "modules": ["modul3"],
+      "route": "Monita",
+      "apptitle": "VideApp rev",
+      "dev": true
     },
     "op127": {
+      "@id": "https://dev-api.beethovens-werkstatt.de/module3/t0c09f04e-e36d-4eaa-a064-029b5a232332.json",
+      "id": "t0c09f04e-e36d-4eaa-a064-029b5a232332",
       "label": "Op. 127",
       "title": "Streichquartett Es-Dur",
       "opus": 127,
-      "modules": ["modul3"]
+      "modules": ["modul3"],
+      "route": "Monita",
+      "apptitle": "VideApp rev",
+      "dev": true
     },
     "op86": {
       "label": "Op. 86",
@@ -166,7 +182,8 @@
       "label": "WoO 152",
       "title": "Irische Lieder",
       "woo": 152,
-      "modules": ["modul3"]
+      "modules": ["modul3"],
+      "dev": true
     }
   },
   "modules": {

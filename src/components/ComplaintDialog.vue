@@ -5,15 +5,17 @@
       <div class="head" v-if="active">
         <div class="title">
           <div class="titletext">
-            {{ toRoman(activeComplaint.movement.n) }}. {{ activeComplaint.movement.label }}{{ (complaintLabel !== '') ? (', ' + complaintLabel) : '' }}, {{ $t('terms.measure') }} {{ measures }}
+            {{ workTitle(activeComplaint['@work']) }},
+            {{ activeComplaint.movement.label }}{{ (complaintLabel !== '') ? (', ' + complaintLabel) : '' }}, {{ $t('terms.measure') }} {{ measures }}
           </div>
           <div class="measures">
             Monitum <a class="monitumLink" :href="activeComplaint['@id']" target="_blank" rel="noopener noreferrer" :title="monitumId">{{ monitumId.split('-')[0] }}</a>
           </div>
         </div>
         <div class="close">
-          <button :disabled="!previousComplaintId" @click="loadPrevious" class="btn btn-sm"><span class="icon icon-arrow-left">&nbsp;</span></button>
-          <button :disabled="!nextComplaintId" @click="loadNext" class="btn btn-sm"><span class="icon icon-arrow-right">&nbsp;</span></button>
+          <button @click="desktopComplaint" class="btn btn-sm iconBtn"><i class="icon icon-copy"></i></button>
+          <button :disabled="!previousComplaintId" @click="loadPrevious" class="btn btn-sm iconBtn"><i class="icon icon-arrow-left"></i></button>
+          <button :disabled="!nextComplaintId" @click="loadNext" class="btn btn-sm iconBtn"><i class="icon icon-arrow-right"></i></button>
           <button class="btn btn-sm" @click.prevent="displayViewSelection"><i class="icon icon-menu"></i> Optionen</button>
           <button class="btn btn-sm" @click.prevent="closeDialog"><i class="icon icon-cross"></i> {{ $t('terms.close') }}</button>
         </div>
@@ -94,7 +96,19 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['viewer', 'displayComplaint', 'activeComplaintId', 'activeComplaint', 'complaintDisplaySelect', 'previousComplaintId', 'nextComplaintId']),
+    ...mapGetters([
+      n.getters.viewer,
+      n.getters.getWork,
+      n.getters.displayComplaint,
+      n.getters.activeComplaintId,
+      n.getters.activeComplaint,
+      n.getters.complaintDisplaySelect,
+      n.getters.previousComplaintId,
+      n.getters.nextComplaintId
+    ]),
+    workId () {
+      return this.$route.params.id
+    },
     active () {
       if (this.displayComplaint && this.activeComplaintId) {
         return true
@@ -202,6 +216,10 @@ export default {
     toRoman (num) {
       return toolbox.toRoman(num)
     },
+    workTitle (workId) {
+      const work = this.getWork(workId)
+      return work?.label ? work?.label[0].title : work?.title[0].title
+    },
     /**
      * create array of objects `[{ mei: { url }}, { img: { url } }, ...]`
      *
@@ -238,7 +256,7 @@ export default {
               url: stat.iiif[0]?.target.selector[0]['@id'],
               page: stat.iiif[0]?.on.full,
               region: stat.iiif[0]?.on.selector.value,
-              label: stat.labels?.source + ', ' + stat.labels?.pages // 'Sigel / Datum'
+              label: stat.labels?.source + ', S.' + stat.labels?.pages // 'Sigel / Seite'
             }
           })
           docs.push({
@@ -344,11 +362,47 @@ export default {
     },
     loadPrevious () {
       console.log('activate previous sibling')
-      // this.$store.dispatch(n.actions.activateSibling, true)
+      this.$store.dispatch(n.actions.activateSibling, true)
     },
     loadNext () {
       console.log('activate next sibling')
-      // this.$store.dispatch(n.actions.activateSibling, false)
+      this.$store.dispatch(n.actions.activateSibling, false)
+    },
+    openPages (complaint) {
+      this.$store.dispatch(n.actions.loadComplaint, {
+        complaint,
+        callback: (complaint) => {
+          // console.log(complaint)
+          for (const state of ['anteDocs', 'revisionDocs', 'postDocs']) {
+            for (const c of complaint[state]) {
+              const pageId = c.iiif[0]?.on.full
+              const page = this.$store.getters.getPage(pageId)
+              // console.log(state, page)
+              this.$store.commit(
+                n.mutations.SET_PAGE,
+                {
+                  id: page.source,
+                  page: page.pagenumber
+                })
+            }
+          }
+          this.closeDialog()
+          this.$store.commit(n.mutations.COMPLAINTS_LIST, false)
+        }
+      })
+    },
+    desktopComplaint () {
+      const complaint = this.activeComplaint
+      const work = this.getWork(complaint.movement.work)
+      if (work) {
+        this.openPages(complaint)
+        if (this.$route.name !== 'Schreibtisch' || this.workId !== work.id) {
+          console.log(this.$router.name, this.workId, work.id)
+          this.$router.push({ name: 'Schreibtisch', params: { id: work.id } }).then(() => {
+            this.$store.dispatch(n.actions.activateComplaint, complaint['@id'])
+          })
+        }
+      }
     }
   }
 }
@@ -438,6 +492,11 @@ export default {
     top: 1em;
     right: 1em;
   }
+}
+
+.iconBtn i {
+  position: relative;
+  left: -2px;
 }
 
 </style>

@@ -29,7 +29,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "videapp" */ '../views/Desktop.vue')
   },
   {
-    path: '/complaints',
+    path: '/complaints/:id?',
     name: 'Monita',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route

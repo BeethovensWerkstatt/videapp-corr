@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { startProc, finishProc } from '..'
 import n from '@/store/names'
+import tb from '@/toolbox'
 
 /**
  * @namespace store.complaints.actions
@@ -11,27 +12,18 @@ const actions = {
    * @memberof store.complaints.actions
    * @param {Object} payload object containing complaints property `{ complaints: Object[] }`
    */
-  [n.actions.loadComplaints] ({ commit, /* dispatch, */ getters }, { complaints }) {
+  [n.actions.loadComplaints] ({ commit, /* dispatch, */ getters }, { complaints, work }) {
+    console.log(getters[n.getters.directory_is_dev_work](tb.atId(work)), work)
+    if (getters[n.getters.mainbranch] === getters[n.getters.version].branch && getters[n.getters.directory_is_dev_work](tb.atId(work))) return
     complaints.forEach(c => {
-      // console.log(c)
+      // console.log(c, work)
       const mdiv = c.affects[0]?.mdiv
       // console.log(state.movements, mdiv)
-      const movement = mdiv ? getters.movements[mdiv] : undefined
+      const movement = mdiv ? getters.movements[tb.atId(mdiv)] : undefined
+      const workobj = getters[n.getters.getWork](work)
+      const videapp = workobj?.level === 'videapp'
       // TODO this looks like a workaround
-      const complaint = movement ? { ...c, movement } : { ...c }
-      // console.log(complaint)
-      /*
-      dispatch(act.getData, {
-        url: complaint['@id'],
-        callback ({ data }) {
-          const c = { ...data, ...complaint }
-          commit(mut.LOAD_COMPLAINT, c)
-        },
-        error (error) {
-          console.error(error)
-        }
-      })
-      */
+      const complaint = movement ? { videapp, work, ...c, movement } : { videapp, work, ...c }
       commit(n.mutations.LOAD_COMPLAINT, complaint)
     })
   },
@@ -47,7 +39,7 @@ const actions = {
       commit(n.mutations.CANCEL_CURRENT_ITEM)
       return
     }
-    console.log(complaintId, state.activeComplaintId)
+    // console.log(complaintId, state.activeComplaintId)
     if (complaintId !== state.activeComplaintId) {
       commit(n.mutations.CANCEL_CURRENT_ITEM)
     }
