@@ -16,6 +16,7 @@ const config = {
   couchdb: {
     defaultName: 'axios-data'
   },
+  mainbranch: 'main',
   version: new Promise((resolve, reject) => {
     axios.get('./version.json').then(({ status, data }) => {
       if (status === 200) {
@@ -37,7 +38,7 @@ const API_HOST = {
 
 export const getAPIURL = async function (path) {
   const version = await config.version
-  const url = new Url('https://api.beethovens-werkstatt.de/')
+  const url = new Url('https://dev-api.beethovens-werkstatt.de/')
   if (API_HOST[version.branch]) {
     url.host = API_HOST[version.branch]
   }

@@ -159,12 +159,15 @@ export default {
     },
     anno () {
       // console.log(this.row[this.state])
-      if (this.select.anno && this.row[this.state]?.anno) {
+      const anno = this.row[this.state]?.anno
+      if (this.select.anno && anno) {
+        /*
         const temporalDivElement = document.createElement('div')
         temporalDivElement.innerHTML = this.row[this.state].anno ? this.row[this.state]?.anno : '&mdash;'
         let anno = temporalDivElement.textContent || temporalDivElement.innerText || '&mdash;'
+        */
         if (typeof anno !== 'string' || anno.trim().length === 0) {
-          anno = '&mdash;'
+          return '&mdash;'
         }
         return anno
       }

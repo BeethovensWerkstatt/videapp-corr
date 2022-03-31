@@ -2,12 +2,12 @@
   <div>
     <h2 @click="openPage">
       {{ $t("terms.complaint.state." + state + "Doc") }}: <span class="sourceSiglum">{{ label }}</span>
-      <div
+      <!-- <div
         class="zoomLocker"
         @click="rezoom(500, true)"
         v-html="pinned ? '&#x1F512;' : '&#x1F513;'"
         :title="$t('messages.comparative-view.' + (pinned ? 'zoom-lock' : 'zoom-unlock'))"
-      />
+      /> -->
     </h2>
     <div :id="divid" class="ComplaintDialogOSD" :class="{ ['facs-' + state]: true, facs: true, [state]: true }" :style="styles">
       <div :id="ovlid" class="complaint-region" />
@@ -19,7 +19,7 @@
 import { mapGetters } from 'vuex'
 import OpenSeadragon from 'openseadragon'
 import tb from '@/toolbox'
-import { mutations, getters } from '@/store/names'
+import n from '@/store/names'
 import config from '@/config'
 
 /**
@@ -35,10 +35,15 @@ export default {
     return {
       viewer: undefined,
       rezoomTime: Date.now(),
-      pinned: false
+      pinned: false,
+      tidata: undefined
     }
   },
   props: {
+    idx: {
+      type: Number,
+      default: 0 // TODO: TabCol.vue with counter
+    },
     label: {
       type: String,
       required: true
@@ -82,10 +87,28 @@ export default {
   },
   watch: {
     pageId () {
-      console.log('TODO reload tiled image')
+      console.log('reload tiled image')
+      const tisrc = {
+        tileSource: this.tileSource,
+        success: (e) => {
+          if (this.tidata) {
+            this.viewer.world.setItemIndex(this.tidata, 0)
+            this.tidata.setOpacity(0)
+            this.tidata.destroy()
+          }
+          this.tidata = e.item
+        },
+        x: 0,
+        y: 0,
+        width: this.page.dimensions.width
+      }
+      this.viewer.addTiledImage(tisrc)
     },
     region () {
-      console.log('TODO reload tiled image')
+      console.log('change region')
+      const overlay = this.viewer.getOverlayById(this.ovlid)
+      overlay.update(this.bounds)
+      this.viewer.viewport.fitBounds(this.fitBounds, false)
       this.rezoom()
     },
     pinned () {
@@ -96,38 +119,48 @@ export default {
   },
   computed: {
     ...mapGetters([
-      getters.getPage,
-      'complaintFacsimileAspect'
+      n.getters.getPage,
+      n.getters.complaintFacsimileAspect,
+      n.getters.version,
+      n.getters.mainbranch
     ]),
+    mainbranch: () => this[n.getters.mainbranch],
     divid () {
-      return this.page.uuid + '_osd'
+      return 'q' + this.idx + '_' + this.state + '_osd'
     },
     ovlid () {
-      return this.page.uuid + '_ovl'
+      return 'q' + this.idx + '_' + this.state + '_ovl'
     },
     page () {
-      return this.getPage(this.pageId)
+      return this[n.getters.getPage](this.pageId)
+    },
+    tileSource () {
+      return {
+        '@context': 'http://iiif.io/api/image/2/context.json',
+        '@id': this.page.uri,
+        profile: 'http://iiif.io/api/image/2/level2.json',
+        protocol: 'http://iiif.io/api/image',
+        width: this.page.pixels.width,
+        height: this.page.pixels.height
+      }
     },
     viewerConfig () {
       // console.log(this.pageId, tb.parsexywh(this.region))
       // console.log(this.page.uri)
+      const tileSource = {
+        ...this.tileSource,
+        success: (e) => {
+          this.tidata = e.item
+          this.viewer.addOverlay(this.$el.querySelector('#' + this.ovlid), this.bounds)
+        }
+      }
       const props = {
         ...config.osd,
         ...this.osdinit,
         id: this.divid,
         showNavigator: false,
         tileSources: {
-          tileSource: {
-            '@context': 'http://iiif.io/api/image/2/context.json',
-            '@id': this.page.uri,
-            profile: 'http://iiif.io/api/image/2/level2.json',
-            protocol: 'http://iiif.io/api/image',
-            width: this.page.pixels.width,
-            height: this.page.pixels.height,
-            success: (e) => {
-              this.viewer.addOverlay(this.$el.querySelector('#' + this.ovlid), this.bounds)
-            }
-          },
+          tileSource: tileSource,
           x: 0,
           y: 0,
           width: this.page.dimensions.width
@@ -188,7 +221,7 @@ export default {
     openPage () {
       // console.log(this.page.pagenumber)
       this.$store.commit(
-        mutations.SET_PAGE,
+        n.mutations.SET_PAGE,
         {
           id: this.page.source,
           page: this.page.pagenumber

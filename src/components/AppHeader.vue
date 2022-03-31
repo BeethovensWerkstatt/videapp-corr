@@ -34,6 +34,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import Progress from '@/components/Progress.vue'
+import n from '@/store/names'
 
 /**
  * Application header component
@@ -44,9 +45,12 @@ export default {
   components: { Progress },
   name: 'AppHeader',
   computed: {
-    ...mapGetters(['version']),
+    ...mapGetters([n.getters.version, n.getters.mainbranch]),
     versionText () {
-      return this.version?.version ? this.version.version + this.version.branch : this.version?.branch
+      // console.log(config)
+      return this.version?.branch !== this[n.getters.mainbranch]
+        ? this.version?.version ? this.version.version + this.version.branch : this.version?.branch
+        : 'VideApp version ' + this.version?.date
     }
   },
   methods: {

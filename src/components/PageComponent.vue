@@ -121,6 +121,11 @@ export default {
         this.viewer.world.setItemIndex(this.tiledimage, ci - 1)
       }
       this.topsource = this.active
+    },
+    activeComplaintId () {
+      const newVal = this.$store.getters.activeComplaintId
+      // console.log('CALLING OUT FOR ' + newVal)
+      this.highlightMonitumShapes(newVal)
     }
   },
   beforeDestroy () {
@@ -273,9 +278,6 @@ export default {
       return svgurl
     },
     activeComplaintId () {
-      const newVal = this.$store.getters.activeComplaintId
-      // console.log('CALLING OUT FOR ' + newVal)
-      this.highlightMonitumShapes(newVal)
       return this.$store.getters.activeComplaintId
     }
   },
@@ -352,6 +354,12 @@ export default {
                   // const shapes = svgroot.querySelectorAll('path')
                   svgContainer.innerHTML = serializer.serializeToString(svg)
                   svgContainer.addEventListener('click', this.clickShapes)
+
+                  const activeComplaintId = this.$store.getters.activeComplaintId
+                  if (activeComplaintId) {
+                    // console.log('highlight', activeComplaintId)
+                    this.highlightMonitumShapes(activeComplaintId)
+                  }
                 }
                 const url = this.svgShapeUrl
                 // if (!this.page.svgRequested) {

@@ -4,7 +4,7 @@
 @import "./variables.scss";
 
 .revision.trans svg {
-   .add g:not([class*="bounding-box"]) {
+   .add g:not([class*="bounding-box"]), .add use {
       stroke: green;
       fill: green;
 
@@ -14,7 +14,7 @@
       }
    }
 
-   .del g:not([class*="bounding-box"]) {
+   .del g:not([class*="bounding-box"]), .del use {
       stroke: red;
       fill: red;
 
@@ -26,7 +26,7 @@
 }
 
 .trans svg {
-   .sic g:not([class*="bounding-box"]) {
+   .sic g:not([class*="bounding-box"]), .sic use {
       stroke: #d825da;
       fill: #d825da;
 
@@ -64,7 +64,7 @@ svg {
     fill: $verovio-supplied-color;
   }
 
-  .grpSym + .label {
+  .grpSym + .label, .system + .label {
     stroke: $verovio-supplied-color;
     fill: $verovio-supplied-color;
   }
