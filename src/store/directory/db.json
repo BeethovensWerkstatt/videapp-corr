@@ -122,7 +122,9 @@
       "opus": 73,
       "modules": ["modul3"],
       "route": "Schreibtisch",
-      "apptitle": "VideApp rev"
+      "apptitle": "VideApp rev",
+      "dossier": "https://beethovens-werkstatt.de/op73/",
+      "dossiertitle": "5. Klavierkonzert Es-Dur op. 73"
     },
     "op120": {
       "@id": "https://api.beethovens-werkstatt.de/module3/xfae46dc1-e2dc-412a-a27c-91a31cd18ab8.json",
@@ -132,7 +134,9 @@
       "opus": 120,
       "modules": ["modul3"],
       "route": "Schreibtisch",
-      "apptitle": "VideApp rev"
+      "apptitle": "VideApp rev",
+      "dossier": "https://beethovens-werkstatt.de/op120/",
+      "dossiertitle": "Diabelli-Variationen op. 120"
     },
     "op104": {
       "label": "Op. 104",
