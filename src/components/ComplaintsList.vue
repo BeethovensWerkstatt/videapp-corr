@@ -129,7 +129,7 @@
             {{ complaintSigle(complaint) }}
           </td>
           <td class="complaint-attribute">
-            <btn class="btn btn-link" v-if="complaint.staticExample">Details <i class="icon icon-share"></i></btn>
+            <btn class="btn btn-link" v-if="complaint.staticExample" @click.prevent="openStatic(complaint)">Details <i class="icon icon-share"></i></btn>
             <btn class="btn btn-link" v-else @click.prevent="openComplaint(complaint)">Details <i class="icon icon-forward"></i></btn>
           </td>
           <!-- <td class="complaint-attribute">
@@ -151,6 +151,7 @@ import toolbox from '@/toolbox'
 import ComplaintsFilterButton from './ComplaintsFilterButton.vue'
 import { sortTag, tagLabel } from '@/store/complaints/data'
 import ComplaintsFilterDialog from './ComplaintsFilterDialog.vue'
+import { Url } from '@/toolbox/net'
 
 /**
  * component to display list of complaints
@@ -266,6 +267,13 @@ export default {
       // this.$store.dispatch(actions.loadComplaint, { complaint })
       this.$store.dispatch(n.actions.openComplaintComparison, complaintId)
       // this.$store.commit(mutations.DISPLAY_COMPLAINT, !!complaintId)
+    },
+    openStatic (complaint) {
+      console.log(complaint.externalUri.join(', '))
+      const exturi = new Url(complaint.externalUri)
+      if (exturi.host === 'dossier') {
+        console.log(exturi)
+      }
     },
     openPages (complaint, close = true) {
       this.$store.dispatch(n.actions.loadComplaint, {
