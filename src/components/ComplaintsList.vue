@@ -271,8 +271,10 @@ export default {
     openStatic (complaint) {
       console.log(complaint.externalUri.join(', '))
       const exturi = new Url(complaint.externalUri)
-      if (exturi.host === 'dossier') {
-        console.log(exturi)
+      if (!exturi.host || exturi.host === 'dossier') {
+        console.warn('missing external uri for', complaint['@id'])
+      } else {
+        window.open(complaint.externalUri, '_blank')
       }
     },
     openPages (complaint, close = true) {
