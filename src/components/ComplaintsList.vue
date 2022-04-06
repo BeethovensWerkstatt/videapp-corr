@@ -273,6 +273,7 @@ export default {
       const exturi = new Url(complaint.externalUri)
       if (!exturi.host || exturi.host === 'dossier') {
         console.warn('missing external uri for', complaint['@id'])
+        window.open(complaint['@id'], '_blank')
       } else {
         window.open(complaint.externalUri, '_blank')
       }
