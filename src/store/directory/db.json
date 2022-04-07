@@ -139,10 +139,14 @@
       "dossiertitle": "Diabelli-Variationen op. 120"
     },
     "op104": {
+      "@id": "https://dev-api.beethovens-werkstatt.de/module3/g_a0749184-9227-458c-871d-3b8e9b1edb15.json",
+      "id": "g_a0749184-9227-458c-871d-3b8e9b1edb15",
       "label": "Op. 104",
       "title": "Streichquintett c-Moll",
       "opus": 104,
       "modules": ["modul3"],
+      "route": "Monita",
+      "apptitle": "VideApp rev",
       "dev": true
     },
     "op106": {
