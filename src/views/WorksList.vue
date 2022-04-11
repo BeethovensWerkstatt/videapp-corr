@@ -21,7 +21,7 @@
               {{ work.title }}
             </td>
             <td class="appLink">
-              <router-link class="workPill internal" :to="getLink(work.id)" v-if="work.route">
+              <router-link class="workPill internal" :to="getLink(work)" v-if="work.route">
                 <span v-html="appTitle(work)" />
               </router-link>
               <a :href="work.app" class="workPill external" target="_blank" v-else-if="work.app">
@@ -79,8 +79,8 @@ export default {
     }
   },
   methods: {
-    getLink (id) {
-      return { name: 'Schreibtisch', params: { id } }
+    getLink (work) {
+      return { name: work.route, params: { id: work.id } }
     },
     moduleLabel (module) {
       const modules = this[n.getters.directory_modules]
