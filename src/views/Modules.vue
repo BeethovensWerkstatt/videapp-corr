@@ -63,7 +63,6 @@
               <router-link
                 v-if="w.route"
                 :to="{ name: w.route, params: { id: w.id } }"
-                target="_blank"
                 :title="w.apptitle + '\r\n' + worktitle(w)"
                 class="app"
               >{{ w.label }}</router-link>
