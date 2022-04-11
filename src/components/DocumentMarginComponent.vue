@@ -218,8 +218,10 @@ export default {
   }
 }
 .inactive {
+  display: none;
   opacity: 0;
   &:hover {
+    display: inline-block;
     opacity: 1;
     transition: 500ms linear;
   }

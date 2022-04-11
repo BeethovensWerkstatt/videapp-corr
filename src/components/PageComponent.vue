@@ -173,9 +173,13 @@ export default {
       const scale = this.viewer.viewport._containerInnerSize.x * zoom
       const fs = Math.max(7, 7 * scale)
       // console.log(fs)
-      return {
+      const style = {
         'font-size': fs + 'px'
       }
+      if (!this.active) {
+        style.display = 'none'
+      }
+      return style
     },
     showDetail () {
       // console.log(this.scale, this.scale > 1.2)
