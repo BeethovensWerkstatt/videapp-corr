@@ -21,7 +21,7 @@
         <div class="range-info">{{ measureRange }}</div>
       </div>
     </div>
-    <div :class="activeComplaintId" class="svg-shapes" v-if="svgShapeUrl">
+    <div :class="{ inactive: !active }" class="svg-shapes" v-if="svgShapeUrl">
     </div>
   </div>
 </template>
@@ -189,10 +189,7 @@ export default {
     },
     isActive () {
       // make it a boolean
-      if (this.page) {
-        return true
-      }
-      return false
+      return !!this.page
     },
     scaleFactor () {
       return (this.isActive)
@@ -308,11 +305,13 @@ export default {
       // console.log('update TI ' + (this.pgdata !== this.pageID))
       this.updatePosition()
       if (!this.tiledimage || this.pgdata !== this.pageID) {
-        /* console.log('\n\nopening new page ' + this.pgdata)
+        /*
+        console.log('\n\nopening new page ' + this.pgdata)
         console.log('this.tiledimage:')
         console.log(this.tiledimage)
         console.log('this.isActive: ' + this.isActive)
-        console.log('.\n\n') */
+        console.log('.\n\n')
+        */
         // new page
         if (this.isActive) {
           // refresh tiled image
@@ -331,6 +330,18 @@ export default {
             success: (e) => {
               // when the tiled image is loaded (on success), a previous image is removed
               this.tiledimage = e.item
+              /*
+              const canvas = this.viewer.canvas.querySelector('canvas')
+              if (canvas) {
+                const ctx = canvas.getContext('2d')
+                const pgrect = this.viewer.viewport.viewportToViewerElementRectangle(new OpenSeadragon.Rect(x, y, page.pixels.width, page.pixels.height))
+                const pgdata = ctx.getImageData(pgrect.x, pgrect.y, pgrect.width, pgrect.height)
+                console.log(pgrect, pgdata)
+              } else {
+                console.warn('no canvas?')
+              }
+              */
+              // const pgrect = this.tiledimage.viewportToImageRectangle(0, 0, page.pixels.width, page.pixels.height, true)
               const svgContainer = this.$el.querySelector('.svg-shapes')
               try {
                 svgContainer.removeEventListener('click', this.clickShapes)
@@ -384,6 +395,7 @@ export default {
           // console.log('--CALLING ELVIS ' + this.sourceId.split('/').slice(-1)[0] + ' – ' + typeof this.svgShapeUrl + ' – ' + typeof svgContainer)
         } else {
           this.tiledimage = null
+          this.pgimg = null
         }
       }
       this.pgdata = this.page ? this.page.id : null
@@ -494,5 +506,8 @@ export default {
 .svg-shapes img {
   width: 100%;
   height: auto;
+}
+.inactive {
+  display: none;
 }
 </style>

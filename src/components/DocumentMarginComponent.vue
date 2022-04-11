@@ -1,5 +1,6 @@
 <template>
   <div
+    :class="{ inactive: !active }"
     class="document-margin"
     :id="divid"
   >
@@ -46,6 +47,10 @@ export default {
     },
     position: {
       type: Object,
+      required: true
+    },
+    active: {
+      type: Boolean,
       required: true
     }
   },
@@ -210,6 +215,13 @@ export default {
     left: -20% !important;
     padding-left: 20%;
     background-color: rgba(255, 255, 181, 0.8);
+  }
+}
+.inactive {
+  opacity: 0;
+  &:hover {
+    opacity: 1;
+    transition: 500ms linear;
   }
 }
 </style>

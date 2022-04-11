@@ -9,6 +9,7 @@
     <document-margin-component
       :position="marginPos"
       :sourceId="sourceId"
+      :active="isActive"
     />
     <page-component
       :divid="divid + '_' + pagenr + '_verso'"

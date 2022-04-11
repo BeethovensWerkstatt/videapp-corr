@@ -1,7 +1,7 @@
 <template>
   <div
     class="document-header"
-    :class="{ activeSource: active }"
+    :class="{ activeSource: active, inactiveSource: !active }"
     :id="divid"
   >
     <div class="top-left" :style="{ width: marginPerc + '%' }">
@@ -365,6 +365,13 @@ export default {
 }
 .activeSource {
   outline: 2px solid #ff000033;
+}
+.inactiveSource {
+  opacity: 0;
+  &:hover {
+    opacity: 1;
+    transition: 500ms linear;
+  }
 }
 
 </style>
