@@ -1,4 +1,4 @@
-import { sourceMutationNames } from './names'
+import n from '@/store/names'
 
 /**
  * @namespace store.sources.mutations
@@ -9,7 +9,7 @@ const mutations = {
    * @memberof store.sources.mutations
    * @param {object} source - (*TBD typedef source object*)
    */
-  [sourceMutationNames.LOAD_SOURCE] (state, source) {
+  [n.mutations.LOAD_SOURCE] (state, source) {
     const sources = [...state.sources]
     // console.log(source)
     sources.push(source)
@@ -19,7 +19,7 @@ const mutations = {
    * @memberof store.sources.mutations
    * @param {Object} movement
    */
-  [sourceMutationNames.LOAD_MOVEMENT] (state, movement) {
+  [n.mutations.LOAD_MOVEMENT] (state, movement) {
     const movements = { ...state.movements }
     movements[movement['@id']] = movement
     state.movements = movements
@@ -30,7 +30,7 @@ const mutations = {
    * @memberof store.sources.mutations
    * @param {object} source - properties to modify with id
    */
-  [sourceMutationNames.MODIFY_SOURCE] (state, source) {
+  [n.mutations.MODIFY_SOURCE] (state, source) {
     state.sources = state.sources.map(src => {
       if (src.id === source.id) {
         return { ...src, ...source }
@@ -44,7 +44,7 @@ const mutations = {
    * @memberof store.sources.mutations
    * @param {object} src
    */
-  [sourceMutationNames.MOVE_SOURCE] (state, { id, x, y }) {
+  [n.mutations.MOVE_SOURCE] (state, { id, x, y }) {
     // console.log('move source ' + id + ': ' + x + ',' + y)
     const msrc = { ...state.sources.find(src => src.id === id), position: { x: x, y: y } }
     if (msrc.id) {
@@ -56,7 +56,7 @@ const mutations = {
    * @memberof store.sources.mutations
    * @param {Object} payload id: String, page: Number
    */
-  [sourceMutationNames.SET_PAGE] (state, { id, page }) {
+  [n.mutations.SET_PAGE] (state, { id, page }) {
     const msrc = { ...state.sources.find(src => src.id === id), pagenr: page }
     if (msrc.id) {
       state.sources = state.sources.map(src => src.id === msrc.id ? msrc : src)
@@ -67,7 +67,7 @@ const mutations = {
    * @memberof store.sources.mutations
    * @param {String} src source id
    */
-  [sourceMutationNames.ACTIVATE_SOURCE] (state, src) {
+  [n.mutations.ACTIVATE_SOURCE] (state, src) {
     state.activeSourceId = src
   }
 }

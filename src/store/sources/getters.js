@@ -1,19 +1,5 @@
 // import { Url } from '@/toolbox/net'
-import { sourceGetterNames } from './names'
-
-export const getterNames = {
-  movements: 'movements',
-  getMovementById: 'getMovementById',
-  sources: 'sources',
-  workSources: 'workSources',
-  activeSourceId: 'activeSourceId',
-  activeSource: 'activeSource',
-  getSourceById: 'getSourceById',
-  activeZoneId: 'activeZoneId',
-  activeZone: 'activeZone',
-  getZoneById: 'getZoneById',
-  getPageMarkers: 'getPageMarkers'
-}
+import n from '@/store/names'
 
 /**
  * @namespace store.sources.getters
@@ -26,7 +12,7 @@ export const getterNames = {
  */
 const getters = {
   // TODO: get source/movement title image, get image from HTML/SVG (canvas.toDataURL)
-  [sourceGetterNames.movements]: (state) => {
+  [n.getters.movements]: (state) => {
     return state.movements
   },
   /**
@@ -35,14 +21,14 @@ const getters = {
    * @param {String} mvtId
    * @returns {Object} movement of id `mvtId`
    */
-  [sourceGetterNames.getMovementById]: (state) => (mvtId) => {
+  [n.getters.getMovementById]: (state) => (mvtId) => {
     const movements = state.movements
     if (movements) {
       return movements[mvtId]
     }
     return undefined
   },
-  [sourceGetterNames.sources]: (state) => {
+  [n.getters.sources]: (state) => {
     // console.log(state.sources)
     return state.sources
   },
@@ -52,7 +38,7 @@ const getters = {
    * @param {String} workId return sources of work
    * @returns {Object[]} sources
    */
-  [sourceGetterNames.workSources]: (state) => (workId) => {
+  [n.getters.workSources]: (state) => (workId) => {
     // TODO sources should be stored per work
     const sources = state.sources.filter(src => src.workId === workId)
     /*
@@ -62,10 +48,10 @@ const getters = {
     */
     return sources
   },
-  [sourceGetterNames.activeSourceId]: (state) => {
+  [n.getters.activeSourceId]: (state) => {
     return state.activeSourceId
   },
-  [sourceGetterNames.activeSource]: (state, getters) => {
+  [n.getters.activeSource]: (state, getters) => {
     if (state.activeSourceId) {
       const source = getters.getSourceById(state.activeSourceId)
       // console.log('active source: ' + source)
@@ -79,14 +65,14 @@ const getters = {
    * @param {String} id - id of source object
    * @returns {Object} source of id or undefined
    */
-  [sourceGetterNames.getSourceById]: (state) => (id) => {
+  [n.getters.getSourceById]: (state) => (id) => {
     // console.log('get source: ' + id)
     if (!id) {
       throw new Error('source id undefined!')
     }
     return state.sources.find(source => source.id === id)
   },
-  [sourceGetterNames.activeZoneId]: (state, getters) => {
+  [n.getters.activeZoneId]: (state, getters) => {
     const source = getters.activeSource
     // console.log(source)
     if (source) {
@@ -95,7 +81,7 @@ const getters = {
     }
     return null
   },
-  [sourceGetterNames.activeZone]: (state, getters) => {
+  [n.getters.activeZone]: (state, getters) => {
     const source = getters.activeSource
     const zoneId = getters.activeZoneId
     if (source && zoneId) {
@@ -115,7 +101,7 @@ const getters = {
    * @param {String} sourceId - id of containing source object or null
    * @param {String} zoneId - id of zone object
    */
-  [sourceGetterNames.getZoneById]: (state, getters) => (sourceId, zoneId) => {
+  [n.getters.getZoneById]: (state, getters) => (sourceId, zoneId) => {
     const findZone = function (source, zoneId) {
       for (var p = 0; p < source.pages.length; p++) {
         const pp = source.pages[p]
@@ -149,7 +135,7 @@ const getters = {
     return null
   },
 
-  [sourceGetterNames.getPageMarkers]: (state, getters) => (sourceId) => {
+  [n.getters.getPageMarkers]: (state, getters) => (sourceId) => {
     const markers = []
 
     const source = getters.getSourceById(sourceId)

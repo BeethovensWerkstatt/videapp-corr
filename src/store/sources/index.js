@@ -1,4 +1,4 @@
-import { sourcesNames } from './names'
+import n from '@/store/names'
 import mutations from './mutations'
 import actions from './actions'
 import getters from './getters'
@@ -18,10 +18,10 @@ const sourcesModule = {
    * @property {String} activeSourceId id of selected source
    */
   state: {
-    [sourcesNames.state.movements]: {},
-    [sourcesNames.state.sources]: [],
-    [sourcesNames.state.activeSourceId]: null,
-    [sourcesNames.state.pages]: {}
+    [n.state.movements]: {},
+    [n.state.sources]: [],
+    [n.state.activeSourceId]: null,
+    [n.state.pages]: {}
   },
   mutations,
   actions,

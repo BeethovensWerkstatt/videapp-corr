@@ -1,15 +1,8 @@
 import axios from 'axios'
-import { mutations as mut, actions as act } from '../names'
+import n from '@/store/names'
 
 import { finishProc, startProc } from '..'
 import { Url } from '@/toolbox/net'
-
-export const actionNames = {
-  loadSources: 'loadSources',
-  loadMovements: 'loadMovements',
-  loadZones: 'loadZones',
-  activateZone: 'activateZone'
-}
 
 // otherContent label for measure positions URL
 const TAG_MEASURE_POSITIONS = 'measure positions'
@@ -30,7 +23,7 @@ const actions = {
    * @param {function} commit
    * @param {object} state
    */
-  async [act.loadSources] ({ commit, dispatch, state, getters }, workId) {
+  async [n.actions.loadSources] ({ commit, dispatch, state, getters }, workId) {
     if (workId) {
       // console.log(state.works, workId)
       const work = getters.works.find(w => {
@@ -56,10 +49,10 @@ const actions = {
         var py = 0
         var ph = 0
 
-        dispatch(act.loadMovements, { work: work['@id'], ...data })
+        dispatch(n.actions.loadMovements, { work: work['@id'], ...data })
 
         // load complaints for this work
-        dispatch(act.loadComplaints, { work: work['@id'], ...data })
+        dispatch(n.actions.loadComplaints, { work: work['@id'], ...data })
 
         // console.log(data.manifestations)
 
@@ -123,7 +116,7 @@ const actions = {
                     uri: canvas.images[0].resource.service['@id'],
                     measures: [] // load measures?
                   }
-                  commit(mut.LOAD_PAGE, page)
+                  commit(n.mutations.LOAD_PAGE, page)
 
                   // get measure zones uri
                   const otherContent = canvas.otherContent
@@ -238,7 +231,7 @@ const actions = {
                 // TODO unfold
                 source.structures = structures
 
-                commit(mut.LOAD_SOURCE, source)
+                commit(n.mutations.LOAD_SOURCE, source)
               } else {
                 console.warn('no sequence for "' + m.label + '"', iiif)
               }
@@ -255,7 +248,7 @@ const actions = {
    * @memberof store.sources.actions
    * @param {Object} payload object containing property `movements`
    */
-  async [act.loadMovements] ({ commit }, { movements, work }) {
+  async [n.actions.loadMovements] ({ commit }, { movements, work }) {
     if (movements) {
       for (const m of movements) {
         // console.log(m)
@@ -265,7 +258,7 @@ const actions = {
             work,
             ...data
           }
-          commit(mut.LOAD_MOVEMENT, movement)
+          commit(n.mutations.LOAD_MOVEMENT, movement)
         }).catch(error => {
           console.error(error)
         })
@@ -278,7 +271,7 @@ const actions = {
    * @param {Object} context
    * @param {Object} payload - sourceId, pagenr, place, uri
    */
-  [act.loadZones] ({ dispatch }, page) {
+  [n.actions.loadZones] ({ dispatch }, page) {
     if (!page) {
       return
     }
@@ -331,7 +324,7 @@ const actions = {
         // console.log(measures)
         page.measures = measures
       }
-      dispatch(act.getData, { url: uri, callback, error: reason => console.warn(reason) })
+      dispatch(n.actions.getData, { url: uri, callback, error: reason => console.warn(reason) })
       // axios.get(uri).then(callback).catch(reason => console.warn(reason))
     }
   },
@@ -341,16 +334,16 @@ const actions = {
    * @param {Object} callback commit, getters
    * @param {Object} payload source: String, zone: String
    */
-  [act.activateZone] ({ commit, getters }, { source, zone }) {
+  [n.actions.activateZone] ({ commit, getters }, { source, zone }) {
     if (source) {
       const src = getters.getSourceById(source)
       if (src) {
         // console.log(source, zone)
-        commit(mut.MODIFY_SOURCE, { ...src, activeZoneId: zone })
-        commit(mut.ACTIVATE_SOURCE, source)
+        commit(n.mutations.MODIFY_SOURCE, { ...src, activeZoneId: zone })
+        commit(n.mutations.ACTIVATE_SOURCE, source)
       }
     } else {
-      commit(mut.ACTIVATE_SOURCE, null)
+      commit(n.mutations.ACTIVATE_SOURCE, null)
     }
   }
 }

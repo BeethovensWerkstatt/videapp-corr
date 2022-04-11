@@ -89,6 +89,7 @@ export default {
   data () {
     return {
       pgdata: this.page?.id,
+      pgimg: null,
       tidata: null,
       topsource: false
     }
