@@ -187,10 +187,14 @@
       "dossiertitle": "Schreibchronologie bei Orchestrierungsvarianten: ein Beispiel aus Beethovens Messe C-Dur op. 86"
     },
     "woo152": {
+      "@id": "https://dev-api.beethovens-werkstatt.de/module3/xa70e58f9-4067-411c-8b6f-800371c4d25f.json",
+      "id": "xa70e58f9-4067-411c-8b6f-800371c4d25f",
       "label": "WoO 152",
       "title": "Irische Lieder",
       "woo": 152,
       "modules": ["modul3"],
+      "route": "Monita",
+      "apptitle": "VideApp rev",
       "dev": true
     }
   },
