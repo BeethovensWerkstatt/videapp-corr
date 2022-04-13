@@ -114,7 +114,8 @@
             <template v-if="complaint.movement && complaint.movement.label">
               {{ complaint.movement.label }},
             </template>
-            {{ 'T. ' + measures(complaint) }}
+            {{ 'T. ' + measures(complaint) }},
+            {{ instruments(complaint) }}
           </td>
           <td
             v-for="(tag, i) in [/*sortTag.revisionObject, */sortTag.textOperation, sortTag.classification, sortTag.context, sortTag.implementation]"
@@ -201,11 +202,20 @@ export default {
     toRoman: toolbox.toRoman,
     workTitle (workId) {
       const work = this.getWork(workId)
-      return work?.label[0].title ? work?.label[0].title : work?.title[0].title
+      return work?.label[0].title || work?.title[0].title
     },
     workLongTitle (workId) {
       const work = this.getWork(workId)
       return work?.title[0].title
+    },
+    instruments (complaint) {
+      if (complaint.affects) {
+        const staves = complaint.affects[0]?.staves
+        const stavenames = complaint.movement.staves
+
+        return [...new Set(staves.map(s => stavenames.find(sn => sn.n === s).label))].join(', ')
+      }
+      return 'N/A'
     },
     /**
      * check if new movement.work starts while looping through complaints

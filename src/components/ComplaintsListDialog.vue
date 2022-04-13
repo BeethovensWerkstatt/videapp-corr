@@ -58,10 +58,10 @@ export default {
     },
     workTitle () {
       const work = this.getWork(this.workId)
-      return work?.title[0].title
+      return work?.label[0].title || work?.title[0].title
     },
     title () {
-      return this.$t('terms.complaints') + (this.workTitle ? (': ' + this.workTitle) : '')
+      return this.$t('terms.complaints') + (this.workTitle ? (': ' + this.workTitle.split(' ')[1]) : '')
     },
     styles () {
       return {}
