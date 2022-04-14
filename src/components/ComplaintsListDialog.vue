@@ -61,7 +61,9 @@ export default {
       return work?.label[0].title || work?.title[0].title
     },
     title () {
-      return this.$t('terms.complaints') + (this.workTitle ? (': ' + this.workTitle.split(' ')[1]) : '')
+      const workTitle = this.workTitle
+      const spidx = workTitle?.indexOf(' ')
+      return this.$t('terms.complaints') + (spidx >= 0 ? ': ' + workTitle.substring(spidx + 1) : '')
     },
     styles () {
       return {}

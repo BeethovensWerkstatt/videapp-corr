@@ -51,7 +51,7 @@ import { mapGetters } from 'vuex'
 // import { vsprintf } from 'sprintf-js'
 import n from '@/store/names'
 import { sortTag, tagLabel } from '@/store/complaints/data'
-import tb, { filterAndCol } from '@/toolbox'
+import { filterAndCol } from '@/toolbox'
 import ContextModal from './ContextModal.vue'
 
 export default {
@@ -202,10 +202,14 @@ export default {
       const movement = this[n.getters.getMovementById](mdiv)
       if (movement) {
         // console.log(movement)
-        const wrk = !this.workId ? (this.workTitle(movement.work) + ', ') : ''
-        return wrk + tb.toRoman(movement.n) + '. ' + movement.label
+        const wrk = !this.workId ? (this.workLabel(movement.work) + ', ') : ''
+        return wrk + movement.label
       }
       return mdiv
+    },
+    workLabel (workId) {
+      const work = this.getWork(workId)
+      return (work?.label[0].title || work?.title[0].title).split(' ')[1]
     },
     workTitle (workId) {
       const work = this.getWork(workId)
