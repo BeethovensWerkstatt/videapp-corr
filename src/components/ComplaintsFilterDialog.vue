@@ -209,7 +209,9 @@ export default {
     },
     workLabel (workId) {
       const work = this.getWork(workId)
-      return (work?.label[0].title || work?.title[0].title).split(' ')[1]
+      const workTitle = work?.label[0].title || work?.title[0].title
+      const spidx = workTitle?.indexOf(' ')
+      return (spidx >= 0 ? workTitle.substring(spidx + 1) : '')
     },
     workTitle (workId) {
       const work = this.getWork(workId)
