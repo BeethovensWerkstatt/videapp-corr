@@ -105,7 +105,7 @@
             @click.prevent="toggleActivate(complaint)"
             :title="workLongTitle(complaint.movement.work)"
           >
-            {{ workTitle(complaint.movement.work).split(' ')[1] }}
+            {{ workTitle(complaint.movement.work) }}
           </td>
           <td
             class="complaint-attribute"
@@ -202,7 +202,9 @@ export default {
     toRoman: toolbox.toRoman,
     workTitle (workId) {
       const work = this.getWork(workId)
-      return work?.label[0].title || work?.title[0].title
+      const workTitle = work?.label[0].title || work?.title[0].title
+      const spidx = workTitle?.indexOf(' ')
+      return (spidx >= 0 ? workTitle.substring(spidx + 1) : '')
     },
     workLongTitle (workId) {
       const work = this.getWork(workId)

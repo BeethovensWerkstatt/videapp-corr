@@ -17,8 +17,10 @@ export const compareWorks = (wid1, wid2) => {
   }
   // TODO why do I need to separate them?
   // TODO erase workaround if opus number is part of work structure!
-  const matchOpus1 = /Op.\s*(\d+)/igm
-  const matchOpus2 = /Op.\s*(\d+)/igm
+  const matchOpus1 = /Op\.\s*(\d+)/igm
+  const matchOpus2 = /Op\.\s*(\d+)/igm
+  const matchWoO1 = /WoO\s*(\d+)/igm
+  const matchWoO2 = /WoO\s*(\d+)/igm
 
   const work1 = store.getters[n.getters.getWork](wid1)
   const work2 = store.getters[n.getters.getWork](wid2)
@@ -26,14 +28,29 @@ export const compareWorks = (wid1, wid2) => {
     const t1 = work1?.title[0].title
     const t2 = work2?.title[0].title
     if (!!t1 && !!t2) {
-      const m1 = matchOpus1.exec(t1)
-      const o1 = m1 ? parseInt(m1[1]) : 0
-      const m2 = matchOpus2.exec(t2)
-      const o2 = m2 ? parseInt(m2[1]) : 0
-      if (o1 < o2) {
-        return -1
-      } else if (o1 > o2) {
-        return 1
+      const mO1 = matchOpus1.exec(t1)
+      const mO2 = matchOpus2.exec(t2)
+      if (mO1 && mO2) {
+        const o1 = parseInt(mO1[1])
+        const o2 = parseInt(mO2[1])
+        if (o1 < o2) {
+          return -1
+        } else if (o1 > o2) {
+          return 1
+        }
+      }
+      const mW1 = matchWoO1.exec(t1)
+      const mW2 = matchWoO2.exec(t2)
+      if (mO1 && mW2) return -1
+      if (mW1 && mO2) return 1
+      if (mW1 && mW2) {
+        const o1 = parseInt(mW1[1])
+        const o2 = parseInt(mW2[1])
+        if (o1 < o2) {
+          return -1
+        } else if (o1 > o2) {
+          return 1
+        }
       }
     }
     return t2?.localeCompare(t1) > 0 ? -1 : 1
