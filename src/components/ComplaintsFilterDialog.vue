@@ -7,7 +7,7 @@
     :dialog="dialog"
     :buttons="buttons"
   >
-    <div class="filterInfo">{{ filterInfo }}</div>
+    <div class="filterInfo">{{ filterInfo.msg}}</div>
     <hr />
     <div class="selectAll">
       <input
@@ -17,6 +17,39 @@
       />
       <label for="filterSelectAll">{{ $t('terms.selectall') }}</label>
     </div>
+    <table>
+      <tr
+        v-for="(t,i) in tags"
+        :key="i + '-opt'"
+        :class="{ emptyFilter: filterInfo[t] === 0 }"
+      >
+        <td>
+          <input
+            :id="sid + '-' + t"
+            type="checkbox"
+            :checked="tagsSelected.indexOf(t) >= 0"
+            @change="select"
+            :value="t"
+          />
+        </td>
+        <template v-if="dialog.tag === 'work'">
+          <td>{{ workLabel(t) }}</td>
+          <td>{{ workTitle(t) }}</td>
+        </template>
+        <template v-else-if="dialog.tag === 'movementMeasure'">
+          <td v-if="!workId">{{ movementWorkLabel(t) }}</td>
+          <td>{{ movementTitle(t) }}</td>
+        </template>
+        <template v-else-if="dialog.tag === 'document'">
+          <td>{{ t }}</td>
+        </template>
+        <template v-else>
+          <td>{{ t ? $t('taxonomy.' + t) : '&mdash;' }}</td>
+        </template>
+        <td>{{ filterInfo[t] || 0 }}</td>
+      </tr>
+    </table>
+    <!--
     <div
       v-for="(t,i) in tags"
       :key="i + '-opt'"
@@ -43,6 +76,7 @@
         </template>
       </label>
     </div>
+    -->
   </context-modal>
 </template>
 
@@ -163,7 +197,15 @@ export default {
       // console.log(Object.keys(filtermap), filters.length, complaints.length)
       const msg = this.$tc('messages.complaint-count', complaints.length)
       // console.log(msg)
-      this.filterInfo = msg
+      this.filterInfo = { msg }
+
+      console.log(this.tags)
+      for (const t of this.tags) {
+        const tfilter = this[n.getters.createComplaintFilter](this.dialog?.tag, [t])
+        filtermap[this.dialog?.tag] = tfilter
+        const filters = Object.values(filtermap).filter(f => (typeof f === 'function'))
+        this.filterInfo[t] = allComplaints.filter(filterAndCol(filters)).length
+      }
 
       // update ok-button-label
       let label = 'terms.ok'
@@ -183,6 +225,20 @@ export default {
         { label, value: 'ok', class: 'btn-primary' }
       ]
     },
+    createFilter () {
+      const filterTag = this.dialog?.tag
+      const filterSet = this.tags.filter((t) => {
+        const sel = this.isSelected(t)
+        // console.log(this.dialog?.tag, t, sel)
+        return sel
+      })
+      if (filterTag) {
+        return this[n.getters.createComplaintFilter](filterTag, filterSet)
+      }
+      console.warn('no filter tag given!')
+      // if no filterTag is given return dummy filter
+      return (c) => true
+    },
     select (e) {
       // console.log(e.target)
       const t = e.target.value
@@ -198,12 +254,16 @@ export default {
       // console.log(t, sel)
       return sel
     },
+    movementWorkLabel (mdiv) {
+      const movement = this[n.getters.getMovementById](mdiv)
+      return this.workLabel(movement?.work) || '[?]'
+    },
     movementTitle (mdiv) {
       const movement = this[n.getters.getMovementById](mdiv)
       if (movement) {
         // console.log(movement)
-        const wrk = !this.workId ? (this.workLabel(movement.work) + ', ') : ''
-        return wrk + movement.label
+        // const wrk = !this.workId ? (this.workLabel(movement.work) + ', ') : ''
+        return /* wrk + */ movement.label
       }
       return mdiv
     },
@@ -228,20 +288,6 @@ export default {
         // case 'cancel':
       }
       this.$store.commit(n.mutations.DISPLAY_FILTER_DIALOG, {})
-    },
-    createFilter () {
-      const filterTag = this.dialog?.tag
-      const filterSet = this.tags.filter((t) => {
-        const sel = this.isSelected(t)
-        // console.log(this.dialog?.tag, t, sel)
-        return sel
-      })
-      if (filterTag) {
-        return this[n.getters.createComplaintFilter](filterTag, filterSet)
-      }
-      console.warn('no filter tag given!')
-      // if no filterTag is given return dummy filter
-      return (c) => true
     }
   }
 }
@@ -255,5 +301,9 @@ export default {
 .selectAll {
   margin-bottom: 1em;
   font-style: italic;
+}
+.emptyFilter {
+  // background-color: lightgray
+  display: none
 }
 </style>

@@ -112,7 +112,7 @@ const mutations = {
    * @param {Object} parms { sortedBy, sorter }
    */
   [n.mutations.SET_SORTER] (state, { sortedBy, sorter, toggle }) {
-    console.log(sortedBy, toggle)
+    // console.log(sortedBy, toggle)
     if (toggle) {
       state[n.state.sortReverse] = !state[n.state.sortReverse]
     } else if (state[n.state.sortedBy] !== sortedBy) {
