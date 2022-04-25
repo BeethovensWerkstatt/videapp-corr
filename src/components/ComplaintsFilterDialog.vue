@@ -199,7 +199,7 @@ export default {
       // console.log(msg)
       this.filterInfo = { msg }
 
-      console.log(this.tags)
+      // console.log(this.tags)
       for (const t of this.tags) {
         const tfilter = this[n.getters.createComplaintFilter](this.dialog?.tag, [t])
         filtermap[this.dialog?.tag] = tfilter
