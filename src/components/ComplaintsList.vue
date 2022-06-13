@@ -259,8 +259,8 @@ export default {
       return 'N/A'
     },
     complaintSigle (complaint) {
-      const revDoc = complaint.revisionDoc
-      // console.log(complaint)
+      const revDoc = complaint.revisionDoc?.replaceAll('_', ' ')
+      // console.log(revDoc)
       return revDoc || '?'
     },
     /**
@@ -326,7 +326,7 @@ export default {
       }
     },
     sort (tag, volatil = true) {
-      console.log('sort', tag)
+      // console.log('sort', tag)
       this.mvt = null
       const toggle = volatil && !!tag && tag === this.sortedBy
       // console.log(this[n.getters.sortReverse], toggle)

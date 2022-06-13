@@ -13,7 +13,7 @@ const actions = {
    * @param {Object} payload object containing complaints property `{ complaints: Object[] }`
    */
   [n.actions.loadComplaints] ({ commit, /* dispatch, */ getters }, { complaints, work }) {
-    console.log(getters[n.getters.directory_is_dev_work](tb.atId(work)), work)
+    // console.log(getters[n.getters.directory_is_dev_work](tb.atId(work)), work)
     if (getters[n.getters.mainbranch] === getters[n.getters.version].branch && getters[n.getters.directory_is_dev_work](tb.atId(work))) return
     complaints.forEach(c => {
       // console.log(c, work)
