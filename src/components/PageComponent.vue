@@ -298,6 +298,14 @@ export default {
       }
       if (this.tiledimage) {
         this.tiledimage.setPosition(this.pos, true)
+        // console.log(this.viewer.drawer.context)
+        // const rect = this.viewer.drawer.viewportToDrawerRectangle(this.pos)
+        // console.log(rect)
+        /* https://github.com/openseadragon/openseadragon/issues/811
+        const ctx = this.viewer.drawer.context
+        const img = ctx.getImageData(rect.x, rect.y, rect.width, rect.height)
+        console.log(img)
+        */
       }
     },
     /**
