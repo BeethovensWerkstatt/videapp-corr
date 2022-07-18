@@ -147,6 +147,8 @@
       "modules": ["modul3"],
       "route": "Monita",
       "apptitle": "VideApp rev",
+      "dossier": "https://beethovens-werkstatt.de/op104/",
+      "dossiertitle": "Streichquintett c-Moll op. 104",
       "dev": false
     },
     "op106": {
