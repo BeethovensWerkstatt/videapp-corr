@@ -147,7 +147,7 @@
       "modules": ["modul3"],
       "route": "Monita",
       "apptitle": "VideApp rev",
-      "dev": true
+      "dev": false
     },
     "op106": {
       "label": "Op. 106",
