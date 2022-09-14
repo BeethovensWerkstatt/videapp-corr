@@ -1,7 +1,7 @@
 <template>
   <div class="modules">
     <h1>Module</h1>
-    <div class="module" v-for="mod in modules" :key="mod.n" :class="{ inactive: mod.inactive }">
+    <div class="module" v-for="mod in modules" :key="'mod_' + mod.n" :class="{ inactive: mod.inactive }">
       <h2>
         <span class="num">{{ mod.label }}</span>
         <span class="title">{{ mod.title }}</span>
@@ -59,7 +59,7 @@
         <div class="workPills" v-if="!mod.inactive">
           <template v-for="(w, i) in module_works(mod)">
 
-            <span class="workPill" :class="{hasDossier: w.dossier}" :key="i">
+            <span class="workPill" :class="{hasDossier: w.dossier}" :key="'pill_' + i">
               <router-link
                 v-if="w.route"
                 :to="{ name: w.route, params: { id: w.id } }"
@@ -79,7 +79,7 @@
               >{{ w.label }}</span>
             </span>
 
-            <a :key="i"
+            <a :key="'dossier_' + i"
               v-if="w.dossier"
               :href="w.dossier"
               target="_blank"
