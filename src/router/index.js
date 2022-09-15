@@ -19,14 +19,24 @@ const routes = [
     component: () => import(/* webpackChunkName: "videapp" */ '../views/WorksList.vue')
   },
   {
+    path: '/work/:id',
+    name: 'Schreibtisch',
+    component: () => import(/* webpackChunkName: "videapp" */ '../views/Desktop.vue')
+  },
+  {
     path: '/modules',
     name: 'Module',
     component: () => import(/* webpackChunkName: "videapp" */ '../views/Modules.vue')
   },
   {
-    path: '/work/:id',
-    name: 'Schreibtisch',
-    component: () => import(/* webpackChunkName: "videapp" */ '../views/Desktop.vue')
+    path: '/documents',
+    name: 'Dokumente',
+    component: () => import(/* webpackChunkName: "videapp" */ '../views/Documents.vue')
+  },
+  {
+    path: '/document/:id',
+    name: 'Dokument',
+    component: () => import(/* webpackChunkName: "videapp" */ '../views/Desktop2.vue')
   },
   {
     path: '/complaints/:id?',
@@ -39,7 +49,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  // mode: 'history', // nice, but needs server config
+  mode: 'history', // nice, but needs server config
   routes
 })
 

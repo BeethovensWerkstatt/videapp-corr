@@ -40,5 +40,6 @@ new Vue({
 store.dispatch(n.actions.initVerovio)
 store.dispatch(n.actions.loadWorks)
 store.dispatch(n.actions.directory_load_db)
+store.dispatch('loadDocuments')
 
 console.log(config)
