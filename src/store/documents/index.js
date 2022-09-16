@@ -27,7 +27,9 @@ export const actions = {
     const url = await config.api.documents.url()
     const { data } = await axios.get(url)
     for (const i in data) {
-      const doc = data[i]
+      const res = await axios.get(data[i]['@id'])
+      const doc = res.data
+      axios.get(doc.iiif.manifest).then(({ data }) => console.log(data))
       doc.id = atId(doc['@id'])
       console.log(i, doc.id, doc)
       commit('LOAD_DOCUMENT', doc)

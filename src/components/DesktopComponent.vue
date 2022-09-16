@@ -122,12 +122,13 @@ export default {
     this.$store.dispatch(actions.destroyOpenSeaDragon)
   },
   computed: {
-    ...mapGetters(['viewer', 'scale', 'workSources']),
+    ...mapGetters(['viewer', 'scale', 'workSources', 'getDocument']),
     sources () {
       console.log('DesktopComponent get sources ...')
       if (this.onesource) {
         console.log('one source', this.$route.params.id)
-        return []
+        const doc = this.getDocument(this.$route.params.id)
+        return [doc]
       }
       const sources = this.workSources(this.$route.params.id)
       // console.log(sources)
