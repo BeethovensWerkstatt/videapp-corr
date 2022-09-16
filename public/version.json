@@ -1,8 +1,8 @@
 {
-  "version": "2022-03-07 11:05:11 +0100\nJan-Peter Voigt\nreset PageComponent\n54520bc40a6a9196ce6a90f7a849b235b0217888\n\n",
-  "date": "2022-03-07 11:05:11 +0100",
+  "version": "2022-09-16 07:54:41 +0200\nJan-Peter Voigt\nrebuild Desktop2\n6e9f48edeec44e898386138238fdc4afec064878\n\n",
+  "date": "2022-09-16 07:54:41 +0200",
   "author": "Jan-Peter Voigt",
-  "subject": "reset PageComponent",
-  "commit": "54520bc40a6a9196ce6a90f7a849b235b0217888",
+  "subject": "rebuild Desktop2",
+  "commit": "6e9f48edeec44e898386138238fdc4afec064878",
   "branch": "jpv/dev"
 }

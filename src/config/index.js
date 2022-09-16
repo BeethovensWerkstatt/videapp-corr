@@ -21,7 +21,7 @@ const config = {
   }, */
   mainbranch: 'main',
   version: new Promise((resolve, reject) => {
-    axios.get('./version.json').then(({ status, data }) => {
+    axios.get(process.env.BASE_URL + 'version.json').then(({ status, data }) => {
       if (status === 200) {
         store.commit(n.mutations.SET_VERSION, data)
         resolve(data)

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "gulp gitlogdev ; vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
@@ -15,7 +15,6 @@
     "axios": "^0.21.4",
     "core-js": "^3.8.0",
     "openseadragon": "^2.4.2",
-    "pouchdb": "^7.2.2",
     "sass": "^1.54.9",
     "spectre.css": "^0.5.9",
     "sprintf-js": "^1.1.2",

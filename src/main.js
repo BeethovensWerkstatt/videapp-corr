@@ -14,17 +14,6 @@ import '@/scss/variables.scss'
 import i18n from './i18n'
 import VueD3 from 'vue2-d3'
 
-// add fabricjs- and html-overlay plugins
-// import OpenSeadragon from 'openseadragon'
-// import fabricosd from '@/openseadragon/openseadragon-fabricjs-overlay'
-// import htmlosd from '@/openseadragon/openseadragon-html-overlay'
-// should this be a vuejs plugin to be called in the Vue constructor??
-// we need fabricjs ...
-// require('@/openseadragon/fabric.adapted.js')
-// add plugins to the Viewer prototype
-// fabricosd(OpenSeadragon)
-// htmlosd(OpenSeadragon)
-
 Vue.use(VectrePlugin)
 Vue.use(VueD3)
 
