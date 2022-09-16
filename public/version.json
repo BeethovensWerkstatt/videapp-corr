@@ -1,8 +1,8 @@
 {
-  "version": "2022-09-16 09:59:43 +0200\nJan-Peter Voigt\nupdate version.json, DesktopComponent one source, link in Module 4\ndf5107122991c50464982186229cfd825a8a4f95\n\n",
-  "date": "2022-09-16 09:59:43 +0200",
+  "version": "2022-09-16 19:17:36 +0200\nJan-Peter Voigt\npublic/version.json\nf46bec40cf53fd32b71ecb15858e85b83b648d53\n\n",
+  "date": "2022-09-16 19:17:36 +0200",
   "author": "Jan-Peter Voigt",
-  "subject": "update version.json, DesktopComponent one source, link in Module 4",
-  "commit": "df5107122991c50464982186229cfd825a8a4f95",
+  "subject": "public/version.json",
+  "commit": "f46bec40cf53fd32b71ecb15858e85b83b648d53",
   "branch": "jpv/dev"
 }
