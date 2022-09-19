@@ -2,7 +2,7 @@
   <div class="desk">
     <desktop-component divid="canvas" :width="1650" :height="1000" :onesource="true"></desktop-component>
     <div id="sidebar">
-      <div class="workTitle">
+      <div class="workTitle" v-if="work">
         <strong>{{ workTitle }}</strong>
         <p>{{ workLongTitle }}</p>
       </div>
