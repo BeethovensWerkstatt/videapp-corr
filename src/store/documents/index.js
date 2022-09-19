@@ -1,6 +1,6 @@
 import config from '@/config'
 import axios from 'axios'
-import { atId } from '@/toolbox'
+// import { atId } from '@/toolbox'
 
 export const state = {
   documents: []
@@ -23,16 +23,11 @@ export const mutations = {
 }
 
 export const actions = {
-  async loadDocuments ({ commit }) {
+  async loadDocuments ({ commit, dispatch }) {
     const url = await config.api.documents.url()
     const { data } = await axios.get(url)
-    for (const i in data) {
-      const res = await axios.get(data[i]['@id'])
-      const doc = res.data
-      axios.get(doc.iiif.manifest).then(({ data }) => console.log(data))
-      doc.id = atId(doc['@id'])
-      console.log(i, doc.id, doc)
-      commit('LOAD_DOCUMENT', doc)
+    for (const doc of data) {
+      dispatch('initSource', { murl: doc['@id'], callback: (doc_) => commit('LOAD_DOCUMENT', { ...doc, ...doc_ }) })
     }
   }
 }

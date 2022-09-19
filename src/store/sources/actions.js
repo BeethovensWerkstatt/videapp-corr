@@ -213,8 +213,6 @@ const actions = {
   /**
    * init source
    * @memberof store.sources.actions
-   * @param {Function} commit
-   * @param {Object} state
    * @param {String} murl url of source
    * @param {Number} [index=0] number in list of source
    * @param {Positioner} [positioner=new Positioner(...)] helper to layout sources on the desktop
@@ -228,7 +226,8 @@ const actions = {
       hgap: getters.sourceHorizontalGap + (2 * getters.sourceMarginWidth),
       vgap: getters.sourceVerticalGap + getters.sourceHeaderHeight
     }),
-    workId = ''
+    workId = '',
+    callback = undefined
   }) {
     const resp = await axios.get(murl)
     const m = resp.data
@@ -366,6 +365,9 @@ const actions = {
           source.structures = structures
 
           commit(mut.LOAD_SOURCE, source)
+          if (callback) {
+            callback(source)
+          }
         } else {
           console.warn('no sequence for "' + m.label + '"', iiif)
         }
