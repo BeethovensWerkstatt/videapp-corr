@@ -31,4 +31,4 @@ store.dispatch(n.actions.loadWorks)
 store.dispatch(n.actions.directory_load_db)
 store.dispatch('loadDocuments')
 
-console.log(config)
+config.version.then(() => console.log(config))
