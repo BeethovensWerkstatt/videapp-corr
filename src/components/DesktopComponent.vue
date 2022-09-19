@@ -128,7 +128,10 @@ export default {
       if (this.onesource) {
         console.log('one source', this.$route.params.id)
         const doc = this.getDocument(this.$route.params.id)
-        return [doc]
+        if (doc) {
+          console.log(doc)
+          return [doc]
+        }
       }
       const sources = this.workSources(this.$route.params.id)
       // console.log(sources)

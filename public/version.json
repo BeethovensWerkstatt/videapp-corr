@@ -1,8 +1,8 @@
 {
-  "version": "2022-09-16 19:17:36 +0200\nJan-Peter Voigt\npublic/version.json\nf6ed2c335c021fafe2debfa96f7238e74a1f9e0d\n\n",
-  "date": "2022-09-16 19:17:36 +0200",
+  "version": "2022-09-16 19:23:32 +0200\nJan-Peter Voigt\npublic/version.json\n2beb908e0f654dc67ee92ce1154806f9274e6c77\n\n",
+  "date": "2022-09-16 19:23:32 +0200",
   "author": "Jan-Peter Voigt",
   "subject": "public/version.json",
-  "commit": "f6ed2c335c021fafe2debfa96f7238e74a1f9e0d",
+  "commit": "2beb908e0f654dc67ee92ce1154806f9274e6c77",
   "branch": "jpv/dev"
 }

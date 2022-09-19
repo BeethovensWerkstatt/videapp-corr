@@ -1,8 +1,9 @@
 import axios from 'axios'
 import { mutations as mut, actions as act } from '../names'
-
+import { Positioner } from '.'
 import { finishProc, startProc } from '..'
 import { Url } from '@/toolbox/net'
+import positions from './positions.json'
 
 // otherContent label for measure positions URL
 const TAG_MEASURE_POSITIONS = 'measure positions'
@@ -42,12 +43,11 @@ const actions = {
         work.label = work.title
         work.title = data.title
 
-        // default placement of sources
-        const hgap = getters.sourceHorizontalGap + (2 * getters.sourceMarginWidth)
-        const vgap = getters.sourceVerticalGap + getters.sourceHeaderHeight
-        var px = hgap / 2
-        var py = 0
-        var ph = 0
+        const positioner = new Positioner({
+          width: getters.deskDimensions.width,
+          hgap: getters.sourceHorizontalGap + (2 * getters.sourceMarginWidth),
+          vgap: getters.sourceVerticalGap + getters.sourceHeaderHeight
+        })
 
         dispatch(act.loadMovements, { work: work['@id'], ...data })
 
@@ -56,29 +56,30 @@ const actions = {
 
         // console.log(data.manifestations)
 
-        data.manifestations.forEach(async (murl, index) => {
+        const initSource = async (murl, index = 0) => {
           const resp = await axios.get(murl)
           const m = resp.data
           // console.log(m)
-
-          const source = {
-            id: m['@id'],
-            workId,
-            label: m.label,
-            // these values are updated later
-            maxDimensions: { width: 0, height: 0 },
-            position: { x: (150 + index * 400), y: 400 },
-            pages: [],
-            pageref: {},
-            rotation: 0,
-            singleLeaf: false
-          }
 
           const existingSource = state.sources.find(source => source.id === m.id)
           if (existingSource === undefined) {
             // get manifestation json
             axios.get(m.iiif.manifest).then(res => {
               const iiif = res.data
+
+              const source = {
+                id: m['@id'],
+                workId,
+                label: m.label,
+                // these values are updated later
+                maxDimensions: { width: 0, height: 0 },
+                position: { x: (150 + index * 400), y: 400 },
+                pages: [],
+                pageref: {},
+                rotation: 0,
+                singleLeaf: false
+              }
+
               // console.log(iiif)
               if (iiif.sequences && iiif.sequences.length > 0) {
                 const canvases = iiif.sequences[0].canvases
@@ -181,24 +182,29 @@ const actions = {
                 // console.log(source)
 
                 // calc position
-                if (px > hgap && (px + hgap + source.maxDimensions.width) > getters.deskDimensions.width) {
+                positioner.addSource(source)
+                /*
+                if (position.px > position.hgap && (position.px + position.hgap + source.maxDimensions.width) > getters.deskDimensions.width) {
                   // start new line
-                  px = 0
-                  py += ph + vgap
-                  ph = source.maxDimensions.height
-                  source.position.x = px + hgap + (source.maxDimensions.width / 2)
-                  source.position.y = py + vgap + (source.maxDimensions.height / 2)
+                  position.px = 0
+                  position.py += position.ph + position.vgap
+                  position.ph = source.maxDimensions.height
+                  source.position.x = position.px + position.hgap + (source.maxDimensions.width / 2)
+                  source.position.y = position.py + position.vgap + (source.maxDimensions.height / 2)
                 } else {
                   // next horizontal position
-                  source.position.x = px + hgap + (source.maxDimensions.width / 2)
-                  source.position.y = py + vgap + (source.maxDimensions.height / 2)
-                  px += source.maxDimensions.width + hgap
-                  ph = Math.max(ph, source.maxDimensions.height)
+                  source.position.x = position.px + position.hgap + (source.maxDimensions.width / 2)
+                  source.position.y = position.py + position.vgap + (source.maxDimensions.height / 2)
+                  position.px += source.maxDimensions.width + position.hgap
+                  position.ph = Math.max(position.ph, source.maxDimensions.height)
                 }
+                */
                 // console.log(source.position)
 
                 // hack !!!
                 const sid = (new Url(source.id)).path.elements.pop()
+                if (positions[sid]) source.position = positions[sid]
+                /*
                 switch (sid) {
                   // Op. 73
                   case 'US-NYj_31_B393cp_no.5_errata.json':
@@ -227,6 +233,7 @@ const actions = {
                     source.position = { x: 1235, y: 825 }
                     break
                 }
+                */
 
                 // TODO unfold
                 source.structures = structures
@@ -237,7 +244,9 @@ const actions = {
               }
             })
           }
-        })
+        }
+
+        data.manifestations.forEach(initSource)
         finishProc()
         work.sourcesLoadFinished = true
       }
