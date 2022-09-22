@@ -33,6 +33,7 @@ import ZoneComponent from '@/components/ZoneComponent.vue'
 import { getters, actions } from '@/store/names'
 import axios from 'axios'
 import tb from '@/toolbox'
+import { Url } from '../toolbox/net'
 
 /**
  * Component for one page (recto or verso). Collect all measure-zones
@@ -324,12 +325,20 @@ export default {
         if (this.isActive) {
           // refresh tiled image
           const page = this.page
+          // TODO sometimes 'info.json' has ////////////////////////////////////////////
+          const uri = new Url(page.uri)
+          if (uri.path.elements[uri.path.length - 1] === 'info.json') {
+            const infojson = uri.path.elements.pop()
+            console.log('remove', infojson)
+          }
+          console.log(uri.toString())
+          // ///////////////////////////////////////////////////////////////////////////
           const x = this.pos.x
           const y = this.pos.y
           const tisrc = {
             tileSource: {
               '@context': 'http://iiif.io/api/image/2/context.json',
-              '@id': page.uri,
+              '@id': uri.toString(), // page.uri
               profile: 'http://iiif.io/api/image/2/level2.json',
               protocol: 'http://iiif.io/api/image',
               width: page.pixels.width,

@@ -4,7 +4,7 @@
     <table>
       <tr v-for="(doc, i) in documents" :key="'doc-' + i">
         <td>
-          <router-link :to="{ name: 'Dokument', params: { id: doc.id } }">{{ doc.title[0].title }}</router-link>
+          <router-link :to="{ name: 'Dokument', params: { id: atId(doc.id) } }">{{ doc.title[0].title }}</router-link>
         </td>
         <td>
           {{ doc.composer.name }}
@@ -16,11 +16,15 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { atId } from '@/toolbox'
 
 export default {
   name: 'Documents',
   computed: {
     ...mapGetters(['documents'])
+  },
+  methods: {
+    atId
   }
 }
 </script>
