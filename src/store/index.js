@@ -10,6 +10,7 @@ import OSD from './osd'
 import userDisplayOptions from './userDisplayOptions'
 import dataAccess from './dataAccess'
 import Works from './works'
+import Documents from './documents'
 import Sources from './sources'
 import Pages from './pages'
 import Complaints from './complaints'
@@ -61,6 +62,7 @@ const store = new Vuex.Store({
     userDisplayOptions,
     dataAccess,
     Works,
+    Documents,
     Sources,
     Pages,
     Complaints,

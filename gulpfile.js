@@ -2,7 +2,7 @@ const gulp = require('gulp')
 const git = require('gulp-git')
 const fs = require('fs')
 
-gulp.task('gitlog', async function () {
+const gitlog = file => async function () {
   const json = {}
   git.exec(
     {
@@ -26,11 +26,14 @@ gulp.task('gitlog', async function () {
         function (err, stdout) {
           if (err) throw err
           json.branch = stdout.trim()
-          fs.writeFile('dist/version.json', JSON.stringify(json, null, 2), function () {
+          fs.writeFile(file, JSON.stringify(json, null, 2), function () {
             console.log(json, 'fertig')
           })
         }
       )
     }
   )
-})
+}
+
+gulp.task('gitlog', gitlog('dist/version.json'))
+gulp.task('gitlogdev', gitlog('public/version.json'))
