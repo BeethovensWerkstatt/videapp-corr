@@ -1,17 +1,20 @@
 # docker-compose.yml
-version: "3.6"
+version: "3.8"
 services:
   existdb:
     image: stadlerpeter/existdb:latest
+    restart: unless-stopped
     environment:
       - EXIST_PASSWORD_FILE=/run/secrets/existdb_passwd
-    restart: unless-stopped
+      - EXIST_ENV=development
+      - EXIST_CONTEXT=/exist
+    volumes:
+      - ./existdb/existdb_data:/opt/exist/data
+      - ./existdb/existdb_logs:/opt/exist/logs
     ports:
       - 8080:8080
     secrets:
       - source: existdb_passwd
-    volumes:
-      - ./existdb/existdb_data:/opt/exist/data
 secrets:
   existdb_passwd:
     file: ./existdb/password-file

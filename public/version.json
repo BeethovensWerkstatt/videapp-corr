@@ -1,8 +1,8 @@
 {
-  "version": "2022-09-19 13:34:04 +0200\nJan-Peter Voigt\nhide worktitle if not defined\nf2fc6b6f01f834d2feae0c038ce79f5f7146d402\n\n",
-  "date": "2022-09-19 13:34:04 +0200",
+  "version": "2022-09-19 16:10:59 +0200\nJan-Peter Voigt\npublic/version.json\n75ab042310ba81e040d4097099bd6daf5fc43eb6\n\n",
+  "date": "2022-09-19 16:10:59 +0200",
   "author": "Jan-Peter Voigt",
-  "subject": "hide worktitle if not defined",
-  "commit": "f2fc6b6f01f834d2feae0c038ce79f5f7146d402",
+  "subject": "public/version.json",
+  "commit": "75ab042310ba81e040d4097099bd6daf5fc43eb6",
   "branch": "jpv/dev"
 }
