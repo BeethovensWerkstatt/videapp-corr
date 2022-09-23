@@ -1,8 +1,8 @@
 {
-  "version": "2022-09-22 09:42:22 +0200\nJan-Peter Voigt\nexist docker-compose\nc0557502f2e832712a9d956c16f9a74769dc07ad\n\n",
-  "date": "2022-09-22 09:42:22 +0200",
+  "version": "2022-09-22 10:59:54 +0200\nJan-Peter Voigt\nremove 'info.json' from page.uri\n46dc386d5b976b58e739cb055a20262e0c1721df\n\n",
+  "date": "2022-09-22 10:59:54 +0200",
   "author": "Jan-Peter Voigt",
-  "subject": "exist docker-compose",
-  "commit": "c0557502f2e832712a9d956c16f9a74769dc07ad",
+  "subject": "remove 'info.json' from page.uri",
+  "commit": "46dc386d5b976b58e739cb055a20262e0c1721df",
   "branch": "jpv/dev"
 }
