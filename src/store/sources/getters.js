@@ -1,4 +1,5 @@
 // import { Url } from '@/toolbox/net'
+import { atId } from '@/toolbox'
 import { sourceGetterNames } from './names'
 
 /**
@@ -70,7 +71,7 @@ const getters = {
     if (!id) {
       throw new Error('source id undefined!')
     }
-    return state.sources.find(source => source.id === id)
+    return state.sources.find(source => source.id === id || atId(source.id) === id)
   },
   [sourceGetterNames.activeZoneId]: (state, getters) => {
     const source = getters.activeSource

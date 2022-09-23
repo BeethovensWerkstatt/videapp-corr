@@ -1,8 +1,8 @@
 {
-  "version": "2022-09-22 10:59:54 +0200\nJan-Peter Voigt\nremove 'info.json' from page.uri\n46dc386d5b976b58e739cb055a20262e0c1721df\n\n",
-  "date": "2022-09-22 10:59:54 +0200",
+  "version": "2022-09-23 10:53:05 +0200\nJan-Peter Voigt\nDockerfile to node:16-alpine\nc7a70a036ba54af0a2370ad3018e23672c96d907\n\n",
+  "date": "2022-09-23 10:53:05 +0200",
   "author": "Jan-Peter Voigt",
-  "subject": "remove 'info.json' from page.uri",
-  "commit": "46dc386d5b976b58e739cb055a20262e0c1721df",
+  "subject": "Dockerfile to node:16-alpine",
+  "commit": "c7a70a036ba54af0a2370ad3018e23672c96d907",
   "branch": "jpv/dev"
 }
