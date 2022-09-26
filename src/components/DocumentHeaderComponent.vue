@@ -36,14 +36,14 @@
         </svg>-->
         <div :style="headerStyle">{{ versopage }}</div>
       </div>
-      <div class="title" :title="source.label">
+      <div class="title" :title="source.description">
         <!--<svg
           viewBox="0 0 100 10"
           xmlns="http://www.w3.org/2000/svg"
         >
           <text x="0" y="50%" style="font-size: 8px;" dominant-baseline="middle">{{ source.label }}</text>
         </svg>-->
-        <div :style="headerStyle">{{ source.label }}</div>
+        <div :style="headerStyle">{{ sourceLabel }}</div>
       </div>
     </div>
     <div class="top-right" :style="{ width: marginPerc + '%' }">
@@ -152,6 +152,13 @@ export default {
         pages: [{ v: null, r: null }],
         position: { x: 0, y: 0 }
       }
+    },
+    sourceLabel () {
+      // console.log(this.source.description, this.source.label)
+      if (!this.source.label?.trim() || this.source.label === '… ') {
+        return this.source.description || this.source.label
+      }
+      return this.source.label
     },
     sourcePosition: {
       get () {

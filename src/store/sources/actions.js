@@ -88,7 +88,8 @@ const actions = {
         const source = {
           id: m['@id'],
           workId,
-          label: m.label,
+          label: iiif.label,
+          description: iiif.description,
           // these values are updated later
           maxDimensions: { width: 0, height: 0 },
           position: { x: (150 + index * 400), y: 400 },
