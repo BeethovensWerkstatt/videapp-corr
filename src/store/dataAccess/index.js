@@ -1,6 +1,6 @@
-import PouchDB from 'pouchdb'
+// import PouchDB from 'pouchdb'
 import axios from 'axios'
-import config from '@/config'
+// import config from '@/config'
 import n from '@/store/names'
 
 /**
@@ -11,7 +11,7 @@ const DAmodule = {
    * @namespace store.data_access.state
    */
   state: {
-    [n.state.db]: new PouchDB(config.couchdb.defaultName)
+    // [n.state.db]: new PouchDB(config.couchdb.defaultName)
   },
   /**
    * @namespace store.data_access.mutations

@@ -73,6 +73,10 @@ export default {
           }
         }
       }
+    },
+    onesource: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
@@ -118,9 +122,17 @@ export default {
     this.$store.dispatch(actions.destroyOpenSeaDragon)
   },
   computed: {
-    ...mapGetters(['viewer', 'scale']),
+    ...mapGetters(['viewer', 'scale', 'workSources', 'getDocument', 'getSourceById']),
     sources () {
-      const sources = this.$store.getters.workSources(this.$route.params.id)
+      // console.log('DesktopComponent get sources ...')
+      if (this.onesource) {
+        const doc = this.getSourceById(this.$route.params.id)
+        // console.log('one source', this.$route.params.id, doc)
+        if (doc) {
+          return [doc]
+        }
+      }
+      const sources = this.workSources(this.$route.params.id)
       // console.log(sources)
       return sources
     }

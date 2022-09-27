@@ -46,6 +46,7 @@
           ein typisches Werkstattdokument von Beethoven untersucht und digital
           erschlossen werden. In diesem Skizzenbuch finden sich u.a. Entwürfe zu
           den Diabelli-Variationen Op.120 sowie zur Neunten Sinfonie Op.125.
+          Als erstes ist die Facsimile Ansicht des "<router-link :to="{ name: 'Dokumente' }">Notirungsbuch K</router-link>" zugänglich.
           [<a class="moreLink" :href="mod.url" target="_blank">mehr</a>]
         </div>
         <div v-if="mod.n === 5">
