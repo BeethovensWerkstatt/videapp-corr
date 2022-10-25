@@ -9,11 +9,11 @@
         :dir="-1"
         :action="prevPage"
         :enabled="hasPrev"
-        :headerStyle="headerStyle"
+        :headerStyle="footerStyle"
       />
     </div>
     <div
-      class="top-title"
+      class="bottom-title"
       :style="{ left: marginPerc + '%', width: titlePerc + '%' }"
       id="draghandle"
     >
@@ -25,7 +25,7 @@
         >
           <text x="0" y="50%" style="font-size: 8px;" dominant-baseline="middle">{{ rectopage }}</text>
         </svg> -->
-        <div :style="headerStyle">{{ rectopage }}</div>
+        <div :style="footerStyle">{{ rectopage }}</div>
       </div>
       <div class="pagenr verso">
         <!--<svg
@@ -34,7 +34,7 @@
         >
           <text x="0" y="50%" style="font-size: 8px;" dominant-baseline="middle">{{ versopage }}</text>
         </svg>-->
-        <div :style="headerStyle">{{ versopage }}</div>
+        <div :style="footerStyle">{{ versopage }}</div>
       </div>
       <div class="title" :title="source.description">
         <!--<svg
@@ -43,7 +43,7 @@
         >
           <text x="0" y="50%" style="font-size: 8px;" dominant-baseline="middle">{{ source.label }}</text>
         </svg>-->
-        <div :style="headerStyle">{{ sourceLabel }}</div>
+        <div :style="footerStyle">{{ sourceLabel }}</div>
       </div>
     </div>
     <div class="top-right" :style="{ width: marginPerc + '%' }">
@@ -51,7 +51,7 @@
         :dir="1"
         :action="nextPage"
         :enabled="hasNext"
-        :headerStyle="headerStyle"
+        :headerStyle="footerStyle"
       />
     </div>
   </div>
@@ -197,7 +197,7 @@ export default {
     hasNext () {
       return this.checkPageNr(this.pagenr + 1)
     },
-    headerStyle () {
+    footerStyle () {
       const zoom = this.viewer.viewport.getZoom(true)
       const scale = this.viewer.viewport._containerInnerSize.x * zoom
       // console.log('header scale', scale)
@@ -328,6 +328,46 @@ export default {
   }
   #draghandle {
     cursor: pointer;
+  }
+  .bottom-title {
+    position: absolute;
+    height: 100%;
+    text-align: center;
+    white-space: nowrap;
+    // TODO color consts in separate file
+    background: linear-gradient(0deg, #dddddd, #ffffff);
+
+    .pagenr {
+      position: absolute;
+      top: 0;
+      width: 10%;
+      height: 100%;
+      // outline: 1px solid red;
+
+      svg {
+        // max-width: 100%;
+        height: 100%;
+      }
+    }
+    .recto {
+      right: 0;
+    }
+    .verso {
+      left: 0;
+    }
+
+    .title {
+      position: absolute;
+      left: 10%;
+      width: 80%;
+      overflow: hidden;
+      svg {
+        left: 0;
+        // max-width: 100%;
+        height: 100%;
+        width: auto;
+      }
+    }
   }
 }
 .activeSource {

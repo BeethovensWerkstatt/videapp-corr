@@ -25,6 +25,7 @@
       :active="isActive"
     />
     <document-footer-component
+      v-if="footer.title"
       :position="footerPos"
       :sourceId="sourceId"
       :active="isActive"
@@ -71,6 +72,10 @@ export default {
     defaultPage: {
       type: Number,
       default: 0
+    },
+    footer: {
+      type: Object,
+      default: () => ({})
     }
   },
   data: function () {
