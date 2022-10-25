@@ -24,6 +24,12 @@
       :pos="rectoPos"
       :active="isActive"
     />
+    <document-footer-component
+      :position="footerPos"
+      :sourceId="sourceId"
+      :active="isActive"
+      @move-source="moveTo"
+    />
   </div>
 </template>
 
@@ -33,6 +39,7 @@ import { mapGetters } from 'vuex'
 import OpenSeadragon from 'openseadragon'
 import PageComponent from '@/components/PageComponent.vue'
 import DocumentHeaderComponent from '@/components/DocumentHeaderComponent.vue'
+import DocumentFooterComponent from './DocumentFooterComponent.vue'
 import DocumentMarginComponent from '@/components/DocumentMarginComponent.vue'
 import { mutations } from '@/store/names'
 import { Url } from '@/toolbox/net'
@@ -54,7 +61,7 @@ import { Url } from '@/toolbox/net'
  * @vue-computed {OpenSeadragon.Rect} versoPos - position of verso page
  */
 export default {
-  components: { PageComponent, DocumentHeaderComponent, DocumentMarginComponent },
+  components: { PageComponent, DocumentHeaderComponent, DocumentMarginComponent, DocumentFooterComponent },
   name: 'SourceComponent',
   props: {
     sourceId: {
@@ -132,6 +139,14 @@ export default {
       const pp = this.source.pages[this.pagenr]
       const x = (pp.v ? this.versoPos.x : this.rectoPos.x) - this.sourceMarginWidth
       const y = (pp.v ? this.versoPos.y : this.rectoPos.y) - this.sourceHeaderHeight
+      const width = this.rectoPos.width + this.versoPos.width + (2 * this.sourceMarginWidth)
+      const pos = new OpenSeadragon.Rect(x, y, width, this.sourceHeaderHeight)
+      return pos
+    },
+    footerPos () {
+      const pp = this.source.pages[this.pagenr]
+      const x = (pp.v ? this.versoPos.x : this.rectoPos.x) - this.sourceMarginWidth
+      const y = (pp.v ? this.versoPos.y + this.versoPos.height : this.rectoPos.y + this.rectoPos.height)
       const width = this.rectoPos.width + this.versoPos.width + (2 * this.sourceMarginWidth)
       const pos = new OpenSeadragon.Rect(x, y, width, this.sourceHeaderHeight)
       return pos
