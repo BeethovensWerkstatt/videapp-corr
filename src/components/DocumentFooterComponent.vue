@@ -17,33 +17,15 @@
       :style="{ left: marginPerc + '%', width: titlePerc + '%' }"
       id="draghandle"
     >
-      <!-- <btn id="draghandle"><span :style="{ 'font-size': (scale * sourceHeaderHeight) + 'mm' }">{{ source.label }}</span></btn> -->
       <div class="pagenr recto">
-        <!-- <svg
-          viewBox="0 0 10 10"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <text x="0" y="50%" style="font-size: 8px;" dominant-baseline="middle">{{ rectopage }}</text>
-        </svg> -->
         <div :style="footerStyle">{{ rectopage }}</div>
       </div>
       <div class="pagenr verso">
-        <!--<svg
-          viewBox="0 0 10 10"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <text x="0" y="50%" style="font-size: 8px;" dominant-baseline="middle">{{ versopage }}</text>
-        </svg>-->
         <div :style="footerStyle">{{ versopage }}</div>
       </div>
       <div class="title" :title="source.description">
-        <!--<svg
-          viewBox="0 0 100 10"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <text x="0" y="50%" style="font-size: 8px;" dominant-baseline="middle">{{ source.label }}</text>
-        </svg>-->
-        <div :style="footerStyle">{{ sourceLabel }}</div>
+        <div :style="footerStyleRecto">{{ sourceLabelRecto }}</div>
+        <div :style="footerStyleVerso">{{ sourceLabelVerso }}</div>
       </div>
     </div>
     <div class="top-right" :style="{ width: marginPerc + '%' }">
@@ -153,12 +135,11 @@ export default {
         position: { x: 0, y: 0 }
       }
     },
-    sourceLabel () {
-      // console.log(this.source.description, this.source.label)
-      if (!this.source.label?.trim() || this.source.label === '… ') {
-        return this.source.description || this.source.label
-      }
-      return this.source.label
+    sourceLabelRecto () {
+      return 'Signatur Recto'
+    },
+    sourceLabelVerso () {
+      return 'Signatur Verso'
     },
     sourcePosition: {
       get () {
@@ -204,6 +185,16 @@ export default {
       return {
         'font-size': scale * this.sourceHeaderHeight * 0.7 + 'px'
       }
+    },
+    footerStyleRecto () {
+      const width = (this.pagenr === this.source.pages.length - 1) ? '100%' : '50%'
+      const display = (this.pagenr === 0) ? 'none' : 'inline-block'
+      return ({ ...this.footerStyle, display, width })
+    },
+    footerStyleVerso () {
+      const width = (this.pagenr === 0) ? '100%' : '50%'
+      const display = (this.pagenr === this.source.pages.length - 1) ? 'none' : 'inline-block'
+      return ({ ...this.footerStyle, display, width })
     }
   },
   methods: {

@@ -43,7 +43,7 @@
         >
           <text x="0" y="50%" style="font-size: 8px;" dominant-baseline="middle">{{ source.label }}</text>
         </svg>-->
-        <div :style="headerStyle">{{ sourceLabel }}</div>
+        <div :style="headerStyle">{{ sourceLabel }} ({{ source.pages.length }} p.)</div>
       </div>
     </div>
     <div class="top-right" :style="{ width: marginPerc + '%' }">
@@ -184,12 +184,10 @@ export default {
       return 0
     },
     rectopage () {
-      const page = this.source.pages[this.pagenr]
-      return page.r ? page.r.label : ''
+      return this.source.pages[this.pagenr].r ? ((this.pagenr * 2) + 1) : ''
     },
     versopage () {
-      const page = this.source.pages[this.pagenr]
-      return page.v ? page.v.label : ''
+      return this.source.pages[this.pagenr].v ? (this.pagenr * 2) : ''
     },
     hasPrev () {
       return this.checkPageNr(this.pagenr - 1)
