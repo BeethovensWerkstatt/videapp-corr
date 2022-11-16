@@ -58,9 +58,9 @@
           [<a class="moreLink" :href="mod.url" target="_blank">mehr</a>]
         </div>
         <div class="workPills" v-if="!mod.inactive">
-          <template v-for="(w, i) in module_works(mod)">
+          <template v-for="(w, i) in module_works(mod)" :key="'pill_' + i">
 
-            <span class="workPill" :class="{hasDossier: w.dossier}" :key="'pill_' + i">
+            <span class="workPill" :class="{hasDossier: w.dossier}">
               <router-link
                 v-if="w.route"
                 :to="{ name: w.route, params: { id: w.id } }"

@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import { createApp, h } from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
@@ -14,17 +14,10 @@ import '@/scss/variables.scss'
 import i18n from './i18n'
 import VueD3 from 'vue2-d3'
 
-Vue.use(VectrePlugin)
-Vue.use(VueD3)
-
-Vue.config.productionTip = false
-
-new Vue({
-  router,
-  store,
+createApp({
   i18n,
-  render: h => h(App)
-}).$mount('#app')
+  render: () => h(App)
+}).use(router).use(store).use(VectrePlugin).use(VueD3).mount('#app')
 
 store.dispatch(n.actions.initVerovio)
 store.dispatch(n.actions.loadWorks)

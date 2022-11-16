@@ -79,7 +79,7 @@ export default {
     // this.createViewer()
     // console.log(this.viewer)
   },
-  beforeDestroy () {
+  beforeUnmount () {
     if (this.viewer) {
       this.viewer.destroy()
     }

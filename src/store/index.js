@@ -1,8 +1,3 @@
-/**
- * @module store
- */
-
-import Vue from 'vue'
 import Vuex from 'vuex'
 
 import runtime from './runtime'
@@ -20,9 +15,7 @@ import Directory from './directory'
 
 import n from './names'
 
-Vue.use(Vuex)
-
-const store = new Vuex.Store({
+const store = Vuex.createStore({
   /**
    * @namespace store.state
    * @memberof store

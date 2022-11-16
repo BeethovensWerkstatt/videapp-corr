@@ -32,7 +32,9 @@ import n from '@/store/names'
  * Desktop View
  *
  * @module views/Desktop
- * @vue-computed {object[]} sources - list of available sources
+ * @vue-computed {object} work - displayed work
+ * @vue-computed {string} workTitle - title of work
+ * @vue-computed {string} workLongTitle - long title of work
  */
 export default {
   name: 'Desktop',

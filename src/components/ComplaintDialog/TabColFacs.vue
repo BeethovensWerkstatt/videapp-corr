@@ -80,7 +80,7 @@ export default {
     this.viewer.addHandler('pan', this.rezoom())
     this.viewer.addHandler('resize', this.rezoom(0))
   },
-  beforeDestroy () {
+  beforeUnmount () {
     if (this.viewer) {
       this.viewer.destroy()
     }

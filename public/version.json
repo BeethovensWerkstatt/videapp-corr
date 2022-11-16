@@ -1,8 +1,8 @@
 {
-  "version": "2022-10-25 13:09:58 +0200\nJan-Peter Voigt\nadd source footer (TODO content)\n4117e0d13929056b70ce0f238f02ab379fe0e065\n\n",
-  "date": "2022-10-25 13:09:58 +0200",
+  "version": "2022-11-14 12:31:05 +0100\nJan-Peter Voigt\ndocument desktop size\n1ff5f4933b7e05add121e163e9a22d7ab66c48fc\n\n",
+  "date": "2022-11-14 12:31:05 +0100",
   "author": "Jan-Peter Voigt",
-  "subject": "add source footer (TODO content)",
-  "commit": "4117e0d13929056b70ce0f238f02ab379fe0e065",
-  "branch": "jpv/dev"
+  "subject": "document desktop size",
+  "commit": "1ff5f4933b7e05add121e163e9a22d7ab66c48fc",
+  "branch": "jpv/migrate-vue3"
 }

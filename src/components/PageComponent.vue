@@ -30,7 +30,7 @@
 import { mapGetters } from 'vuex'
 import OpenSeadragon from 'openseadragon'
 import ZoneComponent from '@/components/ZoneComponent.vue'
-import { getters, actions } from '@/store/names'
+import n from '@/store/names'
 import axios from 'axios'
 import tb from '@/toolbox'
 
@@ -100,7 +100,7 @@ export default {
     // console.log('updated ' + this.page ? this.page.id : '[null]')
     this.updateTI()
     if (this.page && this.page.measures_uri) {
-      this.$store.dispatch(actions.loadZones, this.page)
+      this.$store.dispatch(n.actions.loadZones, this.page)
     }
   },
   watch: {
@@ -108,7 +108,7 @@ export default {
       // console.log('change page', this.page, this.page?.measures_uri)
       this.updateTI()
       if (this.page && this.page.measures_uri) {
-        this.$store.dispatch(actions.loadZones, this.page)
+        this.$store.dispatch(n.actions.loadZones, this.page)
       }
     },
     pos () {
@@ -128,7 +128,7 @@ export default {
       this.highlightMonitumShapes(newVal)
     }
   },
-  beforeDestroy () {
+  beforeUnmount () {
     // console.log('bye bye Page')
     if (this.tiledimage) {
       if (this.viewer) {
@@ -142,7 +142,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([getters.viewer, getters.scale, getters.displayMeasures]),
+    ...mapGetters([n.getters.viewer, n.getters.scale, n.getters.displayMeasures]),
     tiledimage: {
       get () {
         return this.tidata
@@ -374,7 +374,8 @@ export default {
                 axios.get(url).then(callback)
                 // } else {    console.log('skipping second loading of SVG shapes')
                 // }
-                this.page.svgRequested = true
+                // this.page.svgRequested = true
+                this.$store.commit(n.mutations.LOAD_PAGE, { ...this.page, svgRequested: true })
               }
             },
             x,
@@ -427,9 +428,9 @@ export default {
           }) */
           const oldId = this.$store.getters.activeComplaintId
           if (oldId === null) {
-            this.$store.dispatch(actions.activateComplaint, monitumId)
+            this.$store.dispatch(n.actions.activateComplaint, monitumId)
           } else if (oldId !== monitumId && !oldId.endsWith('/' + monitumId + '.json')) {
-            this.$store.dispatch(actions.activateComplaint, monitumId)
+            this.$store.dispatch(n.actions.activateComplaint, monitumId)
           }
         } else {
           console.log('clicked on ' + path.id + ', which is not part of a monitum ')
@@ -437,7 +438,7 @@ export default {
 
         if (meiId !== '') {
           const firstItem = meiId.split(' ')[0]
-          this.$store.dispatch(actions.setCurrentItem, firstItem)
+          this.$store.dispatch(n.actions.setCurrentItem, firstItem)
         }
       }
     },

@@ -62,18 +62,7 @@ export default {
     },
     backsrc: {
       type: Object,
-      default: function () {
-        return {
-          height: this.height,
-          width: this.width,
-          tileSize: 256,
-          minLevel: 8,
-          getTileUrl: function (level, x, y) {
-            // console.log(desktopTile)
-            return desktopTile
-          }
-        }
-      }
+      default: undefined
     },
     onesource: {
       type: Boolean,
@@ -104,7 +93,7 @@ export default {
       },
       config: this.viewerprops,
       TIback: {
-        tileSource: this.backsrc,
+        tileSource: this._backsrc,
         x: 0,
         y: 0,
         width: this.width
@@ -118,7 +107,7 @@ export default {
       this.scaleCache = this.scale
     }
   },
-  beforeDestroy () {
+  beforeUnmount () {
     // destroy OpenSeadragon viewer
     this.$store.dispatch(actions.destroyOpenSeaDragon)
   },
@@ -139,6 +128,18 @@ export default {
     },
     footertitle () {
       return ({})
+    },
+    _backsrc () {
+      return {
+        height: this.height,
+        width: this.width,
+        tileSize: 256,
+        minLevel: 8,
+        getTileUrl: function (level, x, y) {
+          // console.log(desktopTile)
+          return desktopTile
+        }
+      }
     }
   }
 }
