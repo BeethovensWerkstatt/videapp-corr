@@ -24,8 +24,8 @@
         <div :style="footerStyle">{{ versopage }}</div>
       </div>
       <div class="title" :title="source.description">
-        <div :style="footerStyleRecto">{{ sourceLabelRecto }}</div>
         <div :style="footerStyleVerso">{{ sourceLabelVerso }}</div>
+        <div :style="footerStyleRecto">{{ sourceLabelRecto }}</div>
       </div>
     </div>
     <div class="top-right" :style="{ width: marginPerc + '%' }">
