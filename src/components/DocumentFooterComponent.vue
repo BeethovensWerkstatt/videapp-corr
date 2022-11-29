@@ -17,15 +17,15 @@
       :style="{ left: marginPerc + '%', width: titlePerc + '%' }"
       id="draghandle"
     >
-      <div class="pagenr recto">
-        <div :style="footerStyle">{{ rectopage }}</div>
-      </div>
       <div class="pagenr verso">
         <div :style="footerStyle">{{ versopage }}</div>
       </div>
+      <div class="pagenr recto">
+        <div :style="footerStyle">{{ rectopage }}</div>
+      </div>
       <div class="title" :title="source.description">
-        <div :style="footerStyleVerso">{{ sourceLabelVerso }}</div>
-        <div :style="footerStyleRecto">{{ sourceLabelRecto }}</div>
+        <div v-if="source.pages[pagenr].v" :style="footerStyleVerso">{{ sourceLabelVerso }}</div>
+        <div v-if="source.pages[pagenr].r" :style="footerStyleRecto">{{ sourceLabelRecto }}</div>
       </div>
     </div>
     <div class="top-right" :style="{ width: marginPerc + '%' }">
@@ -139,11 +139,19 @@ export default {
       const page = this.source.pages[this.pagenr]
       const labels = this.$store.getters.getPageLabel(page?.r?.id)
       if (labels) {
-        return `${labels.label} ${labels.sigle}`
+        const label = `${labels.label} ${labels.sigle} [${labels.pagelabel}]`
+        console.log(label)
+        return label
       }
       return 'Signatur Recto'
     },
     sourceLabelVerso () {
+      const page = this.source.pages[this.pagenr]
+      const labels = this.$store.getters.getPageLabel(page?.v?.id)
+      console.log(page?.v?.id, labels)
+      if (labels) {
+        return `${labels.label} ${labels.sigle} [${labels.pagelabel}]`
+      }
       return 'Signatur Verso'
     },
     sourcePosition: {
@@ -173,12 +181,16 @@ export default {
       const page = this.source.pages[this.pagenr]
       const labels = this.$store.getters.getPageLabel(page?.r?.id)
       if (labels) {
-        return `${labels.pagelabel} [${labels.page}]`
+        return labels.page
       }
       return page.r ? page.r.label : ''
     },
     versopage () {
       const page = this.source.pages[this.pagenr]
+      const labels = this.$store.getters.getPageLabel(page?.v?.id)
+      if (labels) {
+        return labels.page
+      }
       return page.v ? page.v.label : ''
     },
     hasPrev () {
@@ -197,12 +209,12 @@ export default {
     },
     footerStyleRecto () {
       const width = (this.pagenr === this.source.pages.length - 1) ? '100%' : '50%'
-      const display = (this.pagenr === 0) ? 'none' : 'inline-block'
+      const display = (this.pagenr === this.source.pages.length - 1) ? 'none' : 'inline-block'
       return ({ ...this.footerStyle, display, width })
     },
     footerStyleVerso () {
       const width = (this.pagenr === 0) ? '100%' : '50%'
-      const display = (this.pagenr === this.source.pages.length - 1) ? 'none' : 'inline-block'
+      const display = (this.pagenr === 0) ? 'none' : 'inline-block'
       return ({ ...this.footerStyle, display, width })
     }
   },

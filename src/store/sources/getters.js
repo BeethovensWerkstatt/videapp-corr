@@ -196,9 +196,13 @@ const getters = {
     return markers
   },
   getPageLabel: (state, getters) => (id) => {
+    // console.log('page', id)
     for (const src of state.labels) {
       const l = src.pages.find(p => p['@id'] === id)
-      if (l) return l.source
+      if (l) {
+        console.log(l)
+        return l.source
+      }
     }
     return undefined
   }

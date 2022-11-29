@@ -1,8 +1,8 @@
 {
-  "version": "2022-11-14 12:31:05 +0100\nJan-Peter Voigt\ndocument desktop size\n1ff5f4933b7e05add121e163e9a22d7ab66c48fc\n\n",
-  "date": "2022-11-14 12:31:05 +0100",
+  "version": "2022-11-29 17:03:54 +0100\nJan-Peter Voigt\nlabels.json for page sources\na24d975352618b75fb0406ba75a830223a0f0bd9\n\n",
+  "date": "2022-11-29 17:03:54 +0100",
   "author": "Jan-Peter Voigt",
-  "subject": "document desktop size",
-  "commit": "1ff5f4933b7e05add121e163e9a22d7ab66c48fc",
+  "subject": "labels.json for page sources",
+  "commit": "a24d975352618b75fb0406ba75a830223a0f0bd9",
   "branch": "jpv/dev"
 }
