@@ -136,6 +136,11 @@ export default {
       }
     },
     sourceLabelRecto () {
+      const page = this.source.pages[this.pagenr]
+      const labels = this.$store.getters.getPageLabel(page?.r?.id)
+      if (labels) {
+        return `${labels.label} ${labels.sigle}`
+      }
       return 'Signatur Recto'
     },
     sourceLabelVerso () {
@@ -166,6 +171,10 @@ export default {
     },
     rectopage () {
       const page = this.source.pages[this.pagenr]
+      const labels = this.$store.getters.getPageLabel(page?.r?.id)
+      if (labels) {
+        return `${labels.pagelabel} [${labels.page}]`
+      }
       return page.r ? page.r.label : ''
     },
     versopage () {

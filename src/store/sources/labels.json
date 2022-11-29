@@ -1,0 +1,27 @@
+[
+  {
+    "@id": "http://localhost:8080/exist/apps/api/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/manifest.json",
+    "label": "Notirungsbuch K",
+    "sigle": "Sigle?",
+    "pages": [
+      {
+        "@id": "http://localhost:8080/exist/apps/api/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/xb14dce0a-0617-4be8-8272-522706548ae9",
+        "source": {
+          "label": "Engelmann",
+          "sigle": "ABCD",
+          "page": 42,
+          "pagelabel": "21v"
+        }
+      },
+      {
+        "@id": "http://localhost:8080/exist/apps/api/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/x2433e745-3d60-4043-9258-10ab1f1aeb47",
+        "source": {
+          "label": "Engelmann",
+          "sigle": "ABCD",
+          "page": 43,
+          "pagelabel": "22r"
+        }
+      }
+    ]
+  }
+]

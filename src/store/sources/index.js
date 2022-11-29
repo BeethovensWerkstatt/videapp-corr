@@ -2,6 +2,7 @@ import { sourcesNames } from './names'
 import mutations from './mutations'
 import actions from './actions'
 import getters from './getters'
+import labels from './labels.json'
 
 // TODO compareSources
 // TODO compareMovements
@@ -60,7 +61,8 @@ const sourcesModule = {
     [sourcesNames.state.movements]: {},
     [sourcesNames.state.sources]: [],
     [sourcesNames.state.activeSourceId]: null,
-    [sourcesNames.state.pages]: {}
+    [sourcesNames.state.pages]: {},
+    labels
   },
   mutations,
   actions,
