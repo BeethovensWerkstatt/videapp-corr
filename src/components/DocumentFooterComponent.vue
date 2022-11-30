@@ -17,17 +17,23 @@
       :style="{ left: marginPerc + '%', width: titlePerc + '%' }"
       id="draghandle"
     >
-      <!--
-      <div class="pagenr verso">
-        <div :style="footerStyle">{{ versopage }}</div>
-      </div>
-      <div class="pagenr recto">
-        <div :style="footerStyle">{{ rectopage }}</div>
-      </div>
-      -->
-      <div class="title" :title="source.description">
-        <div v-if="source.pages[pagenr].v" :style="footerStyleVerso">{{ sourceLabelVerso }}</div>
-        <div v-if="source.pages[pagenr].r" :style="footerStyleRecto">{{ sourceLabelRecto }}</div>
+      <div class="title">
+        <div v-if="source.pages[pagenr].v" :style="footerStyleVerso">
+          <template v-if="sourceURLVerso">
+            <a :href="sourceURLVerso" target="_blank" :title="sourceDescVerso">{{ sourceLabelVerso }}</a>
+          </template>
+          <template v-else>
+            {{ sourceLabelVerso }}
+          </template>
+        </div>
+        <div v-if="source.pages[pagenr].r" :style="footerStyleRecto">
+          <template v-if="sourceURLRecto">
+            <a :href="sourceURLRecto" target="_blank" :title="sourceDescRecto">{{ sourceLabelRecto }}</a>
+          </template>
+          <template v-else>
+            {{ sourceLabelRecto }}
+          </template>
+        </div>
       </div>
     </div>
     <div class="top-right" :style="{ width: marginPerc + '%' }">
@@ -46,6 +52,23 @@ import { mapGetters } from 'vuex'
 import OpenSeadragon from 'openseadragon'
 import { mutations } from '@/store/names'
 import FlipPageButtonComponent from './FlipPageButtonComponent.vue'
+
+const sourceLabel = (labels) => {
+  if (labels) {
+    let label = labels.names[0].label
+    if (labels.names[0].page) label += ' [' + labels.names[0].page + ']'
+    return label
+  }
+  return undefined
+}
+const sourceDesc = (labels) => {
+  if (labels) {
+    let label = labels.names[0].desc
+    if (labels.names[0].page) label += ' [' + labels.names[0].page + ']'
+    return label
+  }
+  return undefined
+}
 
 /**
  * @module components/DocumentFooterComponent
@@ -109,7 +132,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['viewer', 'sourceHeaderHeight', 'sourceMarginWidth']),
+    ...mapGetters(['viewer', 'sourceHeaderHeight', 'sourceMarginWidth', 'getSourceById', 'getPageLabel']),
     divid () {
       return this.sourceId + '_footer'
     },
@@ -126,7 +149,7 @@ export default {
       return this.$el.querySelector('#draghandle')
     },
     source () {
-      const source = this.$store.getters.getSourceById(this.sourceId)
+      const source = this.getSourceById(this.sourceId)
       if (source) {
         return source
       }
@@ -137,25 +160,35 @@ export default {
         position: { x: 0, y: 0 }
       }
     },
+
+    sourceNameRecto () {
+      const page = this.source.pages[this.pagenr].r
+      return this.getPageLabel(page?.id)
+    },
+    sourceNameVerso () {
+      const page = this.source.pages[this.pagenr].v
+      return this.getPageLabel(page?.id)
+    },
+
     sourceLabelRecto () {
-      const page = this.source.pages[this.pagenr]
-      const labels = this.$store.getters.getPageLabel(page?.r?.id)
-      if (labels) {
-        const label = `${labels.label} ${labels.sigle} [${labels.pagelabel}]`
-        console.log(label)
-        return label
-      }
-      return 'Signatur Recto'
+      return sourceLabel(this.sourceNameRecto) || 'Signatur Recto'
+    },
+    sourceDescRecto () {
+      return sourceDesc(this.sourceNameRecto) || 'Signatur Recto'
+    },
+    sourceURLRecto () {
+      return this.sourceNameRecto?.names[0].url
     },
     sourceLabelVerso () {
-      const page = this.source.pages[this.pagenr]
-      const labels = this.$store.getters.getPageLabel(page?.v?.id)
-      console.log(page?.v?.id, labels)
-      if (labels) {
-        return `${labels.label} ${labels.sigle} [${labels.pagelabel}]`
-      }
-      return 'Signatur Verso'
+      return sourceLabel(this.sourceNameVerso) || 'Signatur Verso'
     },
+    sourceDescVerso () {
+      return sourceDesc(this.sourceNameVerso) || 'Signatur Verso'
+    },
+    sourceURLVerso () {
+      return this.sourceNameVerso?.names[0].url
+    },
+
     sourcePosition: {
       get () {
         return this.position_
@@ -182,18 +215,12 @@ export default {
     rectopage () {
       const page = this.source.pages[this.pagenr]
       const labels = this.$store.getters.getPageLabel(page?.r?.id)
-      if (labels) {
-        return labels.page
-      }
-      return page.r ? page.r.label : ''
+      return labels?.page || page.r?.label || ''
     },
     versopage () {
       const page = this.source.pages[this.pagenr]
       const labels = this.$store.getters.getPageLabel(page?.v?.id)
-      if (labels) {
-        return labels.page
-      }
-      return page.v ? page.v.label : ''
+      return labels?.page || page.v?.label || ''
     },
     hasPrev () {
       return this.checkPageNr(this.pagenr - 1)
@@ -351,38 +378,11 @@ export default {
     // TODO color consts in separate file
     background: linear-gradient(0deg, #dddddd, #ffffff);
 
-    /*
-    .pagenr {
-      position: absolute;
-      top: 0;
-      width: 10%;
-      height: 100%;
-      // outline: 1px solid red;
-
-      svg {
-        // max-width: 100%;
-        height: 100%;
-      }
-    }
-    */
-    .recto {
-      right: 0;
-    }
-    .verso {
-      left: 0;
-    }
-
     .title {
       position: absolute;
-      left: 10%;
-      width: 80%;
+      left: 0;
+      width: 100%;
       overflow: hidden;
-      svg {
-        left: 0;
-        // max-width: 100%;
-        height: 100%;
-        width: auto;
-      }
     }
   }
 }
