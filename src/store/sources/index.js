@@ -62,7 +62,7 @@ const sourcesModule = {
     [sourcesNames.state.sources]: [],
     [sourcesNames.state.activeSourceId]: null,
     [sourcesNames.state.pages]: {},
-    labels
+    labels: [labels]
   },
   mutations,
   actions,

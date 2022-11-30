@@ -198,10 +198,10 @@ const getters = {
   getPageLabel: (state, getters) => (id) => {
     // console.log('page', id)
     for (const src of state.labels) {
-      const l = src.pages.find(p => p['@id'] === id)
+      const l = src.provenances.find(p => p.canvas === id)
       if (l) {
         console.log(l)
-        return l.source
+        return l
       }
     }
     return undefined

@@ -17,12 +17,14 @@
       :style="{ left: marginPerc + '%', width: titlePerc + '%' }"
       id="draghandle"
     >
+      <!--
       <div class="pagenr verso">
         <div :style="footerStyle">{{ versopage }}</div>
       </div>
       <div class="pagenr recto">
         <div :style="footerStyle">{{ rectopage }}</div>
       </div>
+      -->
       <div class="title" :title="source.description">
         <div v-if="source.pages[pagenr].v" :style="footerStyleVerso">{{ sourceLabelVerso }}</div>
         <div v-if="source.pages[pagenr].r" :style="footerStyleRecto">{{ sourceLabelRecto }}</div>
@@ -349,6 +351,7 @@ export default {
     // TODO color consts in separate file
     background: linear-gradient(0deg, #dddddd, #ffffff);
 
+    /*
     .pagenr {
       position: absolute;
       top: 0;
@@ -361,6 +364,7 @@ export default {
         height: 100%;
       }
     }
+    */
     .recto {
       right: 0;
     }
