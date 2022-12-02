@@ -1,6 +1,5 @@
 // import { Url } from '@/toolbox/net'
 import { atId } from '@/toolbox'
-import { Url } from '@/toolbox/net'
 import { sourceGetterNames } from './names'
 
 /**
@@ -182,27 +181,6 @@ const getters = {
       }
     }
     return markers
-  },
-  getCanvasLabels: (state, getters) => (id) => {
-    for (const src of state.canvases) {
-      // console.log('page', id, src)
-      const matchID = (c) => {
-        const id1 = c.canvas
-        const id2 = id
-        if (id1 === id2) return true
-        const p1 = new Url(id1).path.elements.pop()
-        const p2 = new Url(id2).path.elements.pop()
-        // console.log('"' + p1 + '" --- "' + p2 + '"')
-        if (p1 === p2) return true
-        return false
-      }
-      const l = src.provenances.find(matchID)
-      if (l) {
-        // console.log(l)
-        return l
-      }
-    }
-    return undefined
   }
 }
 
