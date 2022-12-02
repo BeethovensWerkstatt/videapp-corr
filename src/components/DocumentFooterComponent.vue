@@ -192,14 +192,14 @@ export default {
       }
     },
     footerStyleRecto () {
-      const width = (this.pagenr === this.source.pages.length - 1) ? '100%' : '50%'
-      const display = (this.pagenr === this.source.pages.length - 1) ? 'none' : 'inline-block'
-      return ({ ...this.footerStyle, display, width })
+      const width = (this.versopage) ? '50%' : '100%'
+      const display = (this.rectopage) ? 'inline-block' : 'none'
+      return ({ ...this.footerStyle, 'text-align': 'right', 'padding-right': '5pt', display, width })
     },
     footerStyleVerso () {
-      const width = (this.pagenr === 0) ? '100%' : '50%'
-      const display = (this.pagenr === 0) ? 'none' : 'inline-block'
-      return ({ ...this.footerStyle, display, width })
+      const width = (this.rectopage) ? '50%' : '100%'
+      const display = (this.versopage) ? 'inline-block' : 'none'
+      return ({ ...this.footerStyle, 'text-align': 'left', 'padding-left': '5pt', display, width })
     }
   },
   methods: {
@@ -231,28 +231,11 @@ export default {
   padding: 0%;
   margin: 0%;
 
-  .top-left {
-    position: absolute;
-    left: 0;
-    height: 100%;
-    background: radial-gradient(ellipse 100% 100% at bottom right, #dddddd, #ffffff);
-    // border-radius: 100% 0% 0% 0%;
-  }
-  .top-right {
-    position: absolute;
-    right: 0;
-    height: 100%;
-    background: radial-gradient(ellipse 100% 100% at bottom left, #dddddd, #ffffff);
-    // border-radius: 0% 100% 0% 0%;
-  }
   .btn {
     width: 100%;
     height: 100%;
     margin: 0%;
     padding: 0%;
-  }
-  #draghandle {
-    cursor: pointer;
   }
   .bottom-title {
     position: absolute;
