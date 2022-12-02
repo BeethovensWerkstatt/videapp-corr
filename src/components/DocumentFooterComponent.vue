@@ -107,7 +107,7 @@ export default {
   },
   // TODO before destroy cleanup: remove Overlay, remove handlers
   mounted () {
-    // /*
+    /*
     // create MouseTracker for moving component via drag and drop
     this.tracker = new OpenSeadragon.MouseTracker({
       element: this.dragHandle,
