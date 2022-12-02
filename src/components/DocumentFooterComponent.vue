@@ -132,7 +132,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['viewer', 'sourceHeaderHeight', 'sourceMarginWidth', 'getSourceById', 'getPageLabel']),
+    ...mapGetters(['viewer', 'sourceHeaderHeight', 'sourceMarginWidth', 'getSourceById', 'getCanvasLabels']),
     divid () {
       return this.sourceId + '_footer'
     },
@@ -163,11 +163,11 @@ export default {
 
     sourceNameRecto () {
       const page = this.source.pages[this.pagenr].r
-      return this.getPageLabel(page?.id)
+      return this.getCanvasLabels(page?.id)
     },
     sourceNameVerso () {
       const page = this.source.pages[this.pagenr].v
-      return this.getPageLabel(page?.id)
+      return this.getCanvasLabels(page?.id)
     },
 
     sourceLabelRecto () {
@@ -214,12 +214,12 @@ export default {
     },
     rectopage () {
       const page = this.source.pages[this.pagenr]
-      const labels = this.$store.getters.getPageLabel(page?.r?.id)
+      const labels = this.getCanvasLabels(page?.r?.id)
       return labels?.page || page.r?.label || ''
     },
     versopage () {
       const page = this.source.pages[this.pagenr]
-      const labels = this.$store.getters.getPageLabel(page?.v?.id)
+      const labels = this.getCanvasLabels(page?.v?.id)
       return labels?.page || page.v?.label || ''
     },
     hasPrev () {
