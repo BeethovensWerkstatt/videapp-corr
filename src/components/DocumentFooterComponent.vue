@@ -1,17 +1,8 @@
 <template>
   <div
     class="document-footer"
-    :class="{ activeSource: active }"
     :id="divid"
   >
-    <div class="top-left" :style="{ width: marginPerc + '%' }">
-      <flip-page-button-component
-        :dir="-1"
-        :action="prevPage"
-        :enabled="hasPrev"
-        :headerStyle="footerStyle"
-      />
-    </div>
     <div
       class="bottom-title"
       :style="{ left: marginPerc + '%', width: titlePerc + '%' }"
@@ -36,22 +27,12 @@
         </div>
       </div>
     </div>
-    <div class="top-right" :style="{ width: marginPerc + '%' }">
-      <flip-page-button-component
-        :dir="1"
-        :action="nextPage"
-        :enabled="hasNext"
-        :headerStyle="footerStyle"
-      />
-    </div>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 import OpenSeadragon from 'openseadragon'
-import { mutations } from '@/store/names'
-import FlipPageButtonComponent from './FlipPageButtonComponent.vue'
 
 const sourceLabel = (labels) => {
   if (labels) {
@@ -75,7 +56,7 @@ const sourceDesc = (labels) => {
  * @vue-prop {String} sourceId id of source object
  */
 export default {
-  components: { FlipPageButtonComponent },
+  components: {},
   name: 'DocumentFooterComponent',
   props: {
     sourceId: {
@@ -108,16 +89,6 @@ export default {
   },
   // TODO before destroy cleanup: remove Overlay, remove handlers
   mounted () {
-    /*
-    // create MouseTracker for moving component via drag and drop
-    this.tracker = new OpenSeadragon.MouseTracker({
-      element: this.dragHandle,
-      clickHandler: () => { this.selectSource() },
-      dragHandler: this.dragHandler,
-      dragEndHandler: this.dragEndHandler,
-      releaseHandler: this.dragEndHandler // do we need this?
-    })
-    // */
     // create overlay for footer bar
     if (this.viewer) {
       this.viewer.addOverlay({
@@ -135,7 +106,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['viewer', 'sourceHeaderHeight', 'sourceMarginWidth', 'getSourceById', 'getCanvasLabels']),
+    ...mapGetters(['viewer', 'sourceFooterHeight', 'sourceMarginWidth', 'getSourceById', 'getCanvasLabels']),
     divid () {
       return this.sourceId + '_footer'
     },
@@ -192,19 +163,6 @@ export default {
       return this.sourceNameVerso?.names[0].url
     },
 
-    sourcePosition: {
-      get () {
-        return this.position_
-      },
-      set (pos) {
-        this.position_ = pos
-        if (this.overlay) {
-          // console.log('move source ' + this.sourceId + ': ' + JSON.stringify(pos))
-          this.overlay.update(new OpenSeadragon.Point(this.dashX, this.dashY), OpenSeadragon.TOP_CENTER)
-          this.$forceUpdate()
-        }
-      }
-    },
     pagenr () {
       const pnr = +this.source.pagenr
       if (this.checkPageNr(pnr)) {
@@ -225,18 +183,12 @@ export default {
       const labels = this.getCanvasLabels(page?.v?.id)
       return labels?.page || page.v?.label || ''
     },
-    hasPrev () {
-      return this.checkPageNr(this.pagenr - 1)
-    },
-    hasNext () {
-      return this.checkPageNr(this.pagenr + 1)
-    },
     footerStyle () {
       const zoom = this.viewer.viewport.getZoom(true)
       const scale = this.viewer.viewport._containerInnerSize.x * zoom
       // console.log('header scale', scale)
       return {
-        'font-size': scale * this.sourceHeaderHeight * 0.7 + 'px'
+        'font-size': scale * this.sourceFooterHeight * 0.7 + 'px'
       }
     },
     footerStyleRecto () {
@@ -268,73 +220,6 @@ export default {
      */
     checkPageNr (pnr) {
       return (pnr >= 0 && pnr < this.source.pages.length)
-    },
-    /**
-     * flip pages forward
-     */
-    prevPage () {
-      if (this.hasPrev) {
-        this.$store.commit(mutations.SET_PAGE, { id: this.sourceId, page: this.pagenr - 1 })
-      }
-    },
-    /**
-     * flip pages backward
-     */
-    nextPage () {
-      if (this.hasNext) {
-        this.$store.commit(mutations.SET_PAGE, { id: this.sourceId, page: this.pagenr + 1 })
-      }
-    },
-    /**
-     * select this source
-     *
-     * @param {Object} e - event object
-     */
-    selectSource (e) {
-      if (e) {
-        e.preventDefault()
-      }
-      this.$store.commit(mutations.ACTIVATE_SOURCE, this.sourceId)
-    },
-    /**
-     * handle drag and drop
-     *
-     * @param {Object} e - drag event
-     */
-    dragHandler (e) {
-      // console.log(e)
-      var pos = new OpenSeadragon.Point(e.originalEvent.clientX, e.originalEvent.clientY)
-      pos = this.viewer.viewport.windowToViewportCoordinates(pos)
-      if (!this.dragDelta) {
-        this.dragDelta = {
-          x: pos.x - this.sourcePosition.x,
-          y: pos.y - this.sourcePosition.y
-        }
-        // console.log(this.dragDelta)
-        this.selectSource()
-      }
-      pos = new OpenSeadragon.Point(pos.x - this.dragDelta.x, pos.y - this.dragDelta.y)
-      this.moveTo(pos.x, pos.y)
-    },
-    /**
-     * handle drag drop
-     *
-     * @param {Object} e - drag event
-     */
-    dragEndHandler (e) {
-      this.dragDelta = null
-    },
-    /**
-     * move SourceComponent to new position
-     *
-     * @param {Number} x - horizontal coordinate (viewport)
-     * @param {Number} y - vertical coordinate (viewport)
-     */
-    moveTo (x, y) {
-      this.sourcePosition = { x: x, y: y }
-      // console.log(this.sourcePosition)
-      this.$store.commit(mutations.MOVE_SOURCE, { id: this.sourceId, ...this.sourcePosition })
-      this.$emit('move-source', this.sourcePosition.x, this.sourcePosition.y)
     }
   }
 }
@@ -345,10 +230,6 @@ export default {
   // outline: 1px solid red;
   padding: 0%;
   margin: 0%;
-
-  &:hover {
-    outline: 1px solid #0000ff22;
-  }
 
   .top-left {
     position: absolute;
@@ -380,17 +261,16 @@ export default {
     white-space: nowrap;
     // TODO color consts in separate file
     background: linear-gradient(0deg, #dddddd, #ffffff);
+    border-radius: 3px;
 
     .title {
       position: absolute;
       left: 0;
       width: 100%;
       overflow: hidden;
+      font-size: 80%;
     }
   }
-}
-.activeSource {
-  outline: 2px solid #ff000033;
 }
 
 </style>
