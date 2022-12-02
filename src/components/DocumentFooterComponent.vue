@@ -20,17 +20,17 @@
       <div class="title">
         <div v-if="source.pages[pagenr].v" :style="footerStyleVerso">
           <template v-if="sourceURLVerso">
-            <a :href="sourceURLVerso" target="_blank" :title="sourceDescVerso">{{ sourceLabelVerso }}</a>
+            <a :href="sourceURLVerso" target="_blank" :title="sourceDescVerso" @click="window.open(sourceURLVerso, '_blank')">{{ sourceLabelVerso }}</a>
           </template>
-          <template v-else>
+          <template v-else-if="sourceLabelVerso">
             {{ sourceLabelVerso }}
           </template>
         </div>
         <div v-if="source.pages[pagenr].r" :style="footerStyleRecto">
           <template v-if="sourceURLRecto">
-            <a :href="sourceURLRecto" target="_blank" :title="sourceDescRecto">{{ sourceLabelRecto }}</a>
+            <a :href="sourceURLRecto" target="_blank" :title="sourceDescRecto" @click="window.open(sourceURLRecto, '_blank')">{{ sourceLabelRecto }}</a>
           </template>
-          <template v-else>
+          <template v-else-if="sourceLabelRecto">
             {{ sourceLabelRecto }}
           </template>
         </div>
@@ -102,7 +102,8 @@ export default {
       position_: { ...this.$store.getters.getSourceById(this.sourceId).position },
       tracker: null,
       dragDelta: null,
-      scale
+      scale,
+      window
     }
   },
   // TODO before destroy cleanup: remove Overlay, remove handlers
