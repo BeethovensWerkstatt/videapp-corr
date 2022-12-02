@@ -1,6 +1,7 @@
 <template>
   <div class="desk">
-    <desktop-component divid="canvas" :width="1650" :height="1000" :onesource="true"></desktop-component>
+    <!-- TODO calc desktop size from document? -->
+    <desktop-component divid="canvas" :width="800" :height="600" :onesource="true"></desktop-component>
     <div id="sidebar">
       <div class="workTitle" v-if="work">
         <strong>{{ workTitle }}</strong>

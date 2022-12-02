@@ -1,8 +1,8 @@
 {
-  "version": "2022-09-23 16:26:03 +0200\nJan-Peter Voigt\ndocument to source, getSourceById short and long\n4d74e524f5ed4110339428dc73a7419b9505dd78\n\n",
-  "date": "2022-09-23 16:26:03 +0200",
+  "version": "2022-11-29 17:03:54 +0100\nJan-Peter Voigt\nlabels.json for page sources\na24d975352618b75fb0406ba75a830223a0f0bd9\n\n",
+  "date": "2022-11-29 17:03:54 +0100",
   "author": "Jan-Peter Voigt",
-  "subject": "document to source, getSourceById short and long",
-  "commit": "4d74e524f5ed4110339428dc73a7419b9505dd78",
+  "subject": "labels.json for page sources",
+  "commit": "a24d975352618b75fb0406ba75a830223a0f0bd9",
   "branch": "jpv/dev"
 }

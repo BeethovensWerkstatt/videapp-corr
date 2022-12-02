@@ -82,7 +82,8 @@ const actions = {
     const existingSource = state.sources.find(source => source.id === m.id)
     if (existingSource === undefined) {
       // get manifestation json
-      axios.get(m.iiif.manifest).then(res => {
+
+      const loadIIIF = res => {
         const iiif = res.data
 
         const source = {
@@ -218,7 +219,16 @@ const actions = {
         } else {
           console.warn('no sequence for "' + m.label + '"', iiif)
         }
-      })
+      }
+
+      // WORKAROUND
+      // https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/manifest.json
+      if (m.iiif.manifest.indexOf('t83a01023-37fd-4e91-90db-f228da4a14a9') > 0) {
+        console.log('load cached Notirungsbuch K')
+        loadIIIF({ data: require('./notirungsBuchK.json') })
+      } else {
+        axios.get(m.iiif.manifest).then(loadIIIF)
+      }
     }
   },
 

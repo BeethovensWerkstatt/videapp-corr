@@ -5,6 +5,7 @@
         v-for="source in sources"
         :key="source.id"
         :sourceId="source.id"
+        :footer="{ title: onesource ? footertitle : undefined }"
       />
     </div>
   </div>
@@ -135,6 +136,9 @@ export default {
       const sources = this.workSources(this.$route.params.id)
       // console.log(sources)
       return sources
+    },
+    footertitle () {
+      return ({})
     }
   }
 }
