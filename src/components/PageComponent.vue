@@ -274,7 +274,7 @@ export default {
     },
     svgShapeUrl () {
       const svgurl = this.page?.svg_shapes
-      console.log(svgurl)
+      // console.log(svgurl)
       return svgurl
     },
     activeComplaintId () {
@@ -342,9 +342,9 @@ export default {
               try {
                 svgContainer.removeEventListener('click', this.clickShapes)
                 svgContainer.innerHTML = ''
-                console.log('got rid of old stuff')
+                // console.log('got rid of old stuff')
               } catch (err) {
-                console.log('cannot remove svg')
+                // console.log('cannot remove svg')
               }
 
               if (this.svgShapeUrl && svgContainer) {
