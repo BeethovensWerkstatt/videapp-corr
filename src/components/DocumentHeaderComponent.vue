@@ -15,7 +15,7 @@
     <div
       class="top-title"
       :style="{ left: marginPerc + '%', width: titlePerc + '%' }"
-      id="draghandle"
+      id="draghandle-header"
     >
       <!-- <btn id="draghandle"><span :style="{ 'font-size': (scale * sourceHeaderHeight) + 'mm' }">{{ source.label }}</span></btn> -->
       <div class="pagenr recto">
@@ -139,7 +139,7 @@ export default {
       return 100 - (2 * this.marginPerc)
     },
     dragHandle () {
-      return this.$el.querySelector('#draghandle')
+      return this.$el.querySelector('#draghandle-header')
     },
     source () {
       const source = this.$store.getters.getSourceById(this.sourceId)

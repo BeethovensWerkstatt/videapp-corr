@@ -15,7 +15,7 @@
     <div
       class="bottom-title"
       :style="{ left: marginPerc + '%', width: titlePerc + '%' }"
-      id="draghandle"
+      id="draghandle-footer"
     >
       <div class="title">
         <div v-if="source.pages[pagenr].v" :style="footerStyleVerso">
@@ -107,6 +107,7 @@ export default {
   },
   // TODO before destroy cleanup: remove Overlay, remove handlers
   mounted () {
+    // /*
     // create MouseTracker for moving component via drag and drop
     this.tracker = new OpenSeadragon.MouseTracker({
       element: this.dragHandle,
@@ -115,7 +116,8 @@ export default {
       dragEndHandler: this.dragEndHandler,
       releaseHandler: this.dragEndHandler // do we need this?
     })
-    // create overlay for title bar
+    // */
+    // create overlay for footer bar
     if (this.viewer) {
       this.viewer.addOverlay({
         element: this.$el,
@@ -146,7 +148,7 @@ export default {
       return 100 - (2 * this.marginPerc)
     },
     dragHandle () {
-      return this.$el.querySelector('#draghandle')
+      return this.$el.querySelector('#draghandle-footer')
     },
     source () {
       const source = this.getSourceById(this.sourceId)
