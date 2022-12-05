@@ -1993,7 +1993,38 @@
       "width" : 3585,
       "height" : 3021,
       "otherContent" : [ ]
-    }, {
+      }, {
+        "@id" : "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/s96c104e1-474a-424c-adab-4475de21a1d4",
+        "@type" : "sc:Canvas",
+        "label" : "2",
+        "images" : [ {
+          "@type" : "oa:Annotation",
+          "motivation" : "sc:painting",
+          "resource" : {
+            "@id" : "https://gallica.bnf.fr/iiif/ark:/12148/btv1b550025366/f1/full/full/0/default.jpg",
+            "@type" : "dctypes:Image",
+            "service" : {
+              "@context" : "http://iiif.io/api/image/2/context.json",
+              "@id" : "https://gallica.bnf.fr/iiif/ark:/12148/btv1b550025366/f1",
+              "profile" : "http://iiif.io/api/image/2/level2.json",
+              "service" : {
+                "@id" : "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/s96c104e1-474a-424c-adab-4475de21a1d4_physdim",
+                "@context" : "http://iiif.io/api/annex/services/physdim/1/context.json",
+                "profile" : "http://iiif.io/api/annex/services/physdim",
+                "physicalScale" : 0.0762,
+                "physicalUnits" : "mm"
+              }
+            },
+            "format" : "image/jpeg",
+            "width" : 3910,
+            "height" : 3043
+          },
+          "on" : "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/s96c104e1-474a-424c-adab-4475de21a1d4"
+        } ],
+        "width" : 3910,
+        "height" : 3043,
+        "otherContent" : [ ]
+      }, {
       "@id" : "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/s56bb2264-ef46-47cc-9715-d10789f78374",
       "@type" : "sc:Canvas",
       "label" : "1",
@@ -2023,37 +2054,6 @@
       } ],
       "width" : 3869,
       "height" : 2993,
-      "otherContent" : [ ]
-    }, {
-      "@id" : "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/s96c104e1-474a-424c-adab-4475de21a1d4",
-      "@type" : "sc:Canvas",
-      "label" : "2",
-      "images" : [ {
-        "@type" : "oa:Annotation",
-        "motivation" : "sc:painting",
-        "resource" : {
-          "@id" : "https://gallica.bnf.fr/iiif/ark:/12148/btv1b550025366/f1/full/full/0/default.jpg",
-          "@type" : "dctypes:Image",
-          "service" : {
-            "@context" : "http://iiif.io/api/image/2/context.json",
-            "@id" : "https://gallica.bnf.fr/iiif/ark:/12148/btv1b550025366/f1",
-            "profile" : "http://iiif.io/api/image/2/level2.json",
-            "service" : {
-              "@id" : "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/s96c104e1-474a-424c-adab-4475de21a1d4_physdim",
-              "@context" : "http://iiif.io/api/annex/services/physdim/1/context.json",
-              "profile" : "http://iiif.io/api/annex/services/physdim",
-              "physicalScale" : 0.0762,
-              "physicalUnits" : "mm"
-            }
-          },
-          "format" : "image/jpeg",
-          "width" : 3910,
-          "height" : 3043
-        },
-        "on" : "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/s96c104e1-474a-424c-adab-4475de21a1d4"
-      } ],
-      "width" : 3910,
-      "height" : 3043,
       "otherContent" : [ ]
     }, {
       "@id" : "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/sa6d82aed-b71f-47dd-978f-cd425ecf5e03",

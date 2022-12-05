@@ -708,17 +708,6 @@
         },
         
         {
-            "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/s96c104e1-474a-424c-adab-4475de21a1d4",
-            "names": [
-                {
-                    "label": "F-Pn, Ms. 57/2",
-                    "desc": "F-Pn, Ms. 57/2",
-                    "page": "2",
-                    "url": "https://gallica.bnf.fr/ark:/12148/btv1b550025366/f2.item.r=beethoven%20op"
-                }
-            ]
-        },
-        {
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/s56bb2264-ef46-47cc-9715-d10789f78374",
             "names": [
                 {
@@ -726,6 +715,17 @@
                     "desc": "F-Pn, Ms. 57/2",
                     "page": "1",
                     "url": "https://gallica.bnf.fr/ark:/12148/btv1b550025366.r=beethoven%20op.%20125%20esquisses?rk=171674;4"
+                }
+            ]
+        },
+        {
+            "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/s96c104e1-474a-424c-adab-4475de21a1d4",
+            "names": [
+                {
+                    "label": "F-Pn, Ms. 57/2",
+                    "desc": "F-Pn, Ms. 57/2",
+                    "page": "2",
+                    "url": "https://gallica.bnf.fr/ark:/12148/btv1b550025366/f2.item.r=beethoven%20op"
                 }
             ]
         },
