@@ -43,7 +43,7 @@
         >
           <text x="0" y="50%" style="font-size: 8px;" dominant-baseline="middle">{{ source.label }}</text>
         </svg>-->
-        <div :style="headerStyle">{{ sourceLabel }}</div>
+        <div :style="headerStyle">{{ sourceLabel }} <source-menu :style="headerStyle" /></div>
       </div>
     </div>
     <div class="top-right" :style="{ width: marginPerc + '%' }">
@@ -62,13 +62,14 @@ import { mapGetters } from 'vuex'
 import OpenSeadragon from 'openseadragon'
 import { mutations } from '@/store/names'
 import FlipPageButtonComponent from './FlipPageButtonComponent.vue'
+import SourceMenu from './SourceMenu.vue'
 
 /**
  * @module components/DocumentHeaderComponent
  * @vue-prop {String} sourceId id of source object
  */
 export default {
-  components: { FlipPageButtonComponent },
+  components: { FlipPageButtonComponent, SourceMenu },
   name: 'DocumentHeaderComponent',
   props: {
     sourceId: {

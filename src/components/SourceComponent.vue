@@ -29,7 +29,11 @@
       :position="footerPos"
       :sourceId="sourceId"
       :active="isActive"
-      @move-source="moveTo"
+    />
+    <page-separator-component
+      v-if="footer.title && source.pages[pagenr].v && source.pages[pagenr].r"
+      :position="separatorPos"
+      :sourceId="sourceId"
     />
   </div>
 </template>
@@ -44,6 +48,7 @@ import DocumentFooterComponent from './DocumentFooterComponent.vue'
 import DocumentMarginComponent from '@/components/DocumentMarginComponent.vue'
 import { mutations } from '@/store/names'
 import { Url } from '@/toolbox/net'
+import PageSeparatorComponent from './PageSeparatorComponent.vue'
 
 /**
  * @module components/SourceComponent
@@ -62,7 +67,7 @@ import { Url } from '@/toolbox/net'
  * @vue-computed {OpenSeadragon.Rect} versoPos - position of verso page
  */
 export default {
-  components: { PageComponent, DocumentHeaderComponent, DocumentMarginComponent, DocumentFooterComponent },
+  components: { PageComponent, DocumentHeaderComponent, DocumentMarginComponent, DocumentFooterComponent, PageSeparatorComponent },
   name: 'SourceComponent',
   props: {
     sourceId: {
@@ -90,7 +95,7 @@ export default {
       const atId = new Url(this.sourceId)
       let id = atId.path.elements.pop()
       id = id.split('.').filter(e => e !== 'json').join('_')
-      console.log(id)
+      // console.log(id)
       return id + '_dash'
     },
     source () {
@@ -140,6 +145,10 @@ export default {
     isActive () {
       return this.sourceId === this.$store.getters.activeSourceId
     },
+    height () {
+      const pp = this.source.pages[this.pagenr]
+      return Math.max(pp?.v?.dimensions.height || 0, pp?.r?.dimensions.height || 0)
+    },
     headerPos () {
       const pp = this.source.pages[this.pagenr]
       const x = (pp.v ? this.versoPos.x : this.rectoPos.x) - this.sourceMarginWidth
@@ -161,7 +170,7 @@ export default {
       const x = (pp.v ? this.versoPos.x : this.rectoPos.x) - this.sourceMarginWidth
       const y = (pp.v ? this.versoPos.y : this.rectoPos.y)
       const width = this.rectoPos.width + this.versoPos.width + (2 * this.sourceMarginWidth)
-      const height = Math.max(this.rectoPos.height, this.versoPos.height)
+      const height = this.height
       const pos = new OpenSeadragon.Rect(x, y, width, height)
       return pos
     },
@@ -188,6 +197,14 @@ export default {
         return new OpenSeadragon.Rect(x, y, width, height)
       }
       return new OpenSeadragon.Rect(0, 0, 0, 0)
+    },
+    separatorPos () {
+      const pp = this.source.pages[this.pagenr]
+      const x = this.position.x - 1
+      const y = (pp.v ? this.versoPos.y : this.rectoPos.y)
+      const width = 2
+      const height = this.height
+      return new OpenSeadragon.Rect(x, y, width, height)
     }
   },
   methods: {
