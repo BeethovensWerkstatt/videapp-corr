@@ -1,7 +1,7 @@
 <template>
   <div class="dropdown">
     <button class="btn btn-link dropdown-toggle" tabindex="0">
-      <i class="icon icon-menu"></i>
+      <i class="icon icon-menu" @click="toggleMenu"></i>
     </button>
     <ul class="menu srcMenu">
       <li class="menu-item">
@@ -21,6 +21,9 @@ export default {
   computed: {
   },
   methods: {
+    toggleMenu () {
+      console.log('toggleMenu')
+    },
     showOverview () {
       console.log('display page overview ...')
     }
