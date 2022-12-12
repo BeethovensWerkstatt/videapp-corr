@@ -168,7 +168,7 @@ export default {
     rectoPos () {
       const pp = this.source.pages[this.pagenr]
       if (pp.r) {
-        // center page, if no recto page
+        // center page, if no verso page
         const x = this.position.x - (pp.v ? 0 : (pp.r.dimensions.width / 2))
         const y = this.position.y - (pp.r.dimensions.height / 2)
         const width = pp.r.dimensions.width
@@ -181,7 +181,7 @@ export default {
       const pp = this.source.pages[this.pagenr]
       if (pp.v) {
         // center page, if no recto page
-        const x = this.position.x - (pp.r ? pp.r.dimensions.width : (pp.v.dimensions.width / 2))
+        const x = this.position.x - (pp.r ? pp.v.dimensions.width : (pp.v.dimensions.width / 2))
         const y = this.position.y - (pp.v.dimensions.height / 2)
         const width = pp.v.dimensions.width
         const height = pp.v.dimensions.height
