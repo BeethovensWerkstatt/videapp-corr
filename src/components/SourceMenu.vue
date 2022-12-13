@@ -3,7 +3,7 @@
     <span tabindex="0" @click.prevent="toggleMenu">
       &#x2630;
     </span>
-    <div :id="menuid">
+    <div :id="menuid" style="z-index: 10000;">
       <ul class="srcMenu" v-if="active">
         <li class="menu-item">
           <button class="customBtn btn btn-link" @click.prevent="showOverview()">
@@ -17,7 +17,9 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { atId } from '../toolbox'
+import OpenSeadragon from 'openseadragon'
+import { atId } from '@/toolbox'
+
 export default {
   name: 'SourceMenu',
   props: {
@@ -36,20 +38,27 @@ export default {
   mounted () {
     this.viewer.addOverlay({
       element: this.$el.querySelector(`#${this.menuid}`),
-      position: this.position
+      position: this.menuposition
     })
   },
   watch: {
     position () {
       if (this.overlay) {
-        this.overlay.update(this.position)
+        this.overlay.update(this.menuposition)
       }
     }
   },
   computed: {
-    ...mapGetters(['viewer']),
+    ...mapGetters(['viewer', 'sourceHeaderHeight']),
     menuid () {
       return 'source-menu-' + atId(this.sourceId)
+    },
+    menuposition () {
+      const x = this.position.x
+      const y = this.position.y + this.sourceHeaderHeight
+      const width = this.position.width
+      const height = 250
+      return new OpenSeadragon.Rect(x, y, width, height)
     },
     overlay () {
       return this.viewer?.getOverlayById(this.menuid)
@@ -75,9 +84,10 @@ export default {
 }
 .srcMenu {
   display: inline-block;
-  background-color: lightgray;
+  background-color: rgba(233, 231, 231, 0.45);
   li {
     list-style: none;
+    background: linear-gradient(0deg, #dddddd, #ffffff);
   }
 }
 </style>
