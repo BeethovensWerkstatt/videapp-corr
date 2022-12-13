@@ -31,7 +31,7 @@ const pagesModule = {
       // console.log(uuid, state.pages)
       return state.pages[uuid]
     },
-    getCanvasLabels: (state, getters) => (id) => {
+    getCanvasLabels: (state) => (id) => {
       for (const src of state.canvases) {
         // console.log('page', id, src)
         const matchID = (c) => {

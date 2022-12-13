@@ -72,6 +72,7 @@ export default {
     },
     showOverview () {
       console.log('display page overview ...')
+      this.$store.commit('SET_SELECT_PAGE_ID', this.sourceId)
       this.active = false
     }
   }
@@ -82,6 +83,9 @@ export default {
 <style scoped lang="scss">
 .srcMenuButton {
   display: inline-block;
+  span {
+    cursor: pointer;
+  }
 }
 .srcMenu {
   margin: auto;

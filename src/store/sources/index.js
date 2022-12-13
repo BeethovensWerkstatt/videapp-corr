@@ -60,6 +60,7 @@ const sourcesModule = {
     [sourcesNames.state.movements]: {},
     [sourcesNames.state.sources]: [],
     [sourcesNames.state.activeSourceId]: null,
+    selectPageId: null,
     [sourcesNames.state.pages]: {}
   },
   mutations,

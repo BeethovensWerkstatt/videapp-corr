@@ -52,6 +52,11 @@ const mutations = {
     }
   },
   /**
+   * open select page dialog
+   * @param {string} id
+   */
+  SET_SELECT_PAGE_ID: (state, id) => { state.selectPageId = id },
+  /**
    * open page pair (recto/verso)
    * @memberof store.sources.mutations
    * @param {Object} payload id: String, page: Number

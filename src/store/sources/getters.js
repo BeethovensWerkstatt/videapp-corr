@@ -52,6 +52,7 @@ const getters = {
   [sourceGetterNames.activeSourceId]: (state) => {
     return state.activeSourceId
   },
+  selectPageId: (state) => state.selectPageId,
   [sourceGetterNames.activeSource]: (state, getters) => {
     if (state.activeSourceId) {
       const source = getters.getSourceById(state.activeSourceId)
