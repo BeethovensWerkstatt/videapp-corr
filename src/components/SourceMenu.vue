@@ -18,7 +18,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import OpenSeadragon from 'openseadragon'
-import { atId } from '@/toolbox'
+import { Url } from '@/toolbox/net'
 
 export default {
   name: 'SourceMenu',
@@ -51,13 +51,14 @@ export default {
   computed: {
     ...mapGetters(['viewer', 'sourceHeaderHeight']),
     menuid () {
-      return 'source-menu-' + atId(this.sourceId)
+      const sourceId = new Url(this.sourceId).path.elements.pop()
+      return 'source-menu-' + sourceId.split('.').join('_')
     },
     menuposition () {
       const x = this.position.x
       const y = this.position.y + this.sourceHeaderHeight
       const width = this.position.width
-      const height = 4 * this.sourceHeaderHeight
+      const height = this.sourceHeaderHeight
       return new OpenSeadragon.Rect(x, y, width, height)
     },
     overlay () {
@@ -66,7 +67,7 @@ export default {
   },
   methods: {
     toggleMenu () {
-      console.log('toggleMenu')
+      console.log('toggleMenu', this.menuid)
       this.active = !this.active
     },
     showOverview () {
