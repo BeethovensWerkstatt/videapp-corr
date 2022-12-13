@@ -1,31 +1,68 @@
 <template>
-  <div class="dropdown">
-    <a class="dropdown-toggle" href="#" tabindex="0" @click.prevent="toggleMenu">
+  <div class="srcMenuButton">
+    <span tabindex="0" @click.prevent="toggleMenu">
       &#x2630;
-    </a>
-    <ul class="menu srcMenu">
-      <li class="menu-item">
-        <button class="customBtn btn btn-link" @click="showOverview()">
-          Document Overview
-        </button>
-      </li>
-    </ul>
+    </span>
+    <div :id="menuid">
+      <ul class="srcMenu" v-if="active">
+        <li class="menu-item">
+          <button class="customBtn btn btn-link" @click.prevent="showOverview()">
+            Document Overview
+          </button>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import { atId } from '../toolbox'
 export default {
   name: 'SourceMenu',
   props: {
+    sourceId: {
+      type: String,
+      required: true
+    },
+    position: {
+      type: Object,
+      required: true
+    }
+  },
+  data: () => ({
+    active: false
+  }),
+  mounted () {
+    this.viewer.addOverlay({
+      element: this.$el.querySelector(`#${this.menuid}`),
+      position: this.position
+    })
+  },
+  watch: {
+    position () {
+      if (this.overlay) {
+        this.overlay.update(this.position)
+      }
+    }
   },
   computed: {
+    ...mapGetters(['viewer']),
+    menuid () {
+      return 'source-menu-' + atId(this.sourceId)
+    },
+    overlay () {
+      return this.viewer?.getOverlayById(this.menuid)
+    }
   },
   methods: {
     toggleMenu () {
       console.log('toggleMenu')
+      this.active = !this.active
     },
     showOverview () {
       console.log('display page overview ...')
+      this.active = false
     }
   }
 }
@@ -33,37 +70,14 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-// @import '@/css/_variables.scss';
-
-// This will determine the width of the menu
-$srcMenuOffset: -200px;
-
-.customBtn.btn.btn-link {
-   text-align: left;
-   margin: 0;
-   padding: 0;
-   border: none;
+.srcMenuButton {
+  display: inline-block;
 }
-
-.btn.dropdown-toggle, .btn.dropdown-toggle:active, .btn.dropdown-toggle:hover, .btn.dropdown-toggle:focus {
-  // color: $lightFontColor;
-  border: none;
-  box-shadow: none;
-  font-size: 100%;
-}
-
 .srcMenu {
-  width: calc(abs($srcMenuOffset) + 100px);
-  left: $srcMenuOffset !important;
-
-  // color: $darkFontColor;
-  font-weight: 300;
-
-  .icon {
-    font-size: .7rem;
-    position: relative;
-    top: -1px;
-    padding-right: 5px;
+  display: inline-block;
+  background-color: lightgray;
+  li {
+    list-style: none;
   }
 }
 </style>
