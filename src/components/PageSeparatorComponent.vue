@@ -18,6 +18,9 @@ export default {
       // this.viewer.addHandler('zoom', this.doResize)
     }
   },
+  beforeDestroy () {
+    this.viewer.removeOverlay(this.$el)
+  },
   props: {
     position: {
       type: Object,

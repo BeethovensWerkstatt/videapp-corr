@@ -1,8 +1,8 @@
 <template>
   <div class="dropdown">
-    <button class="btn btn-link dropdown-toggle" tabindex="0">
-      <i class="icon icon-menu" @click="toggleMenu"></i>
-    </button>
+    <a class="dropdown-toggle" href="#" tabindex="0" @click.prevent="toggleMenu">
+      &#x2630;
+    </a>
     <ul class="menu srcMenu">
       <li class="menu-item">
         <button class="customBtn btn btn-link" @click="showOverview()">
@@ -49,6 +49,7 @@ $srcMenuOffset: -200px;
   // color: $lightFontColor;
   border: none;
   box-shadow: none;
+  font-size: 100%;
 }
 
 .srcMenu {
