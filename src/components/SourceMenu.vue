@@ -57,7 +57,7 @@ export default {
       const x = this.position.x
       const y = this.position.y + this.sourceHeaderHeight
       const width = this.position.width
-      const height = 250
+      const height = 4 * this.sourceHeaderHeight
       return new OpenSeadragon.Rect(x, y, width, height)
     },
     overlay () {
@@ -83,6 +83,7 @@ export default {
   display: inline-block;
 }
 .srcMenu {
+  margin: auto;
   display: inline-block;
   background-color: rgba(233, 231, 231, 0.45);
   li {
