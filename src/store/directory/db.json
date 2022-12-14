@@ -167,7 +167,9 @@
       "modules": ["modul3"],
       "route": "Monita",
       "apptitle": "VideApp rev",
-      "dev": true
+      "dossier": "https://beethovens-werkstatt.de/wp-content/uploads/2022/09/op.-109_Revisionsprozess.pdf#page=5",
+      "dossiertitle": "Klaviersonate Es-Dur op. 109",
+      "dev": false
     },
     "op127": {
       "@id": "https://dev-api.beethovens-werkstatt.de/module3/t0c09f04e-e36d-4eaa-a064-029b5a232332.json",
