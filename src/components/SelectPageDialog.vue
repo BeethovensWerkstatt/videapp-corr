@@ -10,11 +10,15 @@
       <div class="body">
         <table>
           <tr class="table-head"><th colspan="3">Verso</th><th colspan="3">Recto</th></tr>
+          <tr>
+            <td title="Seite in Notirungsbuch K">Nr.</td><td>Quelle</td><td title="Seite in Quelle">Seite</td>
+            <td title="Seite in Notirungsbuch K">Nr.</td><td>Quelle</td><td title="Seite in Quelle">Seite</td>
+          </tr>
           <template v-for="(pp, i) in source.pages">
             <tr :key="'page-row-' + i" :class="{ selected: i === pagenr }">
               <td>
                 <template v-if="hasVerso(i)">
-                  <button class="btn btn-link" @click.prevent="openPage(i)">({{ i * 2 }})</button>
+                  <button class="btn btn-link" @click.prevent="openPage(i)">[{{ i * 2 }}]</button>
                 </template>
               </td>
               <td>
@@ -35,7 +39,7 @@
               </td>
               <td>
                 <template v-if="hasRecto(i)">
-                  <button class="btn btn-link" @click.prevent="openPage(i)">({{ (i * 2) + 1 }})</button>
+                  <button class="btn btn-link" @click.prevent="openPage(i)">[{{ (i * 2) + 1 }}]</button>
                 </template>
               </td>
               <td>
@@ -66,16 +70,6 @@
 import { mapGetters } from 'vuex'
 import n from '@/store/names'
 
-/*
-const sourceLabel = (labels) => {
-  if (labels) {
-    let label = labels.names[0].label
-    if (labels.names[0].page) label += ' [' + labels.names[0].page + ']'
-    return label
-  }
-  return undefined
-}
-// */
 const sourceDesc = (labels) => {
   if (labels) {
     const label = labels.names[0].desc
@@ -92,7 +86,7 @@ const sourceLabel = (labels) => {
 }
 const sourcePage = (labels) => {
   if (labels) {
-    const label = '[' + labels.names[0].page + ']'
+    const label = labels.names[0].page
     return label
   }
   return undefined
@@ -188,9 +182,9 @@ export default {
 
 .select-page-dialog {
   position: relative;
-  margin: auto;
+  margin: 5% auto;
   width: 800px; // parametresize
-  height: calc(80%);
+  height: 80%;
   overflow: scroll;
   background-color: white;
   border-radius: 5px;

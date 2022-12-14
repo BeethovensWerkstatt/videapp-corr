@@ -3,7 +3,7 @@
     <span tabindex="0" @click.prevent="toggleMenu">
       &#x2630;
     </span>
-    <div :id="menuid" style="z-index: 10000;">
+    <div :id="menuid" class="srcMenuContainer">
       <ul class="srcMenu" v-if="active">
         <li class="menu-item">
           <button class="customBtn btn btn-link" @click.prevent="showOverview()">
@@ -17,7 +17,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import OpenSeadragon from 'openseadragon'
+// import OpenSeadragon from 'openseadragon'
 import { Url } from '@/toolbox/net'
 
 export default {
@@ -26,22 +26,21 @@ export default {
     sourceId: {
       type: String,
       required: true
-    },
+    }/* ,
     position: {
       type: Object,
       required: true
-    }
+    } */
   },
   data: () => ({
     active: false
   }),
+  /*
   mounted () {
-    /*
     this.viewer.addOverlay({
       element: this.$el.querySelector(`#${this.menuid}`),
       position: this.menuposition
     })
-    */
   },
   watch: {
     position () {
@@ -50,12 +49,13 @@ export default {
       }
     }
   },
+  */
   computed: {
     ...mapGetters(['viewer', 'sourceHeaderHeight']),
     menuid () {
       const sourceId = new Url(this.sourceId).path.elements.pop()
       return 'source-menu-' + sourceId.split('.').join('_')
-    },
+    }/* ,
     menuposition () {
       const x = this.position.x
       const y = this.position.y + this.sourceHeaderHeight
@@ -65,7 +65,7 @@ export default {
     },
     overlay () {
       return this.viewer?.getOverlayById(this.menuid)
-    }
+    } */
   },
   methods: {
     toggleMenu () {
@@ -83,20 +83,27 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+ul li {
+  margin: 0;
+}
+.btn.btn-link {
+  font-size: 100%;
+}
 .srcMenuButton {
   position: relative;
   display: inline-block;
-  height: 300px;
+  height: 10em;
   span {
     cursor: pointer;
   }
 }
-.srcMenu {
+.srcMenuContainer {
   z-index: 12000;
   position: absolute;
-  top: 30pt;
+  top: 1.5em;
   left: 0;
-  height: 20pt;
+}
+.srcMenu {
   margin: auto;
   display: inline-block;
   background-color: rgba(233, 231, 231, 0.45);

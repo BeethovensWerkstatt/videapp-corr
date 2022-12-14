@@ -43,7 +43,12 @@
         >
           <text x="0" y="50%" style="font-size: 8px;" dominant-baseline="middle">{{ source.label }}</text>
         </svg>-->
-        <div :style="headerStyle"><source-menu :position="position" :sourceId="sourceId" v-if="srcmenu" /> {{ sourceLabel }}</div>
+        <div :style="headerStyle">
+          <div v-if="srcmenu" style="display: inline-block;">
+            <source-menu :position="position" :sourceId="sourceId" />
+          </div>
+          {{ sourceLabel }}
+        </div>
       </div>
     </div>
     <div class="top-right" :style="{ width: marginPerc + '%' }">
