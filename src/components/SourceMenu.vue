@@ -36,10 +36,12 @@ export default {
     active: false
   }),
   mounted () {
+    /*
     this.viewer.addOverlay({
       element: this.$el.querySelector(`#${this.menuid}`),
       position: this.menuposition
     })
+    */
   },
   watch: {
     position () {
@@ -82,12 +84,19 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .srcMenuButton {
+  position: relative;
   display: inline-block;
+  height: 300px;
   span {
     cursor: pointer;
   }
 }
 .srcMenu {
+  z-index: 12000;
+  position: absolute;
+  top: 30pt;
+  left: 0;
+  height: 20pt;
   margin: auto;
   display: inline-block;
   background-color: rgba(233, 231, 231, 0.45);
