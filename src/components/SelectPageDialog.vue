@@ -14,12 +14,18 @@
             <tr :key="'page-row-' + i" :class="{ selected: i === pagenr }">
               <td>
                 <template v-if="hasVerso(i)">
-                  ({{ i * 2 }})
+                  <button class="btn btn-link" @click.prevent="openPage(i)">({{ i * 2 }})</button>
                 </template>
               </td>
               <td>
                 <template v-if="hasVerso(i)">
-                  <button class="btn btn-link" @click.prevent="openPage(i)">{{ versoLabel(pp) }}</button>
+                  <button
+                    class="btn btn-link"
+                    @click.prevent="openPage(i)"
+                    :title="versoDesc(pp)"
+                  >
+                    {{ versoLabel(pp) }}
+                  </button>
                 </template>
               </td>
               <td>
@@ -29,12 +35,18 @@
               </td>
               <td>
                 <template v-if="hasRecto(i)">
-                  ({{ (i * 2) + 1 }})
+                  <button class="btn btn-link" @click.prevent="openPage(i)">({{ (i * 2) + 1 }})</button>
                 </template>
               </td>
               <td>
                 <template v-if="hasRecto(i)">
-                  <button class="btn btn-link" @click.prevent="openPage(i)">{{ rectoLabel(pp) }}</button>
+                  <button
+                    class="btn btn-link"
+                    @click.prevent="openPage(i)"
+                    :title="rectoDesc(pp)"
+                  >
+                    {{ rectoLabel(pp) }}
+                  </button>
                 </template>
               </td>
               <td>
@@ -67,6 +79,13 @@ const sourceLabel = (labels) => {
 const sourceDesc = (labels) => {
   if (labels) {
     const label = labels.names[0].desc
+    return label
+  }
+  return undefined
+}
+const sourceLabel = (labels) => {
+  if (labels) {
+    const label = labels.names[0].label
     return label
   }
   return undefined
@@ -119,13 +138,21 @@ export default {
     hasRecto (i) {
       return !!this.source?.pages[i].r
     },
-    versoLabel (pp) {
+    versoDesc (pp) {
       const l = this.getCanvasLabels(pp.v?.id)
       return sourceDesc(l) || '---'
     },
-    rectoLabel (pp) {
+    rectoDesc (pp) {
       const l = this.getCanvasLabels(pp.r?.id)
       return sourceDesc(l) || '---'
+    },
+    versoLabel (pp) {
+      const l = this.getCanvasLabels(pp.v?.id)
+      return sourceLabel(l) || '---'
+    },
+    rectoLabel (pp) {
+      const l = this.getCanvasLabels(pp.r?.id)
+      return sourceLabel(l) || '---'
     },
     versoPage (pp) {
       const l = this.getCanvasLabels(pp.v?.id)
@@ -200,7 +227,7 @@ export default {
       td {
         margin: 0;
         padding-left: 7pt;
-        text-align: left;
+        text-align: center;
       }
       td:nth-child(1) {
         border-left: 1px solid gray;

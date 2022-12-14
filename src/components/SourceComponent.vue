@@ -4,6 +4,7 @@
       :position="headerPos"
       :sourceId="sourceId"
       :active="isActive"
+      :srcmenu="!!footer.title"
       @move-source="moveTo"
     />
     <document-margin-component
