@@ -9,18 +9,37 @@
       </div>
       <div class="body">
         <table>
+          <tr class="table-head"><th colspan="3">Verso</th><th colspan="3">Recto</th></tr>
           <template v-for="(pp, i) in source.pages">
-            <tr :key="'page-row-' + i">
+            <tr :key="'page-row-' + i" :class="{ selected: i === pagenr }">
               <td>
                 <template v-if="hasVerso(i)">
                   ({{ i * 2 }})
+                </template>
+              </td>
+              <td>
+                <template v-if="hasVerso(i)">
                   <button class="btn btn-link" @click.prevent="openPage(i)">{{ versoLabel(pp) }}</button>
+                </template>
+              </td>
+              <td>
+                <template v-if="hasVerso(i)">
+                  <button class="btn btn-link" @click.prevent="openPage(i)">{{ versoPage(pp) }}</button>
                 </template>
               </td>
               <td>
                 <template v-if="hasRecto(i)">
                   ({{ (i * 2) + 1 }})
+                </template>
+              </td>
+              <td>
+                <template v-if="hasRecto(i)">
                   <button class="btn btn-link" @click.prevent="openPage(i)">{{ rectoLabel(pp) }}</button>
+                </template>
+              </td>
+              <td>
+                <template v-if="hasRecto(i)">
+                  <button class="btn btn-link" @click.prevent="openPage(i)">{{ rectoPage(pp) }}</button>
                 </template>
               </td>
             </tr>
@@ -47,8 +66,14 @@ const sourceLabel = (labels) => {
 // */
 const sourceDesc = (labels) => {
   if (labels) {
-    let label = labels.names[0].desc
-    if (labels.names[0].page) label += ' [' + labels.names[0].page + ']'
+    const label = labels.names[0].desc
+    return label
+  }
+  return undefined
+}
+const sourcePage = (labels) => {
+  if (labels) {
+    const label = '[' + labels.names[0].page + ']'
     return label
   }
   return undefined
@@ -82,6 +107,9 @@ export default {
         return this.source.description || this.source.label
       }
       return this.source.label
+    },
+    pagenr () {
+      return this.source?.pagenr || 0
     }
   },
   methods: {
@@ -98,6 +126,14 @@ export default {
     rectoLabel (pp) {
       const l = this.getCanvasLabels(pp.r?.id)
       return sourceDesc(l) || '---'
+    },
+    versoPage (pp) {
+      const l = this.getCanvasLabels(pp.v?.id)
+      return sourcePage(l) || '---'
+    },
+    rectoPage (pp) {
+      const l = this.getCanvasLabels(pp.r?.id)
+      return sourcePage(l) || '---'
     },
     openPage (p) {
       this.$store.commit(n.mutations.SET_PAGE, { id: this.sourceId, page: p })
@@ -156,8 +192,27 @@ export default {
   }
   .body {
     table {
+      margin: auto;
+      tr {
+        margin: 0;
+        padding: 0;
+      }
       td {
+        margin: 0;
+        padding-left: 7pt;
         text-align: left;
+      }
+      td:nth-child(1) {
+        border-left: 1px solid gray;
+      }
+      td:nth-child(4) {
+        border-left: 1px solid gray;
+      }
+      td:nth-child(6) {
+        border-right: 1px solid gray;
+      }
+      .selected {
+        background-color: lightyellow;
       }
     }
   }
