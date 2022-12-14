@@ -185,7 +185,6 @@ export default {
   margin: 5% auto;
   width: 800px; // parametresize
   height: 80%;
-  overflow: scroll;
   background-color: white;
   border-radius: 5px;
   border: .5px solid #333333;
@@ -212,6 +211,8 @@ export default {
     }
   }
   .body {
+    height: calc(100% - 3rem);
+    overflow: scroll;
     table {
       margin: auto;
       tr {
