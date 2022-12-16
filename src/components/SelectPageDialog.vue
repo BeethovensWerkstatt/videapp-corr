@@ -8,56 +8,47 @@
         </div>
       </div>
       <div class="body">
-        <table>
+        <table class="table">
           <tr class="table-head"><th colspan="3">Verso</th><th colspan="3">Recto</th></tr>
           <tr>
-            <td title="Seite in Notirungsbuch K">Nr.</td><td>Quelle</td><td title="Seite in Quelle">Seite</td>
-            <td title="Seite in Notirungsbuch K">Nr.</td><td>Quelle</td><td title="Seite in Quelle">Seite</td>
+            <td>Quelle</td><td title="Seite in Notirungsbuch K">Seite</td>
+            <td title="Seite in Notirungsbuch K">Seite</td><td>Quelle</td>
           </tr>
           <template v-for="(pp, i) in source.pages">
             <tr :key="'page-row-' + i" :class="{ selected: i === pagenr }">
-              <td>
-                <template v-if="hasVerso(i)">
-                  <button class="btn btn-link" @click.prevent="openPage(i)">[{{ i * 2 }}]</button>
-                </template>
-              </td>
+
               <td>
                 <template v-if="hasVerso(i)">
                   <button
-                    class="btn btn-link"
+                    class="btn btn-link sourcelink"
                     @click.prevent="openPage(i)"
-                    :title="versoDesc(pp)"
                   >
-                    {{ versoLabel(pp) }}
+                    {{ versoLabel(pp) }}<span class="nickname">{{ versoDesc(pp) }}</span>: {{ versoPage(pp) }}
                   </button>
                 </template>
               </td>
               <td>
                 <template v-if="hasVerso(i)">
-                  <button class="btn btn-link" @click.prevent="openPage(i)">{{ versoPage(pp) }}</button>
+                  <button class="btn btn-link" @click.prevent="openPage(i)">{{ i * 2 }}</button>
                 </template>
               </td>
+
               <td>
                 <template v-if="hasRecto(i)">
-                  <button class="btn btn-link" @click.prevent="openPage(i)">[{{ (i * 2) + 1 }}]</button>
+                  <button class="btn btn-link" @click.prevent="openPage(i)">{{ (i * 2) + 1 }}</button>
                 </template>
               </td>
               <td>
                 <template v-if="hasRecto(i)">
                   <button
-                    class="btn btn-link"
+                    class="btn btn-link sourcelink"
                     @click.prevent="openPage(i)"
-                    :title="rectoDesc(pp)"
                   >
-                    {{ rectoLabel(pp) }}
+                    {{ rectoLabel(pp) }}<span class="nickname">{{ rectoDesc(pp) }}</span>: {{ rectoPage(pp) }}
                   </button>
                 </template>
               </td>
-              <td>
-                <template v-if="hasRecto(i)">
-                  <button class="btn btn-link" @click.prevent="openPage(i)">{{ rectoPage(pp) }}</button>
-                </template>
-              </td>
+
             </tr>
           </template>
         </table>
@@ -73,16 +64,16 @@ import n from '@/store/names'
 const sourceDesc = (labels) => {
   if (labels) {
     const label = labels.names[0].desc
-    return label
+    return label ? ' ("' + label + '")' : ''
   }
-  return undefined
+  return null
 }
 const sourceLabel = (labels) => {
   if (labels) {
     const label = labels.names[0].label
     return label
   }
-  return undefined
+  return null
 }
 const sourcePage = (labels) => {
   if (labels) {
@@ -100,8 +91,14 @@ export default {
       required: true
     }
   },
+  mounted () {
+    this.viewer.navigator.element.style.display = 'none'
+  },
+  beforeDestroy () {
+    this.viewer.navigator.element.style.display = 'inline-block'
+  },
   computed: {
-    ...mapGetters(['getCanvasLabels']),
+    ...mapGetters(['viewer', 'getCanvasLabels']),
     source () {
       const source = this.$store.getters.getSourceById(this.sourceId)
       if (source) {
@@ -134,11 +131,11 @@ export default {
     },
     versoDesc (pp) {
       const l = this.getCanvasLabels(pp.v?.id)
-      return sourceDesc(l) || '---'
+      return sourceDesc(l)
     },
     rectoDesc (pp) {
       const l = this.getCanvasLabels(pp.r?.id)
-      return sourceDesc(l) || '---'
+      return sourceDesc(l)
     },
     versoLabel (pp) {
       const l = this.getCanvasLabels(pp.v?.id)
@@ -183,7 +180,8 @@ export default {
 .select-page-dialog {
   position: relative;
   margin: 5% auto;
-  width: 800px; // parametresize
+  width: 80vw;
+  max-width: 1000px;
   height: 80%;
   background-color: white;
   border-radius: 5px;
@@ -214,24 +212,24 @@ export default {
     height: calc(100% - 3rem);
     overflow: scroll;
     table {
-      margin: auto;
+      width: 90%;
+      margin: 0 auto;
+      border-collapse: collapse;
       tr {
         margin: 0;
         padding: 0;
       }
       td {
         margin: 0;
-        padding-left: 7pt;
-        text-align: center;
+        padding: 0.05rem 0.2rem;
+        text-align: left;
+
+        .nickname {
+          font-style: italic;
+        }
       }
-      td:nth-child(1) {
-        border-left: 1px solid gray;
-      }
-      td:nth-child(4) {
-        border-left: 1px solid gray;
-      }
-      td:nth-child(6) {
-        border-right: 1px solid gray;
+      td:nth-child(3) {
+        border-left: 1px solid lightgray;
       }
       .selected {
         background-color: lightyellow;
