@@ -6,8 +6,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/x2433e745-3d60-4043-9258-10ab1f1aeb47",
             "names": [
                 {
-                    "label": "Engelmann-Skizzenbuch",
-                    "desc": "D-BNba, MH 60",
+                    "label": "D-BNba, MH 60",
+                    "desc": "Engelmann",
                     "page": "1",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/4"
                 }
@@ -17,8 +17,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/x57291b2b-71f2-40b4-b3a2-a4b4994ef961",
             "names": [
                 {
-                    "label": "Engelmann-Skizzenbuch",
-                    "desc": "D-BNba, MH 60",
+                    "label": "D-BNba, MH 60",
+                    "desc": "Engelmann",
                     "page": "2",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/5"
                 }
@@ -28,8 +28,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/xe1e069ed-67a2-4a63-b4f1-c6b227242876",
             "names": [
                 {
-                    "label": "Engelmann-Skizzenbuch",
-                    "desc": "D-BNba, MH 60",
+                    "label": "D-BNba, MH 60",
+                    "desc": "Engelmann",
                     "page": "3",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/6"
                 }
@@ -39,8 +39,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/xe0df306c-077d-49ea-8e0f-3e3440d50a5d",
             "names": [
                 {
-                   "label": "Engelmann-Skizzenbuch",
-                    "desc": "D-BNba, MH 60",
+                   "label": "D-BNba, MH 60",
+                    "desc": "Engelmann",
                     "page": "4",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/7"
                 }
@@ -50,8 +50,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/xef927fa2-1f31-495f-83f9-9e00a850e003",
             "names": [
                 {
-                    "label": "Engelmann-Skizzenbuch",
-                    "desc": "D-BNba, MH 60",
+                    "label": "D-BNba, MH 60",
+                    "desc": "Engelmann",
                     "page": "5",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/8"
                 }
@@ -61,8 +61,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/x717cfb28-9f73-4a31-a0ec-f6c781f772a5",
             "names": [
                 {
-                    "label": "Engelmann-Skizzenbuch",
-                    "desc": "D-BNba, MH 60",
+                    "label": "D-BNba, MH 60",
+                    "desc": "Engelmann",
                     "page": "6",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/9"
                 }
@@ -72,8 +72,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/x6d6721df-b995-479b-a227-cf1bd05dfe7d",
             "names": [
                 {
-                    "label": "Engelmann-Skizzenbuch",
-                    "desc": "D-BNba, MH 60",
+                    "label": "D-BNba, MH 60",
+                    "desc": "Engelmann",
                     "page": "7",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/10"
                 }
@@ -83,8 +83,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/xb14dce0a-0617-4be8-8272-522706548ae9",
             "names": [
                 {
-                    "label": "Engelmann-Skizzenbuch",
-                    "desc": "D-BNba, MH 60",
+                    "label": "D-BNba, MH 60",
+                    "desc": "Engelmann",
                     "page": "8",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/11"
                 }
@@ -95,7 +95,7 @@
             "names": [
                 {
                     "label": "D-BNba, BSk 21/69",
-                    "desc": "D-BNba, BSk 21/69",
+                    "desc": "",
                     "page": "1r",
                     "url": "https://www.beethoven.de/de/media/view/5603937289764864/scan/0"
                 }
@@ -106,7 +106,7 @@
             "names": [
                 {
                     "label": "D-BNba, BSk 21/69",
-                    "desc": "D-BNba, BSk 21/69",
+                    "desc": "",
                     "page": "1v",
                     "url": "https://www.beethoven.de/de/media/view/5603937289764864/scan/1"
                 }
@@ -116,8 +116,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/x506637f0-9b11-4643-a220-9bbd77965bf7",
             "names": [
                 {
-                    "label": "Engelmann-Skizzenbuch",
-                    "desc": "D-BNba, MH 60",
+                    "label": "D-BNba, MH 60",
+                    "desc": "Engelmann",
                     "page": "9",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/12"
                 }
@@ -127,8 +127,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/xf2f94a93-e5fe-4b94-9518-dcd35b27a88e",
             "names": [
                 {
-                    "label": "Engelmann-Skizzenbuch",
-                    "desc": "D-BNba, MH 60",
+                    "label": "D-BNba, MH 60",
+                    "desc": "Engelmann",
                     "page": "10",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/13"
                 }
@@ -138,8 +138,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/x13167dbf-459c-4408-a8ee-df7c582e2255",
             "names": [
                 {
-                    "label": "Engelmann-Skizzenbuch",
-                    "desc": "D-BNba, MH 60",
+                    "label": "D-BNba, MH 60",
+                    "desc": "Engelmann",
                     "page": "11",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/14"
                 }
@@ -149,8 +149,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/x69931b4f-66d0-4d26-9f4b-8a076f22a60c",
             "names": [
                 {
-                    "label": "Engelmann-Skizzenbuch",
-                    "desc": "D-BNba, MH 60",
+                    "label": "D-BNba, MH 60",
+                    "desc": "Engelmann",
                     "page": "12",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/15"
                 }
@@ -161,7 +161,7 @@
             "names": [
                 {
                     "label": "D-B, Grasnick 20b",
-                    "desc": "D-B, Grasnick 20b",
+                    "desc": "",
                     "page": "20r",
                     "url": "https://digital.staatsbibliothek-berlin.de/werkansicht?PPN=PPN766169545&PHYSID=PHYS_0043&DMDID=DMDLOG_0001"
                 }
@@ -172,7 +172,7 @@
             "names": [
                 {
                     "label": "D-B, Grasnick 20b",
-                    "desc": "D-B, Grasnick 20b",
+                    "desc": "",
                     "page": "20v",
                     "url": "https://digital.staatsbibliothek-berlin.de/werkansicht?PPN=PPN766169545&PHYSID=PHYS_0044&DMDID=DMDLOG_0001"
                 }
@@ -182,8 +182,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/x5ac4fa83-c044-4c2b-858b-7a95888a5332",
             "names": [
                 {
-                    "label": "Engelmann-Skizzenbuch",
-                    "desc": "D-BNba, MH 60",
+                    "label": "D-BNba, MH 60",
+                    "desc": "Engelmann",
                     "page": "13",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/16"
                 }
@@ -193,8 +193,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/x8933a040-58f0-4865-9be6-530eeb25157c",
             "names": [
                 {
-                    "label": "Engelmann-Skizzenbuch",
-                    "desc": "D-BNba, MH 60",
+                    "label": "D-BNba, MH 60",
+                    "desc": "Engelmann",
                     "page": "14",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/17"
                 }
@@ -204,8 +204,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/x616c11a1-7377-48bd-a6d7-ec03ce718eb2",
             "names": [
                 {
-                    "label": "Engelmann-Skizzenbuch",
-                    "desc": "D-BNba, MH 60",
+                    "label": "D-BNba, MH 60",
+                    "desc": "Engelmann",
                     "page": "15",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/18"
                 }
@@ -215,8 +215,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/x989f416b-6af5-4615-82da-09eed754b965",
             "names": [
                 {
-                    "label": "Engelmann-Skizzenbuch",
-                    "desc": "D-BNba, MH 60",
+                    "label": "D-BNba, MH 60",
+                    "desc": "Engelmann",
                     "page": "16",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/19"
                 }
@@ -226,8 +226,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/x6e6bb355-b7bb-4d8f-b8ea-d23d9e9ae795",
             "names": [
                 {
-                    "label": "Engelmann-Skizzenbuch",
-                    "desc": "D-BNba, MH 60",
+                    "label": "D-BNba, MH 60",
+                    "desc": "Engelmann",
                     "page": "17",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/20"
                 }
@@ -237,8 +237,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/xedf924c8-5e68-4508-bf57-5eee7904f096",
             "names": [
                 {
-                    "label": "Engelmann-Skizzenbuch",
-                    "desc": "D-BNba, MH 60",
+                    "label": "D-BNba, MH 60",
+                    "desc": "Engelmann",
                     "page": "18",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/21"
                 }
@@ -248,8 +248,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/xcd55dabb-8f39-43a4-abbf-138c32f1f93b",
             "names": [
                 {
-                    "label": "Engelmann-Skizzenbuch",
-                    "desc": "D-BNba, MH 60",
+                    "label": "D-BNba, MH 60",
+                    "desc": "Engelmann",
                     "page": "19",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/22"
                 }
@@ -259,8 +259,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/x7dcbd745-fe04-4731-8c56-7b6c6fd61ce9",
             "names": [
                 {
-                    "label": "Engelmann-Skizzenbuch",
-                    "desc": "D-BNba, MH 60",
+                    "label": "D-BNba, MH 60",
+                    "desc": "Engelmann",
                     "page": "20",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/23"
                 }
@@ -270,8 +270,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/xf94dcffd-1999-4278-9711-5bdfb9e1ee85",
             "names": [
                 {
-                    "label": "Engelmann-Skizzenbuch",
-                    "desc": "D-BNba, MH 60",
+                    "label": "D-BNba, MH 60",
+                    "desc": "Engelmann",
                     "page": "21",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/24"
                 }
@@ -281,8 +281,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/x1b0b15a1-cf03-491c-9fda-d15d4fbe5e66",
             "names": [
                 {
-                    "label": "Engelmann-Skizzenbuch",
-                    "desc": "D-BNba, MH 60",
+                    "label": "D-BNba, MH 60",
+                    "desc": "Engelmann",
                     "page": "22",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/25"
                 }
@@ -292,8 +292,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/xc595ffad-c5c4-488b-ba92-45f4e5b4c450",
             "names": [
                 {
-                    "label": "Engelmann-Skizzenbuch",
-                    "desc": "D-BNba, MH 60",
+                    "label": "D-BNba, MH 60",
+                    "desc": "Engelmann",
                     "page": "23",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/26"
                 }
@@ -303,8 +303,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/x73cd7cec-9873-4fd4-9f36-6d96e97ed881",
             "names": [
                 {
-                    "label": "Engelmann-Skizzenbuch",
-                    "desc": "D-BNba, MH 60",
+                    "label": "D-BNba, MH 60",
+                    "desc": "Engelmann",
                     "page": "24",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/27"
                 }
@@ -314,8 +314,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/x50b7ec35-6d68-4ad7-91eb-59a315af7e0c",
             "names": [
                 {
-                    "label": "Engelmann-Skizzenbuch",
-                    "desc": "D-BNba, MH 60",
+                    "label": "D-BNba, MH 60",
+                    "desc": "Engelmann",
                     "page": "25",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/28"
                 }
@@ -325,8 +325,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/x3ff8c2a2-81ef-40cc-8f3f-e135b610fe87",
             "names": [
                 {
-                    "label": "Engelmann-Skizzenbuch",
-                    "desc": "D-BNba, MH 60",
+                    "label": "D-BNba, MH 60",
+                    "desc": "Engelmann",
                     "page": "26",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/29"
                 }
@@ -336,8 +336,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/x301c694b-9bea-4c50-8213-4a92143caeb4",
             "names": [
                 {
-                    "label": "Engelmann-Skizzenbuch",
-                    "desc": "D-BNba, MH 60",
+                    "label": "D-BNba, MH 60",
+                    "desc": "Engelmann",
                     "page": "27",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/30"
                 }
@@ -347,8 +347,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/xca097347-c5ad-4863-8d7b-66f50c0550bf",
             "names": [
                 {
-                    "label": "Engelmann-Skizzenbuch",
-                    "desc": "D-BNba, MH 60",
+                    "label": "D-BNba, MH 60",
+                    "desc": "Engelmann",
                     "page": "28",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/31"
                 }
@@ -358,8 +358,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/xac8888c6-90dc-4e7b-b704-c2f1be8c333d",
             "names": [
                 {
-                    "label": "Engelmann-Skizzenbuch",
-                    "desc": "D-BNba, MH 60",
+                    "label": "D-BNba, MH 60",
+                    "desc": "Engelmann",
                     "page": "29",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/32"
                 }
@@ -369,8 +369,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/x58a60b82-2e9e-4adf-9415-6ca3063a1f29",
             "names": [
                 {
-                    "label": "Engelmann-Skizzenbuch",
-                    "desc": "D-BNba, MH 60",
+                    "label": "D-BNba, MH 60",
+                    "desc": "Engelmann",
                     "page": "30",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/33"
                 }
@@ -380,8 +380,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/xaa2712a5-69c9-4a96-bc6c-84f326b61b4e",
             "names": [
                 {
-                    "label": "Engelmann-Skizzenbuch",
-                    "desc": "D-BNba, MH 60",
+                    "label": "D-BNba, MH 60",
+                    "desc": "Engelmann",
                     "page": "31",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/34"
                 }
@@ -391,8 +391,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/x8ca2a944-2b00-4184-af2b-58e2bd33e205",
             "names": [
                 {
-                    "label": "Engelmann-Skizzenbuch",
-                    "desc": "D-BNba, MH 60",
+                    "label": "D-BNba, MH 60",
+                    "desc": "Engelmann",
                     "page": "32",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/35"
                 }
@@ -402,8 +402,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/xa5c51527-c2ed-4565-91db-c6723d3a5d25",
             "names": [
                 {
-                    "label": "Engelmann-Skizzenbuch",
-                    "desc": "D-BNba, MH 60",
+                    "label": "D-BNba, MH 60",
+                    "desc": "Engelmann",
                     "page": "33",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/36"
                 }
@@ -413,8 +413,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/x2433eb34-9ae9-44be-a41a-ff81446a672a",
             "names": [
                 {
-                    "label": "Engelmann-Skizzenbuch",
-                    "desc": "D-BNba, MH 60",
+                    "label": "D-BNba, MH 60",
+                    "desc": "Engelmann",
                     "page": "34",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/37"
                 }
@@ -424,8 +424,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/xb2d5df6e-f52a-4021-b5b3-656d1e915c1f",
             "names": [
                 {
-                    "label": "Engelmann-Skizzenbuch",
-                    "desc": "D-BNba, MH 60",
+                    "label": "D-BNba, MH 60",
+                    "desc": "Engelmann",
                     "page": "35",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/38"
                 }
@@ -435,8 +435,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/x9d3af3e9-b9bb-4392-b1e2-1978c50e0e44",
             "names": [
                 {
-                    "label": "Engelmann-Skizzenbuch",
-                    "desc": "D-BNba, MH 60",
+                    "label": "D-BNba, MH 60",
+                    "desc": "Engelmann",
                     "page": "36",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/39"
                 }
@@ -446,8 +446,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/xbafcb5f6-d42e-4eed-b8c5-d4a93069400f",
             "names": [
                 {
-                    "label": "Engelmann-Skizzenbuch",
-                    "desc": "D-BNba, MH 60",
+                    "label": "D-BNba, MH 60",
+                    "desc": "Engelmann",
                     "page": "37",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/40"
                 }
@@ -457,8 +457,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/x8a2db5b1-e555-424c-ab52-15c588abd75a",
             "names": [
                 {
-                    "label": "Engelmann-Skizzenbuch",
-                    "desc": "D-BNba, MH 60",
+                    "label": "D-BNba, MH 60",
+                    "desc": "Engelmann",
                     "page": "38",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/41"
                 }
@@ -469,7 +469,7 @@
             "names": [
                 {
                     "label": "F-Pn, Fonds francais 12.756",
-                    "desc": "F-Pn, Fonds francais 12.756",
+                    "desc": "",
                     "page": "194",
                     "url": "https://gallica.bnf.fr/ark:/12148/btv1b9065146v/f42.item.r=beethoven%20tr%C3%A9mont.zoom"
                 }
@@ -480,7 +480,7 @@
             "names": [
                 {
                     "label": "F-Pn, Fonds francais 12.756",
-                    "desc": "F-Pn, Fonds francais 12.756",
+                    "desc": "",
                     "page": "193 bis",
                     "url": "https://gallica.bnf.fr/ark:/12148/btv1b9065146v/f41.item.r=beethoven%20tr%C3%A9mont.zoom"
                 }
@@ -491,7 +491,7 @@
             "names": [
                 {
                     "label": "F-Pn, Ms. 96",
-                    "desc": "F-Pn, Ms. 96",
+                    "desc": "",
                     "page": "1",
                     "url": "https://gallica.bnf.fr/ark:/12148/btv1b55002519q/f1.item.r=beethoven%20op"
                 }
@@ -502,7 +502,7 @@
             "names": [
                 {
                     "label": "F-Pn, Ms. 96",
-                    "desc": "F-Pn, Ms. 96",
+                    "desc": "",
                     "page": "2",
                     "url": "https://gallica.bnf.fr/ark:/12148/btv1b55002519q/f2.item.r=beethoven%20op"
                 }
@@ -513,7 +513,7 @@
             "names": [
                 {
                     "label": "F-Pn, Ms. 96",
-                    "desc": "F-Pn, Ms. 96",
+                    "desc": "",
                     "page": "3",
                     "url": "https://gallica.bnf.fr/ark:/12148/btv1b55002519q/f3.item.r=beethoven%20op"
                 }
@@ -524,7 +524,7 @@
             "names": [
                 {
                     "label": "F-Pn, Ms. 96",
-                    "desc": "F-Pn, Ms. 96",
+                    "desc": "",
                     "page": "4",
                     "url": "https://gallica.bnf.fr/ark:/12148/btv1b55002519q/f4.item.r=beethoven%20op"
                 }
@@ -535,7 +535,7 @@
             "names": [
                 {
                     "label": "F-Pn, Ms. 96",
-                    "desc": "F-Pn, Ms. 96",
+                    "desc": "",
                     "page": "5",
                     "url": "https://gallica.bnf.fr/ark:/12148/btv1b55002519q/f5.item.r=beethoven%20op"
                 }
@@ -546,7 +546,7 @@
             "names": [
                 {
                     "label": "F-Pn, Ms. 96",
-                    "desc": "F-Pn, Ms. 96",
+                    "desc": "",
                     "page": "6",
                     "url": "https://gallica.bnf.fr/ark:/12148/btv1b55002519q/f6.item.r=beethoven%20op"
                 }
@@ -557,7 +557,7 @@
             "names": [
                 {
                     "label": "F-Pn, Ms. 96",
-                    "desc": "F-Pn, Ms. 96",
+                    "desc": "",
                     "page": "7",
                     "url": "https://gallica.bnf.fr/ark:/12148/btv1b55002519q/f7.item.r=beethoven%20op"
                 }
@@ -568,7 +568,7 @@
             "names": [
                 {
                     "label": "F-Pn, Ms. 96",
-                    "desc": "F-Pn, Ms. 96",
+                    "desc": "",
                     "page": "8",
                     "url": "https://gallica.bnf.fr/ark:/12148/btv1b55002519q/f8.item.r=beethoven%20op"
                 }
@@ -578,8 +578,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/s927a0baa-5546-4f00-93d1-d0edfecdec64",
             "names": [
                 {
-                    "label": "Landsberg 8/1",
-                    "desc": "D-B, Landsberg 8,1",
+                    "label": "D-B, Landsberg 8,1",
+                    "desc": "",
                     "page": "9",
                     "url": "https://digital.staatsbibliothek-berlin.de/werkansicht?PPN=PPN800412591&PHYSID=PHYS_0015&DMDID=DMDLOG_0001"
                 }
@@ -589,8 +589,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/s471f69fa-3362-4d87-9454-342eb793ed29",
             "names": [
                 {
-                    "label": "Landsberg 8/1",
-                    "desc": "D-B, Landsberg 8,1",
+                    "label": "D-B, Landsberg 8,1",
+                    "desc": "",
                     "page": "10",
                     "url": "https://digital.staatsbibliothek-berlin.de/werkansicht?PPN=PPN800412591&PHYSID=PHYS_0016&DMDID=DMDLOG_0001"
                 }
@@ -600,8 +600,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/sf3143c56-e098-4355-87b0-f7845a53438c",
             "names": [
                 {
-                    "label": "Landsberg 8/1",
-                    "desc": "D-B, Landsberg 8,1",
+                    "label": "D-B, Landsberg 8,1",
+                    "desc": "",
                     "page": "11",
                     "url": "https://digital.staatsbibliothek-berlin.de/werkansicht?PPN=PPN800412591&PHYSID=PHYS_0017&DMDID=DMDLOG_0001"
                 }
@@ -611,8 +611,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/s8084a0fc-894f-447b-bd62-0051d71d33dd",
             "names": [
                 {
-                    "label": "Landsberg 8/1",
-                    "desc": "D-B, Landsberg 8,1",
+                    "label": "D-B, Landsberg 8,1",
+                    "desc": "",
                     "page": "12",
                     "url": "https://digital.staatsbibliothek-berlin.de/werkansicht?PPN=PPN800412591&PHYSID=PHYS_0018&DMDID=DMDLOG_0001"
                 }
@@ -622,8 +622,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/s0337400f-b93a-4607-9582-4d2df0f56732",
             "names": [
                 {
-                    "label": "Landsberg 8/1",
-                    "desc": "D-B, Landsberg 8,1",
+                    "label": "D-B, Landsberg 8,1",
+                    "desc": "",
                     "page": "13",
                     "url": "https://digital.staatsbibliothek-berlin.de/werkansicht?PPN=PPN800412591&PHYSID=PHYS_0019&DMDID=DMDLOG_0001"
                 }
@@ -633,8 +633,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/s2565ec01-6805-447d-9e66-63c496d672a5",
             "names": [
                 {
-                    "label": "Landsberg 8/1",
-                    "desc": "D-B, Landsberg 8,1",
+                    "label": "D-B, Landsberg 8,1",
+                    "desc": "",
                     "page": "14",
                     "url": "https://digital.staatsbibliothek-berlin.de/werkansicht?PPN=PPN800412591&PHYSID=PHYS_0020&DMDID=DMDLOG_0001"
                 }
@@ -644,8 +644,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/s6cdd330e-8668-4f09-a6da-bed40a4df8da",
             "names": [
                 {
-                    "label": "Landsberg 8/1",
-                    "desc": "D-B, Landsberg 8,1",
+                    "label": "D-B, Landsberg 8,1",
+                    "desc": "",
                     "page": "15",
                     "url": "https://digital.staatsbibliothek-berlin.de/werkansicht?PPN=PPN800412591&PHYSID=PHYS_0021&DMDID=DMDLOG_0001"
                 }
@@ -655,8 +655,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/sa191eabb-4243-4d65-ad92-8aeae28753b1",
             "names": [
                 {
-                    "label": "Landsberg 8/1",
-                    "desc": "D-B, Landsberg 8,1",
+                    "label": "D-B, Landsberg 8,1",
+                    "desc": "",
                     "page": "16",
                     "url": "https://digital.staatsbibliothek-berlin.de/werkansicht?PPN=PPN800412591&PHYSID=PHYS_0022&DMDID=DMDLOG_0001"
                 }
@@ -666,8 +666,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/s36a5b13f-8414-46ab-9641-0f0a6357ed1c",
             "names": [
                 {
-                    "label": "Landsberg 8/1",
-                    "desc": "D-B, Landsberg 8,1",
+                    "label": "D-B, Landsberg 8,1",
+                    "desc": "",
                     "page": "17",
                     "url": "https://digital.staatsbibliothek-berlin.de/werkansicht?PPN=PPN800412591&PHYSID=PHYS_0023&DMDID=DMDLOG_0001"
                 }
@@ -677,8 +677,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/s18b4e189-521e-4000-8d3d-b2f9d2df07f8",
             "names": [
                 {
-                    "label": "Landsberg 8/1",
-                    "desc": "D-B, Landsberg 8,1",
+                    "label": "D-B, Landsberg 8,1",
+                    "desc": "",
                     "page": "18",
                     "url": "https://digital.staatsbibliothek-berlin.de/werkansicht?PPN=PPN800412591&PHYSID=PHYS_0024&DMDID=DMDLOG_0001"
                 }
@@ -688,8 +688,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/sd6fa6331-6059-49dc-9840-58fd4063f1c4",
             "names": [
                 {
-                    "label": "Landsberg 8/1",
-                    "desc": "D-B, Landsberg 8,1",
+                    "label": "D-B, Landsberg 8,1",
+                    "desc": "",
                     "page": "19",
                     "url": "https://digital.staatsbibliothek-berlin.de/werkansicht?PPN=PPN800412591&PHYSID=PHYS_0025&DMDID=DMDLOG_0001"
                 }
@@ -699,8 +699,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/s85649749-b273-402f-9170-3717db06b4f5",
             "names": [
                 {
-                    "label": "Landsberg 8/1",
-                    "desc": "D-B, Landsberg 8,1",
+                    "label": "D-B, Landsberg 8,1",
+                    "desc": "",
                     "page": "20",
                     "url": "https://digital.staatsbibliothek-berlin.de/werkansicht?PPN=PPN800412591&PHYSID=PHYS_0026&DMDID=DMDLOG_0001"
                 }
@@ -712,7 +712,7 @@
             "names": [
                 {
                     "label": "F-Pn, Ms. 57/2",
-                    "desc": "F-Pn, Ms. 57/2",
+                    "desc": "",
                     "page": "2",
                     "url": "https://gallica.bnf.fr/ark:/12148/btv1b550025366/f2.item.r=beethoven%20op"
                 }
@@ -723,7 +723,7 @@
             "names": [
                 {
                     "label": "F-Pn, Ms. 57/2",
-                    "desc": "F-Pn, Ms. 57/2",
+                    "desc": "",
                     "page": "1",
                     "url": "https://gallica.bnf.fr/ark:/12148/btv1b550025366.r=beethoven%20op.%20125%20esquisses?rk=171674;4"
                 }
@@ -733,8 +733,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/sa6d82aed-b71f-47dd-978f-cd425ecf5e03",
             "names": [
                 {
-                    "label": "Landsberg 8/1",
-                    "desc": "D-B, Landsberg 8,1",
+                    "label": "D-B, Landsberg 8,1",
+                    "desc": "",
                     "page": "21",
                     "url": "https://digital.staatsbibliothek-berlin.de/werkansicht?PPN=PPN800412591&PHYSID=PHYS_0029&DMDID=DMDLOG_0001"
                 }
@@ -744,8 +744,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/s5ade7dfe-86e9-46a5-930e-01e01f7ccff9",
             "names": [
                 {
-                    "label": "Landsberg 8/1",
-                    "desc": "D-B, Landsberg 8,1",
+                    "label": "D-B, Landsberg 8,1",
+                    "desc": "",
                     "page": "22",
                     "url": "https://digital.staatsbibliothek-berlin.de/werkansicht?PPN=PPN800412591&PHYSID=PHYS_0030&DMDID=DMDLOG_0001"
                 }
@@ -755,8 +755,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/s1136a0da-2284-486a-b8d2-d7ccc7953820",
             "names": [
                 {
-                    "label": "Landsberg 8/1",
-                    "desc": "D-B, Landsberg 8,1",
+                    "label": "D-B, Landsberg 8,1",
+                    "desc": "",
                     "page": "23",
                     "url": "https://digital.staatsbibliothek-berlin.de/werkansicht?PPN=PPN800412591&PHYSID=PHYS_0031&DMDID=DMDLOG_0001"
                 }
@@ -766,8 +766,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/sd137bb06-dc28-4e2d-af01-55946183e5e1",
             "names": [
                 {
-                    "label": "Landsberg 8/1",
-                    "desc": "D-B, Landsberg 8,1",
+                    "label": "D-B, Landsberg 8,1",
+                    "desc": "",
                     "page": "24",
                     "url": "https://digital.staatsbibliothek-berlin.de/werkansicht?PPN=PPN800412591&PHYSID=PHYS_0032&DMDID=DMDLOG_0001"
                 }
@@ -777,8 +777,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/sb437f767-bbac-4e5b-a46c-81d2d7b634c7",
             "names": [
                 {
-                    "label": "Landsberg 8/1",
-                    "desc": "D-B, Landsberg 8,1",
+                    "label": "D-B, Landsberg 8,1",
+                    "desc": "",
                     "page": "25",
                     "url": "https://digital.staatsbibliothek-berlin.de/werkansicht?PPN=PPN800412591&PHYSID=PHYS_0033&DMDID=DMDLOG_0001"
                 }
@@ -788,8 +788,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/s601e22d8-31c6-4e91-a27c-9b3ad3d18102",
             "names": [
                 {
-                    "label": "Landsberg 8/1",
-                    "desc": "D-B, Landsberg 8,1",
+                    "label": "D-B, Landsberg 8,1",
+                    "desc": "",
                     "page": "26",
                     "url": "https://digital.staatsbibliothek-berlin.de/werkansicht?PPN=PPN800412591&PHYSID=PHYS_0034&DMDID=DMDLOG_0001"
                 }
@@ -799,8 +799,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/s6163e2e9-befa-47a4-9200-2ae699db041f",
             "names": [
                 {
-                    "label": "Landsberg 8/1",
-                    "desc": "D-B, Landsberg 8,1",
+                    "label": "D-B, Landsberg 8,1",
+                    "desc": "",
                     "page": "27",
                     "url": "https://digital.staatsbibliothek-berlin.de/werkansicht?PPN=PPN800412591&PHYSID=PHYS_0035&DMDID=DMDLOG_0001"
                 }
@@ -810,8 +810,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/s6f878a72-f63c-4c31-bd9b-8adaa7545f55",
             "names": [
                 {
-                    "label": "Landsberg 8/1",
-                    "desc": "D-B, Landsberg 8,1",
+                    "label": "D-B, Landsberg 8,1",
+                    "desc": "",
                     "page": "28",
                     "url": "https://digital.staatsbibliothek-berlin.de/werkansicht?PPN=PPN800412591&PHYSID=PHYS_0036&DMDID=DMDLOG_0001"
                 }
@@ -821,8 +821,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/se6247d5c-fd36-4684-82c2-69c9a38e5f02",
             "names": [
                 {
-                    "label": "Landsberg 8/1",
-                    "desc": "D-B, Landsberg 8,1",
+                    "label": "D-B, Landsberg 8,1",
+                    "desc": "",
                     "page": "29",
                     "url": "https://digital.staatsbibliothek-berlin.de/werkansicht?PPN=PPN800412591&PHYSID=PHYS_0037&DMDID=DMDLOG_0001"
                 }
@@ -832,8 +832,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/s9086e726-e7d5-419e-b070-789140155956",
             "names": [
                 {
-                    "label": "Landsberg 8/1",
-                    "desc": "D-B, Landsberg 8,1",
+                    "label": "D-B, Landsberg 8,1",
+                    "desc": "",
                     "page": "30",
                     "url": "https://digital.staatsbibliothek-berlin.de/werkansicht?PPN=PPN800412591&PHYSID=PHYS_0038&DMDID=DMDLOG_0001"
                 }
@@ -843,8 +843,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/s3ab422cd-84e0-4322-ae19-d32d1ed1fd44",
             "names": [
                 {
-                    "label": "Landsberg 8/1",
-                    "desc": "D-B, Landsberg 8,1",
+                    "label": "D-B, Landsberg 8,1",
+                    "desc": "",
                     "page": "1",
                     "url": "https://digital.staatsbibliothek-berlin.de/werkansicht?PPN=PPN800412591&PHYSID=PHYS_0007&DMDID=DMDLOG_0001"
                 }
@@ -854,8 +854,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/sfbaaf128-3ff9-4fab-be22-a53fc6262a27",
             "names": [
                 {
-                    "label": "Landsberg 8/1",
-                    "desc": "D-B, Landsberg 8,1",
+                    "label": "D-B, Landsberg 8,1",
+                    "desc": "",
                     "page": "2",
                     "url": "https://digital.staatsbibliothek-berlin.de/werkansicht?PPN=PPN800412591&PHYSID=PHYS_0008&DMDID=DMDLOG_0001"
                 }
@@ -865,8 +865,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/s79ac927a-b16e-4888-9fe6-185a32e16bd2",
             "names": [
                 {
-                    "label": "Landsberg 8/1",
-                    "desc": "D-B, Landsberg 8,1",
+                    "label": "D-B, Landsberg 8,1",
+                    "desc": "",
                     "page": "3",
                     "url": "https://digital.staatsbibliothek-berlin.de/werkansicht?PPN=PPN800412591&PHYSID=PHYS_0009&DMDID=DMDLOG_0001"
                 }
@@ -876,8 +876,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/sdacc8c39-cc74-4851-ac36-d1c6faf92cf6",
             "names": [
                 {
-                    "label": "Landsberg 8/1",
-                    "desc": "D-B, Landsberg 8,1",
+                    "label": "D-B, Landsberg 8,1",
+                    "desc": "",
                     "page": "4",
                     "url": "https://digital.staatsbibliothek-berlin.de/werkansicht?PPN=PPN800412591&PHYSID=PHYS_0010&DMDID=DMDLOG_0001"
                 }
@@ -887,8 +887,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/s070b0492-9bb4-4eec-bd81-318e4387b1aa",
             "names": [
                 {
-                    "label": "Landsberg 8/1",
-                    "desc": "D-B, Landsberg 8,1",
+                    "label": "D-B, Landsberg 8,1",
+                    "desc": "",
                     "page": "5",
                     "url": "https://digital.staatsbibliothek-berlin.de/werkansicht?PPN=PPN800412591&PHYSID=PHYS_0011&DMDID=DMDLOG_0001"
                 }
@@ -898,8 +898,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/sad9b696b-dcfc-42f8-a7df-1d0936cb433c",
             "names": [
                 {
-                    "label": "Landsberg 8/1",
-                    "desc": "D-B, Landsberg 8,1",
+                    "label": "D-B, Landsberg 8,1",
+                    "desc": "",
                     "page": "6",
                     "url": "https://digital.staatsbibliothek-berlin.de/werkansicht?PPN=PPN800412591&PHYSID=PHYS_0012&DMDID=DMDLOG_0001"
                 }
@@ -909,8 +909,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/seea8eb64-7bd4-49b7-bc16-0681be3a220c",
             "names": [
                 {
-                    "label": "Landsberg 8/1",
-                    "desc": "D-B, Landsberg 8,1",
+                    "label": "D-B, Landsberg 8,1",
+                    "desc": "",
                     "page": "7",
                     "url": "https://digital.staatsbibliothek-berlin.de/werkansicht?PPN=PPN800412591&PHYSID=PHYS_0013&DMDID=DMDLOG_0001"
                 }
@@ -920,8 +920,8 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/s32dabb51-4c7d-4a78-b393-ba0280ba1d4e",
             "names": [
                 {
-                    "label": "Landsberg 8/1",
-                    "desc": "D-B, Landsberg 8,1",
+                    "label": "D-B, Landsberg 8,1",
+                    "desc": "",
                     "page": "8",
                     "url": "https://digital.staatsbibliothek-berlin.de/werkansicht?PPN=PPN800412591&PHYSID=PHYS_0014&DMDID=DMDLOG_0001"
                 }
