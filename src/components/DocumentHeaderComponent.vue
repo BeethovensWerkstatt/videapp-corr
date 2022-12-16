@@ -378,8 +378,10 @@ export default {
     }
   }
 }
+/*
 .activeSource {
   outline: 2px solid #ff000033;
 }
+*/
 
 </style>

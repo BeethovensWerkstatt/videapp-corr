@@ -9,14 +9,19 @@
       </div>
       <div class="body">
         <table class="table">
-          <tr class="table-head"><th colspan="3">Verso</th><th colspan="3">Recto</th></tr>
+          <tr class="table-head"><th colspan="2">Verso</th><th colspan="2">Recto</th></tr>
           <tr>
-            <td>Quelle</td><td title="Seite in Notirungsbuch K">Seite</td>
-            <td title="Seite in Notirungsbuch K">Seite</td><td>Quelle</td>
+            <td title="Seite in Notirungsbuch K">Seite</td><td>Quelle mit Seitenzählung</td>
+            <td>Quelle mit Seitenzählung</td><td title="Seite in Notirungsbuch K">Seite</td>
           </tr>
           <template v-for="(pp, i) in source.pages">
             <tr :key="'page-row-' + i" :class="{ selected: i === pagenr }">
 
+              <td>
+                <template v-if="hasVerso(i)">
+                  <button class="btn btn-link text-bold" @click.prevent="openPage(i)">{{ i * 2 }}</button>
+                </template>
+              </td>
               <td>
                 <template v-if="hasVerso(i)">
                   <button
@@ -27,17 +32,7 @@
                   </button>
                 </template>
               </td>
-              <td>
-                <template v-if="hasVerso(i)">
-                  <button class="btn btn-link" @click.prevent="openPage(i)">{{ i * 2 }}</button>
-                </template>
-              </td>
 
-              <td>
-                <template v-if="hasRecto(i)">
-                  <button class="btn btn-link" @click.prevent="openPage(i)">{{ (i * 2) + 1 }}</button>
-                </template>
-              </td>
               <td>
                 <template v-if="hasRecto(i)">
                   <button
@@ -46,6 +41,11 @@
                   >
                     {{ rectoLabel(pp) }}<span class="nickname">{{ rectoDesc(pp) }}</span>: {{ rectoPage(pp) }}
                   </button>
+                </template>
+              </td>
+              <td>
+                <template v-if="hasRecto(i)">
+                  <button class="btn btn-link text-bold" @click.prevent="openPage(i)">{{ (i * 2) + 1 }}</button>
                 </template>
               </td>
 
@@ -218,6 +218,9 @@ export default {
       tr {
         margin: 0;
         padding: 0;
+      }
+      th {
+        text-align: center;
       }
       td {
         margin: 0;
