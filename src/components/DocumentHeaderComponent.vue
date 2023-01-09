@@ -17,37 +17,18 @@
       :style="{ left: marginPerc + '%', width: titlePerc + '%' }"
       id="draghandle-header"
     >
-      <!-- <btn id="draghandle"><span :style="{ 'font-size': (scale * sourceHeaderHeight) + 'mm' }">{{ source.label }}</span></btn> -->
       <div class="pagenr recto">
-        <!-- <svg
-          viewBox="0 0 10 10"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <text x="0" y="50%" style="font-size: 8px;" dominant-baseline="middle">{{ rectopage }}</text>
-        </svg> -->
         <div :style="headerStyle">{{ rectopage }}</div>
       </div>
       <div class="pagenr verso">
-        <!--<svg
-          viewBox="0 0 10 10"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <text x="0" y="50%" style="font-size: 8px;" dominant-baseline="middle">{{ versopage }}</text>
-        </svg>-->
         <div :style="headerStyle">{{ versopage }}</div>
       </div>
       <div class="title" :title="source.description">
-        <!--<svg
-          viewBox="0 0 100 10"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <text x="0" y="50%" style="font-size: 8px;" dominant-baseline="middle">{{ source.label }}</text>
-        </svg>-->
-        <div :style="headerStyle">
-          <div v-if="srcmenu" style="display: inline-block;">
-            <source-menu :position="position" :sourceId="sourceId" />
-          </div>
+        <div :style="headerStyle" :class="{ documentLabel: !!srcmenu }">
           {{ sourceLabel }}
+        </div>
+        <div v-if="srcmenu" :style="headerStyle" class="documentMenu">
+          <source-menu :position="position" :sourceId="sourceId" />
         </div>
       </div>
     </div>
@@ -368,12 +349,21 @@ export default {
       position: absolute;
       left: 10%;
       width: 80%;
-      overflow: hidden;
-      svg {
+      .documentLabel {
+        position: absolute;
+        top: 0;
         left: 0;
-        // max-width: 100%;
-        height: 100%;
-        width: auto;
+        display: inline-block;
+        width: calc(100% - 20px);
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+      .documentMenu {
+        position: absolute;
+        top: 0;
+        right: 0;
+        display: inline-block;
+        width: 20px;
       }
     }
   }
