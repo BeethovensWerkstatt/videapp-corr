@@ -2,7 +2,7 @@
 version: "3.6"
 services:
   existdb:
-    image: stadlerpeter/existdb:latest
+    image: stadlerpeter/existdb:5.4
     restart: unless-stopped
     environment:
       - EXIST_PASSWORD_FILE=/run/secrets/existdb_passwd
