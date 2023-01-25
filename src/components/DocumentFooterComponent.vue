@@ -31,7 +31,8 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { computed, onMounted, ref, watch } from 'vue'
+import { useStore } from 'vuex'
 import OpenSeadragon from 'openseadragon'
 
 const sourceLabel = (labels) => {
@@ -72,154 +73,173 @@ export default {
       default: false
     }
   },
-  data: function () {
-    const viewer = this.$store.getters.viewer
+  setup (props) {
+    const $el = ref(null)
+
+    const store = useStore()
+
+    const viewer = computed(() => store.getters.viewer)
     const background = viewer.world.getItemAt(0)
     let scale = background?.viewportToImageZoom(viewer.viewport.getZoom())
     if (!scale) {
       scale = 1
     }
-    return {
-      position_: { ...this.$store.getters.getSourceById(this.sourceId).position },
-      tracker: null,
-      dragDelta: null,
-      scale,
-      window
-    }
-  },
-  // TODO before destroy cleanup: remove Overlay, remove handlers
-  mounted () {
-    // create overlay for footer bar
-    if (this.viewer) {
-      this.viewer.addOverlay({
-        element: this.$el,
-        location: this.position
-      }, this.position, OpenSeadragon.TOP_CENTER)
-      this.viewer.addHandler('zoom', this.doResize)
-    }
-    // console.log(this.position, this.dragHandle)
-  },
-  watch: {
-    position () {
-      // console.log(this.position)
-      this.updatePosition()
-    }
-  },
-  computed: {
-    ...mapGetters(['viewer', 'sourceFooterHeight', 'sourceMarginWidth', 'getSourceById', 'getCanvasLabels']),
-    divid () {
-      return this.sourceId + '_footer'
-    },
-    overlay () {
-      return this.viewer ? this.viewer.getOverlayById(this.divid) : null
-    },
-    marginPerc () {
-      return (100 * this.sourceMarginWidth / this.position.width)
-    },
-    titlePerc () {
-      return 100 - (2 * this.marginPerc)
-    },
-    dragHandle () {
-      return this.$el.querySelector('#draghandle-footer')
-    },
-    source () {
-      const source = this.getSourceById(this.sourceId)
+    const position_ = ref({ ...store.getters.getSourceById(props.sourceId).position })
+    const tracker = ref(null)
+    const dragDelta = ref(null)
+
+    const sourceFooterHeight = computed(() => store.getters.sourceFooterHeight)
+    const sourceMarginWidth = computed(() => store.getters.sourceMarginWidth)
+    const getSourceById = computed(() => store.getters.getSourceById)
+    const getCanvasLabels = computed(() => store.getters.getCanvasLabels)
+
+    const divid = computed(() => props.sourceId + '_footer')
+    const overlay = computed(() => viewer.value ? viewer.value.getOverlayById(divid.value) : null)
+    const marginPerc = computed(() => (100 * sourceMarginWidth.value / props.position.width))
+    const titlePerc = computed(() => (100 - (2 * marginPerc.value)))
+    const dragHandle = computed(() => $el.value?.querySelector('#draghandle-footer'))
+
+    const source = computed(() => {
+      const source = getSourceById.value(props.sourceId)
       if (source) {
         return source
       }
       // return fake source object
-      console.warn('no source for ' + this.sourceId + '!')
+      console.warn('no source for ' + props.sourceId + '!')
       return {
         pages: [{ v: null, r: null }],
         position: { x: 0, y: 0 }
       }
-    },
+    })
 
-    sourceNameRecto () {
-      const page = this.source.pages[this.pagenr].r
-      return this.getCanvasLabels(page?.id)
-    },
-    sourceNameVerso () {
-      const page = this.source.pages[this.pagenr].v
-      return this.getCanvasLabels(page?.id)
-    },
-
-    sourceLabelRecto () {
-      return sourceLabel(this.sourceNameRecto) || 'Signatur Recto'
-    },
-    sourceDescRecto () {
-      return sourceDesc(this.sourceNameRecto) || 'Signatur Recto'
-    },
-    sourceURLRecto () {
-      return this.sourceNameRecto?.names[0].url
-    },
-    sourceLabelVerso () {
-      return sourceLabel(this.sourceNameVerso) || 'Signatur Verso'
-    },
-    sourceDescVerso () {
-      return sourceDesc(this.sourceNameVerso) || 'Signatur Verso'
-    },
-    sourceURLVerso () {
-      return this.sourceNameVerso?.names[0].url
-    },
-
-    pagenr () {
-      const pnr = +this.source.pagenr
-      if (this.checkPageNr(pnr)) {
-        return pnr
+    /**
+     * update overlay position
+     */
+    function updatePosition () {
+      if (overlay.value) {
+        overlay.value.update(props.position)
       }
-      if (this.checkPageNr(this.defaultPage)) {
-        return this.defaultPage
-      }
-      return 0
-    },
-    rectopage () {
-      const page = this.source.pages[this.pagenr]
-      const labels = this.getCanvasLabels(page?.r?.id)
-      return labels?.page || page.r?.label || ''
-    },
-    versopage () {
-      const page = this.source.pages[this.pagenr]
-      const labels = this.getCanvasLabels(page?.v?.id)
-      return labels?.page || page.v?.label || ''
-    },
-    footerStyle () {
-      const zoom = this.viewer.viewport.getZoom(true)
-      const scale = this.viewer.viewport._containerInnerSize.x * zoom
-      // console.log('header scale', scale)
-      return {
-        'font-size': scale * this.sourceFooterHeight * 0.7 + 'px'
-      }
-    },
-    footerStyleRecto () {
-      const width = (this.versopage) ? '50%' : '100%'
-      const display = (this.rectopage) ? 'inline-block' : 'none'
-      return ({ ...this.footerStyle, 'text-align': 'right', 'padding-right': '5pt', display, width })
-    },
-    footerStyleVerso () {
-      const width = (this.rectopage) ? '50%' : '100%'
-      const display = (this.versopage) ? 'inline-block' : 'none'
-      return ({ ...this.footerStyle, 'text-align': 'left', 'padding-left': '5pt', display, width })
     }
-  },
-  methods: {
-    updatePosition () {
-      if (this.overlay) {
-        this.overlay.update(this.position)
+    watch({
+      position () {
+        // console.log(props.position)
+        updatePosition()
       }
-    },
-    doResize (e) {
-      const zoom = this.viewer.world.getItemAt(0).viewportToImageZoom(e.zoom)
+    })
+    /**
+     * set zoom factor
+     */
+    function doResize (e) {
+      const zoom = viewer.value.world.getItemAt(0).viewportToImageZoom(e.zoom)
       // console.log(zoom)
-      this.scale = zoom * 2
-    },
+      scale.value = zoom * 2
+    }
     /**
      * check if page number is in range
      * @param {Number} pnr - page number to check
      * @returns {Boolean} true if `pnr` is in range
      */
-    checkPageNr (pnr) {
-      return (pnr >= 0 && pnr < this.source.pages.length)
+    function checkPageNr (pnr) {
+      return (pnr >= 0 && pnr < source.value.pages.length)
+    }
+
+    const sourceNameRecto = computed(() => {
+      const page = source.value.pages[pagenr.value].r
+      return getCanvasLabels(page?.id)
+    })
+    const sourceNameVerso = computed(() => {
+      const page = source.value.pages[pagenr.value].v
+      return getCanvasLabels(page?.id)
+    })
+
+    const sourceLabelRecto = computed(() => sourceLabel(sourceNameRecto.value) || 'Signatur Recto')
+    const sourceDescRecto = computed(() => sourceDesc(sourceNameRecto.value) || 'Signatur Recto')
+    const sourceURLRecto = computed(() => sourceNameRecto.value?.names[0].url)
+    const sourceLabelVerso = computed(() => sourceLabel(sourceNameVerso.value) || 'Signatur Verso')
+    const sourceDescVerso = computed(() => sourceDesc(sourceNameVerso.value) || 'Signatur Verso')
+    const sourceURLVerso = computed(() => sourceNameVerso.value?.names[0].url)
+
+    const pagenr = computed(() => {
+      const pnr = +source.value.pagenr
+      if (checkPageNr(pnr)) {
+        return pnr
+      }
+      return 0
+    })
+    const rectopage = computed(() => {
+      const page = source.value.pages[pagenr.value]
+      const labels = getCanvasLabels(page?.r?.id)
+      return labels?.page || page.value.r?.label || ''
+    })
+    const versopage = computed(() => {
+      const page = source.value.pages[pagenr.value]
+      const labels = getCanvasLabels(page?.v?.id)
+      return labels?.page || page.v?.label || ''
+    })
+    const footerStyle = computed(() => {
+      const zoom = viewer.value.viewport.getZoom(true)
+      const scale = viewer.value.viewport._containerInnerSize.x * zoom
+      // console.log('header scale', scale)
+      return {
+        'font-size': scale * sourceFooterHeight.value * 0.7 + 'px'
+      }
+    })
+    const footerStyleRecto = computed(() => {
+      const width = (versopage.value) ? '50%' : '100%'
+      const display = (rectopage.value) ? 'inline-block' : 'none'
+      return ({ ...footerStyle.value, 'text-align': 'right', 'padding-right': '5pt', display, width })
+    })
+    const footerStyleVerso = computed(() => {
+      const width = (rectopage.value) ? '50%' : '100%'
+      const display = (versopage.value) ? 'inline-block' : 'none'
+      return ({ ...footerStyle.value, 'text-align': 'left', 'padding-left': '5pt', display, width })
+    })
+
+    onMounted(() => {
+      if (viewer.value) {
+        viewer.value.addOverlay({
+          element: $el.value,
+          location: props.position
+        }, props.position, OpenSeadragon.TOP_CENTER)
+        viewer.value.addHandler('zoom', doResize())
+      }
+    })
+
+    return {
+      $el,
+      viewer,
+      position_,
+      tracker,
+      dragDelta,
+      scale: ref(scale),
+      window: ref(window),
+
+      sourceFooterHeight,
+      sourceMarginWidth,
+      getSourceById,
+      getCanvasLabels,
+
+      divid,
+      overlay,
+      marginPerc,
+      titlePerc,
+      dragHandle,
+
+      source,
+      pagenr,
+      sourceNameRecto,
+      sourceNameVerso,
+      sourceLabelRecto,
+      sourceDescRecto,
+      sourceURLRecto,
+      sourceLabelVerso,
+      sourceDescVerso,
+      sourceURLVerso,
+      rectopage,
+      versopage,
+      footerStyle,
+      footerStyleRecto,
+      footerStyleVerso
     }
   }
 }
