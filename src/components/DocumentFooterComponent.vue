@@ -31,9 +31,9 @@
 </template>
 
 <script>
-import { computed, onMounted, ref, watch } from 'vue'
-import { useStore } from 'vuex'
+import { computed, onMounted, ref, watch } from '@vue/composition-api'
 import OpenSeadragon from 'openseadragon'
+import { useStore } from '@vueblocks/vue-use-vuex'
 
 const sourceLabel = (labels) => {
   if (labels) {
@@ -79,8 +79,8 @@ export default {
     const store = useStore()
 
     const viewer = computed(() => store.getters.viewer)
-    const background = viewer.world.getItemAt(0)
-    let scale = background?.viewportToImageZoom(viewer.viewport.getZoom())
+    const background = computed(() => viewer.value?.world?.getItemAt(0))
+    let scale = background.value?.viewportToImageZoom(viewer.value.viewport.getZoom())
     if (!scale) {
       scale = 1
     }
@@ -120,19 +120,16 @@ export default {
         overlay.value.update(props.position)
       }
     }
-    watch({
-      position () {
-        // console.log(props.position)
-        updatePosition()
-      }
-    })
+    watch(props, () => updatePosition(), {})
     /**
      * set zoom factor
      */
     function doResize (e) {
-      const zoom = viewer.value.world.getItemAt(0).viewportToImageZoom(e.zoom)
-      // console.log(zoom)
-      scale.value = zoom * 2
+      if (e) {
+        const zoom = viewer.value.world.getItemAt(0).viewportToImageZoom(e.zoom)
+        // console.log(zoom)
+        scale.value = zoom * 2
+      }
     }
     /**
      * check if page number is in range
@@ -145,11 +142,11 @@ export default {
 
     const sourceNameRecto = computed(() => {
       const page = source.value.pages[pagenr.value].r
-      return getCanvasLabels(page?.id)
+      return getCanvasLabels.value(page?.id)
     })
     const sourceNameVerso = computed(() => {
       const page = source.value.pages[pagenr.value].v
-      return getCanvasLabels(page?.id)
+      return getCanvasLabels.value(page?.id)
     })
 
     const sourceLabelRecto = computed(() => sourceLabel(sourceNameRecto.value) || 'Signatur Recto')
@@ -168,13 +165,13 @@ export default {
     })
     const rectopage = computed(() => {
       const page = source.value.pages[pagenr.value]
-      const labels = getCanvasLabels(page?.r?.id)
-      return labels?.page || page.value.r?.label || ''
+      const labels = getCanvasLabels.value(page?.r?.id)
+      return labels?.page || page?.r?.label || ''
     })
     const versopage = computed(() => {
       const page = source.value.pages[pagenr.value]
-      const labels = getCanvasLabels(page?.v?.id)
-      return labels?.page || page.v?.label || ''
+      const labels = getCanvasLabels.value(page?.v?.id)
+      return labels?.page || page?.v?.label || ''
     })
     const footerStyle = computed(() => {
       const zoom = viewer.value.viewport.getZoom(true)

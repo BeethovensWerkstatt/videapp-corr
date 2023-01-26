@@ -12,6 +12,9 @@
   },
   "dependencies": {
     "@vectrejs/vectre": "^1.1.0",
+    "@vue/composition-api": "^1.7.1",
+    "@vueblocks/vue-use-core": "^0.2.11",
+    "@vueblocks/vue-use-vuex": "^0.2.11",
     "axios": "^0.21.4",
     "core-js": "^3.8.0",
     "openseadragon": "^2.4.2",
@@ -25,7 +28,7 @@
     "vue-router": "^3.4.9",
     "vue2-ace-editor": "0.0.15",
     "vue2-d3": "^1.0.0",
-    "vuex": "^3.6.0"
+    "vuex": "^3.6.2"
   },
   "devDependencies": {
     "@intlify/vue-i18n-loader": "^1.0.0",
