@@ -145,19 +145,19 @@ export default {
     },
 
     sourceLabelRecto () {
-      return sourceLabel(this.sourceNameRecto) || '[verschollen]'
+      return sourceLabel(this.sourceNameRecto) || 'N/A'
     },
     sourceDescRecto () {
-      return sourceDesc(this.sourceNameRecto) || '[verschollen]'
+      return sourceDesc(this.sourceNameRecto) || 'N/A'
     },
     sourceURLRecto () {
       return this.sourceNameRecto?.names[0].url
     },
     sourceLabelVerso () {
-      return sourceLabel(this.sourceNameVerso) || '[verschollen]'
+      return sourceLabel(this.sourceNameVerso) || 'N/A'
     },
     sourceDescVerso () {
-      return sourceDesc(this.sourceNameVerso) || '[verschollen]'
+      return sourceDesc(this.sourceNameVerso) || 'N/A'
     },
     sourceURLVerso () {
       return this.sourceNameVerso?.names[0].url

@@ -4,7 +4,6 @@ import { Positioner } from '.'
 import { finishProc, startProc } from '..'
 import { Url } from '@/toolbox/net'
 import positions from './positions.json'
-import { uuidv4 } from '../../toolbox'
 
 // otherContent label for measure positions URL
 const TAG_MEASURE_POSITIONS = 'measure positions'
@@ -226,9 +225,8 @@ const actions = {
       // https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/manifest.json
       if (m.iiif.manifest.indexOf('t83a01023-37fd-4e91-90db-f228da4a14a9') > 0) {
         console.log('load cached Notirungsbuch K')
-        const pageid = 'https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/s' + uuidv4()
-        const placeholder = () => ({
-          '@id': pageid,
+        const placeholder = (id) => ({
+          '@id': id,
           '@type': 'sc:Canvas',
           label: '9',
           images: [
@@ -243,7 +241,7 @@ const actions = {
                   '@id': 'https://edirom-images.beethovens-werkstatt.de/Scaler/IIIF/lostPagePlaceholders%2FNotirungsbuch-K_305x232mm.jpeg',
                   profile: 'http://iiif.io/api/image/2/level2.json',
                   service: {
-                    '@id': pageid + '_physdim',
+                    '@id': id + '_physdim',
                     '@context': 'http://iiif.io/api/annex/services/physdim/1/context.json',
                     profile: 'http://iiif.io/api/annex/services/physdim',
                     physicalScale: 0.0768,
@@ -254,7 +252,7 @@ const actions = {
                 width: 3698,
                 height: 3021
               },
-              on: pageid
+              on: id
             }
           ],
           width: 3698,
@@ -262,7 +260,7 @@ const actions = {
           otherContent: []
         })
         const data = require('./notirungsBuchK.json')
-        data.sequences[0].canvases = data.sequences[0].canvases.map(c => c['@id'] === 'placeholder' ? placeholder() : c)
+        data.sequences[0].canvases = data.sequences[0].canvases.map(c => c['@type'] === 'placeholder' ? { ...placeholder(), '@id': c['@id'] } : c)
         loadIIIF({ data })
       } else {
         axios.get(m.iiif.manifest).then(loadIIIF)
