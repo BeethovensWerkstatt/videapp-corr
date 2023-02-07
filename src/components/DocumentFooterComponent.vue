@@ -145,19 +145,19 @@ export default {
     },
 
     sourceLabelRecto () {
-      return sourceLabel(this.sourceNameRecto) || 'Signatur Recto'
+      return sourceLabel(this.sourceNameRecto) || '[verschollen]'
     },
     sourceDescRecto () {
-      return sourceDesc(this.sourceNameRecto) || 'Signatur Recto'
+      return sourceDesc(this.sourceNameRecto) || '[verschollen]'
     },
     sourceURLRecto () {
       return this.sourceNameRecto?.names[0].url
     },
     sourceLabelVerso () {
-      return sourceLabel(this.sourceNameVerso) || 'Signatur Verso'
+      return sourceLabel(this.sourceNameVerso) || '[verschollen]'
     },
     sourceDescVerso () {
-      return sourceDesc(this.sourceNameVerso) || 'Signatur Verso'
+      return sourceDesc(this.sourceNameVerso) || '[verschollen]'
     },
     sourceURLVerso () {
       return this.sourceNameVerso?.names[0].url

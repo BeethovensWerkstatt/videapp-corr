@@ -1792,18 +1792,6 @@
           "otherContent": []
         },
         {
-          "@id": "placeholder"
-        },
-        {
-          "@id": "placeholder"
-        },
-        {
-          "@id": "placeholder"
-        },
-        {
-          "@id": "placeholder"
-        },
-        {
           "@id": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/s927a0baa-5546-4f00-93d1-d0edfecdec64",
           "@type": "sc:Canvas",
           "label": "9",
