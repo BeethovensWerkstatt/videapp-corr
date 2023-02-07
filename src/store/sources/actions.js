@@ -4,6 +4,7 @@ import { Positioner } from '.'
 import { finishProc, startProc } from '..'
 import { Url } from '@/toolbox/net'
 import positions from './positions.json'
+import { uuidv4 } from '../../toolbox'
 
 // otherContent label for measure positions URL
 const TAG_MEASURE_POSITIONS = 'measure positions'
@@ -225,7 +226,44 @@ const actions = {
       // https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/manifest.json
       if (m.iiif.manifest.indexOf('t83a01023-37fd-4e91-90db-f228da4a14a9') > 0) {
         console.log('load cached Notirungsbuch K')
-        loadIIIF({ data: require('./notirungsBuchK.json') })
+        const pageid = 'https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/s' + uuidv4()
+        const placeholder = () => ({
+          '@id': pageid,
+          '@type': 'sc:Canvas',
+          label: '9',
+          images: [
+            {
+              '@type': 'oa:Annotation',
+              motivation: 'sc:painting',
+              resource: {
+                '@id': 'https://edirom-images.beethovens-werkstatt.de/Scaler/IIIF/lostPagePlaceholders%2FNotirungsbuch-K_305x232mm.jpeg/full/full/0/default.jpg',
+                '@type': 'dctypes:Image',
+                service: {
+                  '@context': 'http://iiif.io/api/image/2/context.json',
+                  '@id': 'https://edirom-images.beethovens-werkstatt.de/Scaler/IIIF/lostPagePlaceholders%2FNotirungsbuch-K_305x232mm.jpeg',
+                  profile: 'http://iiif.io/api/image/2/level2.json',
+                  service: {
+                    '@id': pageid + '_physdim',
+                    '@context': 'http://iiif.io/api/annex/services/physdim/1/context.json',
+                    profile: 'http://iiif.io/api/annex/services/physdim',
+                    physicalScale: 0.0768,
+                    physicalUnits: 'mm'
+                  }
+                },
+                format: 'image/jpeg',
+                width: 3698,
+                height: 3021
+              },
+              on: pageid
+            }
+          ],
+          width: 3698,
+          height: 3021,
+          otherContent: []
+        })
+        const data = require('./notirungsBuchK.json')
+        data.sequences[0].canvases = data.sequences[0].canvases.map(c => c['@id'] === 'placeholder' ? placeholder() : c)
+        loadIIIF({ data })
       } else {
         axios.get(m.iiif.manifest).then(loadIIIF)
       }
