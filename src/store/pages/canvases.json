@@ -3,6 +3,50 @@
     "desc": "Notirungsbuch K",
     "provenances": [
         {
+            "canvas": "lost1",
+            "names": [
+                {
+                    "label": "[verschollen]",
+                    "desc": "",
+                    "page": "",
+                    "url": "https://edirom-images.beethovens-werkstatt.de/Scaler/IIIF/lostPagePlaceholders%2FNotirungsbuch-K_305x232mm.jpeg/full/full/0/default.jpg"
+                }
+            ]
+        },
+        {
+            "canvas": "lost2",
+            "names": [
+                {
+                    "label": "[verschollen]",
+                    "desc": "",
+                    "page": "",
+                    "url": "https://edirom-images.beethovens-werkstatt.de/Scaler/IIIF/lostPagePlaceholders%2FNotirungsbuch-K_305x232mm.jpeg/full/full/0/default.jpg"
+                }
+            ]
+        },
+        {
+            "canvas": "lost3",
+            "names": [
+                {
+                    "label": "[verschollen]",
+                    "desc": "",
+                    "page": "",
+                    "url": "https://edirom-images.beethovens-werkstatt.de/Scaler/IIIF/lostPagePlaceholders%2FNotirungsbuch-K_305x232mm.jpeg/full/full/0/default.jpg"
+                }
+            ]
+        },
+        {
+            "canvas": "lost4",
+            "names": [
+                {
+                    "label": "[verschollen]",
+                    "desc": "",
+                    "page": "",
+                    "url": "https://edirom-images.beethovens-werkstatt.de/Scaler/IIIF/lostPagePlaceholders%2FNotirungsbuch-K_305x232mm.jpeg/full/full/0/default.jpg"
+                }
+            ]
+        },
+        {
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/x2433e745-3d60-4043-9258-10ab1f1aeb47",
             "names": [
                 {
