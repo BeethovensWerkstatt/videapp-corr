@@ -50,7 +50,7 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/x2433e745-3d60-4043-9258-10ab1f1aeb47",
             "names": [
                 {
-                    "label": "D-BNba, MH 60",
+                    "label": "D-BNba, HCB MH 60",
                     "desc": "Engelmann",
                     "page": "1",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/4"
@@ -61,7 +61,7 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/x57291b2b-71f2-40b4-b3a2-a4b4994ef961",
             "names": [
                 {
-                    "label": "D-BNba, MH 60",
+                    "label": "D-BNba, HCB MH 60",
                     "desc": "Engelmann",
                     "page": "2",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/5"
@@ -72,7 +72,7 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/xe1e069ed-67a2-4a63-b4f1-c6b227242876",
             "names": [
                 {
-                    "label": "D-BNba, MH 60",
+                    "label": "D-BNba, HCB MH 60",
                     "desc": "Engelmann",
                     "page": "3",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/6"
@@ -83,7 +83,7 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/xe0df306c-077d-49ea-8e0f-3e3440d50a5d",
             "names": [
                 {
-                   "label": "D-BNba, MH 60",
+                   "label": "D-BNba, HCB MH 60",
                     "desc": "Engelmann",
                     "page": "4",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/7"
@@ -94,7 +94,7 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/xef927fa2-1f31-495f-83f9-9e00a850e003",
             "names": [
                 {
-                    "label": "D-BNba, MH 60",
+                    "label": "D-BNba, HCB MH 60",
                     "desc": "Engelmann",
                     "page": "5",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/8"
@@ -105,7 +105,7 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/x717cfb28-9f73-4a31-a0ec-f6c781f772a5",
             "names": [
                 {
-                    "label": "D-BNba, MH 60",
+                    "label": "D-BNba, HCB MH 60",
                     "desc": "Engelmann",
                     "page": "6",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/9"
@@ -116,7 +116,7 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/x6d6721df-b995-479b-a227-cf1bd05dfe7d",
             "names": [
                 {
-                    "label": "D-BNba, MH 60",
+                    "label": "D-BNba, HCB MH 60",
                     "desc": "Engelmann",
                     "page": "7",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/10"
@@ -127,7 +127,7 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/xb14dce0a-0617-4be8-8272-522706548ae9",
             "names": [
                 {
-                    "label": "D-BNba, MH 60",
+                    "label": "D-BNba, HCB MH 60",
                     "desc": "Engelmann",
                     "page": "8",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/11"
@@ -138,7 +138,7 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/x731b0f02-032a-49d6-a417-d16500bea745",
             "names": [
                 {
-                    "label": "D-BNba, BSk 21/69",
+                    "label": "D-BNba, HCB BSk 21/69",
                     "desc": "",
                     "page": "1r",
                     "url": "https://www.beethoven.de/de/media/view/5603937289764864/scan/0"
@@ -149,7 +149,7 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/xd174ea19-b7ae-48c8-aca1-ad6b5701f8b9",
             "names": [
                 {
-                    "label": "D-BNba, BSk 21/69",
+                    "label": "D-BNba, HCB BSk 21/69",
                     "desc": "",
                     "page": "1v",
                     "url": "https://www.beethoven.de/de/media/view/5603937289764864/scan/1"
@@ -160,7 +160,7 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/x506637f0-9b11-4643-a220-9bbd77965bf7",
             "names": [
                 {
-                    "label": "D-BNba, MH 60",
+                    "label": "D-BNba, HCB MH 60",
                     "desc": "Engelmann",
                     "page": "9",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/12"
@@ -171,7 +171,7 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/xf2f94a93-e5fe-4b94-9518-dcd35b27a88e",
             "names": [
                 {
-                    "label": "D-BNba, MH 60",
+                    "label": "D-BNba, HCB MH 60",
                     "desc": "Engelmann",
                     "page": "10",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/13"
@@ -182,7 +182,7 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/x13167dbf-459c-4408-a8ee-df7c582e2255",
             "names": [
                 {
-                    "label": "D-BNba, MH 60",
+                    "label": "D-BNba, HCB MH 60",
                     "desc": "Engelmann",
                     "page": "11",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/14"
@@ -193,7 +193,7 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/x69931b4f-66d0-4d26-9f4b-8a076f22a60c",
             "names": [
                 {
-                    "label": "D-BNba, MH 60",
+                    "label": "D-BNba, HCB MH 60",
                     "desc": "Engelmann",
                     "page": "12",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/15"
@@ -226,7 +226,7 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/x5ac4fa83-c044-4c2b-858b-7a95888a5332",
             "names": [
                 {
-                    "label": "D-BNba, MH 60",
+                    "label": "D-BNba, HCB MH 60",
                     "desc": "Engelmann",
                     "page": "13",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/16"
@@ -237,7 +237,7 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/x8933a040-58f0-4865-9be6-530eeb25157c",
             "names": [
                 {
-                    "label": "D-BNba, MH 60",
+                    "label": "D-BNba, HCB MH 60",
                     "desc": "Engelmann",
                     "page": "14",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/17"
@@ -248,7 +248,7 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/x616c11a1-7377-48bd-a6d7-ec03ce718eb2",
             "names": [
                 {
-                    "label": "D-BNba, MH 60",
+                    "label": "D-BNba, HCB MH 60",
                     "desc": "Engelmann",
                     "page": "15",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/18"
@@ -259,7 +259,7 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/x989f416b-6af5-4615-82da-09eed754b965",
             "names": [
                 {
-                    "label": "D-BNba, MH 60",
+                    "label": "D-BNba, HCB MH 60",
                     "desc": "Engelmann",
                     "page": "16",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/19"
@@ -270,7 +270,7 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/x6e6bb355-b7bb-4d8f-b8ea-d23d9e9ae795",
             "names": [
                 {
-                    "label": "D-BNba, MH 60",
+                    "label": "D-BNba, HCB MH 60",
                     "desc": "Engelmann",
                     "page": "17",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/20"
@@ -281,7 +281,7 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/xedf924c8-5e68-4508-bf57-5eee7904f096",
             "names": [
                 {
-                    "label": "D-BNba, MH 60",
+                    "label": "D-BNba, HCB MH 60",
                     "desc": "Engelmann",
                     "page": "18",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/21"
@@ -292,7 +292,7 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/xcd55dabb-8f39-43a4-abbf-138c32f1f93b",
             "names": [
                 {
-                    "label": "D-BNba, MH 60",
+                    "label": "D-BNba, HCB MH 60",
                     "desc": "Engelmann",
                     "page": "19",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/22"
@@ -303,7 +303,7 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/x7dcbd745-fe04-4731-8c56-7b6c6fd61ce9",
             "names": [
                 {
-                    "label": "D-BNba, MH 60",
+                    "label": "D-BNba, HCB MH 60",
                     "desc": "Engelmann",
                     "page": "20",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/23"
@@ -314,7 +314,7 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/xf94dcffd-1999-4278-9711-5bdfb9e1ee85",
             "names": [
                 {
-                    "label": "D-BNba, MH 60",
+                    "label": "D-BNba, HCB MH 60",
                     "desc": "Engelmann",
                     "page": "21",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/24"
@@ -325,7 +325,7 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/x1b0b15a1-cf03-491c-9fda-d15d4fbe5e66",
             "names": [
                 {
-                    "label": "D-BNba, MH 60",
+                    "label": "D-BNba, HCB MH 60",
                     "desc": "Engelmann",
                     "page": "22",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/25"
@@ -336,7 +336,7 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/xc595ffad-c5c4-488b-ba92-45f4e5b4c450",
             "names": [
                 {
-                    "label": "D-BNba, MH 60",
+                    "label": "D-BNba, HCB MH 60",
                     "desc": "Engelmann",
                     "page": "23",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/26"
@@ -347,7 +347,7 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/x73cd7cec-9873-4fd4-9f36-6d96e97ed881",
             "names": [
                 {
-                    "label": "D-BNba, MH 60",
+                    "label": "D-BNba, HCB MH 60",
                     "desc": "Engelmann",
                     "page": "24",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/27"
@@ -358,7 +358,7 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/x50b7ec35-6d68-4ad7-91eb-59a315af7e0c",
             "names": [
                 {
-                    "label": "D-BNba, MH 60",
+                    "label": "D-BNba, HCB MH 60",
                     "desc": "Engelmann",
                     "page": "25",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/28"
@@ -369,7 +369,7 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/x3ff8c2a2-81ef-40cc-8f3f-e135b610fe87",
             "names": [
                 {
-                    "label": "D-BNba, MH 60",
+                    "label": "D-BNba, HCB MH 60",
                     "desc": "Engelmann",
                     "page": "26",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/29"
@@ -380,7 +380,7 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/x301c694b-9bea-4c50-8213-4a92143caeb4",
             "names": [
                 {
-                    "label": "D-BNba, MH 60",
+                    "label": "D-BNba, HCB MH 60",
                     "desc": "Engelmann",
                     "page": "27",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/30"
@@ -391,7 +391,7 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/xca097347-c5ad-4863-8d7b-66f50c0550bf",
             "names": [
                 {
-                    "label": "D-BNba, MH 60",
+                    "label": "D-BNba, HCB MH 60",
                     "desc": "Engelmann",
                     "page": "28",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/31"
@@ -402,7 +402,7 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/xac8888c6-90dc-4e7b-b704-c2f1be8c333d",
             "names": [
                 {
-                    "label": "D-BNba, MH 60",
+                    "label": "D-BNba, HCB MH 60",
                     "desc": "Engelmann",
                     "page": "29",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/32"
@@ -413,7 +413,7 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/x58a60b82-2e9e-4adf-9415-6ca3063a1f29",
             "names": [
                 {
-                    "label": "D-BNba, MH 60",
+                    "label": "D-BNba, HCB MH 60",
                     "desc": "Engelmann",
                     "page": "30",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/33"
@@ -424,7 +424,7 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/xaa2712a5-69c9-4a96-bc6c-84f326b61b4e",
             "names": [
                 {
-                    "label": "D-BNba, MH 60",
+                    "label": "D-BNba, HCB MH 60",
                     "desc": "Engelmann",
                     "page": "31",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/34"
@@ -435,7 +435,7 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/x8ca2a944-2b00-4184-af2b-58e2bd33e205",
             "names": [
                 {
-                    "label": "D-BNba, MH 60",
+                    "label": "D-BNba, HCB MH 60",
                     "desc": "Engelmann",
                     "page": "32",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/35"
@@ -446,7 +446,7 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/xa5c51527-c2ed-4565-91db-c6723d3a5d25",
             "names": [
                 {
-                    "label": "D-BNba, MH 60",
+                    "label": "D-BNba, HCB MH 60",
                     "desc": "Engelmann",
                     "page": "33",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/36"
@@ -457,7 +457,7 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/x2433eb34-9ae9-44be-a41a-ff81446a672a",
             "names": [
                 {
-                    "label": "D-BNba, MH 60",
+                    "label": "D-BNba, HCB MH 60",
                     "desc": "Engelmann",
                     "page": "34",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/37"
@@ -468,7 +468,7 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/xb2d5df6e-f52a-4021-b5b3-656d1e915c1f",
             "names": [
                 {
-                    "label": "D-BNba, MH 60",
+                    "label": "D-BNba, HCB MH 60",
                     "desc": "Engelmann",
                     "page": "35",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/38"
@@ -479,7 +479,7 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/x9d3af3e9-b9bb-4392-b1e2-1978c50e0e44",
             "names": [
                 {
-                    "label": "D-BNba, MH 60",
+                    "label": "D-BNba, HCB MH 60",
                     "desc": "Engelmann",
                     "page": "36",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/39"
@@ -490,7 +490,7 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/xbafcb5f6-d42e-4eed-b8c5-d4a93069400f",
             "names": [
                 {
-                    "label": "D-BNba, MH 60",
+                    "label": "D-BNba, HCB MH 60",
                     "desc": "Engelmann",
                     "page": "37",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/40"
@@ -501,7 +501,7 @@
             "canvas": "https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/canvas/x8a2db5b1-e555-424c-ab52-15c588abd75a",
             "names": [
                 {
-                    "label": "D-BNba, MH 60",
+                    "label": "D-BNba, HCB MH 60",
                     "desc": "Engelmann",
                     "page": "38",
                     "url": "https://www.beethoven.de/de/media/view/5605781743337472/scan/41"
