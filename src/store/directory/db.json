@@ -179,6 +179,8 @@
       "opus": 127,
       "modules": ["modul3"],
       "route": "Monita",
+      "dossier": "https://beethovens-werkstatt.de/op127/",
+      "dossiertitle": "Streichquartett in Es-Dur op. 127",
       "apptitle": "VideApp rev",
       "dev": true
     },
