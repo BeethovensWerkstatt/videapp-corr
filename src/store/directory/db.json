@@ -203,7 +203,7 @@
       "modules": ["modul3"],
       "route": "Monita",
       "apptitle": "VideApp rev",
-      "dossier": "https://beethovens-werkstatt.de/woo152/"
+      "dossier": "https://beethovens-werkstatt.de/woo152/",
       "dossiertitle": "Irische Lieder I, für eine oder zwei Singstimmen mit Begleitung von Klavier, Violine und Violoncello,  WoO 152",
       "dev": false
     }
