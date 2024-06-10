@@ -152,10 +152,14 @@
       "dev": false
     },
     "op106": {
+      "@id": "https://dev-api.beethovens-werkstatt.de/module3/xf10c913d-d780-438a-8f71-5a8b2c90ffe7",
+      "id": "xf10c913d-d780-438a-8f71-5a8b2c90ffe7",
       "label": "Op. 106",
       "title": "Klaviersonate B-Dur",
       "opus": 106,
       "modules": ["modul3"],
+      "route": "Monita",
+      "apptitle": "VideApp rev",
       "dossier": "https://beethovens-werkstatt.de/op106/",
       "dosiertitle": "Klaviersonate B-Dur op. 106 (Hammerklavier)",
       "dev": true
