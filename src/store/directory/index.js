@@ -4,7 +4,8 @@ import config from '@/config'
 const state = {
   [n.state.directory_works]: [],
   [n.state.directory_modules]: [],
-  [n.state.directory_dev_works]: []
+  [n.state.directory_dev_works]: [],
+  bibliolinks: {}
 }
 const mutations = {}
 const actions = {
@@ -32,6 +33,7 @@ const actions = {
       }
     }
     state[n.state.directory_modules] = db.modules
+    state.bibliolinks = db.bibliolinks
     // console.log(getters[n.getters.directory_modules])
   }
 }
@@ -42,7 +44,8 @@ const getters = {
   [n.getters.directory_get_module]: (state) => (key) => state[n.state.directory_modules][key],
   [n.getters.directory_is_dev_work]: (state) => (work) => {
     return !!(state[n.state.directory_dev_works].find(w => w.id === work))
-  }
+  },
+  get_bibliolink: (state) => (signa) => state.bibliolinks[signa]
 }
 
 const directoryModule = {

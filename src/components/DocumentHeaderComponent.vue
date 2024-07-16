@@ -153,6 +153,13 @@ export default {
         position: { x: 0, y: 0 }
       }
     },
+    sourceLabel () {
+      // console.log(this.source.description, this.source.label)
+      if (!this.source.label?.trim() || this.source.label === '… ') {
+        return this.source.description || this.source.label
+      }
+      return this.source.label
+    },
     sourcePosition: {
       get () {
         return this.position_
