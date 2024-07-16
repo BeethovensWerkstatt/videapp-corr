@@ -4,6 +4,7 @@
       :position="headerPos"
       :sourceId="sourceId"
       :active="isActive"
+      :srcmenu="!!footer.title"
       @move-source="moveTo"
     />
     <document-margin-component
@@ -25,6 +26,17 @@
       :pos="rectoPos"
       :active="isActive"
     />
+    <document-footer-component
+      v-if="footer.title"
+      :position="footerPos"
+      :sourceId="sourceId"
+      :active="isActive"
+    />
+    <page-separator-component
+      v-if="footer.title && source.pages[pagenr].v && source.pages[pagenr].r"
+      :position="separatorPos"
+      :sourceId="sourceId"
+    />
   </div>
 </template>
 
@@ -34,9 +46,11 @@ import { mapGetters } from 'vuex'
 import OpenSeadragon from 'openseadragon'
 import PageComponent from '@/components/PageComponent.vue'
 import DocumentHeaderComponent from '@/components/DocumentHeaderComponent.vue'
+import DocumentFooterComponent from './DocumentFooterComponent.vue'
 import DocumentMarginComponent from '@/components/DocumentMarginComponent.vue'
 import { mutations } from '@/store/names'
 import { Url } from '@/toolbox/net'
+import PageSeparatorComponent from './PageSeparatorComponent.vue'
 
 /**
  * @module components/SourceComponent
@@ -55,7 +69,7 @@ import { Url } from '@/toolbox/net'
  * @vue-computed {OpenSeadragon.Rect} versoPos - position of verso page
  */
 export default {
-  components: { PageComponent, DocumentHeaderComponent, DocumentMarginComponent },
+  components: { PageComponent, DocumentHeaderComponent, DocumentMarginComponent, DocumentFooterComponent, PageSeparatorComponent },
   name: 'SourceComponent',
   props: {
     sourceId: {
@@ -65,6 +79,10 @@ export default {
     defaultPage: {
       type: Number,
       default: 0
+    },
+    footer: {
+      type: Object,
+      default: () => ({})
     }
   },
   data: function () {
@@ -79,7 +97,7 @@ export default {
       const atId = new Url(this.sourceId)
       let id = atId.path.elements.pop()
       id = id.split('.').filter(e => e !== 'json').join('_')
-      console.log(id)
+      // console.log(id)
       return id + '_dash'
     },
     source () {
@@ -129,10 +147,22 @@ export default {
     isActive () {
       return this.sourceId === this.$store.getters.activeSourceId
     },
+    height () {
+      const pp = this.source.pages[this.pagenr]
+      return Math.max(pp?.v?.dimensions.height || 0, pp?.r?.dimensions.height || 0)
+    },
     headerPos () {
       const pp = this.source.pages[this.pagenr]
       const x = (pp.v ? this.versoPos.x : this.rectoPos.x) - this.sourceMarginWidth
       const y = (pp.v ? this.versoPos.y : this.rectoPos.y) - this.sourceHeaderHeight
+      const width = this.rectoPos.width + this.versoPos.width + (2 * this.sourceMarginWidth)
+      const pos = new OpenSeadragon.Rect(x, y, width, this.sourceHeaderHeight)
+      return pos
+    },
+    footerPos () {
+      const pp = this.source.pages[this.pagenr]
+      const x = (pp.v ? this.versoPos.x : this.rectoPos.x) - this.sourceMarginWidth
+      const y = (pp.v ? this.versoPos.y + this.versoPos.height : this.rectoPos.y + this.rectoPos.height)
       const width = this.rectoPos.width + this.versoPos.width + (2 * this.sourceMarginWidth)
       const pos = new OpenSeadragon.Rect(x, y, width, this.sourceHeaderHeight)
       return pos
@@ -142,14 +172,14 @@ export default {
       const x = (pp.v ? this.versoPos.x : this.rectoPos.x) - this.sourceMarginWidth
       const y = (pp.v ? this.versoPos.y : this.rectoPos.y)
       const width = this.rectoPos.width + this.versoPos.width + (2 * this.sourceMarginWidth)
-      const height = Math.max(this.rectoPos.height, this.versoPos.height)
+      const height = this.height
       const pos = new OpenSeadragon.Rect(x, y, width, height)
       return pos
     },
     rectoPos () {
       const pp = this.source.pages[this.pagenr]
       if (pp.r) {
-        // center page, if no recto page
+        // center page, if no verso page
         const x = this.position.x - (pp.v ? 0 : (pp.r.dimensions.width / 2))
         const y = this.position.y - (pp.r.dimensions.height / 2)
         const width = pp.r.dimensions.width
@@ -162,13 +192,21 @@ export default {
       const pp = this.source.pages[this.pagenr]
       if (pp.v) {
         // center page, if no recto page
-        const x = this.position.x - (pp.r ? pp.r.dimensions.width : (pp.v.dimensions.width / 2))
+        const x = this.position.x - (pp.r ? pp.v.dimensions.width : (pp.v.dimensions.width / 2))
         const y = this.position.y - (pp.v.dimensions.height / 2)
         const width = pp.v.dimensions.width
         const height = pp.v.dimensions.height
         return new OpenSeadragon.Rect(x, y, width, height)
       }
       return new OpenSeadragon.Rect(0, 0, 0, 0)
+    },
+    separatorPos () {
+      const pp = this.source.pages[this.pagenr]
+      const x = this.position.x - 1
+      const y = (pp.v ? this.versoPos.y : this.rectoPos.y)
+      const width = 2
+      const height = this.height
+      return new OpenSeadragon.Rect(x, y, width, height)
     }
   },
   methods: {

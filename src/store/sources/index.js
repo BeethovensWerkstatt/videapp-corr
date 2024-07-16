@@ -57,6 +57,7 @@ const sourcesModule = {
    * @property {String} activeSourceId id of selected source
    */
   state: {
+    selectPageId: null,
     [n.state.movements]: {},
     [n.state.sources]: [],
     [n.state.activeSourceId]: null,

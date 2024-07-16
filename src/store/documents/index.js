@@ -9,8 +9,9 @@ export const state = {
 export const getters = {
   documents: state => state.documents,
   getDocument: state => (docid) => {
-    console.log('getDocument', docid)
-    return state.documents.find(doc => doc.id === docid)
+    const doc = state.documents.find(doc => doc.id === docid)
+    console.log('getDocument', docid, doc)
+    return doc
   }
 }
 

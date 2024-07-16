@@ -3,10 +3,10 @@
 # 1. set up the build environment and compile the app
 # 2. run it with nginx
 #########################
-FROM node:14.16-alpine3.13 as build-stage
+FROM node:16-alpine as build-stage
 WORKDIR /app
 COPY package*.json ./
-RUN npm install
+RUN npm install --legacy-peer-deps
 COPY ./ .
 RUN apk add git
 RUN npm install -g gulp-cli gulp-git

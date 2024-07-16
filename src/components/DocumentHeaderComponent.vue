@@ -15,35 +15,21 @@
     <div
       class="top-title"
       :style="{ left: marginPerc + '%', width: titlePerc + '%' }"
-      id="draghandle"
+      id="draghandle-header"
     >
-      <!-- <btn id="draghandle"><span :style="{ 'font-size': (scale * sourceHeaderHeight) + 'mm' }">{{ source.label }}</span></btn> -->
       <div class="pagenr recto">
-        <!-- <svg
-          viewBox="0 0 10 10"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <text x="0" y="50%" style="font-size: 8px;" dominant-baseline="middle">{{ rectopage }}</text>
-        </svg> -->
         <div :style="headerStyle">{{ rectopage }}</div>
       </div>
       <div class="pagenr verso">
-        <!--<svg
-          viewBox="0 0 10 10"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <text x="0" y="50%" style="font-size: 8px;" dominant-baseline="middle">{{ versopage }}</text>
-        </svg>-->
         <div :style="headerStyle">{{ versopage }}</div>
       </div>
-      <div class="title" :title="source.label">
-        <!--<svg
-          viewBox="0 0 100 10"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <text x="0" y="50%" style="font-size: 8px;" dominant-baseline="middle">{{ source.label }}</text>
-        </svg>-->
-        <div :style="headerStyle">{{ source.label }}</div>
+      <div class="title" :title="source.description">
+        <div :style="headerStyle" :class="{ documentLabel: !!srcmenu }">
+          {{ sourceLabel }}
+        </div>
+        <div v-if="srcmenu" :style="headerStyle" class="documentMenu">
+          <source-menu :position="position" :sourceId="sourceId" />
+        </div>
       </div>
     </div>
     <div class="top-right" :style="{ width: marginPerc + '%' }">
@@ -62,13 +48,14 @@ import { mapGetters } from 'vuex'
 import OpenSeadragon from 'openseadragon'
 import { mutations } from '@/store/names'
 import FlipPageButtonComponent from './FlipPageButtonComponent.vue'
+import SourceMenu from './SourceMenu.vue'
 
 /**
  * @module components/DocumentHeaderComponent
  * @vue-prop {String} sourceId id of source object
  */
 export default {
-  components: { FlipPageButtonComponent },
+  components: { FlipPageButtonComponent, SourceMenu },
   name: 'DocumentHeaderComponent',
   props: {
     sourceId: {
@@ -80,6 +67,10 @@ export default {
       required: true
     },
     active: {
+      type: Boolean,
+      default: false
+    },
+    srcmenu: {
       type: Boolean,
       default: false
     }
@@ -139,7 +130,7 @@ export default {
       return 100 - (2 * this.marginPerc)
     },
     dragHandle () {
-      return this.$el.querySelector('#draghandle')
+      return this.$el.querySelector('#draghandle-header')
     },
     source () {
       const source = this.$store.getters.getSourceById(this.sourceId)
@@ -184,12 +175,10 @@ export default {
       return 0
     },
     rectopage () {
-      const page = this.source.pages[this.pagenr]
-      return page.r ? page.r.label : ''
+      return this.source.pages[this.pagenr].r ? ((this.pagenr * 2) + 1) : ''
     },
     versopage () {
-      const page = this.source.pages[this.pagenr]
-      return page.v ? page.v.label : ''
+      return this.source.pages[this.pagenr].v ? (this.pagenr * 2) : ''
     },
     hasPrev () {
       return this.checkPageNr(this.pagenr - 1)
@@ -360,25 +349,28 @@ export default {
       position: absolute;
       left: 10%;
       width: 80%;
-      overflow: hidden;
-      svg {
+      .documentLabel {
+        position: absolute;
+        top: 0;
         left: 0;
-        // max-width: 100%;
-        height: 100%;
-        width: auto;
+        display: inline-block;
+        width: calc(100% - 20px);
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+      .documentMenu {
+        position: absolute;
+        top: 0;
+        right: 0;
+        display: inline-block;
+        width: 20px;
       }
     }
   }
 }
+
 .activeSource {
   outline: 2px solid #ff000033;
-}
-.inactiveSource {
-  opacity: 0;
-  &:hover {
-    opacity: 1;
-    transition: 500ms linear;
-  }
 }
 
 </style>

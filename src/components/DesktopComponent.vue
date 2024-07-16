@@ -5,6 +5,7 @@
         v-for="source in sources"
         :key="source.id"
         :sourceId="source.id"
+        :footer="{ title: onesource ? footertitle : undefined }"
       />
     </div>
   </div>
@@ -122,20 +123,22 @@ export default {
     this.$store.dispatch(actions.destroyOpenSeaDragon)
   },
   computed: {
-    ...mapGetters(['viewer', 'scale', 'workSources', 'getDocument']),
+    ...mapGetters(['viewer', 'scale', 'workSources', 'getDocument', 'getSourceById']),
     sources () {
-      console.log('DesktopComponent get sources ...')
+      // console.log('DesktopComponent get sources ...')
       if (this.onesource) {
-        console.log('one source', this.$route.params.id)
-        const doc = this.getDocument(this.$route.params.id)
+        const doc = this.getSourceById(this.$route.params.id)
+        // console.log('one source', this.$route.params.id, doc)
         if (doc) {
-          console.log(doc)
           return [doc]
         }
       }
       const sources = this.workSources(this.$route.params.id)
       // console.log(sources)
       return sources
+    },
+    footertitle () {
+      return ({})
     }
   }
 }

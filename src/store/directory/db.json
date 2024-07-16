@@ -152,11 +152,17 @@
       "dev": false
     },
     "op106": {
+      "@id": "https://dev-api.beethovens-werkstatt.de/module3/xf10c913d-d780-438a-8f71-5a8b2c90ffe7",
+      "id": "xf10c913d-d780-438a-8f71-5a8b2c90ffe7",
       "label": "Op. 106",
       "title": "Klaviersonate B-Dur",
       "opus": 106,
       "modules": ["modul3"],
-      "dev": true
+      "route": "Monita",
+      "apptitle": "VideApp rev",
+      "dossier": "https://beethovens-werkstatt.de/op106/",
+      "dosiertitle": "Klaviersonate B-Dur op. 106 (Hammerklavier)",
+      "dev": false
     },
     "op109": {
       "@id": "https://dev-api.beethovens-werkstatt.de/module3/u99c226c2-03f0-476b-889d-9232b724fe44.json",
@@ -167,7 +173,9 @@
       "modules": ["modul3"],
       "route": "Monita",
       "apptitle": "VideApp rev",
-      "dev": true
+      "dossier": "https://beethovens-werkstatt.de/wp-content/uploads/2022/09/op.-109_Revisionsprozess.pdf#page=5",
+      "dossiertitle": "Klaviersonate Es-Dur op. 109",
+      "dev": false
     },
     "op127": {
       "@id": "https://dev-api.beethovens-werkstatt.de/module3/t0c09f04e-e36d-4eaa-a064-029b5a232332.json",
@@ -177,8 +185,10 @@
       "opus": 127,
       "modules": ["modul3"],
       "route": "Monita",
+      "dossier": "https://beethovens-werkstatt.de/op127/",
+      "dossiertitle": "Streichquartett in Es-Dur op. 127",
       "apptitle": "VideApp rev",
-      "dev": true
+      "dev": false
     },
     "op86": {
       "label": "Op. 86",
@@ -197,7 +207,9 @@
       "modules": ["modul3"],
       "route": "Monita",
       "apptitle": "VideApp rev",
-      "dev": true
+      "dossier": "https://beethovens-werkstatt.de/woo152/",
+      "dossiertitle": "Irische Lieder I, für eine oder zwei Singstimmen mit Begleitung von Klavier, Violine und Violoncello,  WoO 152",
+      "dev": false
     }
   },
   "modules": {

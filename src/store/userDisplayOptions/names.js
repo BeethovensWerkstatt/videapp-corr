@@ -3,6 +3,7 @@ export const optionNames = {
     sourceHorizontalGap: 'sourceHorizontalGap',
     sourceVerticalGap: 'sourceVerticalGap',
     sourceHeaderHeight: 'sourceHeaderHeight',
+    sourceFooterHeight: 'sourceFooterHeight',
     sourceMarginWidth: 'sourceMarginWidth',
     sourceMarkerHeight: 'sourceMarkerHeight',
     displayMeasures: 'displayMeasures',
@@ -21,6 +22,7 @@ export const optionNames = {
   actions: {},
   getters: {
     sourceHeaderHeight: 'sourceHeaderHeight',
+    sourceFooterHeight: 'sourceFooterHeight',
     sourceMarginWidth: 'sourceMarginWidth',
     sourceHorizontalGap: 'sourceHorizontalGap',
     sourceVerticalGap: 'sourceVerticalGap',

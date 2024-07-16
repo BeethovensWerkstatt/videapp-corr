@@ -12,6 +12,7 @@ const userDisplayOptions = {
     [optionNames.state.sourceHorizontalGap]: 10, // mm
     [optionNames.state.sourceVerticalGap]: 50, // mm
     [optionNames.state.sourceHeaderHeight]: 20, // mm
+    [optionNames.state.sourceFooterHeight]: 15, // mm
     [optionNames.state.sourceMarginWidth]: 25, // mm
     [optionNames.state.sourceMarkerHeight]: 15, // mm
     [optionNames.state.displayMeasures]: false,
@@ -99,6 +100,7 @@ const userDisplayOptions = {
    */
   getters: {
     [optionNames.getters.sourceHeaderHeight]: (state) => state.sourceHeaderHeight,
+    [optionNames.getters.sourceFooterHeight]: (state) => state.sourceFooterHeight,
     [optionNames.getters.sourceMarginWidth]: (state) => state.sourceMarginWidth,
     [optionNames.getters.sourceHorizontalGap]: (state) => state.sourceHorizontalGap,
     [optionNames.getters.sourceVerticalGap]: (state) => state.sourceVerticalGap,

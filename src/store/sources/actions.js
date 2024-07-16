@@ -56,152 +56,6 @@ const actions = {
         // load complaints for this work
         dispatch(n.actions.loadComplaints, { work: work['@id'], ...data })
 
-        // console.log(data.manifestations)
-        /*
-        const initSource = async (murl, index = 0) => {
-          const resp = await axios.get(murl)
-          const m = resp.data
-          // console.log(m)
-
-          const existingSource = state.sources.find(source => source.id === m.id)
-          if (existingSource === undefined) {
-            // get manifestation json
-            axios.get(m.iiif.manifest).then(res => {
-              const iiif = res.data
-
-              const source = {
-                id: m['@id'],
-                workId,
-                label: m.label,
-                // these values are updated later
-                maxDimensions: { width: 0, height: 0 },
-                position: { x: (150 + index * 400), y: 400 },
-                pages: [],
-                pageref: {},
-                rotation: 0,
-                singleLeaf: false
-              }
-
-              // console.log(iiif)
-              if (iiif.sequences?.length > 0) {
-                const canvases = iiif.sequences[0].canvases
-                const structures = iiif.structures
-                // console.log(structures)
-
-                // TODO workaround!
-                const exuuid = (atid) => {
-                  const path = new Url(atid).path
-                  return path.elements.pop()
-                }
-                // end TODO
-
-                // helper to prepare page object
-                const ctop = (canvas, place) => {
-                  if (!canvas) {
-                    return null
-                  }
-                  // console.log(canvas, place)
-                  // default page height is 300mm if physicalScale is not defined
-
-                  const physScale = (canvas.images[0] && canvas.images[0].resource && canvas.images[0].resource.service && canvas.images[0].resource.service.service && canvas.images[0].resource.service.service.physicalScale)
-                    ? canvas.images[0].resource.service.service.physicalScale
-                    : (300 / canvas.height)
-
-                  const page = {
-                    work: workId,
-                    source: source.id,
-                    id: canvas['@id'],
-                    uuid: exuuid(canvas['@id']),
-                    label: canvas.label,
-                    place,
-                    dimensions: { width: canvas.width * physScale, height: canvas.height * physScale },
-                    pixels: { width: canvas.width, height: canvas.height },
-                    uri: canvas.images[0].resource.service['@id'],
-                    measures: [] // load measures?
-                  }
-                  commit(n.mutations.LOAD_PAGE, page)
-
-                  // get measure zones uri
-                  const otherContent = canvas.otherContent
-                  // console.log(otherContent)
-                  if (otherContent) {
-                    const mpos = otherContent.find(oc => oc.within?.label === TAG_MEASURE_POSITIONS)
-                    if (mpos) {
-                      // console.log(mpos)
-                      // zones are loaded when page is opened first time
-                      page.measures_uri = mpos['@id']
-                    }
-                    const psvg = otherContent.find(oc => oc.within?.label === TAG_SVG_SHAPES)
-                    if (psvg) {
-                      page.svg_shapes = psvg['@id']
-                    }
-                  }
-
-                  return page
-                }
-
-                // iterate over pagepairs. First page is assumed recto.
-                for (var ci = 0; ci <= canvases.length; ci += 2) {
-                  const recto = ci < canvases.length ? ctop(canvases[ci], 'recto') : null
-                  const verso = ci > 0 ? ctop(canvases[ci - 1], 'verso') : null
-                  // corresponding index in pagepair list
-                  const pagenumber = source.pages.length
-
-                  // TODO database/webSQL for fast retrievement of source+page for measure and/or complaint
-                  if (recto) {
-                    source.pageref[recto.uuid] = {
-                      work: workId,
-                      source: source.id,
-                      n: pagenumber,
-                      page: recto
-                    }
-                    recto.pagenumber = pagenumber
-                    recto.place = 'recto'
-                  }
-                  if (verso) {
-                    source.pageref[verso.uuid] = {
-                      work: workId,
-                      source: source.id,
-                      n: pagenumber,
-                      page: verso
-                    }
-                    verso.pagenumber = pagenumber
-                    verso.place = 'verso'
-                  }
-                  // END TODO
-
-                  const pagepair = { r: recto, v: verso }
-                  source.pages.push(pagepair)
-                  source.maxDimensions.width =
-                    Math.max(source.maxDimensions.width,
-                      ((pagepair.r ? pagepair.r.dimensions.width : 0) +
-                       (pagepair.v ? pagepair.v.dimensions.width : 0)))
-                  source.maxDimensions.height =
-                    Math.max(source.maxDimensions.height,
-                      (pagepair.r ? pagepair.r.dimensions.height : 0),
-                      (pagepair.v ? pagepair.v.dimensions.height : 0))
-                }
-                // console.log(source)
-
-                // calc position
-                positioner.addSource(source)
-                // console.log(source.position)
-
-                // hack !!!
-                const sid = (new Url(source.id)).path.elements.pop()
-                if (positions[sid]) source.position = positions[sid]
-
-                // TODO unfold
-                source.structures = structures
-
-                commit(n.mutations.LOAD_SOURCE, source)
-              } else {
-                console.warn('no sequence for "' + m.label + '"', iiif)
-              }
-            })
-          }
-        }
-        */
         const initSource = (murl, index) => dispatch('initSource', { murl, index, workId })
         data.manifestations.forEach(initSource)
         finishProc()
@@ -236,13 +90,15 @@ const actions = {
     const existingSource = state.sources.find(source => source.id === m.id)
     if (existingSource === undefined) {
       // get manifestation json
-      axios.get(m.iiif.manifest).then(res => {
+
+      const loadIIIF = res => {
         const iiif = res.data
 
         const source = {
           id: m['@id'],
           workId,
-          label: m.label,
+          label: iiif.label,
+          description: iiif.description,
           // these values are updated later
           maxDimensions: { width: 0, height: 0 },
           position: { x: (150 + index * 400), y: 400 },
@@ -371,7 +227,52 @@ const actions = {
         } else {
           console.warn('no sequence for "' + m.label + '"', iiif)
         }
-      })
+      }
+
+      // WORKAROUND
+      // https://dev-api.beethovens-werkstatt.de/iiif/document/t83a01023-37fd-4e91-90db-f228da4a14a9/manifest.json
+      if (m.iiif.manifest.indexOf('t83a01023-37fd-4e91-90db-f228da4a14a9') > 0) {
+        console.log('load cached Notirungsbuch K')
+        const placeholder = (id) => ({
+          '@id': id,
+          '@type': 'sc:Canvas',
+          label: '9',
+          images: [
+            {
+              '@type': 'oa:Annotation',
+              motivation: 'sc:painting',
+              resource: {
+                '@id': 'https://edirom-images.beethovens-werkstatt.de/Scaler/IIIF/lostPagePlaceholders%2FNotirungsbuch-K_305x232mm.jpeg/full/full/0/default.jpg',
+                '@type': 'dctypes:Image',
+                service: {
+                  '@context': 'http://iiif.io/api/image/2/context.json',
+                  '@id': 'https://edirom-images.beethovens-werkstatt.de/Scaler/IIIF/lostPagePlaceholders%2FNotirungsbuch-K_305x232mm.jpeg',
+                  profile: 'http://iiif.io/api/image/2/level2.json',
+                  service: {
+                    '@id': id + '_physdim',
+                    '@context': 'http://iiif.io/api/annex/services/physdim/1/context.json',
+                    profile: 'http://iiif.io/api/annex/services/physdim',
+                    physicalScale: 0.0768,
+                    physicalUnits: 'mm'
+                  }
+                },
+                format: 'image/jpeg',
+                width: 3698,
+                height: 3021
+              },
+              on: id
+            }
+          ],
+          width: 3698,
+          height: 3021,
+          otherContent: []
+        })
+        const data = require('./notirungsBuchK.json')
+        data.sequences[0].canvases = data.sequences[0].canvases.map(c => c['@type'] === 'placeholder' ? { ...placeholder(), '@id': c['@id'] } : c)
+        loadIIIF({ data })
+      } else {
+        axios.get(m.iiif.manifest).then(loadIIIF)
+      }
     }
   },
 

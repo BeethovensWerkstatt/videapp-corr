@@ -1,5 +1,6 @@
 // import { Url } from '@/toolbox/net'
 import n from '@/store/names'
+import atId from '@/toolbox'
 
 /**
  * @namespace store.sources.getters
@@ -70,7 +71,7 @@ const getters = {
     if (!id) {
       throw new Error('source id undefined!')
     }
-    return state.sources.find(source => source.id === id)
+    return state.sources.find(source => source.id === id || atId(source.id) === id)
   },
   [n.getters.activeZoneId]: (state, getters) => {
     const source = getters.activeSource
@@ -179,19 +180,6 @@ const getters = {
         }
       }
     }
-    // dummy markers every 5th dbl page
-    /*
-    const dpagecount = source.pages.length
-    for (var i = 0; i < dpagecount; i += 5) {
-      markers.push({
-        name: {
-          recto: '' + (i * 2 + 1),
-          verso: '' + (i * 2 + 2)
-        },
-        page: i
-      })
-    }
-     */
     return markers
   }
 }

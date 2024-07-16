@@ -1,6 +1,8 @@
 <template>
   <div class="desk">
-    <desktop-component divid="canvas" :width="1650" :height="1000" :onesource="true"></desktop-component>
+    <!-- TODO calc desktop size from document? -->
+    <desktop-component divid="canvas" :width="800" :height="600" :onesource="true"></desktop-component>
+    <select-page-dialog :sourceId="selectPageId" v-if="selectPageSource" />
     <div id="sidebar">
       <div class="workTitle" v-if="work">
         <strong>{{ workTitle }}</strong>
@@ -25,6 +27,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import DesktopComponent from '@/components/DesktopComponent'
+import SelectPageDialog from '@/components/SelectPageDialog.vue'
 import n from '@/store/names'
 
 /**
@@ -36,10 +39,11 @@ import n from '@/store/names'
 export default {
   name: 'Desktop',
   components: {
-    DesktopComponent
+    DesktopComponent,
+    SelectPageDialog
   },
   computed: {
-    ...mapGetters(['viewer', 'scale']),
+    ...mapGetters(['viewer', 'scale', 'selectPageId', n.getters.getSourceById]),
     work () {
       return this.$store.getters[n.getters.getWork](this.$route.params.id)
     },
@@ -48,6 +52,12 @@ export default {
     },
     workLongTitle () {
       return this.work?.title[0].title
+    },
+    selectPageSource () {
+      if (this.selectPageId) {
+        return this.getSourceById(this.selectPageId)
+      }
+      return undefined
     }
   }
 }
