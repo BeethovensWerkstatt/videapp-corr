@@ -16,6 +16,7 @@
       class="top-title"
       :style="{ left: marginPerc + '%', width: titlePerc + '%' }"
       id="draghandle-header"
+      @dblclick="dblclick"
     >
       <div class="pagenr recto">
         <div :style="headerStyle">{{ rectopage }}</div>
@@ -280,6 +281,9 @@ export default {
       // console.log(this.sourcePosition)
       this.$store.commit(mutations.MOVE_SOURCE, { id: this.sourceId, ...this.sourcePosition })
       this.$emit('move-source', this.sourcePosition.x, this.sourcePosition.y)
+    },
+    dblclick (e) {
+      alert(this.source.label)
     }
   }
 }

@@ -216,4 +216,51 @@ export const filterOrCol = (filters) => (c) => {
   return false
 }
 
-export default { uuidv4, atId, parsexywh, toRoman, createImageFromText, findPrevious, findNext, desktopTile }
+/**
+ * calculate edit distance (Lvenshtein)
+ * @param {string} A first string
+ * @param {string} B second string
+ * @returns {int} edit distance
+ */
+export const editdist = (A, B) => {
+  const X = A.length + 1
+  const Y = B.length + 1
+
+  // prepare matrix ...
+  const row = function * (x, y) {
+    if (y === 0) { // first row counts chars of A
+      for (var i = 0; i < x; i++) {
+        yield i
+      }
+    } else { // others counts chars of B in first column
+      yield y
+      for (i = 1; i < x; i++) {
+        yield 0
+      }
+    }
+  }
+  const matrix = function * (x, y) {
+    for (var i = 0; i < y; i++) {
+      const r = [...row(X, i)]
+      yield r
+    }
+  }
+  const m = [...matrix(X, Y)]
+  // ... matrix prepared
+
+  // calc edit distance with dynamic programming
+  for (var y = 1; y < Y; y++) {
+    for (var x = 1; x < X; x++) {
+      if (A[x - 1] === B[y - 1]) {
+        // if chars are equal
+        m[y][x] = m[y - 1][x - 1]
+      } else {
+        // if chars are not equal
+        m[y][x] = Math.min(m[y - 1][x - 1], m[y][x - 1], m[y - 1][x]) + 1
+      }
+    }
+  }
+  return m[Y - 1][X - 1]
+}
+
+export default { uuidv4, atId, parsexywh, toRoman, createImageFromText, findPrevious, findNext, desktopTile, editdist }

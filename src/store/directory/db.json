@@ -255,5 +255,14 @@
       "start": 2027,
       "finish": 2029
     }
+  },
+  "bibliolinks": {
+    "D-B, Mus. ms. autogr. Beethoven, L. v. 15": "https://digital.staatsbibliothek-berlin.de/werkansicht?PPN=PPN791342433&amp;PHYSID=PHYS_0001&amp;DMDID=DMDLOG_0001",
+    "D-BNba, C 73/9": "https://www.beethoven.de/de/media/view/5588323808575488/scan/0",
+    "US-NYj, 31 B393cp no. 5 errata": "https://juilliardmanuscriptcollection.org/manuscript/piano-concerto-no-5-op-73-e-flat-major/",
+    "D-BNba, Slg. H. C. Bodmer, HCB BBr 9": "https://www.beethoven.de/de/media/view/6515349549744128/scan/0",
+    "D-BNba, NE 157": "https://www.beethoven.de/de/media/view/6016726059712512/scan/0",
+    "A-Wn, SH.Beethoven.323": "http://digital.onb.ac.at/RepViewer/viewer.faces?doc=DTL_7883193&amp;order=1&amp;view=SINGLE"
   }
 }
+
