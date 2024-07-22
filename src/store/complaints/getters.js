@@ -241,7 +241,11 @@ const getters = {
   [n.getters.complaintMovements]: (state, getters) => (workId) => {
     // console.log('complaintMovements', workId)
     const complaints = workId ? getters[n.getters.workComplaints](workId, false) : getters[n.getters.allComplaints]
-    const movements = [...new Set(complaints.map(c => c.affects[0]?.mdiv).filter(cmd => !!cmd))]
+    const errata = [...complaints.filter(c => !c.affects[0])]
+    for (const ec of errata) {
+      console.warn('affects is empty!', ec)
+    }
+    const movements = [...new Set(complaints.map(c => c.affects[0]?.mdiv))]
     // console.log(workId, complaints, movements)
     return movements.sort((mdiv1, mdiv2) => {
       const m1 = getters[n.getters.getMovementById](mdiv1)

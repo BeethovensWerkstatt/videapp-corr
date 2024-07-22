@@ -16,7 +16,7 @@ export const tagLabel = {
   [sortTag.classification]: 'terms.complaint.classification',
   [sortTag.context]: 'terms.complaint.context',
   [sortTag.implementation]: 'terms.complaint.implementation',
-  [sortTag.document]: 'terms.document'
+  [sortTag.document]: 'terms.complaint.state.revisionDoc'
 }
 
 export const complaintFilterTags = {

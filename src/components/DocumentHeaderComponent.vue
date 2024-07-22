@@ -50,6 +50,7 @@ import OpenSeadragon from 'openseadragon'
 import { mutations } from '@/store/names'
 import FlipPageButtonComponent from './FlipPageButtonComponent.vue'
 import SourceMenu from './SourceMenu.vue'
+import { editdist } from '@/toolbox'
 
 /**
  * @module components/DocumentHeaderComponent
@@ -73,7 +74,7 @@ export default {
     },
     srcmenu: {
       type: Boolean,
-      default: false
+      default: true
     }
   },
   data: function () {
@@ -283,7 +284,18 @@ export default {
       this.$emit('move-source', this.sourcePosition.x, this.sourcePosition.y)
     },
     dblclick (e) {
-      alert(this.source.label)
+      // alert(this.source.label)
+      const bibliolinks = this.$store.getters.bibliolinks
+      const sigs = Object.keys(bibliolinks)
+      const ed = sigs.map(sig => editdist(sig, this.source.label))
+      const argmin = array => [].map.call(array, (x, i) => [x, i]).reduce((r, a) => (a[0] < r[0] ? a : r))[1]
+      const mni = argmin(ed)
+      if (ed[mni] <= 3) {
+        console.log(bibliolinks[sigs[mni]])
+        window.open(bibliolinks[sigs[mni]], '_blank')
+      } else {
+        console.warn('no link for "' + this.source.label + '"')
+      }
     }
   }
 }
@@ -350,6 +362,7 @@ export default {
     }
 
     .title {
+      cursor: pointer;
       position: absolute;
       left: 10%;
       width: 80%;

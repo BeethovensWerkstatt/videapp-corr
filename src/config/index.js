@@ -34,11 +34,12 @@ const config = {
 }
 
 const API_URL = {
-  'jpv/dev': 'http://localhost:8080/exist/apps/api/'
+  // 'jpv/dev': 'http://localhost:8080/exist/apps/api/'
 }
 const API_HOST = {
   main: 'api.beethovens-werkstatt.de',
-  dev: 'dev-api.beethovens-werkstatt.de'
+  dev: 'dev-api.beethovens-werkstatt.de',
+  'jpv/dev': 'dev-api.beethovens-werkstatt.de'
 }
 
 export const getAPIURL = async function (path) {

@@ -45,7 +45,11 @@ const getters = {
   [n.getters.directory_is_dev_work]: (state) => (work) => {
     return !!(state[n.state.directory_dev_works].find(w => w.id === work))
   },
-  get_bibliolink: (state) => (signa) => state.bibliolinks[signa]
+  get_bibliolink: (state) => (signa) => state.bibliolinks[signa],
+  bibliolinks: (state) => {
+    const ret = { ...state.bibliolinks }
+    return ret
+  }
 }
 
 const directoryModule = {
