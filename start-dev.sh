@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker compose up -d && npm run serve ; docker-compose down
+nvm use lts/gallium && docker compose up -d && npm run serve ; docker-compose down

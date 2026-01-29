@@ -22,6 +22,8 @@ The project consists of two main components:
 
 ### Development Environment
 
+*The Vue.js application relies on the legacy Node.js version 16 or `lts/gallium`. Ensure you have the correct Node version using `nvm` or similar tools.*
+
 **Automated Setup** (recommended):
 ```bash
 ./start-dev.sh
@@ -37,6 +39,8 @@ This command starts:
 docker compose up -d
 
 # 2. Start Frontend Development Server
+nvm use lts/gallium # or ensure Node.js v16 is active
+npm install # Install dependencies, if not done yet
 npm run serve
 ```
 
@@ -70,19 +74,6 @@ The Dockerfile performs a multi-stage build:
 npm run build
 ```
 
-### Run your unit tests
-```
-npm run test:unit
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
-
 ## Configuration
 
 ### Current Configuration
@@ -113,11 +104,12 @@ The application configuration is currently located in `src/config/index.js` and 
 - Build-time independent environment configuration
 
 **Proposed Structure** (`public/config.json`):
+*replace `<developer>` with your personal branch prefix for local development*
 ```json
 {
   "api": {
     "urls": {
-      "jpv/dev": "http://localhost:8080/exist/apps/api/",
+      "<developer>/dev": "http://localhost:8080/exist/apps/api/",
       "dev": "https://dev-api.beethovens-werkstatt.de/",
       "main": "https://api.beethovens-werkstatt.de/"
     },
